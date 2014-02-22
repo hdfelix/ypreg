@@ -21,6 +21,8 @@ module YpwReg
     # config.i18n.default_locale = :de
 		
 		config.generators do |g|
+			g.stylesheets false
+			g.javascripts false
 			g.test_framework :rspec,
 				fixtures: true,
 				view_specs: false,

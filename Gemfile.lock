@@ -35,6 +35,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (1.1.0)
+      capybara (~> 2.0, >= 2.0.2)
+      json
     childprocess (0.4.0)
       ffi (~> 1.0, >= 1.0.11)
     coffee-rails (4.0.1)
@@ -154,6 +157,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (~> 2.2.1)
+  capybara-webkit
   coffee-rails (~> 4.0.0)
   database_cleaner (~> 1.2.0)
   factory_girl_rails (~> 4.4.0)
