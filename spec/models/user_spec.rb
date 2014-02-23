@@ -26,6 +26,15 @@ describe User do
 		build(:user, email: nil).should_not be_valid
 	end
 	
-	it "is invalid with a duplicate email address"
+	it "is invalid with a duplicate email address" do
+		User.create(firstname: 'Hector', 
+								lastname: 'Felix',
+								email: 'test@gmail.com')
+		user = User.create(firstname: 'Angela',
+								lastname: 'Felix',
+								email: 'test@gmail.com')
+		expect(user).to have(1).errors_on(:email)
+	end
+
 	it "returns an user's full name as a string"
 end
