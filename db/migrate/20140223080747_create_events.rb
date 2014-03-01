@@ -3,7 +3,7 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
       t.string :title
 			t.integer :location_id
-			t.integer :event_type
+			t.integer :event_type_id
 			t.datetime :begin_date
 			t.datetime :end_date
 			t.decimal	:registration_cost
@@ -12,4 +12,7 @@ class CreateEvents < ActiveRecord::Migration
       t.timestamps
     end
   end
+
+	add_index :events, :location_id
+	add_index :events, :event_type_id
 end
