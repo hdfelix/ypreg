@@ -11,7 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140223024105) do
+ActiveRecord::Schema.define(version: 20140223080847) do
+
+  create_table "events", force: true do |t|
+    t.string   "title"
+    t.integer  "location_id"
+    t.integer  "event_type_id"
+    t.datetime "begin_date"
+    t.datetime "end_date"
+    t.decimal  "registration_cost"
+    t.datetime "registration_open_date"
+    t.datetime "registration_close_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["event_type_id"], name: "event_type_id_ix"
+  add_index "events", ["location_id"], name: "location_id_ix"
+
+  create_table "locations", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "address_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations", ["address_id"], name: "index_locations_on_address_id"
 
   create_table "users", force: true do |t|
     t.string   "firstname"

@@ -11,8 +11,7 @@ class CreateEvents < ActiveRecord::Migration
 			t.datetime :registration_close_date
       t.timestamps
     end
+	add_index :events, :location_id, name: 'location_id_ix'
+	add_index :events, :event_type_id, name: 'event_type_id_ix'
   end
-
-	add_index :events, :location_id
-	add_index :events, :event_type_id
 end
