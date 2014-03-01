@@ -36,5 +36,5 @@ describe User do
 		expect(user).to have(1).errors_on(:email)
 	end
 
-	it "returns an user's full name as a string"
+	# it "returns an user's full name as a string"
 end
