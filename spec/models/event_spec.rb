@@ -9,7 +9,8 @@ describe Event do
 		event = Event.new(
 			title: '6th Grade Conference',
 			begin_date: '03/01/2014',
-			end_date: '03/03/2014')
+			end_date: '03/03/2014',
+			registration_cost: '10')
 		expect(event).to be_valid
 	end
 
@@ -34,5 +35,8 @@ describe Event do
 			begin_date: '01/01/2020')
 		expect(event).to have(1).errors_on(:end_date)
 	end
-	it "is invalid without the cost of attendance"
+	
+	it "is invalid without the cost of attendance" do
+		expect(Event.new(registration_cost: nil)).to have(1).errors_on(:registration_cost)
+	end
 end
