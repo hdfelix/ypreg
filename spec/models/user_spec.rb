@@ -23,7 +23,7 @@ describe User do
 	end
 
 	it "is invalid without an e-mail" do
-		build(:user, email: nil).should_not be_valid
+		expect(build(:user, email: nil)).should_not be_valid
 	end
 	
 	it "is invalid with a duplicate email address" do
