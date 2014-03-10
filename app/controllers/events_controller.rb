@@ -4,12 +4,13 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    #@events = Event.all
+    @events = Event.all
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
+		@post = Event.find(params[:id])
   end
 
   # GET /events/new
@@ -19,6 +20,7 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
+		@post = Event.find(params[:id])
   end
 
   # POST /events
