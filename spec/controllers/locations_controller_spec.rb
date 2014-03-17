@@ -20,32 +20,31 @@ require 'spec_helper'
 
 describe LocationsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Location. As you add validations to Location, be sure to
-  # adjust the attributes here as well.
-  #let(:valid_attributes) { { "name" => "MyString" } }
+  # TODO: Test valid session let(:valid_session) { {} }
+	#       pass :valid_session to 'get'
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # LocationsController. Be sure to keep this updated too.
-#  let(:valid_session) { {} }
-#
-#  describe "GET index" do
+#	describe "GET index" do
 #    it "assigns all locations as @locations" do
 #      location = Location.create! valid_attributes
 #      get :index, {}, valid_session
 #      assigns(:locations).should eq([location])
 #    end
 #  end
-#
-#  describe "GET show" do
-#    it "assigns the requested location as @location" do
-#      location = Location.create! valid_attributes
-#      get :show, {:id => location.to_param}, valid_session
-#      assigns(:location).should eq(location)
-#    end
-#  end
-#
+
+  describe "GET show" do
+    it "assigns the requested location as @location" do
+      location = create(:location) 
+      get :show, id: location
+      expect(assigns(:location)).to eq location
+    end
+
+		it "renders the :show template" do
+			location = create(:location)
+			get :show, id: location
+			expect(response).to render_template :show
+		end
+  end
+
 #  describe "GET new" do
 #    it "assigns a new location as @location" do
 #      get :new, {}, valid_session
