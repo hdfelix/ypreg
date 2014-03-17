@@ -6,4 +6,9 @@ FactoryGirl.define do
 		description "This is a test location string"
 		address_id '1'
   end
+	
+	factory :invalid_location do
+		name nil
+		address nil
+	end
 end
