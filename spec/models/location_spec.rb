@@ -1,13 +1,10 @@
 require 'spec_helper'
 
 describe Location do
-	it "has a valid factory" do #same as is valid with (required fields)
+
+	it "is valid with name, description, and address_id" do
 		expect(build(:location)).to be_valid
 	end
-
-	#it "is valid with name, description, and address_id" do
-	#	expect(build(:location)).to be_valid
-	#end
 
 	it "is invalid without a name" do
 		expect(build(:location, name: nil)).to have(1).errors_on(:name)	

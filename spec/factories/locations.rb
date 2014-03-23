@@ -1,10 +1,13 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
+	sequence(:name) { |n| "Sample Location #{n}" }
+	sequence(:description) { |n| "This is an example description for location #{n}" }
+	sequence(:address_id) { |n| '#{n}'}
   factory :location do
-    name "Test Location"
-		description "This is a test location string"
-		address_id '1'
+    name
+		description
+		address_id
   end
 	
 	factory :invalid_location do
