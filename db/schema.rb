@@ -14,9 +14,16 @@
 ActiveRecord::Schema.define(version: 20140308042301) do
 
   create_table "addresses", force: true do |t|
+    t.string   "addressline1"
+    t.string   "addressline2"
+    t.string   "city"
+    t.integer  "state_id"
+    t.integer  "zipcode"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "addresses", ["state_id"], name: "state_id_ix"
 
   create_table "events", force: true do |t|
     t.string   "title"
