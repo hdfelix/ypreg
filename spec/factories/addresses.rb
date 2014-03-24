@@ -1,9 +1,9 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-	sequence(:addressline1, 100) {|a| "#{n} Street #{a-95}" }
-	sequence(:city) {|c| "City#{n}" }
-	sequence(:zipcode, 92610) {|z| "#{n}" }
+	sequence(:addressline1, 100) {|n| "#{n} Street #{n-95}" }
+	sequence(:city) {|c| "City#{c}" }
+	sequence(:zipcode, 92612) {|z| "#{z}" }
 	#sequence(:state_id, 1..49)
   
 	factory :address do
