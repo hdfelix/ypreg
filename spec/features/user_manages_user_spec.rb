@@ -10,6 +10,7 @@ feature 'User can manage an user account' do
 	scenario 'Adds an user to the library' do
 	
 		visit users_path
+		
 		expect{
 			click_link 'Add User'
 			fill_in 'user_firstname', with: 'Test'
@@ -18,14 +19,17 @@ feature 'User can manage an user account' do
 			#fill_in 'password', with: 'password'
 			click_button 'Create User'
 			}.to change(User, :count).by(1)
+		
 		expect(current_path).to eq users_path
 		#save_and_open_page
+		
 		expect(page).to have_content 'New user created'
 		within 'h1' do
 			expect(page).to have_content 'Users'
 		end
-		within('#user') do
-			expect(page).to have_content(test@email.com)
-		end
+			expect(page).to have_content('test@email.com')
+			
+			expect(page).to have_content 'User, Test'
 	end
+
 end

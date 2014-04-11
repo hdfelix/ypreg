@@ -1,4 +1,22 @@
 <h1>All Users</h1>
 
-<%= flash[:notice] %>
-<%= link_to "Add User", new_user_path %>
+<div>
+	<%= flash[:notice] %>
+</div>
+
+<% @users.each do |user| %>
+	<div class="media">
+		<div class="media-body">
+			<h4 class="media-heading">
+				<span>
+					<%= user.lastname %>, 
+					<%=user.firstname %>
+					<%= link_to user.email, user %>
+				</span>
+			</h4>
+		</div>
+<% end %>
+
+<div>
+	<%= link_to "Add User", new_user_path %>
+</div>
