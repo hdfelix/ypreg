@@ -3,8 +3,14 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use sqlite3 as the database for Active Record in 'development;  use PosgreSQL in 'prodution'
+group :production do
+	gem 'pg'
+end
+
+group :development do
+	gem 'sqlite3'
+end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -27,10 +33,16 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+#CSS Framework 
+gem 'bootstrap-sass', '~> 3.1.1'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
+
+#server static_assets
+gem 'rails_12factor', group: :production
 
 # Added from 'Everyday Rails Testing with Rspec book (with latest versions as of 15MAR14)
 group :development, :test do
