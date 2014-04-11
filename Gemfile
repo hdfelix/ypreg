@@ -57,6 +57,9 @@ group :development, :test do
 	gem "selenium-webdriver", "~> 2.39.0"
 end
 
+#Geographic data 
+#gem 'carmen-rails', '~> 1.0.0'
+
 # Added from 'Everyday Rails Testing with Rspec book (with latest versions as of 15MAR14)
 #group :test do
 #	gem "faker", "~>1.2.0"
