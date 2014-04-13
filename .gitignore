@@ -26,3 +26,6 @@ doc/
 /Guardfile
 /.rspec
 spec/Guardfile
+
+# Ignore application configuration
+/config/application.yml
