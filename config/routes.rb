@@ -3,7 +3,6 @@ YpwReg::Application.routes.draw do
 
 	resources :locations
 	resources :events
-	resources :users, only: [:index,:new,:create,:show]
 
   #get "login/index"
   # See how all your routes lay out with "rake routes".
