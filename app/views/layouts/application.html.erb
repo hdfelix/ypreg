@@ -9,8 +9,12 @@
 <body>
 	<div class="container">
 		<ul class="nav nav-tabs">
-			<li><%= link_to "Home", root_path %></li>
-			
+			<% if current_user %>
+				<li><%= link_to "Home", home_index_path %></li>
+			<% else %>
+				<li><%= link_to "Root", root_path %></li>
+			<% end %>	
+
 			<div class="pull-right user-info">
 				<% if current_user %>
 					Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
