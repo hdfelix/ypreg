@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
 	validates :registration_cost, presence: true
 
 	EVENT_TYPE = ['One-day','Retreat','Conference']
-	
-	has_many :locations
-	accepts_nested_attributes_for :locations
+
+	belongs_to :location
+	accepts_nested_attributes_for :location
 end

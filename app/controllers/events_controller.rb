@@ -16,6 +16,8 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+		@event.build_location
+		puts "******* #{@event.location.to_yaml}"
   end
 
   # GET /events/1/edit
