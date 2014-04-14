@@ -11,19 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140413052850) do
-
-  create_table "addresses", force: true do |t|
-    t.string   "addressline1"
-    t.string   "addressline2"
-    t.string   "city"
-    t.integer  "state_id"
-    t.integer  "zipcode"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "addresses", ["state_id"], name: "state_id_ix"
+ActiveRecord::Schema.define(version: 20140413043855) do
 
   create_table "events", force: true do |t|
     t.string   "title"
@@ -44,21 +32,16 @@ ActiveRecord::Schema.define(version: 20140413052850) do
   create_table "locations", force: true do |t|
     t.string   "name"
     t.string   "description"
-    t.integer  "address_id"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state_abbrv"
+    t.integer  "zipcode"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "locations", ["address_id"], name: "index_locations_on_address_id"
 
   create_table "registrations", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "states", force: true do |t|
-    t.string   "name"
-    t.string   "abbrv"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

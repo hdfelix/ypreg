@@ -1,5 +1,45 @@
 <h1>New event</h1>
 
-<%= render 'form' %>
+<%= form_for @event do |f| %>
+	<%= f.error_messages %>
+	<br/>
+	<div class="form-group">
+		<% f.label :title %>
+		<% f.text_field :title %>
+	</div>
+	<hr>
+	<% f.fields_for :location do |loc| %>
+		<div class="form-group">
+			<% loc.label :name %>
+			<% loc.text_field :name %>
+		</div>
+		<div class="form-group">
+			<% loc.label :description %>
+			<% loc.text_field :description %>
+		</div>
+		<div class="form-group">
+			<% loc.label :address1%>
+			<% loc.text_field :address1 %>
+		</div>
+		<div class="form-group">
+			<% loc.label :address2 %>
+			<% loc.text_field :address2 %>
+		</div>
+		<div class="form-group">
+			<% loc.label :city %>
+			<% loc.text_field :city %>
+		</div>
+		<div class="form-group">
+			<% loc.label :state_abbrv %>
+			<% loc.select(:state_abbrv, options_for_select(State::STATE_LIST)) %>
+		</div>
+		<div class="form-group">
+			<% loc.label :zipcode %>
+			<% loc.text_field :zipcode %>
+		</div>
+		
+	<% end %>
+	<%= f.submit "Submit" %>
+<% end %>
 
 <%= link_to 'Back', events_path %>
