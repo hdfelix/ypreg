@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20140413052850) do
   create_table "events", force: true do |t|
     t.string   "title"
     t.integer  "location_id"
-    t.integer  "event_type_id"
+    t.integer  "event_type"
     t.datetime "begin_date"
     t.datetime "end_date"
     t.decimal  "registration_cost"
@@ -38,18 +38,19 @@ ActiveRecord::Schema.define(version: 20140413052850) do
     t.datetime "updated_at"
   end
 
-  add_index "events", ["event_type_id"], name: "event_type_id_ix"
   add_index "events", ["location_id"], name: "location_id_ix"
 
   create_table "locations", force: true do |t|
     t.string   "name"
     t.string   "description"
-    t.integer  "address_id"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state_abbrv"
+    t.integer  "zipcode"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "locations", ["address_id"], name: "index_locations_on_address_id"
 
   create_table "registrations", force: true do |t|
     t.datetime "created_at"
