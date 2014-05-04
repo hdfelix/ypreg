@@ -21,7 +21,6 @@ feature 'User can manage an user account'
 #			}.to change(User, :count).by(1)
 #		
 #		expect(current_path).to eq users_path
-#		#save_and_open_page
 #		
 #		expect(page).to have_content 'New user created'
 #		within 'h1' do

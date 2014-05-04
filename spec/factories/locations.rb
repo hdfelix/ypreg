@@ -1,21 +1,21 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
 	#city_array = ['This City', 'That City', 'Other City', 'City', 'Far City']
 	#sate_array = ['CT', 'CA']
 	
-	sequence(:name) { |n| 'Sample Location #{n}' }
-	sequence(:description) { |n| 'This is an example description for location #{n}' }
-	sequence(:address1) { |n| '#{n} Sample St'}
+	sequence(:name) { |n| "Sample Location #{n}" }
+	sequence(:description) { |n| "This is an example description for location #{n}" }
+	sequence(:address1) { |n| "#{n} Sample St" }
 	#sequence(:city,  {|n| city_array(n)}
   #sequence(:state, {|n| state_array(1%n)}
 	
   factory :location do
-    name
-		description
-		address1
+    name #{ generate(:name) }
+		description {generate(:description) }
+		address1 {generate(:address1) }
+		address2 ''
 		city 'Test City'
-		#state 'CT'
+		state_abbrv 'CA'
 		zipcode '92612'
   end
 	
@@ -23,7 +23,7 @@ FactoryGirl.define do
 		name nil
 		address1 nil
 		city nil
-		#state nil
+		state nil
 		zicode nil
 	end
 end

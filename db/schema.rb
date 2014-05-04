@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20140413043855) do
   create_table "events", force: true do |t|
     t.string   "title"
     t.integer  "location_id"
-    t.integer  "event_type_id"
+    t.integer  "event_type"
     t.datetime "begin_date"
     t.datetime "end_date"
     t.decimal  "registration_cost"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20140413043855) do
     t.datetime "updated_at"
   end
 
-  add_index "events", ["event_type_id"], name: "event_type_id_ix"
   add_index "events", ["location_id"], name: "location_id_ix"
 
   create_table "locations", force: true do |t|

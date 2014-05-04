@@ -5,12 +5,19 @@ describe Event do
 		expect(build(:event)).to be_valid
 	end
 
-	it "is valid with name, begin_date, end_date, cost" do
-		event = Event.new(
-			title: '6th Grade Conference',
-			begin_date: '03/01/2014',
-			end_date: '03/03/2014',
-			registration_cost: '10')
+	it "is valid with all attributes" do
+		#loc = create(:location)
+		event = create(:event)
+		#event = Event.new(
+		#	title: '6th Grade Conference',
+		#	event_type: 'Conference',
+		#	begin_date: '03/01/2020',
+		#	end_date: '03/03/2020',
+		#	registration_cost: '10',
+		#	registration_open_date: '08/01/2019',
+		#	registration_close_date: '11/30/2019',
+		#	location: location
+		#)
 		expect(event).to be_valid
 	end
 

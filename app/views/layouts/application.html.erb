@@ -12,6 +12,8 @@
 				<li><%= link_to "Welcome", root_path %></li>
 			<% if current_user %>
 				<li><%= link_to "Home", home_index_path %></li>
+				<li><%= link_to "Events", events_path %></li>
+				<li><%= link_to "Locations", locations_path %></li>
 			<% end %>	
 
 			<div class="pull-right user-info">

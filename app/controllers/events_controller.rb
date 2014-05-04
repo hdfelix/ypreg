@@ -6,51 +6,43 @@ class EventsController < ApplicationController
   end
 
   def show
-		@post = Event.find(params[:id])
   end
 
   def new
     @event = Event.new
-		@event.build_location
-		puts "******* #{@event.location.to_yaml}"
   end
 
   def edit
-		@post = Event.find(params[:id])
   end
 
   def create
 		@event = Event.new(event_params)
-		#raise
 		if @event.save
-			redirect_to event_path, notice: 'Event was successfully created.'
+			redirect_to events_path, notice: 'Event was successfully created.' 
 		else
-			#raise
 			flash[:error] = "Error creating the event."
 			render action: 'new'
 		end
   end
 
   def update
-    #respond_to do |format|
-    #  if @event.update(event_params)
-    #    format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-    #    format.json { head :no_content }
-    #  else
-    #    format.html { render action: 'edit' }
-    #    format.json { render json: @event.errors, status: :unprocessable_entity }
-    #  end
-    #end
+		if @event.update(event_params)
+			redirect_to @event, notice: 'Event was successfully updated.'
+		else
+			flash[:error] = "Event could not be updated."
+			render action: 'edit'
+		end
   end
 
   # DELETE /events/1
-  # DELETE /events/1.json
   def destroy
-    #@event.destroy
-    #respond_to do |format|
-    #  format.html { redirect_to events_url }
-    #  format.json { head :no_content }
-    #end
+		if @event.destroy
+			flash[:notice] = "Event #{@event.title}deleted successfully."
+			redirect_to events_url
+		else
+			flash[:error] = "Event could not be deleted."
+			render action: 'index'
+		end
   end
 
   private
@@ -61,7 +53,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-			params.require(:event).permit(:title, 
-				locations_attributes: [:address1, :address2, :city, :state_abbrv, :zipcode])
+			params.require(:event).permit(:event_type, :title, :begin_date, :end_date, :registration_cost, :registration_open_date, :registration_close_date, :location_id)
     end
 end

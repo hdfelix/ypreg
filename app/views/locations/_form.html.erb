@@ -11,10 +11,33 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: 'form-control', placeholder: "Enter the location name" %>
   </div>
+  <div class="form-group">
+    <%= f.label :description %><br>
+    <%= f.text_field :description, class: 'form-control', placeholder: "Enter a description" %>
+	</div>
+  <div class="form-group">
+    <%= f.label :address1 %><br>
+    <%= f.text_field :address1, class: 'form-control', placeholder: "Enter an address" %>
+	</div>
+	<div class="form-group">
+		<%= f.label :address2 %>
+		<%= f.text_field :address2, class: 'form-control' "" %>
+	</div>
+	<div class="form-group">
+		<%= f.label :city %>
+		<%= f.text_field :city, class: 'form-control', placeholder: "Enter a city" %>
+	</div>
+	<div class="form-group">
+		<%= f.label :state_abbrv %>
+		<%= f.select :state_abbrv, Location::STATE_LIST, {include_blank: true}, {class: 'form-control'} %>
+	</div>
+	<div class="form-group">
+		<%= f.label :zipcode %>
+		<%= f.text_field :zipcode, class: 'form-control', maxlength: 5, placeholder: "Enter a zipcode" %> </div>
   <div class="actions">
     <%= f.submit %>
   </div>

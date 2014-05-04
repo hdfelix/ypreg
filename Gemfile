@@ -29,6 +29,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
@@ -63,16 +64,6 @@ end
 
 #Geographic data 
 #gem 'carmen-rails', '~> 1.0.0'
-
-# Added from 'Everyday Rails Testing with Rspec book (with latest versions as of 15MAR14)
-#group :test do
-#	gem "faker", "~>1.2.0"
-#	gem "capybara", "~> 2.2.1"
-#	gem "capybara-webkit"
-#	gem "database_cleaner", "~> 1.2.0"
-#	gem "launchy", "~>2.4.2"
-#	gem "selenium-webdriver", "~> 2.39.0"
-#end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

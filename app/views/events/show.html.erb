@@ -1,8 +1,13 @@
+<h1><%= @event.title %><br /></h1>
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @event.title %>
+	<strong>Begin date: </strong>
+	<%= @event.begin_date %><br />
+	<strong>End date: </strong>
+	<%= @event.end_date %><br />
+	<strong>Registration cost: $</strong>
+	<%= @registration_cost %><br />
 </p>
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
