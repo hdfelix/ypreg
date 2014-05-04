@@ -1,0 +1,6 @@
+<%= content_tag :div, id: "event-#{event.id}" do %>
+	<p><%= event.title %></p>
+	<p><%= event.begin_date %></p>
+	<p><%= event.end_date %></p>
+	<p><%= link_to 'Register', new_registration_path %>
+<% end %>
