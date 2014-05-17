@@ -3,9 +3,13 @@ class CreateLocations < ActiveRecord::Migration
     create_table :locations do |t|
       t.string :name
 			t.text :description
-			t.integer :address_id
+			t.string :address1
+			t.string :address2
+			t.string :city
+			t.string :state_abbrv
+			t.integer :zipcode
+
       t.timestamps
     end
-	add_index :locations, :address_id
   end
 end

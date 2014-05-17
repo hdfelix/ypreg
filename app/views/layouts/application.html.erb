@@ -9,10 +9,11 @@
 <body>
 	<div class="container">
 		<ul class="nav nav-tabs">
+				<li><%= link_to "Welcome", root_path %></li>
 			<% if current_user %>
 				<li><%= link_to "Home", home_index_path %></li>
-			<% else %>
-				<li><%= link_to "Root", root_path %></li>
+				<li><%= link_to "Events", events_path %></li>
+				<li><%= link_to "Locations", locations_path %></li>
 			<% end %>	
 
 			<div class="pull-right user-info">
@@ -35,7 +36,7 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <%= flash[:error] %>
       </div>
-      <% elseif flash[:alert] %>
+      <% elsif flash[:alert] %>
       <div class="alert alert-danger">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <%= flash[:alert] %>
