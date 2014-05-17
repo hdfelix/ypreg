@@ -6,8 +6,6 @@ FactoryGirl.define do
 	sequence(:name) { |n| "Sample Location #{n}" }
 	sequence(:description) { |n| "This is an example description for location #{n}" }
 	sequence(:address1) { |n| "#{n} Sample St" }
-	#sequence(:city,  {|n| city_array(n)}
-  #sequence(:state, {|n| state_array(1%n)}
 	
   factory :location do
     name #{ generate(:name) }
