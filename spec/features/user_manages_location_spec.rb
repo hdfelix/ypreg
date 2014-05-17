@@ -2,12 +2,13 @@ require 'spec_helper'
 
 feature 'User manages a location' do
 
-	before(:all) do
+	let(:authed_user) {
+		create_logged_in_user
 		@location = create(:location)
-	end
+	}		
 
 	scenario ' by acessing the index' do
-			visit locations_path
+			visit locations_path(authed_user)
 			expect(page).to have_content('Location')
 			visit new_location_path
 			expect(page).to have_content('New Location')
@@ -17,7 +18,6 @@ feature 'User manages a location' do
 		@location = create(:location)
 		visit new_location_path
 		expect {
-
 			fill_in 'location[name]', with: @location.name
 			fill_in 'location[description]', with: @location.description
 			fill_in 'location[address1]', with: @location.address1
@@ -31,6 +31,8 @@ feature 'User manages a location' do
 			#find('#location_state_abbrv').find(:xpath, "#{Location::STATE_LIST.find { |h| h.index(@location.state_abbrv)}.first}").click
 			#select_by_value('location_state_abbrv',@location.state_abbrv)
 			fill_in 'location[zipcode]', with: @location.zipcode
+			binding.pry
+			save_and_open_page
 			click_button 'Create Location'
 			#save_and_open_page    #MENTOR
 		}.to change(Location, :count).by(1)

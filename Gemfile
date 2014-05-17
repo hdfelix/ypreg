@@ -60,6 +60,11 @@ group :development, :test do
 	gem "database_cleaner", "~> 1.2.0"
 	gem "launchy", "~>2.4.2"
 	gem "selenium-webdriver", "~> 2.39.0"
+
+	#Add Pry for debugging
+	gem 'pry'
+	gem 'pry-remote'
+	gem 'pry-nav'
 end
 
 #Geographic data 
