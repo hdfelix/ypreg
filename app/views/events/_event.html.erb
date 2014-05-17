@@ -2,5 +2,9 @@
 	<p><%= event.title %></p>
 	<p><%= event.begin_date.strftime("%m/%d/%y") %></p>
 	<p><%= event.end_date.strftime("%m/%d/%y") %></p>
-	<p><%= link_to 'Register', new_registration_path %>
+	<% if current_user %>
+		<p><%= link_to 'Register', new_registration_path %></p>
+	<% else %>
+		<p><%= link_to 'Sign in to register', user_session_path %></p>
+	<% end %>
 <% end %>

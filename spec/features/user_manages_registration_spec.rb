@@ -14,7 +14,7 @@ feature 'Signed-out user views events' do
 	scenario ' - before signing in sees \'sign in to register\' by events' do
 		visit root_path
 		expect(page).to have_content('Sign in to register')
-		expect(page).to not_have_content('Register')
+		expect(page).to_not have_content('Register')
 	end
 end
 

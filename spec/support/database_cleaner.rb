@@ -5,6 +5,7 @@ def select_by_value(id, value)
 		option = find(:xpath, option_xpath).text
 		select(option, :from => id)
 end
+
 RSpec.configure do |config|
 
 	config.before(:suite) do

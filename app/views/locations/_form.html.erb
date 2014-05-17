@@ -32,8 +32,8 @@
 		<%= f.text_field :city, class: 'form-control', placeholder: "Enter a city" %>
 	</div>
 	<div class="form-group">
-		<%= f.label :state_abbrv %>
-		<%= f.select :state_abbrv, Location::STATE_LIST, {include_blank: true}, {class: 'form-control'} %>
+		<%= f.label :state_abbrv, 'State' %>
+		<%= f.select :state_abbrv, Location::STATE_LIST, {include_blank: true, selected: 'CA'}, {class: 'form-control'} %>
 	</div>
 	<div class="form-group">
 		<%= f.label :zipcode %>

@@ -15,7 +15,7 @@ feature 'User manages a location' do
 	end
 
 	scenario '- creates a location successfully' do
-		@location = create(:location)
+		@location = build(:location)
 		visit new_location_path
 		expect {
 			fill_in 'location[name]', with: @location.name
@@ -26,8 +26,8 @@ feature 'User manages a location' do
 			fill_in 'location[zipcode]', with: @location.zipcode
 			click_button 'Create Location'
 		}.to change(Location, :count).by(1)
-		expect(current_path).to eq events_path
-		expect(page).to have_content('Locaction was successfully created.')
+		expect(current_path).to eq locations_path
+		expect(page).to have_content('Location was created successfully.')
 	end
 
 	scenario ' - edits a location' do

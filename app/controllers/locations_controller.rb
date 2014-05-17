@@ -18,8 +18,8 @@ class LocationsController < ApplicationController
   def create
 		@location = Location.new(location_params)
 		if @location.save
-			flash[:notice] = 'Location saved successfully.'
-			redirect_to @location
+			flash[:notice] = 'Location was created successfully.'
+			redirect_to locations_path
     else
 			flash[:error] = 'Error saving the Location.'
 			render action: 'new'
