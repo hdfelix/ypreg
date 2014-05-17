@@ -1,0 +1,198 @@
+/*------------------------------------------------*/
+/*	General Styles
+/*------------------------------------------------*/
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	font-family: $base-font-family;
+	font-size: $base-font-size;
+	color: $base-font-color-dark;
+	background: $body-bg-color;
+}
+
+h1, h2 {
+	font-family: $secondary-font-family-light;
+}
+
+h3, h4, h5, h6 {
+	font-family: $base-font-family;
+}
+
+hr {
+	border-top-color: $line-color;
+
+	&.inner-separator {
+		border-style: dashed;
+	}
+}
+
+label {
+	font-weight: 300;
+}
+
+blockquote {
+	border-color: #e4e4e4;
+}
+
+input {
+	border-radius: 0;
+}
+
+@include min-screen($break-small) {
+	.container {
+		max-width: 100%;
+		width: 100%;
+	}
+}
+
+@include font-face($secondary-font-family-light, font-files(
+	"lato-lig-webfont.woff",
+	"lato-lig-webfont.ttf",
+	"lato-lig-webfont.svg"
+	), "lato-lig-webfont.eot");
+
+@include font-face($secondary-font-family-regular, font-files(
+	"lato-reg-webfont.woff",
+	"lato-reg-webfont.ttf",
+	"lato-reg-webfont.svg"
+	), "lato-reg-webfont.eot");
+
+@include font-face($secondary-font-family-bold, font-files(
+	"lato-bol-webfont.woff",
+	"lato-bol-webfont.ttf",
+	"lato-bol-webfont.svg"
+	), "lato-bol-webfont.eot");
+
+.red-font {
+	color: $the-red;
+}
+
+.yellow-font {
+	color: $the-yellow;
+}
+
+.green-font {
+	color: $the-green;
+}
+
+.dropdown-menu,
+.panel,
+.well,
+code {
+	@include border-radius(0);
+}
+
+.panel {
+	@include box-shadow(none);
+}
+
+.link-disabled {
+	@include opacity(0.5);
+
+	pointer-events: none;
+	cursor: not-allowed;
+}
+
+.no-padding {
+	padding: 0 !important;
+}
+
+.bottom-30px {
+	margin-bottom: 30px;
+}
+
+/* 2 column data presentation */
+.data-row {
+	margin-bottom: 0;
+
+	.data-name,
+	.data-value {
+		@include inline-block;
+
+		padding: 5px;
+
+		@include max-screen($break-xsmall) {
+			display: block;
+		}
+	}
+
+	.data-name {
+		width: 12em;
+		background-color: $body-bg-color;
+		color: darken($body-bg-color, 20%);
+		font-size: 0.9em;
+		vertical-align: top;
+	}
+
+	.data-value {
+		padding-left: 10px;
+	}
+}
+
+/* nav stacked */
+.nav-stacked {
+	> li {
+		border: 1px solid $line-color;
+
+		&:not(:first-child) {
+			border-top: none;
+		}
+
+		> a {
+			@include border-radius(0);
+		}
+
+		+ li {
+			margin-top: 0;
+		}
+	}
+}
+
+/* full page such as 404, login, register */
+.full-page-wrapper {
+	width: 100%;
+	min-height: 100%;
+	position: relative;
+
+	.inner-page {
+		padding-top: 5%;
+	}
+
+	@include max-screen($break-small) {
+		position: initial;
+		padding-top: 5em;
+		margin-top: 0;
+
+		.inner-page {
+			position: relative;
+			padding: 0 1em;
+		}
+	}
+
+	@include max-screen($break-xsmall) {
+		padding-top: 0;
+
+		.inner-page {
+			padding: 5em 1em;
+		}
+	}
+
+	.footer {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+
+		@include max-screen($break-xsmall) {
+			position: relative;
+		}
+	}
+}
+
+.control-inline {
+	@include inline-block;
+}

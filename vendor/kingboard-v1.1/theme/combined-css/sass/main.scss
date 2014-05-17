@@ -1,0 +1,50 @@
+/*	
+*	############################################################################
+*	
+*	KINGBOARD Admin Dashboard Style
+*	---------------------------------------------------------------------
+*
+*	Version		1.1
+*	Author		The Develovers
+*	Copyright	Copyright 2014 The Develovers
+*	
+*	############################################################################
+*/
+
+
+// Import main
+@import "vendors/bootstrap-switch";
+@import "vendors/bootstrap-multiselect";
+@import "vendors/bootstrap-colorpicker";
+@import "vendors/simplecolorpicker";
+@import "vendors/datepicker";
+@import "vendors/daterangepicker-bs3";
+@import "vendors/ui.jqgrid";
+@import "vendors/jquery.gritter";
+@import "vendors/fullcalendar";
+@import "vendors/bootstrap-progressbar-3.0.0";
+@import "vendors/dropzone";
+@import "vendors/bootstrap-tour";
+@import "modules/mixins";
+
+// Import partials
+@import "partials/base";
+@import "partials/general";
+@import "partials/top-bar";
+@import "partials/navigation";
+@import "partials/main-content";
+@import "partials/chart";
+@import "partials/ui-elements";
+@import "partials/tables";
+@import "partials/forms";
+@import "partials/components";
+@import "partials/pages/profile";
+@import "partials/pages/invoice";
+@import "partials/pages/knowledgebase";
+@import "partials/pages/404";
+@import "partials/pages/login";
+@import "partials/pages/register";
+@import "partials/pages/inbox";
+@import "partials/footer";
+
+

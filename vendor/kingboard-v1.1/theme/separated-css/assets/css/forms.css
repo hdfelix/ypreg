@@ -1,0 +1,28 @@
+/*------------------------------------------------*/
+/*	Forms
+/*------------------------------------------------*/
+/* erorr list */
+.parsley-error-list {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  *zoom: 1;
+}
+.parsley-error-list li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  white-space: nowrap;
+}
+.parsley-error-list li {
+  color: #db3833;
+  font-size: 0.9em;
+  margin-top: 3px;
+}

@@ -1,0 +1,17 @@
+//************************//
+//	CHANGELOG
+//************************//
+
+Version 1.1. 07-04-2014
+- UPDATED to jQuery 2.1.0
+- UPDATED to jQuery-UI 1.10.4
+- ADDED Bootstrap Tour
+- ADDED 10 built-in skins
+- ADDED 2 charts (Heatmap and Bar Chart with Negative Values)
+- ADDED attachment icon on inbox message list
+- IMPROVED font visibility, layout and UI related aspects
+- UPDATED documentation
+- FIXED some miscellaneous errors
+
+Version 1.0, 04-03-2014
+- initial release

@@ -1,0 +1,15 @@
+
+/*------------------------------------------------*/
+/*	Forms
+/*------------------------------------------------*/
+
+/* erorr list */
+.parsley-error-list {
+	@include inline-block-list;
+	
+	li {
+		color: $color-danger;
+		font-size: 0.9em;
+		margin-top: 3px;
+	}
+}

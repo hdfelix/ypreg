@@ -2,10 +2,14 @@ class CreateLocations < ActiveRecord::Migration
   def change
     create_table :locations do |t|
       t.string :name
-			t.string :description
-			t.integer :address_id
+			t.text :description
+			t.string :address1
+			t.string :address2
+			t.string :city
+			t.string :state_abbrv
+			t.integer :zipcode
+
       t.timestamps
     end
-	add_index :locations, :address_id
   end
 end
