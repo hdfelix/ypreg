@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20140517143827) do
     t.string   "title"
     t.integer  "location_id"
     t.integer  "event_type"
-    t.date "begin_date"
-    t.date "end_date"
+    t.date     "begin_date"
+    t.date     "end_date"
     t.decimal  "registration_cost"
     t.date     "registration_open_date"
     t.date     "registration_close_date"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20140517143827) do
 
   create_table "locations", force: true do |t|
     t.string   "name"
-    t.text   "description"
+    t.text     "description"
     t.string   "address1"
     t.string   "address2"
     t.string   "city"
