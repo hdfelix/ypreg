@@ -11,17 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140413043855) do
+ActiveRecord::Schema.define(version: 20140517143827) do
+
+  create_table "addresses", force: true do |t|
+    t.string   "addressline1"
+    t.string   "addressline2"
+    t.string   "city"
+    t.string   "state_abbrv"
+    t.integer  "zipcode"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "events", force: true do |t|
     t.string   "title"
     t.integer  "location_id"
     t.integer  "event_type"
-    t.datetime "begin_date"
-    t.datetime "end_date"
+    t.date "begin_date"
+    t.date "end_date"
     t.decimal  "registration_cost"
-    t.datetime "registration_open_date"
-    t.datetime "registration_close_date"
+    t.date     "registration_open_date"
+    t.date     "registration_close_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -30,7 +40,7 @@ ActiveRecord::Schema.define(version: 20140413043855) do
 
   create_table "locations", force: true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text   "description"
     t.string   "address1"
     t.string   "address2"
     t.string   "city"
@@ -41,9 +51,18 @@ ActiveRecord::Schema.define(version: 20140413043855) do
   end
 
   create_table "registrations", force: true do |t|
+    t.date     "registration_date"
+    t.decimal  "payment_type"
+    t.boolean  "has_been_paid"
+    t.decimal  "payment_adjustment"
+    t.integer  "user_id"
+    t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "registrations", ["event_id"], name: "index_registrations_on_event_id"
+  add_index "registrations", ["user_id"], name: "index_registrations_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
