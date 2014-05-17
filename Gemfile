@@ -39,6 +39,7 @@ gem 'jbuilder', '~> 1.2'
 
 #User authentication
 gem 'devise'
+gem 'pundit'
 gem 'figaro'
 
 group :doc do
