@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
 	end
 
 	def create
-		binding.pry
+		#binding.pry
 		@registration = current_user.registrations.build(registration_params)
 		if @registration.save
 			flash[:notice] = "Registration created succesfully"
