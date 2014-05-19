@@ -62,6 +62,9 @@ group :development, :test do
 	gem "launchy", "~>2.4.2"
 	gem "selenium-webdriver", "~> 2.39.0"
 
+	#Generate database diagrams
+	gem "railroad"
+
 	#Add Pry for debugging
 	gem 'pry'
 	gem 'pry-remote'
