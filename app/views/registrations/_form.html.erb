@@ -11,8 +11,15 @@
     </div>
   <% end %>
 
-	<div> </div>
+	<!-- Event info -->
+	<h3><%= @event.title %></h3>
+	<ul>
+		<li>Held at: <%= @event.location.name %></li>
+		<li>Event dates: <%= @event.begin_date %> to <%= @event.end_date %></li>
+		<li>Cost: $<%= @event.registration_cost %></li>
+	</ul>
 	<div class="form-group">
+		<%=f.hidden_field :event_id, value: params[:event_id]%>
 		<%= f.submit %> 
 	</div>
 <% end %>
