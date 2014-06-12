@@ -5,6 +5,14 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+
+	<!-- kingsboard CSS -->
+	<%= stylesheet_link_tag		"font-awesome", media: "all" %>
+	<%= stylesheet_link_tag		"main", media: "all" %>
+	 
+	<!-- kingsboard skin -->
+	<%= stylesheet_link_tag		"fullbright", media: "all" %>
+	<%= stylesheet_link_tag		"slategray", media: "all" %>
 </head>
 <body>
 	<div class="container">
@@ -20,25 +28,24 @@
 				<% if current_user %>
 					Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
 				 <% else %>
-					 <%= link_to "Sign In", new_user_session_path %> or
-					 <%= link_to "Sign Up", new_user_registration_path %>
+					 <%= link_to "Sign In", new_user_session_path %>
 				 <% end %>
 			 </div>
 		</ul>
 
 		<% if flash[:notice] %>
-      <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-success top-general-alert">
+        <a type="button" class="close">&times;</a>
         <%= flash[:notice] %>
       </div>
     <% elsif flash[:error] %>
-      <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-danger top-general-alert">
+				<a type="button" class="close">&times;</a>
         <%= flash[:error] %>
       </div>
       <% elsif flash[:alert] %>
-      <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-danger top-general-alert">
+        <a type="button" class="close">&times;</a>
         <%= flash[:alert] %>
       </div>
     <% end %>

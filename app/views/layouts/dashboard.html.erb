@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Conference Registration</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+
+	<!-- kingAdmin CSS -->
+	<%= stylesheet_link_tag		"font-awesome", media: "all" %>
+	<%= stylesheet_link_tag		"main", media: "all" %>
+	 
+	<!-- kingAdmin skin -->
+	<%= stylesheet_link_tag		"fullbright", media: "all" %>
+	<%= stylesheet_link_tag		"slategray", media: "all" %>
+</head>
+<body class="dashboard">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- TOP GENERAL ALERT -->
+		<% if flash[:notice] %>
+      <div class="alert alert-success top-general-alert">
+        <a type="button" class="close">&times;</a>
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:error] %>
+      <div class="alert alert-danger top-general-alert">
+				<a type="button" class="close">&times;</a>
+        <%= flash[:error] %>
+      </div>
+      <% elsif flash[:alert] %>
+      <div class="alert alert-danger top-general-alert">
+        <a type="button" class="close">&times;</a>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+		<!-- END TOP GENERAL ALERT -->
+
+		<!-- TOP BAR -->
+		<div class="top-bar">
+			<div class="container">
+				<div class="row">
+					<!-- logo -->
+					<div class="col-md-2 logo">
+						<a href="index.html"><img src="assets/img/kingadmin-logo-white.png" alt="KingAdmin - Admin Dashboard" /></a>
+						<h1 class="sr-only">KingAdmin Admin Dashboard</h1>
+					</div>
+					<!-- end logo -->	
+					<div class="col-md-10">
+						<div class="row">
+							<div class="col-md-3">
+								<!-- search box -->
+								<div id="tour-searchbox" class="input-group searchbox">
+									<input type="search" class="form-control" placeholder="enter keyword here...">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+									</span>
+								</div>
+								<!-- end search box -->
+							</div>
+							<div class="col-md-9">
+								<div class="top-bar-right">
+									<!-- responsive menu bar icon -->
+									<a href="#" class="hidden-md hidden-lg main-nav-toggle"><i class="fa fa-bars"></i></a>
+									<!-- end responsive menu bar icon -->
+									<button type="button" id="global-volume" class="btn btn-link btn-global-volume"><i class="fa"></i> <span class="badge element-bg-color-blue">New</span></button>
+									<div class="notifications">
+										<ul>
+											<!-- notification: inbox -->
+												
+											<!-- end notification: inbox -->
+
+											<!-- notification: general -->
+											<!-- end notification: general -->
+										</ul>
+									</div>
+
+									<!-- logged user and the menu -->
+									<div class="logged-user">
+										<div class="btn-group">
+											<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+												<img src="assets/img/user-avatar.png" />
+											</a>
+											<ul class="dropdown-menu" role="menu">
+												<li>
+													<a href="#">
+														<i class="fa fa-user"></i>
+														<span class="text">Profile</span>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<i class="fa fa-cog"></i>
+														<span class="text">Settings</span>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<i class="fa fa-power-off"></i>
+														<span class="text">Logout</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<!-- end logged user and the menu -->
+								</div><!-- /top-bar-right -->
+							</div>
+						</div><!-- /row -->
+					</div>
+				</div><!-- /row -->
+			</div><!-- /container -->
+		</div><!-- /top -->	
+		
+		<!-- BOTTOM: LEFT NAV AND RIGHT MAIN CONTENT -->
+		<div class="bottom">
+			<div class="container">
+				<div class="row">
+					<!-- left sidebar -->
+					<div class="col-md-2 left-sidebar">
+
+						<!-- main-nav -->
+						<nav class="main-nav">
+							
+							<ul class="main-menu">
+								<li ><a href="index.html"><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span></a></li>
+								<li class="active"><a href="#" class="js-sub-menu-toggle"><i class="fa fa-bar-chart-o fw"></i><span class="text">Admin</span>
+									<i class="toggle-icon fa fa-angle-left"></i></a>
+									<ul class="sub-menu open">
+										<li ><a href="#"><span class="text">Events</span></a></li>
+										<li class="active"><a href="#"><span class="text">Locations</span></a></li>
+										<li ><a href="#"><span class="text">Hospitality</span></a></li>
+									</ul>
+								</li>
+								<li ><a href="#" class="js-sub-menu-toggle"><i class="fa fa-list fw"></i><span class="text">Reports</span></li>
+							</ul>
+						</nav><!-- /main-nav -->
+
+						<div class="sidebar-minified js-toggle-minified">
+							<i class="fa fa-angle-left"></i>
+						</div>
+						
+						<!-- sidebar content -->
+						<div class="sidebar-content">
+							<div class="panel panel-default">
+								<div class="panel-heading"><h5><i class="fa fa-lightbulb-o"></i> Tips</h5></div>
+								<div class="panel-body">
+									<p>You can do live search to the widget at search box located at top bar. It's very useful if your dashboard is full of widget.</p>
+								</div>
+							</div>
+							
+							<h5 class="label label-default"><i class="fa fa-info-circle"></i> Server Info</h5>
+							<ul class="list-unstyled list-info-sidebar bottom-30px">
+								<li class="data-row">
+									<span class="data-name">Disk Space Usage</span>
+									<span class="data-value">
+										274.43 / 2 GB
+										<div class="progress progress-xs">
+											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+												<span class="sr-only">10%</span>
+											</div>
+										</div>
+									</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Monthly Bandwidth Transfer</span>
+									<span class="data-value">
+										230 / 500 GB
+										<div class="progress progress-xs">
+											<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" style="width: 46%">
+												<span class="sr-only">46%</span>
+											</div>
+										</div>
+									</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Database Disk Space</span>
+									<span class="data-value">219.45 MB</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Operating System</span>
+									<span class="data-value">Linux</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Apache Version</span>
+									<span class="data-value">2.4.6</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">PHP Version</span>
+									<span class="data-value">5.3.27</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">MySQL Version</span>
+									<span class="data-value">5.5.34-cll</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Architecture</span>
+									<span class="data-value">x86_64</span>
+								</li>
+							</ul>
+						</div>
+						<!-- end sidebar content -->
+					</div>
+					<!-- end left sidebar -->
+
+					<!-- content-wrapper -->
+										
+					<div class="col-md-10 content-wrapper">
+						<div class="row">
+							<div class="col-lg-4 ">
+								<ul class="breadcrumb">
+									<li><i class="fa fa-home"></i><a href="#">Home</a></li>
+									<li><a href="#">Charts &amp; Statistics</a></li> <li class="active">Interactive Charts</li>
+								</ul>
+							</div>
+							<div class="col-lg-8 ">
+								<div class="top-content">
+									<ul class="list-inline quick-access">
+										<li>
+											<a href="charts-statistics-interactive.html">
+												<span class="quick-access-item bg-color-green">
+													<i class="fa fa-bar-chart-o"></i>
+													<h5>CHARTS</h5><em>basic, interactive, real-time</em>
+												</span>
+											</a>
+										</li>
+										<li>
+											<a href="page-inbox.html">
+												<span class="quick-access-item bg-color-blue">
+													<i class="fa fa-envelope"></i>
+													<h5>INBOX</h5><em>inbox with gmail style</em>
+												</span>
+											</a>
+										</li>
+										<li>
+											<a href="tables-dynamic-table.html">
+												<span class="quick-access-item bg-color-orange">
+													<i class="fa fa-table"></i>
+													<h5>DYNAMIC TABLE</h5><em>tons of features and interactivity</em>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						
+						<!-- main -->
+						<% yield %>
+					<!-- /content-wrapper -->
+				</div><!-- /row -->
+			</div><!-- /container -->
+		</div>
+		<!-- END BOTTOM: LEFT NAV AND RIGHT MAIN CONTENT -->
+		<div class="push-sticky-footer"></div>
+	</div><!-- /wrapper -->
+
+	<!-- FOOTER -->
+	<footer class="footer">
+		&copy; 2014 YPReg
+	</footer>
+	<!-- END FOOTER -->
+	</div>
+</body>

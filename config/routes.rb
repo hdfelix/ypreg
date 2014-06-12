@@ -2,7 +2,7 @@ YpwReg::Application.routes.draw do
 
   get "welcome/index"
   devise_for :users
-  get "home/index"
+  get "dashboard/index"
 
 	resources :locations
 	resources :events
