@@ -13,13 +13,19 @@
 	<!-- kingsboard skin -->
 	<%= stylesheet_link_tag		"fullbright", media: "all" %>
 	<%= stylesheet_link_tag		"slategray", media: "all" %>
+
+	<!-- Fav and touch icons  -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/kingadmin-favicon144x144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/kingadmin-favicon114x114.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/kingadmin-favicon72x72.png">
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/kingadmin-favicon57x57.png">
+	<link rel="shortcut icon" href="assets/ico/favicon.png">
 </head>
 <body>
 	<div class="container">
 		<ul class="nav nav-tabs">
 				<li><%= link_to "Welcome", root_path %></li>
 			<% if current_user %>
-				<li><%= link_to "Home", home_index_path %></li>
 				<li><%= link_to "Events", events_path %></li>
 				<li><%= link_to "Locations", locations_path %></li>
 			<% end %>	

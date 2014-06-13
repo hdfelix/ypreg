@@ -22,6 +22,11 @@ YpwReg::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this).
   config.serve_static_assets = false
 
+	gg Add vendor path for Kingsboard theme
+		config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+		config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+	#config.assets.paths += Dir["#{Rails.root}/vendor/assets/kingsboard-v1.1/*"].sort_by { |dir| -dir.size }
+	 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass

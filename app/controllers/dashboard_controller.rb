@@ -15,7 +15,4 @@ class DashboardController < ApplicationController
 		devise_parameter_sanitizer.for(:sign_up) << :name
 	end
 	
-  def index
-		render layout: 'dashboard'
-  end
 end

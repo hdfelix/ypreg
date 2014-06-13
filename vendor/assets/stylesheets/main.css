@@ -12578,8 +12578,11 @@ input {
 }
 @font-face {
   font-family: "latolight";
-  src: url('../fonts/lato-lig-webfont.eot');
-  src: url('../fonts/lato-lig-webfont.eot?#iefix') format('eot'), url('../fonts/lato-lig-webfont.woff') format('woff'), url('../fonts/lato-lig-webfont.ttf') format('truetype'), url('../fonts/lato-lig-webfont.svg') format('svg');
+  src: asset-url('../fonts/lato-lig-webfont.eot');
+  src: asset-url('../fonts/lato-lig-webfont.eot?#iefix') format('eot'), 
+			 asset-url('../fonts/lato-lig-webfont.woff') format('woff'), 
+			 asset-url('../fonts/lato-lig-webfont.ttf') format('truetype'), 
+			 asset-url('../fonts/lato-lig-webfont.svg') format('svg');
 }
 
 @font-face {
