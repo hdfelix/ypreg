@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie ie9" lang="en" class="no-js"> <![endif]-->
+<!--[if !(IE)]><!--><html lang="en" class="no-js"> <!--<![endif]-->
 <html>
 <head>
-  <title>Conference Registration</title>
-	<%= stylesheet_link_tag    "application", media: "all" %>
-	<%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<title><%= "#{params[:controller].capitalize}" %> | YP Registration</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="YPReg - Event Registration">
+	<meta name="author" content="Hector D. Felix (hdfnet@gmail.com)">
 
+	<%= stylesheet_link_tag    "application", media: "all" %>
 	<!-- kingAdmin CSS -->
 	<%= stylesheet_link_tag		"font-awesome", media: "all" %>
 	<%= stylesheet_link_tag		"main", media: "all" %>
@@ -13,6 +18,9 @@
 	<!-- kingAdmin skin -->
 	<%= stylesheet_link_tag		"fullbright", media: "all" %>
 	<%= stylesheet_link_tag		"slategray", media: "all" %>
+
+	<%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
 
 	<!-- Fav and touch icons  -->
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/kingadmin-favicon144x144.png">
@@ -50,7 +58,7 @@
 					<!-- logo -->
 					<div class="col-md-2 logo">
 						<%= link_to image_tag('kingadmin-logo-white.png', alt: 'Admin Dashboard'), dashboard_index_path %>
-						<h1 class="sr-only">YPReg Admin Dashboard</h1>
+						<h1 class="sr-only">YPReg Dashboard</h1>
 					</div>
 					<!-- end logo -->	
 					<div class="col-md-10">
@@ -70,11 +78,36 @@
 									<!-- responsive menu bar icon -->
 									<a href="#" class="hidden-md hidden-lg main-nav-toggle"><i class="fa fa-bars"></i></a>
 									<!-- end responsive menu bar icon -->
-									<button type="button" id="global-volume" class="btn btn-link btn-global-volume"><i class="fa"></i> <span class="badge element-bg-color-blue">New</span></button>
+									<!--button type="button" id="start-tour" class="btn btn-link"><i class="fa fa-refresh"></i> Start Tour</button-->
+									<!--button type="button" id="global-volume" class="btn btn-link btn-global-volume"><i class="fa"></i> <span class="badge element-bg-color-blue">New</span></button-->
 									<div class="notifications">
 										<ul>
 											<!-- notification: inbox -->
-												
+											<!--li class="notification-item inbox"-->	
+												<!-- div class="btn-group"-->
+												<!--a href="#" class="dropdown-toggle" data-toggle="dropdown"-->
+														<!--i class="fa fa-envelope"></i><span class="count">2</span-->
+														<!--span class="circle"></span-->
+													<!--/a-->
+
+													<!--ul class="dropdown-menu" role="menu"-->
+														<!--li class="notification-header"-->
+															<!--em>You have X unread messages</em-->
+														<!--/li-->
+														<!--li class="inbox-item clearfix"-->
+															<!--a href="#"-->
+																<!--div class="media"-->
+																	<!--div class="pull-left" href="#"-->
+																		<!--img class="media-object" src="assets/img/user1.png" alt="Antonio"-->
+																	<!--/div-->
+																	<!--div class="media-body"-->
+																		<!--h5 class="media-heading name">Antonius</h5-->
+																		<!--p class="text">The problem just happened this morning. I can't see ...</-->
+																		<!--span class="timestamp">4 minutes ago</span-->
+																	<!--/div-->
+																<!--/div-->
+															<!--/a-->
+														<!--/li-->
 											<!-- end notification: inbox -->
 
 											<!-- notification: general -->
@@ -133,16 +166,21 @@
 						<nav class="main-nav">
 							
 							<ul class="main-menu">
-								<li ><a href="index.html"><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span></a></li>
-								<li class="active"><a href="#" class="js-sub-menu-toggle"><i class="fa fa-bar-chart-o fw"></i><span class="text">Admin</span>
+								<li class="active"><%= link_to dashboard_index_path do %><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span></a><% end %></li>
+								<li><a href="#" class="js-sub-menu-toggle"><i class="fa fa-clipboard fa-fw"></i><span class="text">Admin</span>
 									<i class="toggle-icon fa fa-angle-left"></i></a>
-									<ul class="sub-menu open">
-										<li ><a href="#"><span class="text">Events</span></a></li>
-										<li class="active"><a href="#"><span class="text">Locations</span></a></li>
-										<li ><a href="#"><span class="text">Hospitality</span></a></li>
+									<ul class="sub-menu">
+										<li><%= link_to events_path do %>Events<%= content_tag(:span, '', class: 'text') %><% end %></li>
+										<li><%= link_to locations_path do %><span class="text">Locations</span><% end %></li>
+										<li><a href="#"><span class="text">Hospitality</span></a></li>
 									</ul>
 								</li>
-								<li ><a href="#" class="js-sub-menu-toggle"><i class="fa fa-list fw"></i><span class="text">Reports</span></li>
+								<li><a href="#" class="js-sub-menu-toggle"><i class="fa fa-list fw"></i><span class="text">Reports</span>
+									<i class="toggle-icon fa fa-angle-left"></i></a>
+									<ul class="sub-menu">
+										<li>[Report pages here]</li>
+									</ul>
+								</li>
 							</ul>
 						</nav><!-- /main-nav -->
 
@@ -220,44 +258,35 @@
 							<div class="col-lg-4 ">
 								<ul class="breadcrumb">
 									<li><i class="fa fa-home"></i><a href="#">Home</a></li>
-									<li><a href="#">Charts &amp; Statistics</a></li> <li class="active">Interactive Charts</li>
+									<li class="active"><%= params[:controller].capitalize %></li>
 								</ul>
 							</div>
 							<div class="col-lg-8 ">
 								<div class="top-content">
-									<ul class="list-inline quick-access">
+									<ul class="list-inline mini-stat">
 										<li>
-											<a href="charts-statistics-interactive.html">
-												<span class="quick-access-item bg-color-green">
-													<i class="fa fa-bar-chart-o"></i>
-													<h5>CHARTS</h5><em>basic, interactive, real-time</em>
-												</span>
-											</a>
+											<h5>LIKES <span class="stat-value stat-color-orange"><i class="fa fa-plus-circle"></i> 81,450</span></h5>
+											<span id="mini-bar-chart1" class="mini-bar-chart"></span>
 										</li>
 										<li>
-											<a href="page-inbox.html">
-												<span class="quick-access-item bg-color-blue">
-													<i class="fa fa-envelope"></i>
-													<h5>INBOX</h5><em>inbox with gmail style</em>
-												</span>
-											</a>
+											<h5>SUBSCRIBERS <span class="stat-value stat-color-blue"><i class="fa fa-plus-circle"></i> 150,743</span></h5>
+											<span id="mini-bar-chart2" class="mini-bar-chart"></span>
 										</li>
 										<li>
-											<a href="tables-dynamic-table.html">
-												<span class="quick-access-item bg-color-orange">
-													<i class="fa fa-table"></i>
-													<h5>DYNAMIC TABLE</h5><em>tons of features and interactivity</em>
-												</span>
-											</a>
+											<h5>CUSTOMERS <span class="stat-value stat-color-seagreen"><i class="fa fa-plus-circle"></i> 43,748</span></h5>
+											<span id="mini-bar-chart3" class="mini-bar-chart"></span>
 										</li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						
+
 						<!-- main -->
-						<% yield %>
-					<!-- /content-wrapper -->
+						<!-- View content goes here -->
+						<%= yield %>
+						<!-- end main -->	
+
+					</div><!-- /content-wrapper -->
 				</div><!-- /row -->
 			</div><!-- /container -->
 		</div>
@@ -270,5 +299,4 @@
 		&copy; 2014 YPReg
 	</footer>
 	<!-- END FOOTER -->
-	</div>
 </body>

@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/anjlab/bootstrap-rails.git
+  revision: addb7143365f97f938e3bdbb2ccfc52591230eda
+  branch: 3.0.0
+  specs:
+    anjlab-bootstrap-rails (3.0.0.rc2)
+      railties (>= 3.0)
+      sass (>= 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -75,8 +84,8 @@ GEM
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
-    font-awesome-sass (4.1.0)
-      sass (~> 3.2)
+    font-awesome-rails (4.1.0.0)
+      railties (>= 3.2, < 5.0)
     formatador (0.2.4)
     guard (2.5.1)
       formatador (>= 0.2.4)
@@ -225,6 +234,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  anjlab-bootstrap-rails!
   capybara (~> 2.2.1)
   capybara-webkit
   coffee-rails (~> 4.0.0)
@@ -233,7 +243,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.4.0)
   faker (~> 1.2.0)
   figaro
-  font-awesome-sass
+  font-awesome-rails
   guard-rspec
   jbuilder (~> 1.2)
   jquery-rails

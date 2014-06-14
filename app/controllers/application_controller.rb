@@ -24,8 +24,6 @@ class ApplicationController < ActionController::Base
 	def layout_by_resource
 		if current_user
 			'dashboard'
-		#else
-		#	'application'
 		end
 	end
 end
