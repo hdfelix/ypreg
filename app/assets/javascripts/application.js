@@ -9,12 +9,11 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+
+// require kingadmin/jquery-2.1.0
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.datepicker
-//= require bootstrap
-//= require turbolinks
+//= requre bootstrap
 //= require_tree .
 
 $(function() {

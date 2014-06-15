@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
+#Asset pipeline - is this gem needed? (http://guides.rubyonrails.org/asset_pipeline.html)
+#gem 'sprockets-rails', :require => 'sprockets/railtie'
+
 # Use sqlite3 as the database for Active Record in 'development;  use PosgreSQL in 'prodution'
 group :production do
 	gem 'pg'
@@ -16,16 +19,15 @@ end
 gem 'sass-rails', '~> 4.0.0'
 
 # Font Awesome
-
 gem 'font-awesome-rails'
 
 #CSS Framework 
 # Using the bootstrap file provided with the KingAdmin theme
 #gem 'bootstrap-sass', '~> 3.1.1'
-gem 'anjlab-bootstrap-rails', 
-		require: 'bootstrap-rails',
-		github: 'anjlab/bootstrap-rails', 
-		branch:'3.0.0'
+#gem 'anjlab-bootstrap-rails', 
+#		require: 'bootstrap-rails',
+#		github: 'anjlab/bootstrap-rails', 
+#		branch:'3.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -41,7 +43,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+#gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'

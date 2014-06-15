@@ -18,7 +18,7 @@
 						<div class="col-sm-12">
 							<div class="input-group">
 								<%= f.email_field :email, class: 'form-control', placeholder: 'email' %>	
-								<span class="input-group-addon"></span>
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>
 							</div>
 						</div>
 					</div>
@@ -38,9 +38,11 @@
 							<% end %>
 						<% end %>
 					</div>
-					<%= f.submit class: 'btn btn-custom-primary btn-lg btn-block btn-login' do %>
+					<%= content_tag(:button, type: :submit, class: 'btn btn-custom-primary btn-lg btn-block btn-login') do %>
 						<i class="fa fa-arrow-circle-o-right"></i>
+						Create User
 					<% end %>
+
 			<% end %>
 				
 				<div class="links">
