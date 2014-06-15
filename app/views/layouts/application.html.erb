@@ -25,21 +25,24 @@
 </head>
 <body>
 	<div class="container">
-		<ul class="nav nav-tabs">
-				<li><%= link_to "Welcome", root_path %></li>
-			<% if current_user %>
-				<li><%= link_to "Events", events_path %></li>
-				<li><%= link_to "Locations", locations_path %></li>
-			<% end %>	
-
-			<div class="pull-right user-info">
+		<% binding.pry %>
+		<% unless (params[:controller] == 'devise/sessions' and params[:action] == 'new') %>
+			<ul class="nav nav-tabs">
+					<li><%= link_to "Welcome", root_path %></li>
 				<% if current_user %>
-					Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-				 <% else %>
-					 <%= link_to "Sign In", new_user_session_path %>
-				 <% end %>
-			 </div>
-		</ul>
+					<li><%= link_to "Events", events_path %></li>
+					<li><%= link_to "Locations", locations_path %></li>
+				<% end %>	
+
+				<div class="pull-right user-info">
+					<% if current_user %>
+						Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+					 <% else %>
+						 <%= link_to "Sign In", new_user_session_path %>
+					 <% end %>
+				 </div>
+			</ul>
+		<% end %>
 
 		<% if flash[:notice] %>
       <div class="alert alert-success top-general-alert">
