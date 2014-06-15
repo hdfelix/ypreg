@@ -2,43 +2,60 @@
 <html>
 <head>
   <title>Conference Registration</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+	<%= stylesheet_link_tag    "application" %>
+
+	<!-- kingsboard CSS -->
+	<%= stylesheet_link_tag		"font-awesome", media: "all" %>
+	<%= stylesheet_link_tag		"main", media: "all" %>
+	 
+	<!-- kingsboard skin -->
+	<%= stylesheet_link_tag		"fullbright", media: "all" %>
+	<%= stylesheet_link_tag		"slategray", media: "all" %>
+
+	<%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+
+	<!-- Fav and touch icons  -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/kingadmin-favicon144x144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/kingadmin-favicon114x114.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/kingadmin-favicon72x72.png">
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/kingadmin-favicon57x57.png">
+	<link rel="shortcut icon" href="assets/ico/favicon.png">
 </head>
 <body>
 	<div class="container">
-		<ul class="nav nav-tabs">
-				<li><%= link_to "Welcome", root_path %></li>
-			<% if current_user %>
-				<li><%= link_to "Home", home_index_path %></li>
-				<li><%= link_to "Events", events_path %></li>
-				<li><%= link_to "Locations", locations_path %></li>
-			<% end %>	
-
-			<div class="pull-right user-info">
+		<% unless (params[:controller] == 'devise/sessions' and params[:action] == 'new') %>
+			<ul class="nav nav-tabs">
+					<li><%= link_to "Welcome", root_path %></li>
 				<% if current_user %>
-					Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-				 <% else %>
-					 <%= link_to "Sign In", new_user_session_path %> or
-					 <%= link_to "Sign Up", new_user_registration_path %>
-				 <% end %>
-			 </div>
-		</ul>
+					<li><%= link_to "Events", events_path %></li>
+					<li><%= link_to "Locations", locations_path %></li>
+				<% end %>	
+
+				<div class="pull-right user-info">
+					<% if current_user %>
+						Hello <%= current_user.email %>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+					 <% else %>
+						 <%= link_to "Sign In", new_user_session_path %>
+					 <% end %>
+				 </div>
+			</ul>
+		<% end %>
 
 		<% if flash[:notice] %>
-      <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-success top-general-alert">
+        <a type="button" class="close">&times;</a>
         <%= flash[:notice] %>
       </div>
     <% elsif flash[:error] %>
-      <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-danger top-general-alert">
+				<a type="button" class="close">&times;</a>
         <%= flash[:error] %>
       </div>
       <% elsif flash[:alert] %>
-      <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <div class="alert alert-danger top-general-alert">
+        <a type="button" class="close">&times;</a>
         <%= flash[:alert] %>
       </div>
     <% end %>

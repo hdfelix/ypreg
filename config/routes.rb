@@ -1,16 +1,11 @@
 YpwReg::Application.routes.draw do
+	root 'welcome#index'
 
   get "welcome/index"
-  devise_for :users
-  get "home/index"
+  get "dashboard/index"
 
+  devise_for :users
 	resources :locations
 	resources :events
 	resources :registrations, only: [:index, :new, :create]
-
-  #get "login/index"
-  # See how all your routes lay out with "rake routes".
-
-	root 'welcome#index'
-
 end

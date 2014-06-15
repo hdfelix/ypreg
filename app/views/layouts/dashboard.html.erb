@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie ie9" lang="en" class="no-js"> <![endif]-->
+<!--[if !(IE)]><!--><html lang="en" class="no-js"> <!--<![endif]-->
+<html>
+<head>
+	<title><%= "#{params[:controller].capitalize}" %> | YP Registration</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="YPReg - Event Registration">
+	<meta name="author" content="Hector D. Felix (hdfnet@gmail.com)">
+
+	<%= stylesheet_link_tag    "application", media: "all" %>
+	<!-- kingAdmin CSS -->
+	<%= stylesheet_link_tag		"font-awesome", media: "all" %>
+	<%= stylesheet_link_tag		"main", media: "all" %>
+	 
+	<!-- kingAdmin skin -->
+	<%= stylesheet_link_tag		"fullbright", media: "all" %>
+	<%= stylesheet_link_tag		"slategray", media: "all" %>
+
+	<%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+
+	<!-- Fav and touch icons  -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/kingadmin-favicon144x144.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/kingadmin-favicon114x114.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/kingadmin-favicon72x72.png">
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/kingadmin-favicon57x57.png">
+	<link rel="shortcut icon" href="assets/ico/favicon.png">
+</head>
+<body class="dashboard">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<!-- TOP GENERAL ALERT -->
+		<% if flash[:notice] %>
+      <div class="alert alert-success top-general-alert">
+        <a type="button" class="close">&times;</a>
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:error] %>
+      <div class="alert alert-danger top-general-alert">
+				<a type="button" class="close">&times;</a>
+        <%= flash[:error] %>
+      </div>
+      <% elsif flash[:alert] %>
+      <div class="alert alert-danger top-general-alert">
+        <a type="button" class="close">&times;</a>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+		<!-- END TOP GENERAL ALERT -->
+
+		<!-- TOP BAR -->
+		<div class="top-bar">
+			<div class="container">
+				<div class="row">
+					<!-- logo -->
+					<div class="col-md-2 logo">
+						<%= link_to image_tag('kingadmin-logo-white.png', alt: 'Admin Dashboard'), dashboard_index_path %>
+						<h1 class="sr-only">YPReg Dashboard</h1>
+					</div>
+					<!-- end logo -->	
+					<div class="col-md-10">
+						<div class="row">
+							<div class="col-md-3">
+								<!-- search box -->
+								<div id="tour-searchbox" class="input-group searchbox">
+									<input type="search" class="form-control" placeholder="enter keyword here...">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+									</span>
+								</div>
+								<!-- end search box -->
+							</div>
+							<div class="col-md-9">
+								<div class="top-bar-right">
+									<!-- responsive menu bar icon -->
+									<a href="#" class="hidden-md hidden-lg main-nav-toggle"><i class="fa fa-bars"></i></a>
+									<!-- end responsive menu bar icon -->
+									<!--button type="button" id="start-tour" class="btn btn-link"><i class="fa fa-refresh"></i> Start Tour</button-->
+									<!--button type="button" id="global-volume" class="btn btn-link btn-global-volume"><i class="fa"></i> <span class="badge element-bg-color-blue">New</span></button-->
+									<div class="notifications">
+										<ul>
+											<!-- notification: inbox -->
+											<!--li class="notification-item inbox"-->	
+												<!-- div class="btn-group"-->
+												<!--a href="#" class="dropdown-toggle" data-toggle="dropdown"-->
+														<!--i class="fa fa-envelope"></i><span class="count">2</span-->
+														<!--span class="circle"></span-->
+													<!--/a-->
+
+													<!--ul class="dropdown-menu" role="menu"-->
+														<!--li class="notification-header"-->
+															<!--em>You have X unread messages</em-->
+														<!--/li-->
+														<!--li class="inbox-item clearfix"-->
+															<!--a href="#"-->
+																<!--div class="media"-->
+																	<!--div class="pull-left" href="#"-->
+																		<!--img class="media-object" src="assets/img/user1.png" alt="Antonio"-->
+																	<!--/div-->
+																	<!--div class="media-body"-->
+																		<!--h5 class="media-heading name">Antonius</h5-->
+																		<!--p class="text">The problem just happened this morning. I can't see ...</-->
+																		<!--span class="timestamp">4 minutes ago</span-->
+																	<!--/div-->
+																<!--/div-->
+															<!--/a-->
+														<!--/li-->
+											<!-- end notification: inbox -->
+
+											<!-- notification: general -->
+											<!-- end notification: general -->
+										</ul>
+									</div>
+
+									<!-- logged user and the menu -->
+									<% if current_user %>
+										<div class="logged-user">
+											<div class="btn-group">
+												<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+													<%= image_tag('user-avatar.png') %>
+													<span class="name"><%= current_user.name %></span><span class="caret"></span>
+												</a>
+												<ul class="dropdown-menu" role="menu">
+													<li>
+														<%= link_to edit_user_registration_path do %>
+															<i class="fa fa-user"></i>
+															<span class="text">Profile</span>
+														<% end %>
+													</li>
+													<li>
+														<a href="#">
+															<i class="fa fa-cog"></i>
+															<span class="text">Settings</span>
+														</a>
+													</li>
+													<li>
+														<%= link_to destroy_user_session_path, method: :delete do %>
+															<i class="fa fa-power-off"></i>
+															<span class="text">Logout</span>
+														<% end %>
+													</li>
+												</ul>
+											</div>
+										</div>
+									<% end %>
+									<!-- end logged user and the menu -->
+								</div><!-- /top-bar-right -->
+							</div>
+						</div><!-- /row -->
+					</div>
+				</div><!-- /row -->
+			</div><!-- /container -->
+		</div><!-- /top -->	
+		
+		<!-- BOTTOM: LEFT NAV AND RIGHT MAIN CONTENT -->
+		<div class="bottom">
+			<div class="container">
+				<div class="row">
+					<!-- left sidebar -->
+					<div class="col-md-2 left-sidebar">
+
+						<!-- main-nav -->
+						<nav class="main-nav">
+							
+							<ul class="main-menu">
+								<li class="active"><%= link_to dashboard_index_path do %><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span></a><% end %></li>
+								<li><a href="#" class="js-sub-menu-toggle"><i class="fa fa-clipboard fa-fw"></i><span class="text">Admin</span>
+									<i class="toggle-icon fa fa-angle-left"></i></a>
+									<ul class="sub-menu">
+										<li><%= link_to events_path do %>Events<%= content_tag(:span, '', class: 'text') %><% end %></li>
+										<li><%= link_to locations_path do %><span class="text">Locations</span><% end %></li>
+										<li><a href="#"><span class="text">Hospitality</span></a></li>
+									</ul>
+								</li>
+								<li><a href="#" class="js-sub-menu-toggle"><i class="fa fa-list fw"></i><span class="text">Reports</span>
+									<i class="toggle-icon fa fa-angle-left"></i></a>
+									<ul class="sub-menu">
+										<li>[Report pages here]</li>
+									</ul>
+								</li>
+							</ul>
+						</nav><!-- /main-nav -->
+
+						<div class="sidebar-minified js-toggle-minified">
+							<i class="fa fa-angle-left"></i>
+						</div>
+						
+						<!-- sidebar content -->
+						<div class="sidebar-content">
+							<div class="panel panel-default">
+								<div class="panel-heading"><h5><i class="fa fa-lightbulb-o"></i> Tips</h5></div>
+								<div class="panel-body">
+									<p>You can do live search to the widget at search box located at top bar. It's very useful if your dashboard is full of widget.</p>
+								</div>
+							</div>
+							
+							<h5 class="label label-default"><i class="fa fa-info-circle"></i> Server Info</h5>
+							<ul class="list-unstyled list-info-sidebar bottom-30px">
+								<li class="data-row">
+									<span class="data-name">Disk Space Usage</span>
+									<span class="data-value">
+										274.43 / 2 GB
+										<div class="progress progress-xs">
+											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+												<span class="sr-only">10%</span>
+											</div>
+										</div>
+									</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Monthly Bandwidth Transfer</span>
+									<span class="data-value">
+										230 / 500 GB
+										<div class="progress progress-xs">
+											<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" style="width: 46%">
+												<span class="sr-only">46%</span>
+											</div>
+										</div>
+									</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Database Disk Space</span>
+									<span class="data-value">219.45 MB</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Operating System</span>
+									<span class="data-value">Linux</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Apache Version</span>
+									<span class="data-value">2.4.6</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">PHP Version</span>
+									<span class="data-value">5.3.27</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">MySQL Version</span>
+									<span class="data-value">5.5.34-cll</span>
+								</li>
+								<li class="data-row">
+									<span class="data-name">Architecture</span>
+									<span class="data-value">x86_64</span>
+								</li>
+							</ul>
+						</div>
+						<!-- end sidebar content -->
+					</div>
+					<!-- end left sidebar -->
+
+					<!-- content-wrapper -->
+										
+					<div class="col-md-10 content-wrapper">
+						<div class="row">
+							<div class="col-lg-4 ">
+								<ul class="breadcrumb">
+									<li><i class="fa fa-home"></i><a href="#">Home</a></li>
+									<li class="active"><%= params[:controller].capitalize %></li>
+								</ul>
+							</div>
+							<div class="col-lg-8 ">
+								<div class="top-content">
+									<ul class="list-inline mini-stat">
+										<li>
+											<h5>LIKES <span class="stat-value stat-color-orange"><i class="fa fa-plus-circle"></i> 81,450</span></h5>
+											<span id="mini-bar-chart1" class="mini-bar-chart"></span>
+										</li>
+										<li>
+											<h5>SUBSCRIBERS <span class="stat-value stat-color-blue"><i class="fa fa-plus-circle"></i> 150,743</span></h5>
+											<span id="mini-bar-chart2" class="mini-bar-chart"></span>
+										</li>
+										<li>
+											<h5>CUSTOMERS <span class="stat-value stat-color-seagreen"><i class="fa fa-plus-circle"></i> 43,748</span></h5>
+											<span id="mini-bar-chart3" class="mini-bar-chart"></span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- main -->
+						<!-- View content goes here -->
+						<%= yield %>
+						<!-- end main -->	
+
+					</div><!-- /content-wrapper -->
+				</div><!-- /row -->
+			</div><!-- /container -->
+		</div>
+		<!-- END BOTTOM: LEFT NAV AND RIGHT MAIN CONTENT -->
+		<div class="push-sticky-footer"></div>
+	</div><!-- /wrapper -->
+
+	<!-- FOOTER -->
+	<footer class="footer">
+		&copy; 2014 YPReg
+	</footer>
+	<!-- END FOOTER -->
+</body>

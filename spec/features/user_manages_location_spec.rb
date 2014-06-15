@@ -15,7 +15,7 @@ feature 'User manages a location' do
 	end
 
 	scenario '- creates a location successfully' do
-		@location = create(:location)
+		@location = build(:location)
 		visit new_location_path
 		expect {
 			fill_in 'location[name]', with: @location.name
@@ -23,21 +23,11 @@ feature 'User manages a location' do
 			fill_in 'location[address1]', with: @location.address1
 			fill_in 'location[city]', with: @location.city
 			find("#location_state_abbrv").find(:xpath, "option[@value=\'#{@location.state_abbrv}\']").select_option
-			#select("#[Location::STATE_LIST[#{@location.state_abbrv}]")
-			#find("#location_state_abbrv").find("option[index_of(#{@location.state_abbrvj)]").click
-			#find("#location_state_abbrv").find(:xpath, 'option[@value=\'CA\']').select_option
-			#page.select(@location_state_abbrv, from: 'location_state_abbrv')
-			#find('#location_state_abbrv').find(:xpath, "option[5]").click
-			#find('#location_state_abbrv').find(:xpath, "#{Location::STATE_LIST.find { |h| h.index(@location.state_abbrv)}.first}").click
-			#select_by_value('location_state_abbrv',@location.state_abbrv)
 			fill_in 'location[zipcode]', with: @location.zipcode
-			binding.pry
-			save_and_open_page
 			click_button 'Create Location'
-			#save_and_open_page    #MENTOR
 		}.to change(Location, :count).by(1)
-		expect(current_path).to eq events_path
-		expect(page).to have_content('Locaction was successfully created.')
+		expect(current_path).to eq locations_path
+		expect(page).to have_content('Location was created successfully.')
 	end
 
 	scenario ' - edits a location' do
@@ -46,7 +36,6 @@ feature 'User manages a location' do
 		visit edit_location_path(@loc)
 		fill_in 'location[name]', with: 'My location'
 		click_button 'Update Location'
-		#save_and_open_page
 	end
 end
 
