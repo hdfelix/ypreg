@@ -58,7 +58,7 @@ group :doc do
 	gem 'sdoc', require: false
 end
 
-#server static_assets
+#serve static_assets
 gem 'rails_12factor', group: :production
 
 # Added from 'Everyday Rails Testing with Rspec book (with latest versions as of 15MAR14)
