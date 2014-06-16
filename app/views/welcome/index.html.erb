@@ -1,4 +1,54 @@
 <br/>
-<h3>Upcoming events</h3>
-<%= render partial: 'events/event', collection: @events %>
-		
+
+<!-- EVENTS -->
+<div class="widget">
+	<div class="widget-header">
+		<h3>Upcoming events</h3>
+	</div>
+	<div class="widget-content">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel-group" id="events">
+					<%= render partial: 'events/event', collection: @events %>
+				</div><!-- panel-group -->
+			</div><!-- col -->
+		<div class="col-md-6">
+												<div class="panel-group" id="accordion">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4 class="panel-title">
+																<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Collapsible Group Item #1 <i class="fa fa-angle-down pull-right"></i><i class="fa fa-angle-up pull-right"></i></a>
+															</h4>
+														</div>
+														<div id="collapseOne" class="panel-collapse collapse in">
+															<div class="panel-body">Sample content .... Sample content</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4 class="panel-title">
+																<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed">Collapsible Group Item #2 <i class="fa fa-angle-down pull-right"></i><i class="fa fa-angle-up pull-right"></i></a>
+															</h4>
+														</div>
+														<div id="collapseTwo" class="panel-collapse collapse">
+															<div class="panel-body">Sample content ... ... Sample content</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4 class="panel-title">
+																<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed">Collapsible Group Item #3 <i class="fa fa-angle-down pull-right"></i><i class="fa fa-angle-up pull-right"></i></a>
+															</h4>
+														</div>
+														<div id="collapseThree" class="panel-collapse collapse">
+															<div class="panel-body">Sample content ... ... Sample content</div>
+														</div>
+													</div>
+												</div>
+											</div>	
+		</div><!-- row -->
+	</div><!-- Widget-content -->
+</div><!-- widget -->
+<!-- END ACCORDION -->
+
+
