@@ -22,10 +22,6 @@ YpwReg::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this).
   config.serve_static_assets = false
 
-	# Add vendor path for Kingsboard theme
-		config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
-		config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
-	#config.assets.paths += Dir["#{Rails.root}/vendor/assets/kingsboard-v1.1/*"].sort_by { |dir| -dir.size }
 	 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -65,7 +61,13 @@ YpwReg::Application.configure do
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )
+	config.assets.precompile += %w( kingadmin/main.css )
 
+	# Add vendor path for Kingsboard theme
+#		config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+		#config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+	#config.assets.paths += Dir["#{Rails.root}/vendor/assets/kingsboard-v1.1/*"].sort_by { |dir| -dir.size }
+	
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
