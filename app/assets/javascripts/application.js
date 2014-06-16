@@ -14,6 +14,7 @@
 //= require jquery
 //= require jquery_ujs
 //= requre bootstrap
+//= require kingadmin/king-common.js
 //= require_tree .
 
 $(function() {

@@ -7,5 +7,6 @@ YpwReg::Application.routes.draw do
   devise_for :users
 	resources :locations
 	resources :events
-	resources :registrations, only: [:index, :new, :create]
+
+	resources :registrations, only: [:index,:new, :create]
 end
