@@ -10,11 +10,12 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 
-// require kingadmin/jquery-2.1.0
 //= require jquery
 //= require jquery_ujs
 //= requre bootstrap
-//= require kingadmin/king-common.js
+//= require kingadmin/king-common
+//= require kingadmin/king-components
+//= require kingadmin/king-form-layouts
 //= require_tree .
 
 $(function() {
