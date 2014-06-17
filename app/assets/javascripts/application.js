@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= requre bootstrap
-//= require kingadmin/king-common
 //= require kingadmin/king-components
+//= require kingadmin/king-common
 //= require kingadmin/king-form-layouts
 //= require_tree .
 
