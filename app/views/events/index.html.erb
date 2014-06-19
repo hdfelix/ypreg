@@ -3,28 +3,37 @@
 		<h2>EVENTS</h2>
 			<em>list of up-coming conferences, retreats, and one-day events</em>
 	</div>
-	<br />
 
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="widget widget-table">
-
-			<div class="widget-header"><h3><i class="fa fa-table"></i></h3></div>
+			<div class="widget-header">
+				<h3><i class="fa fa-table"></i></h3>
+			</div>
 			<div class="widget-content">
-
-				<!-- Events table -->	
-				<table class="table table-condensed table-striped">
+				<table class="table table-striped">
 					<thead>
-						<tr>
-							<td><h5>Name</h5></td>
+						<tr style="font: bold">
+							<td>Name</td>
+							<td>Type</td>
+							<td>Event Begins</td>
+							<td>Event Ends</td>
+							<td>Registration Opens</td>
+							<td>Registration Closes</td>
+							<td>Cost</td>
 							<td></td>
 						</tr>
 					</thead>
 					<tbody>
 						<% @events.each do |event| %>
 							<tr>
-								<td>
-									<%= link_to event.title, event %>
-								</td>
+								<td><%= link_to event.title, event %></td>
+								<td>[Event Type]</td>
+								<td><%= format_date(event.begin_date) %>
+								<td><%= format_date(event.end_date) %>
+								<td><%= format_date(event.registration_open_date) %>
+								<td><%= format_date(event.registration_close_date) %>
+								<td><%= number_to_currency(event.registration_cost) %>
+
 								<td><%= link_to 'Edit', edit_event_path(event) %>&nbsp;
 									<%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
 								</td>

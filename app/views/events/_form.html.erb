@@ -25,7 +25,7 @@
 			<%= f.label :event_type, class: 'col-md-2 control-label' %>
 			<div class="col-md-10">
 				<%= f.select :event_type,
-					[['One-day', 'One-day'], ['Retreat', 'Retreat'], ['Conference', 'Conference']],
+					Event::EVENT_TYPE, 
 					options={placeholder: "Cost"}, html_options={ class: 'form-control select' } %>
 			</div>
 		</div>
