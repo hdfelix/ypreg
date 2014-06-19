@@ -1,20 +1,15 @@
 <br/>
 
 <!-- EVENTS -->
-<div class="widget col-md-6">
-	<div class="widget-header">
-		<h3>Upcoming events</h3>
-	</div>
-	<div class="widget-content">
-		<div class="row">
-			<!--div class="col-md-6"-->
-				<div class="panel-group" id="events">
-					<%= render partial: 'events/event', collection: @events %>
-				</div><!-- panel-group -->
-			<!--/div--><!-- col -->
-		</div><!-- row -->
-	</div><!-- Widget-content -->
-</div><!-- widget -->
-<!-- END ACCORDION -->
+<div class="col-md-8">
+	<h3>Upcoming events</h3>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel-group" id="events">
+				<%= render partial: 'events/event', collection: @events %>
+			</div><!-- panel-group -->
+		</div><!-- col -->
+	</div><!-- row -->
+</div>
 
 

@@ -1,8 +1,8 @@
-<%= form_for(@event) do |f| %>
-  <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
+<%= form_for(@event, class: 'form-horizontal') do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissable">
+			<h4><strong><%= pluralize(@event.errors.count, "error") %></strong> prohibited this event from being saved:</h4>
       <ul>
 				<% @event.errors.full_messages.each do |msg| %>
 					<li><%= msg %></li>
@@ -10,44 +10,90 @@
       </ul>
     </div>
   <% end %>
-	<br />
+
+	<fieldset>
+		<legend>General Information</legend>
+		<div class="form-group">
+			<%= f.label :title, class: 'col-md-2 control-label' %>
+			<div class="col-md-10">
+				<%= f.text_field :title, autofocus: true, class: 'form-control', placeholder: "Enter a  Title" %>
+			</div>
+		</div>
+		<br /><br />
+
+		<div class="form-group">
+			<%= f.label :event_type, class: 'col-md-2 control-label' %>
+			<div class="col-md-10">
+				<%= f.select :event_type,
+					[['One-day', 'One-day'], ['Retreat', 'Retreat'], ['Conference', 'Conference']],
+					options={placeholder: "Cost"}, html_options={ class: 'form-control select' } %>
+			</div>
+		</div>
+		<br /><br />
+		
+		<div class="form-group">
+			<%= f.label :location, class: 'col-md-2 control-label' %>
+			<div class="col-md-10">
+				<%= f.collection_select(:location_id, Location.all, :id, :name, {include_blank: true}, {class: 'form-control'}) %>
+				<%= link_to "Add a location", new_location_path %>
+			</div>
+		</div>
+		<br /><br /><br />
+
+		<div class="form-group">
+			<%= f.label :begin_date, class: 'col-md-2 control-label' %>
+			<div class="col-md-10">
+				<%= f.text_field :begin_date, class: 'form-control', placeholder: "Enter the date the event begins" %>
+			</div>
+		</div>
+		<br /><br />
+
+		<div class="form-group">
+			<%= f.label :end_date, class: 'col-md-2 control-label' %>
+			<div class="col-md-10">
+				<%= f.text_field :end_date, class: 'form-control', placeholder: "Enter the date the event ends" %>
+			</div>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>Registration Details</legend>
+
+		<div class="form-group">
+			<%=f.label :registration_cost, class: 'col-md-2 control-label' %>
+			<div class="col-md-4">
+				<div class="input-group">
+					<span class='input-group-addon'>$</span>
+					<%= f.text_field :registration_cost, class: 'form-control', placeholder: 'Registration cost' %>
+					<span class='input-group-addon'>.00</span>
+				</div>
+			</div>
+			<div class="col-md-6"> </div>
+		</div>
+		<br /><br />
+
+		<div class="form-group">
+			<%= f.label :registration_open_date, class: 'col-md-2 control-label' %>
+			<div class="col-md-10">
+				<%= f.text_field :registration_open_date, class: 'form-control', placeholder: "Enter the date registration opens" %>
+			</div>
+		</div>
+		<br /><br />
+
+		<div class="form-group">
+			<%= f.label :registration_close_date, class: 'col-md-2 control-label' %>
+			<div class="col-md-10">
+				<%= f.text_field :registration_close_date, class: 'form-control', placeholder: "Enter the date registration closes" %>
+			</div>
+		</div>
+	</fieldset>
+
 	<div class="form-group">
-		<%= f.label :title %>
-		<%= f.text_field :title, autofocus: true, class: 'form-control', placeholder: "Enter a  Title" %>
-	</div>
-	<div class="form-group">
-		<%= f.label :event_type %>
-		<%= f.select :event_type, [['One-day', 'One-day'], ['Retreat', 'Retreat'], ['Conference', 'Conference']], options={placeholder: "Cost"}, html_options={ class: 'form-control' } %>
-	</div>
-	<div class="form-group">
-		<%= f.label :location %>
-		<%= f.collection_select(:location_id, Location.all, :id, :name, {include_blank: true}, {class: 'form-control'}) %>
-		<%= link_to "Add a location", new_location_path %>
-	</div>
-	<div class="form-group">
-		<%= f.label :begin_date %>
-		<%= f.text_field :begin_date, class: 'form-control', placeholder: "Enter the date the event begins" %>
-	</div>
-	<div class="form-group">
-		<%= f.label :end_date %>
-		<%= f.text_field :end_date, class: 'form-control', placeholder: "Enter the date the event ends" %>
-	</div>
-	<div class="input-group">
-		<%=f.label :registration_cost %>
-		<span class='input-group-addon'>$</span>
-		<%=f.text_field :registration_cost, class: 'form-control', placeholder: "Enter the cost of registration" %>
-		<span class='input-group-addon'>.00</span>
-	</div>
-	<hr />
-	<div class="form-group">
-		<%= f.label :registration_open_date %>
-		<%= f.text_field :registration_open_date, class: 'form-control', placeholder: "Enter the date registration opens" %>
-	</div>
-	<div class="form-group">
-		<%= f.label :registration_close_date %>
-		<%= f.text_field :registration_close_date, class: 'form-control', placeholder: "Enter the date registration closes" %>
+		<div class="pull-right col-md-4">
+			<%= f.submit "Submit", class: 'btn btn-default btn-block' %>
+		</div>
+		<div class="col-md-6"></div>
+		<br />
 	</div>
 
-	<hr>
-	<%= f.submit "Submit", class: 'btn btn-success' %>
 <% end %>

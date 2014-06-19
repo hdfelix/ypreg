@@ -1,15 +1,57 @@
-<h1><%= @event.title %><br /></h1>
-<p id="notice"><%= notice %></p>
+<div class="content">
+	<div class="main-header">
+		<h2><%= @event.title %></h2>
+		<em><%= "to be held at #{ Location.find(@event.location_id).name }" %></em>
+	</div>
+	<br />
 
-<p>
-	<strong>Begin date: </strong>
-	<%= @event.begin_date %><br />
-	<strong>End date: </strong>
-	<%= @event.end_date %><br />
-	<strong>Registration cost: $</strong>
-	<%= @registration_cost %><br />
-	<%= link_to 'Register', new_events_registration_path %>
-</p>
+	<div class="col-md-6">
+		<div class="widget">
+			<div class="widget-header">
+				<h3><i class="fa fa-calendar-o"></i></h3>
+			</div>
+			<div class="widget-content">
+				<p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Begin Date</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= @event.begin_date %>
+					</div>
+				</div>
+				
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>End date: </strong>
+					</div>
+					<div class="col-sm-8">
+						<%= @event.end_date %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Registration cost:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= (@registration_cost)? "$#{@registration_cost}" : "TBA" %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<%= link_to 'Register', new_registration_path %>
+					</div>
+				</div>
+			</div>
+
+			<div class="widget-footer">	
+				<%= link_to 'Edit', edit_event_path(@event) %> |
+				<%= link_to 'Back', events_path %>
+			</div>
+		</div>
+	</div>
+</div>

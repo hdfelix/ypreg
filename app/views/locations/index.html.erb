@@ -1,27 +1,32 @@
-<h1>Listing locations</h1>
+<div class="content">
+	<div class="main-header">
+		<h2>LOCATIONS</h2>
+			<em>list of locations for conferences, retreats, and one-day events</em>
+	</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
 
-  <tbody>
-    <% @locations.each do |location| %>
-      <tr>
-        <td><%= location.name %></td>
-        <td><%= link_to 'Show', location %></td>
-        <td><%= link_to 'Edit', edit_location_path(location) %></td>
-        <td><%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+		<tbody>
+			<% @locations.each do |location| %>
+				<tr>
+					<td><%= location.name %></td>
+					<td><%= link_to 'Show', location %></td>
+					<td><%= link_to 'Edit', edit_location_path(location) %></td>
+					<td><%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 
-<br>
+	<br>
 
-<%= link_to 'New Location', new_location_path %>
+	<%= link_to 'New Location', new_location_path %>
+</div>

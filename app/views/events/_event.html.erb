@@ -1,22 +1,41 @@
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<%= link_to  "#event#{event.id}", "data-toggle" => "collapse", "data-parent" => "#events", class: 'collapsed' do %>
-									<%= event.title %>
-									<i class="fa fa-angle-down pull-right"></i><i class="fa fa-angle-up pull-right"></i>
-								<% end %>
-							</h4>
-						</div><!-- panel-heading -->
-						<%= content_tag(:div, id: "event#{event.id}", class: 'panel-collapse collapse') do %>
-							<%= content_tag(:div, class: 'panel-body') do %>
-								<p><%= event.begin_date.strftime("%m/%d/%y") %></p>
-								<p><%= event.end_date.strftime("%m/%d/%y") %></p>
-								<% if current_user %>
-									<p><%= link_to 'Register', new_registration_path(event_id: event.id) %></p>
-								<% else %>
-									<p><%= link_to 'Sign in to register', user_session_path %></p>
-								<% end %>
-							<% end %>
-						<% end %>
-					</div><!-- panel panel-default -->
-				<!--% end %-->
+
+<!-- WIDGET SIMPLE  -->
+<div class="widget">
+	<div class="widget-header">
+		<h3><i class="fa fa-calendar"></i></h3>
+	</div>
+	<div class="widget-content">
+		<h3><%= event.title %></h3>
+		<br />
+		<div class="row">
+			<div></div>
+			<div class="col-md-3" style="border-right: 1px solid #ccc; height: 100%">
+				Location:
+				<h4 ><%= event.location.name %></h4>
+				<%= event_location(event) %>
+			</div>
+			<div class="col-md-3">
+				Event Dates:
+				<br />
+				<strong><%= event_dates(event) %></strong>
+				<br /><br />
+				Registration window:
+				<br />
+				<strong><%= event_registration_dates(event) %></strong>
+			</div>
+			<div class="col-md-3">
+				<h4><span>Cost:  </span><span><%= number_to_currency(event.registration_cost) %></span></h4>
+				<br />
+				<% if current_user %>
+					<%= link_to 'Register', new_registration_path(event_id: event.id), class: 'btn btn-custom-secondary' %>
+					<%= link_to 'Edit', event, class: 'btn btn-default' %>
+					
+				<% else %>
+					<p><%= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary' %></p>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+	<!-- END WIDGET SIMPLE  -->
+

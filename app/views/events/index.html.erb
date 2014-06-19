@@ -1,19 +1,45 @@
-<h3>Events</h3>
-<br />
-<div class="row">
-	<div class="col-md-8">
-    <% @events.each do |event| %>
-			<div class="row">
-				<div class="col-md-4"><h4><%= link_to event.title, event %></h4></div>
-				<div class="col-md-2">
-					<%= link_to 'Edit', edit_event_path(event) %>&nbsp;
-					<%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
-				</div>
-			</div>
-		<% end %>
+<div class="content">
+	<div class="main-header">
+		<h2>EVENTS</h2>
+			<em>list of up-coming conferences, retreats, and one-day events</em>
 	</div>
+	<br />
+
+	<div class="col-md-6">
+		<div class="widget widget-table">
+
+			<div class="widget-header"><h3><i class="fa fa-table"></i></h3></div>
+			<div class="widget-content">
+
+				<!-- Events table -->	
+				<table class="table table-condensed table-striped">
+					<thead>
+						<tr>
+							<td><h5>Name</h5></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<% @events.each do |event| %>
+							<tr>
+								<td>
+									<%= link_to event.title, event %>
+								</td>
+								<td><%= link_to 'Edit', edit_event_path(event) %>&nbsp;
+									<%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+								</td>
+							</tr>
+						<% end %>
+					<tbody>
+				</table>
+
+				<%= link_to new_event_path, class: 'btn btn-default' do %>
+					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
+					New Event
+				<% end %>
+
+			</div>
+		</div>
+	</div>
+
 </div>
-<br />
-
-<%= link_to 'New Event', new_event_path %>
-

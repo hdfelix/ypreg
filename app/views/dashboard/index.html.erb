@@ -1,16 +1,15 @@
-<div class="content">
-	<div class="main-header">
-		<h2>DASHBOARD</h2>
-			<em>information on up-coming events</em>
-	</div>
+<div class="main-header">
+	<h2>DASHBOARD</h2>
+		<em>information on up-coming events</em>
+</div>
 
-	<div class="main-content">
-		<div class="row">
-																																																								<div class="col-md-9">
-			<br/>
-			<h3>Upcoming events</h3>
-			<%= render partial: 'events/event', collection: @events %>
-		</div>
-																																																							</div>
-																																																						</div><!-- End main content -->
-
+<div class="main-content">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="panel-group" id="events">
+				<h3>Upcoming events</h3>
+				<%= render partial: 'events/event', collection: @events %>
+			</div><!-- panel group -->
+		</div><!-- col -->
+	</div> <!-- row -->
+</div>

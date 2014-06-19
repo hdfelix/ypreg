@@ -13470,9 +13470,7 @@ ul.main-menu .sub-menu.open {
   margin-bottom: 0;
 }
 
-.widget {
-  border-width: 1px;
-  border-style: solid;
+.widget { border-width: 1px; border-style: solid;
   margin-bottom: 20px;
   background-color: #f9f9f9;
   border-color: lightgrey;

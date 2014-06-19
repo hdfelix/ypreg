@@ -13,9 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= requre bootstrap
+//= require kingadmin/king-elements
 //= require kingadmin/king-components
 //= require kingadmin/king-common
 //= require kingadmin/king-form-layouts
+//= require kingadmin/king-page
 //= require_tree .
 
 $(function() {
