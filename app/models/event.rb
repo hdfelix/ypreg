@@ -10,4 +10,6 @@ class Event < ActiveRecord::Base
 
 	EVENT_TYPE = ['One-day','Retreat','Conference']
 
+	default_scope { order('begin_date DESC') }
+
 end
