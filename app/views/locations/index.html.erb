@@ -3,30 +3,42 @@
 		<h2>LOCATIONS</h2>
 			<em>list of locations for conferences, retreats, and one-day events</em>
 	</div>
+	<br />
 
-	<table>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th></th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
+	<div class="col-md-8">
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<h3><i class="fa fa-table"></i></h3>
+			</div>
+			<div class="widget-content">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Address</th>
+							<th></th>
+						</tr>
+					</thead>
 
-		<tbody>
-			<% @locations.each do |location| %>
-				<tr>
-					<td><%= location.name %></td>
-					<td><%= link_to 'Show', location %></td>
-					<td><%= link_to 'Edit', edit_location_path(location) %></td>
-					<td><%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+					<tbody>
+						<% @locations.each do |location| %>
+							<tr>
+								<td><%= location.name %></td>
+								<td><%= location.description %></td>
+								<td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
+								<td><%= link_to 'Show', location %>
+										<%= link_to 'Edit', edit_location_path(location) %>
+										<%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
+								</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<br />
 
-	<br>
-
-	<%= link_to 'New Location', new_location_path %>
+		<%= link_to 'New Location', new_location_path %>
+	</div>
 </div>
