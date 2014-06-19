@@ -35,7 +35,7 @@
 			<%= f.label :location, class: 'col-md-2 control-label' %>
 			<div class="col-md-10">
 				<%= f.collection_select(:location_id, Location.all, :id, :name, {include_blank: true}, {class: 'form-control'}) %>
-				<%= link_to "Add a location", new_location_path %>
+				<%= link_to "Add a location", new_location_path, class: 'pull-right' %>
 			</div>
 		</div>
 		<br /><br /><br />
@@ -89,10 +89,12 @@
 	</fieldset>
 
 	<div class="form-group">
-		<div class="pull-right col-md-4">
-			<%= f.submit "Submit", class: 'btn btn-default btn-block' %>
+		<div class= "col-md-12">
+			<span class="pull-right">
+				<%= link_to 'Back', events_path, class: 'btn btn-default' %>
+				<%= f.submit "Submit", class: 'btn btn-primary' %>
+			</span>
 		</div>
-		<div class="col-md-6"></div>
 		<br />
 	</div>
 

@@ -15,20 +15,46 @@
 
 				<div class="row">
 					<div class="col-sm-4">
+						<strong>Type of event:</strong>
+					</div>
+					<div class="col-sm-8">
+						[Event Type]
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
 						<strong>Begin Date</strong>
 					</div>
 					<div class="col-sm-8">
-						<%= @event.begin_date %>
+						<%= format_date(@event.begin_date) %>
 					</div>
 				</div>
 				
-
 				<div class="row">
 					<div class="col-sm-4">
 						<strong>End date: </strong>
 					</div>
 					<div class="col-sm-8">
-						<%= @event.end_date %>
+						<%= format_date(@event.end_date) %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Registration opens: </strong>
+					</div>
+					<div class="col-sm-8">
+						<%= format_date(@event.registration_open_date) %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Registration  closes: </strong>
+					</div>
+					<div class="col-sm-8">
+						<%= format_date(@event.registration_close_date) %>
 					</div>
 				</div>
 
@@ -37,15 +63,15 @@
 						<strong>Registration cost:</strong>
 					</div>
 					<div class="col-sm-8">
-						<%= (@registration_cost)? "$#{@registration_cost}" : "TBA" %>
+						<%= (@registration_cost)? "#{number_to_currency(@registration_cost)}" : "TBA" %>
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-sm-12">
-						<%= link_to 'Register', new_registration_path %>
-					</div>
-				</div>
+				<!--div class="row"-->
+					<!--div class="col-sm-12"-->
+						<!--%= link_to 'Register', new_registration_path, class: 'btn btn-default pull-right' %-->
+					<!--/div-->
+				<!--/div-->
 			</div>
 
 			<div class="widget-footer">	
