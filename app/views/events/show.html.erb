@@ -1,10 +1,11 @@
 <div class="content">
+	<div class="row">
 	<div class="main-header">
 		<h2><%= @event.title %></h2>
 		<em><%= "to be held at #{ Location.find(@event.location_id).name }" %></em>
 	</div>
-	<br />
-
+</div>
+<div class="row">
 	<!-- Event Registration Details -->
 	<div class="col-md-6">
 		<div class="widget">
@@ -108,9 +109,14 @@
 			</div>
 
 			<div class="widget-footer">	
-				<%= link_to 'Edit', edit_event_path(@event) %> |
-				<%= link_to 'Back', events_path %>
 			</div>
 		</div>
 	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary'%>
+		<%= link_to 'Back', events_path, class: 'btn btn-default' %>
+	</div>
+</div>
 </div><!-- End event info -->
