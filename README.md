@@ -1,5 +1,7 @@
 ##Event Registration application
 
+Repo: https://bitbucket.org/hdfelix/ypw-reg
+
 This is an event registration management site. You can use this site to manage registrations short one-day events that require
 no hospitality accomodations as well as multi-day events where hospitality accomodations are necessary.  
    
