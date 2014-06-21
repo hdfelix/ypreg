@@ -27,7 +27,7 @@
 						<% @events.each do |event| %>
 							<tr>
 								<td><%= link_to event.title, event %></td>
-								<td>[Event Type]</td>
+								<td><%= display_event(event) %></td>
 								<td><%= format_date(event.begin_date) %>
 								<td><%= format_date(event.end_date) %>
 								<td><%= format_date(event.registration_open_date) %>

@@ -36,8 +36,10 @@ module EventsHelper
 	end
 
 	def display_event(event)
-		binding.pry
-		event_type = Event::EVENT_TYPE.detect{ |a| a.include?(event.event_type)}
-		event_type[0]
+		if	event_type = Event::EVENT_TYPE.detect{ |a| a.include?(event.event_type)}
+			event_type[0]
+		else
+			"--"
+		end
 	end
 end
