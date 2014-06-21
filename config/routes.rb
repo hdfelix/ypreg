@@ -5,8 +5,9 @@ YpwReg::Application.routes.draw do
   get "dashboard/index"
 
 	resources :locations
-	resources :events
+	resources :events do
+		resources :registrations, only: [:index, :new, :create]
+	end
 
   devise_for :user, controllers: { registrations: "users/registrations" }
-	resources :registrations, only: [:index, :new, :create]
 end
