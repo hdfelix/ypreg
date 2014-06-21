@@ -21,7 +21,7 @@
 					<tbody>
 						<tr>
 							<td>Total Attendance</td>
-							<td>[total]</td>
+							<td><%= @event.registrations.count %></td>
 						</tr>
 						<tr>
 							<td>Camp Max Capacity</td>
@@ -51,7 +51,7 @@
 						<strong>Type of event:</strong>
 					</div>
 					<div class="col-sm-8">
-						[Event Type]
+						<%= display_event(@event) %>
 					</div>
 				</div>
 
@@ -96,13 +96,13 @@
 						<strong>Registration cost:</strong>
 					</div>
 					<div class="col-sm-8">
-						<%= (@registration_cost)? "#{number_to_currency(@registration_cost)}" : "TBA" %>
+						<%= (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA" %>
 					</div>
 				</div>
 
 				<!--div class="row"-->
 					<!--div class="col-sm-12"-->
-						<!--%= link_to 'Register', new_registration_path, class: 'btn btn-default pull-right' %-->
+						<!--%= link_to 'Register', new_event_registrations_path, class: 'btn btn-default pull-right' %-->
 					<!--/div-->
 				<!--/div-->
 			</div>

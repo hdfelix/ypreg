@@ -1,5 +1,5 @@
 
-<!-- WIDGET SIMPLE  -->
+<!-- Event Info Widget  -->
 <div class="widget">
 	<div class="widget-header">
 		<h3><i class="fa fa-calendar"></i></h3>
@@ -31,10 +31,9 @@
 				<br />
 				<% if current_user %>
 					<% unless already_registered?(event.id) %>
-						<%= link_to 'Register', new_registration_path(event_id: event.id), class: 'btn btn-custom-secondary' %>
-						<%= link_to 'Edit', event, class: 'btn btn-default' %>
+						<%= link_to 'Register', new_event_registrations_path(event_id: event.id), class: 'btn btn-custom-secondary' %>
 					<% end %>
-					
+					<%= link_to 'Edit', event, class: 'btn btn-default' %>
 				<% else %>
 					<p><%= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary' %></p>
 				<% end %>
@@ -42,5 +41,5 @@
 		</div>
 	</div>
 </div>
-	<!-- END WIDGET SIMPLE  -->
+	<!-- End Event Info Widget  -->
 
