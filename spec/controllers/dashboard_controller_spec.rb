@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HomeController do
+describe DashboardController do
 
   describe "GET 'index'" do
     it "returns http success" do
