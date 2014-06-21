@@ -27,4 +27,12 @@ module EventsHelper
 			end
 		end
 	end
+	def already_registered?(event_id)
+		binding.pry
+		if current_user.registrations.where("id = ?",event_id)
+			true
+		else
+			false
+		end
+	end
 end
