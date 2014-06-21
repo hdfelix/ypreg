@@ -13,7 +13,7 @@ class Event < ActiveRecord::Base
 	validates :registration_cost, presence: true
 	validates :location_id, presence: true
 
-	EVENT_TYPE = ['One-day','Retreat','Conference']
+	EVENT_TYPE = [['One-day',1],['Retreat',2],['Conference',3]]
 
 	default_scope { order('begin_date ASC') }
 

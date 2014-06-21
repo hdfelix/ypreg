@@ -176,7 +176,6 @@
 									</a>
 									<ul class="sub-menu">
 										<li><%= link_to events_url do %><span class="text">Events</span><% end %></li>
-										<li><%= link_to registrations_url do %><span class="text">Registrations</span><% end %></li>
 										<li><%= link_to locations_url do %><span class="text">Locations</span><% end %></li>
 										<li><a href="#"><span class="text">Hospitality</span></a></li>
 									</ul>
@@ -208,7 +207,7 @@
 								<li class="data-row">
 									<span class="data-name">Attendance</span>
 									<span class="data-value">
-										37 / 150
+										<%= Event.first.registrations.count %> / <%= Event.first.location.max_capacity %>
 										<div class="progress progress-xs">
 											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
 												<span class="sr-only">10%</span>
@@ -217,7 +216,7 @@
 									</span>
 								</li>
 								<li class="data-row">
-									<span class="data-name">Registration pmts</span>
+									<span class="data-name">[Registration pmts]</span>
 									<span class="data-value">
 										14 / 37
 										<div class="progress progress-xs">

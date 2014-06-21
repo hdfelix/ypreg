@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140517183716) do
+ActiveRecord::Schema.define(version: 20140621230434) do
 
   create_table "addresses", force: true do |t|
     t.string   "addressline1"
@@ -34,9 +34,26 @@ ActiveRecord::Schema.define(version: 20140517183716) do
     t.date     "registration_close_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "hospitality_type"
   end
 
   add_index "events", ["location_id"], name: "location_id_ix"
+
+  create_table "hospitality_homes", force: true do |t|
+    t.string   "name",                        null: false
+    t.string   "home_phone",       limit: 10
+    t.string   "cell_phone",       limit: 10
+    t.string   "email"
+    t.string   "address",                     null: false
+    t.string   "city",                        null: false
+    t.string   "state_abbrv",      limit: 2,  null: false
+    t.string   "zipcode",          limit: 5,  null: false
+    t.integer  "minimum_capacity"
+    t.integer  "maximum_capacity"
+    t.string   "comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "locations", force: true do |t|
     t.string   "name"
@@ -48,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140517183716) do
     t.integer  "zipcode"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "max_capacity"
   end
 
   create_table "registrations", force: true do |t|
@@ -61,6 +79,7 @@ ActiveRecord::Schema.define(version: 20140517183716) do
     t.datetime "updated_at"
   end
 
+  add_index "registrations", ["event_id", "user_id"], name: "index_registrations_on_event_id_and_user_id", unique: true
   add_index "registrations", ["event_id"], name: "index_registrations_on_event_id"
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id"
 

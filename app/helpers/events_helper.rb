@@ -28,11 +28,18 @@ module EventsHelper
 		end
 	end
 	def already_registered?(event_id)
-		binding.pry
 		if current_user.registrations.where("id = ?",event_id)
 			true
 		else
 			false
+		end
+	end
+
+	def display_event(event)
+		if	event_type = Event::EVENT_TYPE.detect{ |a| a.include?(event.event_type)}
+			event_type[0]
+		else
+			"--"
 		end
 	end
 end
