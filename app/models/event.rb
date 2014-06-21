@@ -1,5 +1,10 @@
 class Event < ActiveRecord::Base
 	belongs_to :location
+	has_many	:registrations
+	has_many :users
+	has_many :events, through: :registrations
+
+	#skip_before_filter :verify_authenticity_token
 
 	validates :event_type, presence: true
 	validates :title, presence: true	
@@ -10,6 +15,6 @@ class Event < ActiveRecord::Base
 
 	EVENT_TYPE = ['One-day','Retreat','Conference']
 
-	default_scope { order('begin_date DESC') }
+	default_scope { order('begin_date ASC') }
 
 end

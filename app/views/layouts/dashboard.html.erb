@@ -168,10 +168,15 @@
 							
 							<ul class="main-menu">
 								<li><%= link_to dashboard_index_url do %><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span><% end %></li>
-								<li class="active"><a href="#" class="js-sub-menu-toggle"><i class="fa fa-clipboard fa-fw"></i><span class="text">Admin</span>
-									<i class="toggle-icon fa fa-angle-left"></i></a>
+								<li>
+									<a href="#" class="js-sub-menu-toggle">
+										<i class="fa fa-clipboard fa-fw"></i>
+										<span class="text">Admin</span>
+										<i class="toggle-icon fa fa-angle-left"></i>
+									</a>
 									<ul class="sub-menu">
-										<li><%= link_to events_url do %>Events<%= content_tag(:span, '', class: 'text') %><% end %></li>
+										<li><%= link_to events_url do %><span class="text">Events</span><% end %></li>
+										<li><%= link_to registrations_url do %><span class="text">Registrations</span><% end %></li>
 										<li><%= link_to locations_url do %><span class="text">Locations</span><% end %></li>
 										<li><a href="#"><span class="text">Hospitality</span></a></li>
 									</ul>
@@ -198,12 +203,12 @@
 								</div>
 							</div>
 							
-							<h5 class="label label-default"><i class="fa fa-info-circle"></i> Global stats</h5>
+							<h5 class="label label-default"><i class="fa fa-info-circle"></i> Up-coming Event stats</h5>
 							<ul class="list-unstyled list-info-sidebar bottom-30px">
 								<li class="data-row">
-									<span class="data-name">Disk Space Usage</span>
+									<span class="data-name">Attendance</span>
 									<span class="data-value">
-										274.43 / 2 GB
+										37 / 150
 										<div class="progress progress-xs">
 											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
 												<span class="sr-only">10%</span>
@@ -212,9 +217,9 @@
 									</span>
 								</li>
 								<li class="data-row">
-									<span class="data-name">Monthly Bandwidth Transfer</span>
+									<span class="data-name">Registration pmts</span>
 									<span class="data-value">
-										230 / 500 GB
+										14 / 37
 										<div class="progress progress-xs">
 											<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" style="width: 46%">
 												<span class="sr-only">46%</span>
@@ -223,20 +228,26 @@
 									</span>
 								</li>
 								<li class="data-row">
+									<span class="data-name">Localities</span>
+									<span class="data-value">[TODO]</span>
+								</li>
+							</ul>
+
+							<h5 class="label label-default"><i class="fa fa-info-circle"></i> Global stats</h5>
+							<ul class="list-unstyled list-info-sidebar bottom-30px">
+								<li class="data-row">
 									<span class="data-name">Registered users</span>
 									<span class="data-value"><%= User.all.count %></span>
 								</li>
+
 								<li class="data-row">
-									<span class="data-name">Events</span>
-									<span class="data-value"><%= Event.all.count %></span>
+									<span class="data-name">Localities</span>
+									<span class="data-value">[TODO]</span>
 								</li>
+								
 								<li class="data-row">
 									<span class="data-name">Event Locations</span>
 									<span class="data-value"><%= Location.all.count %></span>
-								</li>
-								<li class="data-row">
-									<span class="data-name">Registrations (all)</span>
-									<span class="data-value"><%= Registration.all.count %></span>
 								</li>
 							</ul>
 						</div>

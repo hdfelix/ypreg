@@ -20,6 +20,9 @@
 	</ul>
 	<div class="form-group">
 		<%=f.hidden_field :event_id, value: params[:event_id]%>
+
+		<!-- show only if current user is not registered -->jJ:w
+		
 		<%= f.submit 'Register' %> 
 	</div>
 <% end %>
