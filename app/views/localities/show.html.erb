@@ -1,0 +1,40 @@
+<div class="content">
+	<div class="row">
+	<div class="main-header">
+		<% binding.pry %>
+		<h2><%= @locality.city %>, <%= @locality.state_abbrv %></h2>
+		<em></em>
+	</div>
+</div>
+<div class="row">
+	<!-- locality info -->
+	<div class="col-md-6">
+		<div class="widget">
+			<div class="widget-header">
+				<h3><i class="fa fa-calendar-o"></i>Locality Details</h3>
+			</div>
+			<div class="widget-content">
+				<p id="notice"><%= notice %></p>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Contact:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= User.find(@locality.contact_id).name %>
+					</div>
+				</div>
+			</div>
+
+			<div class="widget-footer">	
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<%= link_to 'Edit', edit_locality_path(@locality), class: 'btn btn-primary'%>
+		<%= link_to 'Back', localities_path, class: 'btn btn-default' %>
+	</div>
+</div>
+</div><!-- End locality info -->

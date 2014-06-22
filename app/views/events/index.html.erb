@@ -24,20 +24,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						<% @events.each do |event| %>
-							<tr>
-								<td><%= link_to event.title, event %></td>
-								<td><%= display_event(event) %></td>
-								<td><%= format_date(event.begin_date) %>
-								<td><%= format_date(event.end_date) %>
-								<td><%= format_date(event.registration_open_date) %>
-								<td><%= format_date(event.registration_close_date) %>
-								<td><%= number_to_currency(event.registration_cost) %>
+						<% if @events.all.count > 0 %>
+							<% @events.each do |event| %>
+								<tr>
+									<td><%= link_to event.title, event %></td>
+									<td><%= display_event(event) %></td>
+									<td><%= format_date(event.begin_date) %>
+									<td><%= format_date(event.end_date) %>
+									<td><%= format_date(event.registration_open_date) %>
+									<td><%= format_date(event.registration_close_date) %>
+									<td><%= number_to_currency(event.registration_cost) %>
 
-								<td><%= link_to 'Edit', edit_event_path(event) %>&nbsp;
-									<%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
-								</td>
-							</tr>
+									<td><%= link_to 'Edit', edit_event_path(event) %>&nbsp;
+										<%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+									</td>
+								</tr>
+							<% end %>
+						<% else %>
+							<tr><td colspan=7><center>No Events in the database...</center></td></tr>
 						<% end %>
 					<tbody>
 				</table>

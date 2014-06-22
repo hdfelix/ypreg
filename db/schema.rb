@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140621230434) do
+ActiveRecord::Schema.define(version: 20140622045518) do
 
   create_table "addresses", force: true do |t|
     t.string   "addressline1"
@@ -34,23 +34,27 @@ ActiveRecord::Schema.define(version: 20140621230434) do
     t.date     "registration_close_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "hospitality_type"
   end
 
   add_index "events", ["location_id"], name: "location_id_ix"
 
-  create_table "hospitality_homes", force: true do |t|
-    t.string   "name",                        null: false
-    t.string   "home_phone",       limit: 10
-    t.string   "cell_phone",       limit: 10
-    t.string   "email"
-    t.string   "address",                     null: false
-    t.string   "city",                        null: false
-    t.string   "state_abbrv",      limit: 2,  null: false
-    t.string   "zipcode",          limit: 5,  null: false
-    t.integer  "minimum_capacity"
-    t.integer  "maximum_capacity"
-    t.string   "comments"
+  create_table "hospitalities", force: true do |t|
+    t.string  "name"
+    t.text    "description"
+    t.integer "contact_person_id"
+    t.string  "address1"
+    t.string  "address2"
+    t.string  "city"
+    t.string  "state_abbrv"
+    t.string  "zipcode"
+    t.string  "hospitality_type"
+    t.string  "max_capacity"
+  end
+
+  create_table "localities", force: true do |t|
+    t.string   "city"
+    t.string   "state_abbrv"
+    t.integer  "contact_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

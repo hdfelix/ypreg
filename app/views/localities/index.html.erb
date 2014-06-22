@@ -1,0 +1,49 @@
+<div class="content">
+	<div class="main-header">
+		<h2>Localities</H2>
+		<em>listing of localities registered in the system</em> 
+	</div>
+
+	<div class="col-md-12">
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<h3><i class="fa fa-table"></i></h3>
+			</div>
+			<div class="widget-content">
+				<table class="table table-striped">
+					<thead>
+						<tr style="font: bold">
+							<td>Name</td>
+							<td>State</td>
+							<td>Contact</td>
+						</tr>
+					</thead>
+					<tbody>
+						<% if @localities.all.count > 0 %>
+							<% @localities.each do |locality| %>
+								<tr>
+									<td><%= link_to locality.city, locality %></td>
+									<td><%= locality.state_abbrv %>
+									<td><%= User.find(locality.contact_id).name %>
+
+									<td><%= link_to 'Edit', edit_locality_path(locality) %>&nbsp;
+										<%= link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' } %>
+									</td>
+								</tr>
+							<% end %>
+						<% else %>
+							<tr><td colspan=4><center>No Localities have been entered yet...</center></td></tr>
+						<% end %>
+					<tbody>
+				</table>
+
+				<%= link_to new_locality_path, class: 'btn btn-default' do %>
+					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
+					New Locality
+				<% end %>
+
+			</div>
+		</div>
+	</div>
+
+</div>

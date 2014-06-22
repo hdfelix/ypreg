@@ -1,0 +1,50 @@
+<%= form_for(@locality, class: 'form-horizontal') do |f| %>
+  <% if @locality.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissable">
+			<h4><strong><%= pluralize(@locality.errors.count, "error") %></strong> prohibited this locality from being saved:</h4>
+      <ul>
+				<% @locality.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+      </ul>
+    </div>
+  <% end %>
+	<fieldset>
+		<legend>General Information</legend>
+			<div class="form-group">
+				<%= f.label :city, class: 'col-md-2 control-label' %>
+				<div class="col-md-10">
+					<%= f.text_field :city, autofocus: true, class: 'form-control', placeholder: "Enter city name" %>
+				</div>
+			</div>
+			<br /><br />
+
+			<div class="form-group">
+				<%= f.label :state_abbrv, 'State', class: 'col-md-2 control-label' %>
+				<div class="col-md-10">
+					<%= f.select :state_abbrv, Location::STATE_LIST, {include_blank: true, selected: 'CA'}, {class: 'form-control'} %>
+				</div>
+			</div>
+			<br /><br />
+
+			<div class="form-group">
+				<%= f.label :user, 'Contact', class: 'col-md-2 control-label' %>
+				<div class="col-md-10">
+					<%= f.collection_select(:contact_id, User.all, :id, :name, {include_blank: true}, {class: 'form-control'}) %>
+				</div>
+			</div>
+			<br />
+			
+		</fieldset>
+
+			<div class="form-group">
+				<div class= "col-md-12">
+					<span class="pull-right">
+						<%= link_to 'Back', localities_path, class: 'btn btn-default' %>
+						<%= f.submit "Submit", class: 'btn btn-primary' %>
+					</span>
+				</div>
+				<br />
+			</div>
+
+<% end %>
