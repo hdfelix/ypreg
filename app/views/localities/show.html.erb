@@ -13,27 +13,28 @@
 				<h3><i class="fa fa-calendar-o"></i>Locality Details</h3>
 			</div>
 			<div class="widget-content">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Contact</th>
+							<th>Email</th>
+							<th>Cellphone</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td><%= User.find(@locality.contact_id).name %></td>
+							<td><%= mail_to User.find(@locality.contact_id).email %></td>
+							<td>[cell]</td>
+						</tr>
+					</tbody>
+				</table>
+				<%= link_to 'Edit', edit_locality_path(@locality), class: 'btn btn-primary'%>
+				<%= link_to 'Back', localities_path, class: 'btn btn-default' %>
 				<p id="notice"><%= notice %></p>
-
-				<div class="row">
-					<div class="col-sm-4">
-						<strong>Contact:</strong>
-					</div>
-					<div class="col-sm-8">
-						<%= User.find(@locality.contact_id).name %>
-					</div>
-				</div>
 			</div>
-
 			<div class="widget-footer">	
 			</div>
 		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<%= link_to 'Edit', edit_locality_path(@locality), class: 'btn btn-primary'%>
-		<%= link_to 'Back', localities_path, class: 'btn btn-default' %>
 	</div>
 </div>
 </div><!-- End locality info -->

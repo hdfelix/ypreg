@@ -23,6 +23,20 @@ class LocalitiesController < ApplicationController
 		end
 	end
 
+	def edit
+	end
+
+	def update
+		if @locality.update(locality_params)
+			flash[:notice] = 'Locality was updated successfully.'
+			redirect_to @locality
+		else
+			flash[:error] = 'Error saving Locality.'
+			render action: 'edit'
+		end
+
+	end
+
 	private
 
 	# Use callbacks to share common setup or constraints between actions.
