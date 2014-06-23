@@ -7,32 +7,45 @@
 </div>
 <div class="row">
 	<!-- locality info -->
-	<div class="col-md-6">
+	<div class="col-md-9">
 		<div class="widget">
 			<div class="widget-header">
 				<h3><i class="fa fa-calendar-o"></i>Locality Details</h3>
 			</div>
 			<div class="widget-content">
-				<table class="table table-bordered">
+				<table class="table table-condensed">
 					<thead>
 						<tr>
+							<th></th>
 							<th>Contact</th>
 							<th>Email</th>
 							<th>Cellphone</th>
+							<th></th>
 					</thead>
 					<tbody>
 						<tr>
+							<td class="text-right"><strong>Locality contact:</strong></td>
 							<td><%= User.find(@locality.contact_id).name %></td>
 							<td><%= mail_to User.find(@locality.contact_id).email %></td>
 							<td>[cell]</td>
+							<td>
+								<%= link_to 'Edit', edit_locality_path(@locality) %>
+							</td>
+						</tr>
+						<tr>
+							<td class="text-right"><strong>Hospitality contact:</strong></td>
+							<td><%= User.find(@locality.contact_id).name %></td>
+							<td><%= mail_to User.find(@locality.contact_id).email %></td>
+							<td>[cell]</td>
+							<td>
+								[edit]
+							</td>
 						</tr>
 					</tbody>
 				</table>
-				<%= link_to 'Edit', edit_locality_path(@locality), class: 'btn btn-primary'%>
-				<%= link_to 'Back', localities_path, class: 'btn btn-default' %>
 				<p id="notice"><%= notice %></p>
 			</div>
-			<div class="widget-footer">	
+			<div class="widget-footert">	
 			</div>
 		</div>
 	</div>
