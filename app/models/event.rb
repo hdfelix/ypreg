@@ -1,8 +1,8 @@
 class Event < ActiveRecord::Base
 	belongs_to :location
 	has_many	:registrations
-	has_many :users
-	has_many :events, through: :registrations
+	#has_many :users
+	has_many :users, through: :registrations
 
 	#skip_before_filter :verify_authenticity_token
 

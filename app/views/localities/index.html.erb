@@ -25,7 +25,7 @@
 								<tr>
 									<td><%= link_to locality.city, locality %></td>
 									<td><%= locality.state_abbrv %>
-									<td><%= User.find(locality.contact_id).name %>
+									<td><%= locality.display_contact%>
 
 									<td><%= link_to 'Edit', edit_locality_path(locality) %>&nbsp;
 										<%= link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' } %>

@@ -9,10 +9,10 @@ YpwReg::Application.routes.draw do
 
 	resources :locations
 	resources :localities
-	resources :hospitalities, only: :index
+	resources :hospitalities
 	resources :events do
 		resources :registrations, only: [:index, :new, :create]
-		resources :hospitalities, except: [:index]
+		#resources :hospitalities, except: [:index, :new, :create]
 	end
 
   devise_for :user, controllers: { registrations: "users/registrations" }

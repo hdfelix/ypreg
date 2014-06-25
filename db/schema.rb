@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140622045518) do
+ActiveRecord::Schema.define(version: 20140625053959) do
 
   create_table "addresses", force: true do |t|
     t.string   "addressline1"
@@ -38,6 +38,11 @@ ActiveRecord::Schema.define(version: 20140622045518) do
 
   add_index "events", ["location_id"], name: "location_id_ix"
 
+  create_table "events_hospitalities", force: true do |t|
+    t.integer "event_id"
+    t.integer "hospitality_id"
+  end
+
   create_table "hospitalities", force: true do |t|
     t.string  "name"
     t.text    "description"
@@ -48,6 +53,7 @@ ActiveRecord::Schema.define(version: 20140622045518) do
     t.string  "state_abbrv"
     t.string  "zipcode"
     t.string  "hospitality_type"
+    t.integer "locality_id"
     t.string  "max_capacity"
   end
 

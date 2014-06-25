@@ -1,5 +1,5 @@
 class LocalitiesController < ApplicationController
-  before_action :set_locality, only: [ :show, :edit, :update, :destroy]
+  before_action :set_locality, only: [ :show, :edit, :destroy]
 
 	def index
 		@localities = Locality.all
@@ -27,6 +27,7 @@ class LocalitiesController < ApplicationController
 	end
 
 	def update
+
 		if @locality.update(locality_params)
 			flash[:notice] = 'Locality was updated successfully.'
 			redirect_to @locality
@@ -34,8 +35,17 @@ class LocalitiesController < ApplicationController
 			flash[:error] = 'Error saving Locality.'
 			render action: 'edit'
 		end
-
 	end
+
+  def destroy
+		if @locality.destroy
+			flash[:notice] = "Locality #{ @locality.name }deleted successfully."
+			redirect_to localities_url
+		else
+			flash[:error] = "Locality could not be deleted."
+			render action: 'index'
+		end
+  end
 
 	private
 
