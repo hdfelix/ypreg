@@ -3,12 +3,15 @@
 @import "font-awesome.css";
 //import skin css files here 
 
-.user-info {
-	margin-top: 9px;
+.site-logo {
+	margin: 5px 0px;
 }
 
-.nav {
-	  margin-top: 5px;
+//links on nav for unauthenticated users
+nav.a:hover {color:white;}
+
+span.nav {
+	color: white;
 }
 
 .table th.text-right, .table td.text-right {
