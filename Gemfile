@@ -72,14 +72,22 @@ group :development, :test do
 	gem "database_cleaner", "~> 1.2.0"
 	gem "launchy", "~>2.4.2"
 	gem "selenium-webdriver", "~> 2.39.0"
+	gem "letter_opener"
 
 	#Generate database diagrams
 	gem "railroad"
 
 	#Add Pry for debugging
 	gem 'pry'
-	gem 'pry-remote'
-	gem 'pry-nav'
+	gem 'byebug'
+
+	#Annotate DB schema in models
+	gem 'annotate'
+	gem 'quiet_assets'
+	gem 'awesome_print'
+	gem 'better_errors'
+	gem "binding_of_caller"
+
 end
 
 #Geographic data 
