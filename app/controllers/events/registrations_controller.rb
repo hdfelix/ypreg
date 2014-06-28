@@ -1,6 +1,11 @@
-class RegistrationsController < ApplicationController
-  def index
-  end
+class Events::RegistrationsController < ApplicationController
+
+	#no index action since registrations are scoped to events
+
+	def show
+		@event = Event.find(params[:event_id])
+		@registration = @event.registrations.where('user_id = ?', current_user)
+	end
 
 	def new
 		@event = Event.find(params[:event_id])

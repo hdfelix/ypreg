@@ -1,8 +1,7 @@
 <%= form_for [@event,@registration] do |f| %>
   <% if @registration.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@registration.errors.count, "error") %> prohibited this registration from being saved:</h2>
-
+		<div id="error_explanation" class="alert alert-danger alert-dismissable">
+			<h4><strong><%= pluralize(@registration.errors.count, "error") %></strong> prohibited this registration from being saved:</h4>
       <ul>
 				<% @registration.errors.full_messages.each do |msg| %>
 					<li><%= msg %></li>
@@ -12,17 +11,43 @@
   <% end %>
 
 	<!-- Event info -->
-	<h3><%= @event.title %></h3>
-	<ul>
-		<li>Held at: <%= @event.location.name %></li>
-		<li>Event dates: <%= @event.begin_date %> to <%= @event.end_date %></li>
-		<li>Cost: $<%= @event.registration_cost %></li>
-	</ul>
-	<div class="form-group">
-		<%=f.hidden_field :event_id, value: params[:event_id]%>
+	<fieldset>
+		<legend><%= @event.title %></legend>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-md-2"><strong>Location:</strong></div>
+				<div class="col-md-10">
+					<%= @event.location.name %>
+					<span><%=event_location( @event ) %></span>
+				</div>
+			</div>
+			<br />
 
-		<!-- show only if current user is not registered -->jJ:w
-		
-		<%= f.submit 'Register' %> 
+			<div class="row">
+				<div class="col-md-2"><strong>Event Dates:</strong></div>
+				<div class="col-md-10">
+					<%= @event.begin_date %> to <%= @event.end_date %>
+				</div>
+			</div>
+			<br />
+
+			<div class="row">
+				<div class="col-md-2"><strong>Cost:</strong></div>
+				<div class="col-md-10">
+					<%= number_to_currency(@event.registration_cost) %>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+	<div class="form-group">
+		<div class="col-md-12">
+			<%=f.hidden_field :event_id, value: params[:event_id]%>
+
+			<!-- show only if current user is not registered -->
+				
+			<%= f.submit 'Register', class: 'btn btn-primary' %> 
+			<%= link_to 'Back', event_registrations_path, class: 'btn btn-default' %>
+
+		</div>
 	</div>
 <% end %>

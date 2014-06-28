@@ -11,7 +11,7 @@ YpwReg::Application.routes.draw do
 	resources :localities
 	resources :hospitalities
 	resources :events do
-		resources :registrations, only: [:index, :new, :create]
+		resources :registrations, except: [:index], controller: 'events/registrations'  #, only:  [:index, :new, :create]
 		#resources :hospitalities, except: [:index, :new, :create]
 	end
 

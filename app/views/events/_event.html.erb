@@ -4,7 +4,10 @@
 	<div class="widget-header">
 		<h3><i class="fa fa-calendar"></i></h3>
 		<div class="btn-group widget-header-toolbar">
-			<%= link_to content_tag(:i,'', class: 'fa fa-gear'), event %></i>
+			<link_to class="btn btn-success btn-sm">
+				<i class="fa fa-check-circle"></i>
+					Registered!
+				</span>
 		</div>
 	</div>
 	<div class="widget-content">
@@ -31,7 +34,7 @@
 				<br />
 				<% if current_user %>
 					<% unless already_registered?(event.id) %>
-						<%= link_to 'Register', new_event_registrations_path(event_id: event.id), class: 'btn btn-custom-secondary' %>
+						<%= link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary' %>
 					<% end %>
 					<%= link_to 'Edit', event, class: 'btn btn-default' %>
 				<% else %>
