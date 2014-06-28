@@ -34,7 +34,6 @@
 						</tr>
 						<tr>
 							<td class="text-right"><strong>Hospitality contact:</strong></td>
-							<% binding.pry %>
 							<td><%= User.find(@locality.contact_id).name %></td>
 							<td><%= mail_to User.find(@locality.contact_id).email %></td>
 							<td>[cell]</td>

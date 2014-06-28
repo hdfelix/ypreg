@@ -56,7 +56,6 @@ class HospitalitiesController < ApplicationController
 	end
 	
 	def hospitality_params
-		binding.pry
 		params.require(:hospitality).permit(:name, :hospitality_type, :contact_person_id, :locality_id, :max_capacity, :address1, :address2, :city, :state_abbrv, :zipcode)
 
 	end
