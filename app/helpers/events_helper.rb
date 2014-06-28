@@ -28,11 +28,7 @@ module EventsHelper
 		end
 	end
 	def already_registered?(event_id)
-		if current_user.registrations.where("id = ?",event_id)
-			true
-		else
-			false
-		end
+		current_user.registrations.where("id = ?",event_id).any?
 	end
 
 	def display_event(event)
