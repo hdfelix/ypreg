@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20140625053959) do
     t.string   "city"
     t.string   "state_abbrv"
     t.integer  "contact_id"
+    t.integer  "hospitality_contact_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

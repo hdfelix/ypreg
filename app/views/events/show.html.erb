@@ -17,7 +17,7 @@
 
 				<div class="row">
 					<div class="col-sm-4">
-						<strong>Type of event:</strong>
+						<strong><span class="pull-right">Type of event:</span></strong>
 					</div>
 					<div class="col-sm-8">
 						<%= display_event(@event) %>
@@ -26,7 +26,7 @@
 
 				<div class="row">
 					<div class="col-sm-4">
-						<strong>Begin Date</strong>
+						<strong><span class="pull-right">Begin Date:</span></strong>
 					</div>
 					<div class="col-sm-8">
 						<%= format_date(@event.begin_date) %>
@@ -35,7 +35,7 @@
 				
 				<div class="row">
 					<div class="col-sm-4">
-						<strong>End date: </strong>
+						<strong><span class="pull-right">End date: </span></strong>
 					</div>
 					<div class="col-sm-8">
 						<%= format_date(@event.end_date) %>
@@ -44,7 +44,7 @@
 
 				<div class="row">
 					<div class="col-sm-4">
-						<strong>Registration opens: </strong>
+						<strong><span class="pull-right">Registration opens: </span></strong>
 					</div>
 					<div class="col-sm-8">
 						<%= format_date(@event.registration_open_date) %>
@@ -53,7 +53,7 @@
 
 				<div class="row">
 					<div class="col-sm-4">
-						<strong>Registration  closes: </strong>
+						<strong><span class="pull-right">Registration  closes: </span></strong>
 					</div>
 					<div class="col-sm-8">
 						<%= format_date(@event.registration_close_date) %>
@@ -62,7 +62,7 @@
 
 				<div class="row">
 					<div class="col-sm-4">
-						<strong>Registration cost:</strong>
+						<strong><span class="pull-right">Registration cost:</span></strong>
 					</div>
 					<div class="col-sm-8">
 						<%= (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA" %>
@@ -100,11 +100,11 @@
 						</tr>
 						<tr>
 							<td>Camp Max Capacity</td>
-							<td>[max cap]</td>
+							<td><%= display_max_cap(@event.location)%></td>
 						</tr>
 						<tr>
 							<td>Remaining Spaces</td>
-							<td>[spaces]</td>
+							<td><%= @event.remaining_spaces %></td>
 						</tr>
 					</tbody>
 				</table>

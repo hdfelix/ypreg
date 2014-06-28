@@ -16,4 +16,8 @@ YpwReg::Application.routes.draw do
 	end
 
   devise_for :user, controllers: { registrations: "users/registrations" }
+
+	#if Rails.env.development?
+	#	mount LetterOpenerWeb::Engine, at: '/letter_opener'
+	#end
 end

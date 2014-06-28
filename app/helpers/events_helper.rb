@@ -42,4 +42,16 @@ module EventsHelper
 			"--"
 		end
 	end
+
+	def display_max_cap(location)
+		if location.max_capacity == nil
+			content_tag :span, class:'text-danger' do
+				"None Specified"
+			end
+		else
+			content_tag(:span) do
+				"#{location.max_capacity} saints"
+			end
+		end
+	end
 end

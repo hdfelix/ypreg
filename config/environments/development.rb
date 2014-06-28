@@ -31,6 +31,6 @@ YpwReg::Application.configure do
 
 	#ActionMailer
 	config.action_mailer.default_url_options = { host: 'localhost:3000' }
-	config.action_mailer.delivery_method = :smtp
+	config.action_mailer.delivery_method = :letter_opener #:smtp
 	config.action_mailer.perform_deliveries = true
 end

@@ -17,4 +17,7 @@ class Event < ActiveRecord::Base
 
 	default_scope { order('begin_date ASC') }
 
+	def remaining_spaces
+		self.location.max_capacity - self.registrations.count
+	end
 end

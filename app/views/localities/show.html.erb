@@ -34,15 +34,17 @@
 						</tr>
 						<tr>
 							<td class="text-right"><strong>Hospitality contact:</strong></td>
+							<% binding.pry %>
 							<td><%= User.find(@locality.contact_id).name %></td>
 							<td><%= mail_to User.find(@locality.contact_id).email %></td>
 							<td>[cell]</td>
 							<td>
-								[edit]
+								<%= link_to 'Edit', edit_locality_path(@locality.contact_id) %>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+				<%= link_to "Back", localities_path, class: 'btn btn-default pull-right' %>&nbsp;
 				<p id="notice"><%= notice %></p>
 			</div>
 			<div class="widget-footert">	

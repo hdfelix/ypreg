@@ -72,7 +72,8 @@ group :development, :test do
 	gem "database_cleaner", "~> 1.2.0"
 	gem "launchy", "~>2.4.2"
 	gem "selenium-webdriver", "~> 2.39.0"
-	gem "letter_opener"
+	#gem "letter_opener"
+	gem 'annotate'
 
 	#Generate database diagrams
 	gem "railroad"
