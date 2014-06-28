@@ -80,7 +80,8 @@ group :development, :test do
 
 	#Add Pry for debugging
 	gem 'pry'
-	gem 'byebug'
+	gem 'pry-byebug'
+	gem 'pry-stack_explorer'
 
 	#Annotate DB schema in models
 	gem 'annotate'
