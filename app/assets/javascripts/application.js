@@ -9,10 +9,10 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-
 //= require jquery
 //= require jquery_ujs
-//= requre bootstrap
+//= require kingadmin/jquery-2.1.0
+//= require kingadmin/bootstrap
 //= require kingadmin/king-elements
 //= require kingadmin/king-components
 //= require kingadmin/king-common
@@ -21,6 +21,7 @@
 //= require_tree .
 
 $(function() {
+	alert("jquery working");
 	$("#event_begin_date").datepicker(
 		{dateformat: 'yy-mm-dd'});
 	$("#event_end_date").datepicker(
