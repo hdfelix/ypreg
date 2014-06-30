@@ -19,7 +19,6 @@
 	<!-- kingAdmin skin -->
 	<!--%= stylesheet_link_tag		"fullbright", media: "all" %-->
 	<!--%= stylesheet_link_tag		"slategray", media: "all" %-->
-
 	<%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
@@ -203,7 +202,15 @@
 								</div>
 							</div>
 							
-							<h5 class="label label-default"><i class="fa fa-info-circle"></i> <%= Event.first.title %></h5>
+							<% if Event.all.count > 0 %>
+								<h5 class="label label-default">
+									<i class="fa fa-info-circle"></i> 
+									<%= Event.first.title %></h5>
+							<% else %>
+								<h5 class="label label-default">
+									<i class="fa fa-info-circle"></i> 
+										No Events</h5>
+							<% end %>
 							<ul class="list-unstyled list-info-sidebar bottom-30px">
 								<li class="data-row">
 									<span class="data-name">Attendance</span>
