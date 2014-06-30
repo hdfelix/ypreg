@@ -21,16 +21,20 @@
 					</thead>
 
 					<tbody>
-						<% @locations.each do |location| %>
-							<tr>
-								<td><%= location.name %></td>
-								<td><%= location.description %></td>
-								<td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
-								<td><%= link_to 'Show', location %>
-										<%= link_to 'Edit', edit_location_path(location) %>
-										<%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
-								</td>
-							</tr>
+						<% if @locations.all.count > 0 %>
+							<% @locations.each do |location| %>
+								<tr>
+									<td><%= location.name %></td>
+									<td><%= location.description %></td>
+									<td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
+									<td><%= link_to 'Show', location %>
+											<%= link_to 'Edit', edit_location_path(location) %>
+											<%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
+									</td>
+								</tr>
+							<% end %>
+						<% else %>
+							<tr><td colspan=7><center>No Locations in the database...</center></td></tr>
 						<% end %>
 					</tbody>
 				</table>
