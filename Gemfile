@@ -73,7 +73,6 @@ group :development, :test do
 	gem "launchy", "~>2.4.2"
 	gem "selenium-webdriver", "~> 2.39.0"
 	#gem "letter_opener"
-	gem 'annotate'
 
 	#Generate database diagrams
 	gem "railroad"
