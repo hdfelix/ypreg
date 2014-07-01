@@ -3,6 +3,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.all
+		authorize @events
   end
 
   def show
@@ -10,6 +11,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+		authorize @event
   end
 
   def edit
@@ -17,6 +19,8 @@ class EventsController < ApplicationController
 
   def create
 		@event = Event.new(event_params)
+		authorize @event
+
 		if @event.save
 			redirect_to events_path, notice: 'Event was successfully created.' 
 		else
@@ -49,6 +53,7 @@ class EventsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+			authorize @event
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
