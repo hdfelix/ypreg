@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 	has_many :registrations
 	has_many :events, through: :registrations
 
-	def role?(base_role3)
+	def role?(base_role)
 		role == base_role.to_s
 	end
 end
