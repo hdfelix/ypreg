@@ -15,8 +15,9 @@ class LocalitiesController < ApplicationController
 	end
 
 	def create
-		authorize @locality
 		@locality = Locality.new(locality_params)
+		authorize @locality
+
 		if @locality.save
 			flash[:notice] = 'Locality was created successfully.'
 			redirect_to localities_path

@@ -27,9 +27,6 @@ module EventsHelper
 			end
 		end
 	end
-	def already_registered?(event_id)
-		current_user.registrations.where("id = ?",event_id).any?
-	end
 
 	def display_event(event)
 		if	event_type = Event::EVENT_TYPE.detect{ |a| a.include?(event.event_type)}
