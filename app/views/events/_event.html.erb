@@ -3,15 +3,21 @@
 <div class="widget">
 	<div class="widget-header">
 		<h3><i class="fa fa-calendar"></i></h3>
-		<div class="btn-group widget-header-toolbar">
-			<link_to class="btn btn-success btn-sm">
-				<i class="fa fa-check-circle"></i>
-					Registered!
-				</span>
-		</div>
 	</div>
 	<div class="widget-content">
-		<h3><%= event.title %></h3>
+		<div class="row">
+			<div class="col-md-11"> 
+				<h3><%= event.title %></h3>
+			</div>
+			<div class="col-md-1">
+				<% unless current_user.registrations.where(event_id: event).empty? %>
+					<%= link_to event_registration_path(event,current_user.registrations.where(event_id: event).first), class: 'btn btn-success pull-right' do %>
+						<i class="fa fa-check-circle"></i>
+						Registered
+					<% end %>
+				<% end %>
+			</div>
+		</div>
 		<br />
 		<div class="row">
 			<div></div>
@@ -33,10 +39,10 @@
 				<h4><span>Cost:  </span><span><%= number_to_currency(event.registration_cost) %></span></h4>
 				<br />
 				<% if current_user %>
-					<% unless already_registered?(event.id) %>
+					<% if current_user.registrations.where(event_id: event).empty? %>
 						<%= link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary' %>
 					<% end %>
-					<%= link_to 'Edit', event, class: 'btn btn-default' %>
+					<%= link_to 'Manage', event, class: 'btn btn-default' %>
 				<% else %>
 					<p><%= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary' %></p>
 				<% end %>
