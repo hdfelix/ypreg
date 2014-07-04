@@ -19,7 +19,6 @@
 	<!-- kingAdmin skin -->
 	<!--%= stylesheet_link_tag		"fullbright", media: "all" %-->
 	<!--%= stylesheet_link_tag		"slategray", media: "all" %-->
-
 	<%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
@@ -175,10 +174,18 @@
 										<i class="toggle-icon fa fa-angle-left"></i>
 									</a>
 									<ul class="sub-menu">
-										<li><%= link_to events_url do %><span class="text">Events</span><% end %></li>
-										<li><%= link_to locations_url do %><span class="text">Locations</span><% end %></li>
-										<li><%= link_to localities_url do %><span class="text">Localities</span><% end %></li>
-										<li><%= link_to hospitalities_url do %><span class="text">Hospitality</span><% end %></li>
+										<% if policy(Event.all).index? %>
+											<li><%= link_to events_url do %><span class="text">Events</span><% end %></li>
+										<% end %>
+										<% if policy(Location.all).index? %>
+											<li><%= link_to locations_url do %><span class="text">Locations</span><% end %></li>
+										<% end %>
+										<% if policy(Locality.all).index? %>
+											<li><%= link_to localities_url do %><span class="text">Localities</span><% end %></li>
+										<% end %>
+										<% if policy(Hospitality.all).index? %>
+											<li><%= link_to hospitalities_url do %><span class="text">Hospitality</span><% end %></li>
+										<% end %>
 									</ul>
 								</li>
 								<li><a href="#" class="js-sub-menu-toggle"><i class="fa fa-list fw"></i><span class="text">Reports</span>
@@ -203,7 +210,15 @@
 								</div>
 							</div>
 							
-							<h5 class="label label-default"><i class="fa fa-info-circle"></i> <%= Event.first.title %></h5>
+							<% if Event.all.count > 0 %>
+								<h5 class="label label-default">
+									<i class="fa fa-info-circle"></i> 
+									<%= Event.first.title %></h5>
+							<% else %>
+								<h5 class="label label-default">
+									<i class="fa fa-info-circle"></i> 
+										No Events</h5>
+							<% end %>
 							<ul class="list-unstyled list-info-sidebar bottom-30px">
 								<li class="data-row">
 									<span class="data-name">Attendance</span>

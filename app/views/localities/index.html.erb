@@ -36,10 +36,12 @@
 						<% end %>
 					<tbody>
 				</table>
-
-				<%= link_to new_locality_path, class: 'btn btn-default' do %>
-					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
-					New Locality
+				
+				<% if policy(Locality.new).new? %>
+					<%= link_to new_locality_path, class: 'btn btn-default' do %>
+						<%= content_tag(:i, '', class: "fa fa-plus-square") %>
+						New Locality
+					<% end %>
 				<% end %>
 
 			</div>

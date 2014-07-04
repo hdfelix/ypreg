@@ -25,7 +25,7 @@
 			<div class="col-md-10">
 				<%= f.select :event_type,
 					Event::EVENT_TYPE, 
-					options={placeholder: "Cost"}, html_options={ class: 'form-control select' } %>
+					options={placeholder: "Event Type"}, html_options={ class: 'form-control select' } %>
 			</div>
 		</div>
 		<br /><br />
@@ -63,7 +63,7 @@
 			<div class="col-md-4">
 				<div class="input-group">
 					<span class='input-group-addon'>$</span>
-					<%= f.text_field :registration_cost, class: 'form-control', placeholder: 'Registration cost' %>
+					<%= f.text_field :registration_cost, class: 'form-control', placeholder: 'Cost' %>
 					<span class='input-group-addon'>.00</span>
 				</div>
 			</div>

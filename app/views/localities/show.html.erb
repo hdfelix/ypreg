@@ -7,7 +7,7 @@
 </div>
 <div class="row">
 	<!-- locality info -->
-	<div class="col-md-9">
+	<div class="col-md-8">
 		<div class="widget">
 			<div class="widget-header">
 				<h3><i class="fa fa-calendar-o"></i>Locality Details</h3>
@@ -16,30 +16,50 @@
 				<table class="table table-condensed">
 					<thead>
 						<tr>
-							<th></th>
-							<th>Contact</th>
-							<th>Email</th>
-							<th>Cellphone</th>
+							<th class="text-right">Contact</th>
+							<th><center>Name</center></th>
+							<th><center>Email</center></th>
+							<th><center>Cellphone</center></th>
 							<th></th>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="text-right"><strong>Locality contact:</strong></td>
-							<td><%= User.find(@locality.contact_id).name %></td>
-							<td><%= mail_to User.find(@locality.contact_id).email %></td>
-							<td>[cell]</td>
-							<td>
-								<%= link_to 'Edit', edit_locality_path(@locality) %>
-							</td>
+							<td class="text-right"><strong>Locality:</strong></td>
+							<% unless @locality.contact_id == nil %>
+								<td><%= User.find(@locality.contact_id).name %></td>
+								<td><%= mail_to User.find(@locality.contact_id).email %></td>
+								<td>[cell]</td>
+								<td>
+									<%= link_to 'Edit', edit_locality_path(@locality) %>
+								</td>
+							<% else %>
+								<td><center>--<center></td>
+								<td><center>--<center></td>
+								<td><center>--<center></td>
+								<td>
+									<%= link_to 'Add', edit_locality_path(@locality) %>
+								</td>
+							<% end %>
 						</tr>
 						<tr>
-							<td class="text-right"><strong>Hospitality contact:</strong></td>
-							<td><%= User.find(@locality.contact_id).name %></td>
-							<td><%= mail_to User.find(@locality.contact_id).email %></td>
-							<td>[cell]</td>
-							<td>
-								<%= link_to 'Edit', edit_locality_path(@locality.contact_id) %>
-							</td>
+							<td class="text-right"><strong>Hospitality:</strong></td>
+							<% unless @locality.contact_id == nil %>
+								<td><%= User.find(@locality.contact_id).name %></td>
+								<td><%= mail_to User.find(@locality.contact_id).email %></td>
+								<td>[cell]</td>
+								<td>
+									<% if policy(@locality).edit? %>
+										<%= link_to 'Edit', edit_locality_path(@locality.contact_id) %>
+									<% end %>
+								</td>
+							<% else %>
+								<td><center>--<center></td>
+								<td><center>--<center></td>
+								<td><center>--<center></td>
+								<td>
+									<%= link_to 'Add', edit_locality_path(@locality) %>
+								</td>
+							<% end %>
 						</tr>
 					</tbody>
 				</table>

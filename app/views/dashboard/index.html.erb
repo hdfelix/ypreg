@@ -8,7 +8,11 @@
 		<div class="col-md-9">
 			<div class="panel-group" id="events">
 				<h3>Upcoming events</h3>
-				<%= render partial: 'events/event', collection: @events %>
+				<% if @events.any? %>
+					<%= render partial: 'events/event', collection: @events %>
+				<% else %>
+					<center>There aren't any up-coming events.</center>
+				<% end %>
 			</div><!-- panel group -->
 		</div><!-- col -->
 	</div> <!-- row -->

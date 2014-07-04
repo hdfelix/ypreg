@@ -1,7 +1,7 @@
+//import skin css files here 
 @import "bootstrap.css";
 @import "main.css";
 @import "font-awesome.css";
-//import skin css files here 
 
 .site-logo {
 	margin: 5px 0px;
@@ -16,6 +16,10 @@ span.nav {
 
 .table th.text-right, .table td.text-right {
 	text-align: right;
+	width: 27%;
+	padding-right: 3%;
 }
+
+
 
 

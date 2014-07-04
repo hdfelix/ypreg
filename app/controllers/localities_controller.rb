@@ -3,6 +3,7 @@ class LocalitiesController < ApplicationController
 
 	def index
 		@localities = Locality.all
+		authorize @localities
 	end
 
 	def show
@@ -10,10 +11,13 @@ class LocalitiesController < ApplicationController
 
 	def new
 		@locality = Locality.new
+		authorize @locality
 	end
 
 	def create
 		@locality = Locality.new(locality_params)
+		authorize @locality
+
 		if @locality.save
 			flash[:notice] = 'Locality was created successfully.'
 			redirect_to localities_path
@@ -52,6 +56,7 @@ class LocalitiesController < ApplicationController
 	# Use callbacks to share common setup or constraints between actions.
 	def set_locality
 		@locality = Locality.find(params[:id])
+		authorize @locality
 	end
 		
 	def locality_params

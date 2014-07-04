@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 	before_action :configure_permitted_parameters, if: :devise_controller?
 	
 	rescue_from Pundit::NotAuthorizedError do |exception|
+		flash[:alert] = exception.message
 		redirect_to root_url, alert: exception.message
 	end
 
@@ -19,6 +20,11 @@ class ApplicationController < ActionController::Base
 
 	def after_sign_in_path_for(resource)
 		dashboard_index_path
+	end
+
+	def user_not_authorized
+		flash[:error] = "You are not authorized to perform this action."
+		redirect_to(request.referrer || root_path)
 	end
 
 	def layout_by_resource

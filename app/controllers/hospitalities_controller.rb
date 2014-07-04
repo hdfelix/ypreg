@@ -3,6 +3,7 @@ class HospitalitiesController < ApplicationController
 
 	def index
 		@hospitalities = Hospitality.all
+		authorize @hospitalities
 	end
 
   def show
@@ -11,10 +12,13 @@ class HospitalitiesController < ApplicationController
   def new
 		#@event = Hospitality.find(params[:event_id])
 		@hospitality = Hospitality.new
+		authorize @hospitality
   end
 
 	def create 
 		@hospitality = Hospitality.new(hospitality_params)
+		authorize @hospitality
+
 		if @hospitality.save
 			flash[:notice] = 'Hospitality was created successfully.'
 			redirect_to hospitalities_path
@@ -53,6 +57,7 @@ class HospitalitiesController < ApplicationController
 	# Use callbacks to share common setup or constraints between actions.
 	def set_hospitality
 		@hospitality = Hospitality.find(params[:id])
+		authorize @hospitality
 	end
 	
 	def hospitality_params

@@ -41,7 +41,11 @@
 				<div class= "col-md-12">
 					<span class="pull-right">
 						<%= link_to 'Back', localities_path, class: 'btn btn-default' %>
-						<%= f.submit "Submit", class: 'btn btn-primary' %>
+						<% if policy(@locality).new? ||
+								  policy(@locality).create? || 
+								  policy(@locality).update? %>
+							<%= f.submit "Submit", class: 'btn btn-primary' %>
+						<% end %>
 					</span>
 				</div>
 				<br />
