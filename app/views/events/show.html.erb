@@ -71,8 +71,8 @@
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-							<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary'%>
-							<%= link_to 'Back', events_path, class: 'btn btn-default' %>
+							<br />
+							<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm'%>
 						</div>
 					</div>
 
@@ -197,9 +197,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td colspan="14"><center>[summaries data here]</center></td>
-								</tr>
+							<%= render partial: 'localities/attendance_summary', locals: { localities: Locality.all } %>
 							</tbody>
 						</table>
 					</div><!-- widget content -->

@@ -7,6 +7,11 @@ class EventsController < ApplicationController
   end
 
   def show
+
+		# load summary for all localities into  in a loop here
+		@event = Event.find(params[:id])
+		@stats = @event.load_locality_summary(Locality.first)
+
   end
 
   def new
