@@ -113,8 +113,9 @@ ActiveRecord::Schema.define(version: 20140704184307) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
-    t.integer  "locality_id"
     t.string   "user_type"
+    t.integer  "locality_id"
+    t.string   "type"
     t.decimal  "home_phone"
     t.decimal  "cell_phone"
     t.decimal  "work_phone"
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(version: 20140704184307) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["locality_id"], name: "index_users_on_locality_id"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
