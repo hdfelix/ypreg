@@ -10,10 +10,12 @@
 				<h3><%= event.title %></h3>
 			</div>
 			<div class="col-md-1">
-				<% unless current_user.registrations.where(event_id: event).empty? %>
-					<%= link_to event_registration_path(event,current_user.registrations.where(event_id: event).first), class: 'btn btn-success pull-right' do %>
-						<i class="fa fa-check-circle"></i>
-						Registered
+				<% if current_user %>
+					<% unless current_user.registrations.where(event_id: event).empty? %>
+						<%= link_to event_registration_path(event,current_user.registrations.where(event_id: event).first), class: 'btn btn-success pull-right' do %>
+							<i class="fa fa-check-circle"></i>
+							Registered
+						<% end %>
 					<% end %>
 				<% end %>
 			</div>

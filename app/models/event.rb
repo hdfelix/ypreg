@@ -21,19 +21,27 @@ class Event < ActiveRecord::Base
 		self.location.max_capacity - self.registrations.count
 	end
 
+	def participating_localities
+		loc_array = []
+		self.registrations.all.each do |registration|
+			loc_array << Locality.find(registration.user.locality_id)
+		end
+		loc_array
+	end
+
 	def load_locality_summary(locality)
 		stats = Hash.new{|hash, key| hash[key] = Hash.new{|hash, key| hash[key] = Array.new}}
 
 		#Load stats for one locality
 		#TODO: Update with real values
 		loc = locality.city
-		stats[loc]["grand_total"] = 116
+		stats[loc]["grand_total"] = self.registrations.count
 		stats[loc]["total_yp"] = 83
 		stats[loc]["total_serving_ones"] = 14
 		stats[loc]["total_trainees"] = 11
 		stats[loc]["total_helpers"] = 8
 		stats[loc]["amount_due"] = 22000 #number_to_currency(stats[loc]["grand_total"] * @event.registration_cost)
-stats[loc]["actual_grand_total"] = 92
+		stats[loc]["actual_grand_total"] = 92
 		stats[loc]["actual_total_yp"] = 56
 		stats[loc]["actual_total_serving_ones"] = 8
 		stats[loc]["actual_total_trainees"] = 6
