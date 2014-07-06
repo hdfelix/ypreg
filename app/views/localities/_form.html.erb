@@ -17,7 +17,6 @@
 					<%= f.text_field :city, autofocus: true, class: 'form-control', placeholder: "Enter city name" %>
 				</div>
 			</div>
-			<br /><br />
 
 			<div class="form-group">
 				<%= f.label :state_abbrv, 'State', class: 'col-md-2 control-label' %>
@@ -25,7 +24,6 @@
 					<%= f.select :state_abbrv, Location::STATE_LIST, {include_blank: true, selected: 'CA'}, {class: 'form-control'} %>
 				</div>
 			</div>
-			<br /><br />
 
 			<div class="form-group">
 				<%= f.label :user, 'Contact', class: 'col-md-2 control-label' %>
@@ -33,10 +31,8 @@
 					<%= f.collection_select(:contact_id, User.all, :id, :name, {include_blank: true}, {class: 'form-control'}) %>
 				</div>
 			</div>
-			<br />
 			
 		</fieldset>
-
 			<div class="form-group">
 				<div class= "col-md-12">
 					<span class="pull-right">
