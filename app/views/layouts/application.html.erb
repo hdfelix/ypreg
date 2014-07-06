@@ -52,7 +52,7 @@
 			<!-- END TOP GENERAL ALERT -->
 
 			<!-- TOP BAR -->
-			<% unless (params[:controller] == 'devise/sessions' and params[:action] == 'new') %>
+			<% unless ((params[:controller] == 'devise/sessions' or params[:controller] == 'users/registrations')) and (params[:action] == 'new') %>
 				<div class="top-bar">
 					<div class="container">
 						<div class="row">

@@ -3,6 +3,7 @@ class LocationsController < ApplicationController
 
   def index
 		@locations = Location.all
+		authorize @locations
   end
 
   def show
@@ -10,17 +11,20 @@ class LocationsController < ApplicationController
 
   def new
     @location = Location.new
+		authorize @location
   end
 
   def edit
   end
 
-  def create
+	def create
 		@location = Location.new(location_params)
+		authorize @location
+
 		if @location.save
 			flash[:notice] = 'Location was created successfully.'
 			redirect_to locations_path
-    else
+		else
 			flash[:error] = 'Error saving the Location.'
 			render action: 'new'
 		end
@@ -46,6 +50,7 @@ class LocationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_location
       @location = Location.find(params[:id])
+			authorize @location
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

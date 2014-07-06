@@ -1,87 +1,94 @@
 <div class="content">
 	<div class="row">
-	<div class="main-header">
-		<h2><%= @event.title %></h2>
-		<em><%= "to be held at #{ Location.find(@event.location_id).name }" %></em>
-	</div>
-</div>
-<div class="row">
-	<!-- Event info -->
-	<div class="col-md-6">
-		<div class="widget">
-			<div class="widget-header">
-				<h3><i class="fa fa-calendar-o"></i>Event Details</h3>
-			</div>
-			<div class="widget-content">
-				<p id="notice"><%= notice %></p>
-
-				<div class="row">
-					<div class="col-sm-4">
-						<strong><span class="pull-right">Type of event:</span></strong>
-					</div>
-					<div class="col-sm-8">
-						<%= display_event(@event) %>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-sm-4">
-						<strong><span class="pull-right">Begin Date:</span></strong>
-					</div>
-					<div class="col-sm-8">
-						<%= format_date(@event.begin_date) %>
-					</div>
-				</div>
-				
-				<div class="row">
-					<div class="col-sm-4">
-						<strong><span class="pull-right">End date: </span></strong>
-					</div>
-					<div class="col-sm-8">
-						<%= format_date(@event.end_date) %>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-sm-4">
-						<strong><span class="pull-right">Registration opens: </span></strong>
-					</div>
-					<div class="col-sm-8">
-						<%= format_date(@event.registration_open_date) %>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-sm-4">
-						<strong><span class="pull-right">Registration  closes: </span></strong>
-					</div>
-					<div class="col-sm-8">
-						<%= format_date(@event.registration_close_date) %>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-sm-4">
-						<strong><span class="pull-right">Registration cost:</span></strong>
-					</div>
-					<div class="col-sm-8">
-						<%= (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA" %>
-					</div>
-				</div>
-
-				<!--div class="row"-->
-					<!--div class="col-sm-12"-->
-						<!--%= link_to 'Register', new_event_registrations_path, class: 'btn btn-default pull-right' %-->
-					<!--/div-->
-				<!--/div-->
-			</div>
-
-			<div class="widget-footer">	
-			</div>
+		<div class="main-header">
+			<h2><%= @event.title %></h2>
+			<em><%= "to be held at #{ Location.find(@event.location_id).name }" %></em>
 		</div>
 	</div>
+
+	<div class="row">
+		<!-- Event info -->
+		<div class="col-md-4">
+			<div class="widget">
+				<div class="widget-header">
+					<h3><i class="fa fa-calendar-o"></i>Event Details</h3>
+				</div>
+				<div class="widget-content">
+					<p id="notice"><%= notice %></p>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<strong><span class="pull-right">Type of event:</span></strong>
+						</div>
+						<div class="col-sm-5">
+							<%= display_event(@event) %>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<strong><span class="pull-right">Begin Date:</span></strong>
+						</div>
+						<div class="col-sm-5">
+							<%= format_date(@event.begin_date) %>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-6">
+							<strong><span class="pull-right">End date: </span></strong>
+						</div>
+						<div class="col-sm-5">
+							<%= format_date(@event.end_date) %>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<strong><span class="pull-right">Registration opens: </span></strong>
+						</div>
+						<div class="col-sm-5">
+							<%= format_date(@event.registration_open_date) %>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<strong><span class="pull-right">Registration  closes: </span></strong>
+						</div>
+						<div class="col-sm-5">
+							<%= format_date(@event.registration_close_date) %>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<strong><span class="pull-right">Registration cost:</span></strong>
+						</div>
+						<div class="col-sm-5">
+							<%= (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA" %>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<br />
+							<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm'%>
+						</div>
+					</div>
+
+					<!--div class="row"-->
+						<!--div class="col-sm-12"-->
+							<!--%= link_to 'Register', new_event_registrations_path, class: 'btn btn-default pull-right' %-->
+						<!--/div-->
+					<!--/div-->
+				</div>
+
+				<div class="widget-footer">	
+				</div>
+			</div>
+		</div>
 	<!-- Event Registration Details -->
-	<div class="col-md-6">
+	<div class="col-md-4">
 		<div class="widget">
 			<div class="widget-header">
 				<h3><i class="fa fa-bar-chart-o"></i>Statistics</h3>
@@ -112,11 +119,88 @@
 		</div>
 	</div><!-- end event registration details -->
 
-</div>
-<div class="row">
-	<div class="col-md-12">
-		<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary'%>
-		<%= link_to 'Back', events_path, class: 'btn btn-default' %>
-	</div>
-</div>
-</div><!-- End event info -->
+	<!-- Attendance Breakdown -->
+	<div class="col-md-4">
+		<div class="widget">
+			<div class="widget-header">
+				<h3><i class="fa fa-bar-chart-o"></i>Attendance Breakdown</h3>
+			</div>
+			<div class="widget-content">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Totals</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Young People</td>
+							<td>[yp]</td>
+						</tr>
+						<tr>
+							<td>Serving Ones</td>
+							<td>[so]</td>
+						</tr>
+						<tr>
+						<tr>
+							<td>Trainees</td>
+							<td>[Ts]</td>
+						</tr>
+						<tr>
+							<td>Helpers</td>
+							<td>[Hs]</td>
+						</tr>
+						<tr>
+							<td>Family Attending</td>
+							<td>[FA]</td>
+						</tr>
+						<tr>
+							<td>YCAT</td>
+							<td>[Ys]</td>
+						</tr>
+						<tr>
+							<td>S/S Brothers</td>
+							<td>[SBs]</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div><!-- End attendance breakdown -->
+	</div><!-- End Event info, statistics, attendance breakdown row
+	
+	<div class="row">
+		<!-- Locality Summaries -->
+		<div class="col-md-12">
+			<div class="widget">
+				<div class="widget-header">
+					<h3><i class="fa fa-bar-chart-o"></i>Locality Summaries</h3>
+				</div>
+					<div class="widget-content">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Locality</th>
+									<th>GRAND TOTAL</th>
+									<th>Total YP</th>
+									<th>Total SO</th>
+									<th>Total Trainees</th>
+									<th>YP/SO</th>
+									<th>Amt Due</th>
+									<th>Actual Grand Total</th>
+									<th>Actual Total YP</th>
+									<th>Actual Total SO</th>
+									<th>ActualTotal Trainees</th>
+									<th>Actual Total Helpers</th>
+									<th>Actual Amt Paid</th>
+									<th>Balance</th>
+								</tr>
+							</thead>
+							<tbody>
+							<%= render partial: 'localities/attendance_summary', locals: { localities: @event.participating_localities } %>
+							</tbody>
+						</table>
+					</div><!-- widget content -->
+				</div><!-- Locality Summaries widget -->
+		</div><!-- col-md 12 -->
+	</div><!-- Row -->
