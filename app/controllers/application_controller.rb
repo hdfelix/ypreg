@@ -12,13 +12,15 @@ class ApplicationController < ActionController::Base
 		redirect_to root_url, alert: exception.message
 	end
 
+	before_filter :set_chart_values
+
 	protected
 
 	def configure_permitted_parameters
 		devise_parameter_sanitizer.for(:sign_up) << :name
 
 		#TODO: Handle all new user params, by action
-		if params[:action] == "update"
+		if params[:action] == "update" or params[:action] == "new"
 			devise_parameter_sanitizer.for(:sign_up) << :role
 		end
 	end
@@ -39,4 +41,36 @@ class ApplicationController < ActionController::Base
 			'application'
 		end
 	end
+
+	def set_chart_values
+		# Values for aria chart
+		@chart_values = widget_stats_next_event
+	end
+
+	#dashboard widget helpers
+	def widget_stats_next_event
+
+		chart_values = {}
+
+		# Values for Attendance aria chart
+		next_event = Event.where("end_date >= ?", Time.new.to_date).first
+		location_capacity = next_event.location.max_capacity 
+		registration_count = next_event.registrations.count
+
+		chart_values["att_ratio"] = "#{registration_count} / #{location_capacity}"
+		chart_values["att_ratio_width_percentage"] = "width: #{(registration_count.to_f / location_capacity.to_f) * 100}%"
+		chart_values["att_value_now"] = registration_count
+		chart_values["att_value_max"] = location_capacity
+
+		# Values for Localities aria chart
+		total_localities = Locality.all.count
+		next_event_localities = Event.where("end_date >= ?", Time.now.to_date).first.participating_localities.count 
+		chart_values["loc_ratio"] = "#{next_event_localities} / #{total_localities}"
+		chart_values["loc_ratio_width_percentage"] = "width: #{(next_event_localities.to_f / total_localities.to_f) * 100}%"
+		chart_values["loc_value_now"] = next_event_localities
+		chart_values["loc_value_max"] = total_localities
+
+		chart_values		
+	end
+
 end
