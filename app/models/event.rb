@@ -35,7 +35,7 @@ class Event < ActiveRecord::Base
 		#Load stats for one locality
 		#TODO: Update with real values
 		loc = locality.city
-		stats[loc]["grand_total"] = self.registrations.count
+		stats[loc]["grand_total"] = self.users.where("locality_id = ?",locality.id).count 
 		stats[loc]["total_yp"] = 83
 		stats[loc]["total_serving_ones"] = 14
 		stats[loc]["total_trainees"] = 11
