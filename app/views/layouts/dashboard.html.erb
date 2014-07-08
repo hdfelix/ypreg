@@ -209,7 +209,6 @@
 									<p>You can search the widgets using the search box located at top bar. This is useful when your dashboard has a lot of content.</p>
 								</div>
 							</div>
-							
 							<% if Event.all.count > 0 %>
 								<h5 class="label label-default">
 									<i class="fa fa-info-circle"></i> 
@@ -224,12 +223,12 @@
 									<span class="data-name">Attendance</span>
 									<span class="data-value">
 										<% if Event.all.count > 0 %>
-											<%= Event.first.registrations.count %> / <%= Event.first.location.max_capacity %>
+											<%= @chart_values["att_ratio"] %>
 										<% else  %>
 											0 / 0
 										<% end %>
 										<div class="progress progress-xs">
-											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= @chart_values["att_value_now"] %>" aria-valuemin="0" aria-valuemax="<%= @chart_values["att_value_max"] %>" style="<%= @chart_values["att_ratio_width_percentage"] %>">
 												<span class="sr-only">10%</span>
 											</div>
 										</div>
@@ -248,7 +247,14 @@
 								</li>
 								<li class="data-row">
 									<span class="data-name">Localities</span>
-									<span class="data-value">[TODO]</span>
+									<span class="data-value">
+										<%= @chart_values["loc_ratio"] %>
+									<div class="progress progress-xs">
+										<div class="progress-bar progress-bar-success" role="progressbar" aria_valuenow="<%= @chart_values["loc_value_now"] %>" aria-valuemin="0" aria-valuemax="<%= @chart_values["loc_value_max"] %>" style="<%= @chart_values["loc_ratio_width_percentage"] %>">
+											<span class="sr-only">10%</span>
+										</div>
+									</div>
+								</span>
 								</li>
 							</ul>
 

@@ -29,25 +29,26 @@ class Event < ActiveRecord::Base
 		loc_array
 	end
 
-	def load_locality_summary(locality)
+	def load_locality_summary
 		stats = Hash.new{|hash, key| hash[key] = Hash.new{|hash, key| hash[key] = Array.new}}
-
-		#Load stats for one locality
-		#TODO: Update with real values
-		loc = locality.city
-		stats[loc]["grand_total"] = self.registrations.count
-		stats[loc]["total_yp"] = 83
-		stats[loc]["total_serving_ones"] = 14
-		stats[loc]["total_trainees"] = 11
-		stats[loc]["total_helpers"] = 8
-		stats[loc]["amount_due"] = 22000 #number_to_currency(stats[loc]["grand_total"] * @event.registration_cost)
-		stats[loc]["actual_grand_total"] = 92
-		stats[loc]["actual_total_yp"] = 56
-		stats[loc]["actual_total_serving_ones"] = 8
-		stats[loc]["actual_total_trainees"] = 6
-		stats[loc]["actual_total_helpers"] = 3
-		stats[loc]["actual_amount_paid"] = 73 * 25 #@event.registration_cost
-		stats[loc]["balance"] = stats[loc]["actual_amount_paid"] - stats[loc]["amount_due"]
+		Locality.all.each do |locality|
+			#Load stats for one locality
+			loc = locality.city
+			stats[loc]["grand_total"] = self.users.where("locality_id = ?",locality.id).count 
+			# Create methods for these values once user types and pmt handling is finalized
+			stats[loc]["total_yp"] = [83]
+			stats[loc]["total_serving_ones"] = [14]
+			stats[loc]["total_trainees"] = [11]
+			stats[loc]["total_helpers"] = [8]
+			stats[loc]["amount_due"] = stats[loc]["grand_total"] * self.registration_cost
+			stats[loc]["actual_grand_total"] = [92]
+			stats[loc]["actual_total_yp"] = [56]
+			stats[loc]["actual_total_serving_ones"] = [8]
+			stats[loc]["actual_total_trainees"] = [6]
+			stats[loc]["actual_total_helpers"] = [3]
+			stats[loc]["actual_amount_paid"] = 73 * self.registration_cost
+			stats[loc]["balance"] = stats[loc]["actual_amount_paid"] - stats[loc]["amount_due"]
+		end
 		stats
 	end
 end

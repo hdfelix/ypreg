@@ -7,13 +7,13 @@
 		<td><%= @stats["#{loc.city}"]["total_serving_ones"] %></td>
 		<td><%= @stats["#{loc.city}"]["total_trainees"] %></td>
 		<td><%= @stats["#{loc.city}"]["total_helpers"] %></td>
-		<td><%= @stats["#{loc.city}"]["amount_due"] %></td>
+		<td><%= number_to_currency(@stats["#{loc.city}"]["amount_due"]) %></td>
 		<td><%= @stats["#{loc.city}"]["actual_grand_total"] %></td>
 		<td><%= @stats["#{loc.city}"]["actual_total_yp"] %></td>
 		<td><%= @stats["#{loc.city}"]["actual_total_serving_ones"] %></td>
 		<td><%= @stats["#{loc.city}"]["actual_total_trainees"] %></td>
 		<td><%= @stats["#{loc.city}"]["actual_total_helpers"] %></td>
-		<td><%= @stats["#{loc.city}"]["actual_amount_paid"] %></td>
-		<td><%= @stats["#{loc.city}"]["balance"] %></td>
+		<td><%= number_to_currency(@stats["#{loc.city}"]["actual_amount_paid"]) %></td>
+		<td><%= number_to_currency(@stats["#{loc.city}"]["balance"]) %></td>
 	</tr>
 <% end %>

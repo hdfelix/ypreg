@@ -11,9 +11,10 @@ class DashboardController < ApplicationController
 		redirect_to root_url, alert: exception.message
 	end
 
-	def index
-		@events = Event.all
-	end
+	 def index
+	 	@events = Event.all
+	 end
+	
 	protected
 
 	def configure_permitted_parameters

@@ -23,3 +23,10 @@ $ rake db:migrate
 * (instructions on using the different parts of the site)
 * (Themes)
 
+## Constants
+* US States - Location::STATE_LIST
+* Event Types - Event::EVENT_TYPE
+* User Types - User::USER_TYPE
+* Hospitality TYpes - Hospitality::HOSPITALITY_TYPE
+* Payment Types - Registration::PAYMENT_TYPE
+
