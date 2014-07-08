@@ -10,8 +10,7 @@ class EventsController < ApplicationController
 
 		# load summary for all localities into  in a loop here
 		@event = Event.find(params[:id])
-			@stats =  @event.load_locality_summary
-			binding.pry
+		@stats =  @event.load_locality_summary
   end
 
   def new
