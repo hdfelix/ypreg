@@ -38,13 +38,21 @@
 * Add files to asset pipeline
 * Fix anything broken with theme
 
-### v0.5: Hospitality
+### v0.5 Reports, Skinning
+* 'Next Event' widget on left-nav
+ * Localities
+ * Registrations
+* Event Localities summary 
+* [list reports created, and theming]
+* Graphs?  
+
+### v0.6: Hospitality
 * Integration tests
 * Migration, Controller, Model
 * Initial view
 
-### v0.6 Reports, Skinning
-* [list reports created, and theming]
-* Graphs?  
+### v0.7
+* Refactoring
+ * Law of Demeter?
 
 
