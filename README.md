@@ -11,6 +11,7 @@ no hospitality accomodations as well as multi-day events where hospitality accom
 * Create and manage hospitality locations
 * Create and manage different types of users
 * Reports and graphs for all of the data types
+* ...
 
 ## Setup
 To get started, clone this repo and run the following commands from your terminal:
@@ -18,6 +19,11 @@ To get started, clone this repo and run the following commands from your termina
 $ bundle
 $ rake db:create
 $ rake db:migrate
+```
+
+Next, Run the following command to create an admin user account:  
+```
+rake ypreg:create_admin
 ```
 ...
 * (instructions on using the different parts of the site)
