@@ -53,23 +53,24 @@ class ApplicationController < ActionController::Base
 		chart_values = {}
 
 		# Values for Attendance aria chart
-		next_event = Event.where("end_date >= ?", Time.new.to_date).first
-		location_capacity = next_event.location.max_capacity 
-		registration_count = next_event.registrations.count
+		if Event.any?
+			next_event = Event.where("end_date >= ?", Time.new.to_date).first
+			location_capacity = next_event.location.max_capacity 
+			registration_count = next_event.registrations.count
 
-		chart_values["att_ratio"] = "#{registration_count} / #{location_capacity}"
-		chart_values["att_ratio_width_percentage"] = "width: #{(registration_count.to_f / location_capacity.to_f) * 100}%"
-		chart_values["att_value_now"] = registration_count
-		chart_values["att_value_max"] = location_capacity
+			chart_values["att_ratio"] = "#{registration_count} / #{location_capacity}"
+			chart_values["att_ratio_width_percentage"] = "width: #{(registration_count.to_f / location_capacity.to_f) * 100}%"
+			chart_values["att_value_now"] = registration_count
+			chart_values["att_value_max"] = location_capacity
 
-		# Values for Localities aria chart
-		total_localities = Locality.all.count
-		next_event_localities = Event.where("end_date >= ?", Time.now.to_date).first.participating_localities.count 
-		chart_values["loc_ratio"] = "#{next_event_localities} / #{total_localities}"
-		chart_values["loc_ratio_width_percentage"] = "width: #{(next_event_localities.to_f / total_localities.to_f) * 100}%"
-		chart_values["loc_value_now"] = next_event_localities
-		chart_values["loc_value_max"] = total_localities
-
+			# Values for Localities aria chart
+			total_localities = Locality.all.count
+			next_event_localities = Event.where("end_date >= ?", Time.now.to_date).first.participating_localities.count 
+			chart_values["loc_ratio"] = "#{next_event_localities} / #{total_localities}"
+			chart_values["loc_ratio_width_percentage"] = "width: #{(next_event_localities.to_f / total_localities.to_f) * 100}%"
+			chart_values["loc_value_now"] = next_event_localities
+			chart_values["loc_value_max"] = total_localities
+		end
 		chart_values		
 	end
 
