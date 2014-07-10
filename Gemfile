@@ -6,14 +6,7 @@ gem 'rails', '4.0.1'
 #Asset pipeline - is this gem needed? (http://guides.rubyonrails.org/asset_pipeline.html)
 #gem 'sprockets-rails', :require => 'sprockets/railtie'
 
-# Use sqlite3 as the database for Active Record in 'development;  use PosgreSQL in 'prodution'
-group :production do
-	gem 'pg'
-end
-
-group :development do
-	gem 'sqlite3'
-end
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

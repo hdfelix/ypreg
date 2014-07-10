@@ -113,7 +113,6 @@ ActiveRecord::Schema.define(version: 20140704184307) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
-    t.string   "user_type"
     t.integer  "locality_id"
     t.string   "type"
     t.decimal  "home_phone"
