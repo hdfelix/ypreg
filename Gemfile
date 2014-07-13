@@ -56,10 +56,10 @@ gem 'rails_12factor', group: :production
 
 # Added from 'Everyday Rails Testing with Rspec book (with latest versions as of 15MAR14)
 group :development, :test do
-	gem "rspec-rails", "~> 2.14.1"
+	gem "rspec-rails" #, "~> 2.14.1"
 	gem "factory_girl_rails", "~> 4.4.0"
 	gem "faker", "~>1.2.0"
-	gem "capybara", "~> 2.2.1"
+	gem "capybara" #, "~> 2.2.1"
 	gem "capybara-webkit"
 	gem "guard-rspec"
 	gem "database_cleaner", "~> 1.2.0"
