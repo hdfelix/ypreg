@@ -2,13 +2,14 @@
 
 FactoryGirl.define do
 	sequence(:title) {|n| "Sample Event #{n}" }
+  tmp_date = Time.now + 2.months
   factory :event do
     title { generate(:title) }
-		event_type 'Conference'
-		begin_date '20/01/01' #'01/01/2020'
-		end_date '20/01/03' #'01/03/2020'
-		registration_open_date '19/08/01' # '08/01/2019'
-		registration_close_date '19/11/01' #'11/01/2019'
+		event_type '3'  #
+    begin_date tmp_date 
+    end_date (tmp_date + 3.days).strftime('%Y/%m/%d') 
+    registration_open_date (tmp_date - 1.month).strftime('%Y/%m/%d') 
+    registration_close_date (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d') 
 		registration_cost '10'
 		location
   end
