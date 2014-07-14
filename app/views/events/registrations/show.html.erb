@@ -1,1 +1,6 @@
-<h3>[Need to display event and event registation info here, with ability to cancel registration...]</h3>
+<p> <strong>Event:</strong> <%= Event.find(@registration.first.event_id).title %></p>
+<p> <strong>User:</strong> <%= User.find(@registration.first.user_id).name %></p>
+<p> <strong>Registation Date:</strong> <%= format_date(@registration.first.created_at) %></p>
+<p> <strong>Paid?</strong> <%= @registration.first.has_been_paid %></p>
+<p> <strong>Pmt Adjustment:</strong> <%= @registration.first.payment_adjustment %></p>
+<p> <strong>Serving one?</strong> <%= @registration.first.attend_as_serving_one %></p>

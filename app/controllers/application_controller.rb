@@ -73,5 +73,4 @@ class ApplicationController < ActionController::Base
 		end
 		chart_values		
 	end
-
 end

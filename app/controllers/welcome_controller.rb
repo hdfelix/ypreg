@@ -3,6 +3,6 @@ class WelcomeController < ApplicationController
 		@events = Event.all
 
 		# Values for aria chart
-		@chart_values = widget_stats_next_event
+		#@chart_values = widget_stats_next_event
   end
 end

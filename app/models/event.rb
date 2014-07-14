@@ -36,19 +36,32 @@ class Event < ActiveRecord::Base
 			loc = locality.city
 			stats[loc]['grand_total'] = self.users.where('locality_id = ?',locality.id).count 
 			# Create methods for these values once user types and pmt handling is finalized
-      stats[loc]['total_yp'] = [83]
-      stats[loc]['total_serving_ones'] = [14]
-			stats[loc]['total_trainees'] = [11]
-			stats[loc]['total_helpers'] = [8]
+      stats[loc]['total_yp'] = total_registrations_by_role(locality,'yp')
+      stats[loc]['total_serving_ones'] = total_registered_events(locality)
+			stats[loc]['total_trainees'] = total_registrations_by_role(locality,'trainee')
+			stats[loc]['total_helpers'] = total_registrations_by_role(locality,'helper')
+      if stats[loc]['total_serving_ones'] != 0
+        stats[loc]['yp_so_ratio'] = stats[loc]['total_yp']/stats[loc]['total_serving_ones']
+      else
+        stats[loc]['yp_so_ratio'] = '--'
+      end
 			stats[loc]['amount_due'] = stats[loc]['grand_total'] * self.registration_cost
-			stats[loc]['actual_grand_total'] = [92]
-			stats[loc]['actual_total_yp'] = [56]
-			stats[loc]['actual_total_serving_ones'] = [8]
-			stats[loc]['actual_total_trainees'] = [6]
-			stats[loc]['actual_total_helpers'] = [3]
+			stats[loc]['actual_grand_total'] = "[--]"
+			stats[loc]['actual_total_yp'] = "[--]"
+			stats[loc]['actual_total_serving_ones'] = "[--]"
+			stats[loc]['actual_total_trainees'] = "[--]"
+			stats[loc]['actual_total_helpers'] = "[--]"
 			stats[loc]['actual_amount_paid'] = 73 * self.registration_cost
 			stats[loc]['balance'] = stats[loc]['actual_amount_paid'] - stats[loc]['amount_due']
 		end
     stats
+  end
+
+  def total_registrations_by_role(locality, role)
+    self.users.where('locality_id = ? and role = ?', locality.id, role).count
+  end
+
+  def total_registered_events(locality)
+    self.users.where('locality_id = ? and attend_as_serving_one = ?', locality.id,true).count
   end
 end

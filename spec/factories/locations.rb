@@ -15,6 +15,7 @@ FactoryGirl.define do
 		city { Faker::Address.city }
 		state_abbrv  'CA' #{ Faker::Address.state_abbr }
 		zipcode { Faker::Address.zip_code }
+    max_capacity '200'
   end
 	
 	factory :invalid_location do

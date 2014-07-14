@@ -8,7 +8,20 @@ class User < ActiveRecord::Base
 	has_many :events, through: :registrations
 
 	#validations
-	USER_TYPE = [['Serving One',1],['Trainee',2],['YP',3],['Guest',4]]
+
+  USER_ROLE = [['admin',1],
+              ['scyp',2],
+              ['ycat',3],
+              ['loc_contact',4],
+              ['hosp_contact',5],
+              ['trainee',6],
+              ['speaking_brother',7],
+              ['supporting_brother',8],
+              ['helper',9],
+              ['yp',10],
+              ['user',11],
+              ['guest',12]]
+
 
 	def role?(base_role)
 		role == base_role.to_s
