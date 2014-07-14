@@ -4,6 +4,6 @@ class CreateEventsHospitalities < ActiveRecord::Migration
 			t.integer :event_id
 			t.integer :hospitality_id
     end
-		add_index :events_hospitalities, ["event_id", "page_id"]
+		add_index :events_hospitalities, ["event_id", "hospitality_id"]
   end
 end

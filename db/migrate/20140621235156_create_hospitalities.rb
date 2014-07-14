@@ -8,7 +8,7 @@ class CreateHospitalities < ActiveRecord::Migration
       t.string :address2
       t.string :city
       t.string :state_abbrv
-      t.string :zipcode
+      t.integer :zipcode
       t.string :hospitality_type
 			t.integer :locality_id
       t.string :max_capacity
