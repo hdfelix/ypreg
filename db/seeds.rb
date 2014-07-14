@@ -73,6 +73,7 @@ yp = User.new(
   yp.skip_confirmation!
   yp.save
   yp.update_attributes(role: 'yp')
+  yp.update_attributes(locality_id: Locality.all.sample.id)
 
 scyp = User.new(
   name: 'SCYP User',
@@ -83,4 +84,5 @@ scyp = User.new(
   scyp.skip_confirmation!
   scyp.save
   scyp.update_attributes(role: 'scyp')
+  scyp.update_attributes(locality_id: Locality.all.sample.id)
 

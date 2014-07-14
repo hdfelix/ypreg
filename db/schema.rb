@@ -41,10 +41,12 @@ ActiveRecord::Schema.define(version: 20140704184307) do
 
   add_index "events", ["location_id"], name: "location_id_ix", using: :btree
 
-  create_table "events_hospitalities", force: true do |t|
+  create_table "events_hospitalities", id: false, force: true do |t|
     t.integer "event_id"
     t.integer "hospitality_id"
   end
+
+  add_index "events_hospitalities", ["event_id", "hospitality_id"], name: "index_events_hospitalities_on_event_id_and_hospitality_id", using: :btree
 
   create_table "hospitalities", force: true do |t|
     t.string  "name"
@@ -54,7 +56,7 @@ ActiveRecord::Schema.define(version: 20140704184307) do
     t.string  "address2"
     t.string  "city"
     t.string  "state_abbrv"
-    t.string  "zipcode"
+    t.integer "zipcode"
     t.string  "hospitality_type"
     t.integer "locality_id"
     t.string  "max_capacity"
@@ -93,7 +95,6 @@ ActiveRecord::Schema.define(version: 20140704184307) do
     t.datetime "updated_at"
   end
 
-  add_index "registrations", ["event_id", "user_id"], name: "index_registrations_on_event_id_and_user_id", unique: true, using: :btree
   add_index "registrations", ["event_id"], name: "index_registrations_on_event_id", using: :btree
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
@@ -117,7 +118,6 @@ ActiveRecord::Schema.define(version: 20140704184307) do
     t.datetime "updated_at"
     t.string   "role"
     t.integer  "locality_id"
-    t.string   "type"
     t.decimal  "home_phone"
     t.decimal  "cell_phone"
     t.decimal  "work_phone"
