@@ -36,10 +36,10 @@ class Event < ActiveRecord::Base
 			loc = locality.city
 			stats[loc]['grand_total'] = self.users.where('locality_id = ?',locality.id).count 
 			# Create methods for these values once user types and pmt handling is finalized
-      stats[loc]['total_yp'] = [83]
+      stats[loc]['total_yp'] = total_registrations_by_role(locality,'yp')
       stats[loc]['total_serving_ones'] = [14]
-			stats[loc]['total_trainees'] = [11]
-			stats[loc]['total_helpers'] = [8]
+			stats[loc]['total_trainees'] = total_registrations_by_role(locality,'trainee')
+			stats[loc]['total_helpers'] = total_registrations_by_role(locality,'helper')
 			stats[loc]['amount_due'] = stats[loc]['grand_total'] * self.registration_cost
 			stats[loc]['actual_grand_total'] = [92]
 			stats[loc]['actual_total_yp'] = [56]
@@ -50,5 +50,9 @@ class Event < ActiveRecord::Base
 			stats[loc]['balance'] = stats[loc]['actual_amount_paid'] - stats[loc]['amount_due']
 		end
     stats
+  end
+
+  def total_registrations_by_role(locality, role)
+    self.users.where('locality_id = ? and role = ?', locality.id, role).count
   end
 end
