@@ -13,6 +13,7 @@ class Events::RegistrationsController < ApplicationController
 	end
 
 	def create
+    binding.pry
 		@registration = current_user.registrations.build(registration_params)
 		if @registration.save
 			flash[:notice] = "Registration created succesfully"
@@ -22,11 +23,20 @@ class Events::RegistrationsController < ApplicationController
 			render 'new'
 		end
 
+    def destroy
+      if @registration.destroy
+        flash[:notice] = "Registration deleted successfully."
+        redirect_to events_url
+      else
+        flash[:error] = "Registration could not be deleted."
+        render action: 'index'
+      end
+    end
 	end
 
 	private
 
 	def registration_params
-		params.require(:registration).permit(:event_id)
+		params.require(:registration).permit(:event_id, :attend_as_serving_one)
 	end
 end
