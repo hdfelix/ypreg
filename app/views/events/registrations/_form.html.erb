@@ -37,6 +37,13 @@
 					<%= number_to_currency(@event.registration_cost) %>
 				</div>
 			</div>
+
+      <div class="row">
+        <div class="simple-checkbox">
+          <%= f.check_box :attend_as_serving_one %>
+          <%= f.label :attend_as_serving_one,"Attending as a serving one", class: 'checkbox' %>
+        </div>
+      </div>
 		</div>
 	</fieldset>
 	<div class="form-group">
