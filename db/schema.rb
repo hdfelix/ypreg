@@ -85,10 +85,10 @@ ActiveRecord::Schema.define(version: 20140704184307) do
   end
 
   create_table "registrations", force: true do |t|
-    t.date     "registration_date"
     t.string   "payment_type"
     t.boolean  "has_been_paid"
     t.decimal  "payment_adjustment"
+    t.boolean  "attend_as_serving_one"
     t.integer  "user_id"
     t.integer  "event_id"
     t.datetime "created_at"
