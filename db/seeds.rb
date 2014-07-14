@@ -8,6 +8,8 @@
 require 'faker'
 
 #Create 3 locations
+print "Running seeds file...\n\n"
+print "Creating Locations...\n"
 3.times do
   Location.create(
     name: Faker::Name.name,
@@ -21,6 +23,7 @@ require 'faker'
 end
 
 #Create 5 localities
+print "Creating Localities...\n"
 5.times do
   Locality.create(
     city: Faker::Address.city,
@@ -29,9 +32,11 @@ end
 end
 
 #Create hospitalities
+#print "Creating Hospitalities...\n"
 #hospitality_type: Hospitality::HOSPITALITY_TYPE.sample
 
 #Create Test event
+print "Creating Events...\n"
 tmp_date = Time.now + rand(1..3).months
 
 Event.create(
@@ -45,7 +50,7 @@ Event.create(
   location_id: rand(1..Location.all.count)
 )
 
-
+print "Creating Users...\n"
 #Create an admin user
 admin= User.new(
   name: 'Hector D Felix',
