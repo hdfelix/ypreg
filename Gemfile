@@ -3,6 +3,11 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.1'
 
+#Entity diagrams
+group :development do
+  gem 'railroady'
+end
+
 #Asset pipeline - is this gem needed? (http://guides.rubyonrails.org/asset_pipeline.html)
 #gem 'sprockets-rails', :require => 'sprockets/railtie'
 
