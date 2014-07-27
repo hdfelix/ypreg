@@ -25,7 +25,7 @@ class Event < ActiveRecord::Base
 
 	def participating_localities
 		loc_array = []
-		self.registrations.all.each do |registration|
+		self.registrations.each do |registration|
 			loc_array << Locality.find(registration.user.locality_id)
 		end
 		loc_array
