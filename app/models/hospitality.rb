@@ -28,4 +28,42 @@ class Hospitality < ActiveRecord::Base
 			self.description
 		end
 	end
+
+  def contact_person_home_phone
+    home_phone = User.where('id = ?', self.contact_person_id).first.home_phone
+    if home_phone.nil?
+      '--'
+    else
+      home_phone
+    end
+  end
+
+  def contact_person_cell_phone
+    cell_phone = User.where('id = ?', self.contact_person_id).first.cell_phone
+    if cell_phone.nil?
+      '--'
+    else
+      cell_phone
+    end
+  end
+
+  def address
+    self.address1 + ' ' + self.city + ', ' + self.state_abbrv + '  ' + self.zipcode.to_s
+  end
+
+  def display_min_capacity
+    if self.min_capacity.nil?
+      '--'
+    else
+      self.min_capacity
+    end
+  end
+
+  def display_max_capacity
+    if self.max_capacity.nil?
+      '--'
+    else
+      self.max_capacity
+    end
+  end
 end
