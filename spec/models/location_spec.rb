@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Location do
+describe Location, :type => :model do
 
 	it "is valid with name, description, and address (has valid factory)" do
 		expect(build(:location)).to be_valid
