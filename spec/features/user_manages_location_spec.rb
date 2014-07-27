@@ -7,7 +7,7 @@ feature 'User manages a location' do
 		@location = create(:location)
 	}		
 
-	scenario ' by acessing the index' do
+	scenario ' by acessing the index & new views' do
 			visit locations_path(authed_user)
 			expect(page).to have_content('Location')
 			visit new_location_path
