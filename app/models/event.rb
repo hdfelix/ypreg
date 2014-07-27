@@ -3,6 +3,8 @@ class Event < ActiveRecord::Base
 	has_many	:registrations
 	#has_many :users
 	has_many :users, through: :registrations
+	has_many :localities, through: :users
+  has_and_belongs_to_many :hospitalities
 
 	#skip_before_filter :verify_authenticity_token
 
