@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140704184307) do
+ActiveRecord::Schema.define(version: 20140727055611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140704184307) do
     t.string  "hospitality_type"
     t.integer "locality_id"
     t.string  "max_capacity"
+    t.string  "min_capacity"
   end
 
   create_table "localities", force: true do |t|
