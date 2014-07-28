@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'Signed-out user views events' do
 	scenario ' - can see a list of up-coming events in Welcome page' do
