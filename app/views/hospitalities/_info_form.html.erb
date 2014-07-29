@@ -1,37 +1,40 @@
-                <tr class="odd">
-                  <td class=" sorting_1">
-                    <!-- Hosp. name -->
-                    <%= event.hospitalities.first.name %>
+<% event.hospitalities.each do |ev| %>
+<% binding.pry %>
+  <tr class="odd">
+    <td class=" sorting_1">
+      <!-- Hosp. name -->
+      <%= ev.name %>
 
-                  </td>
-                  <td class=" ">
-                    <!-- Hosp. contact home phone -->
-                    <%= event.hospitalities.first.contact_person_home_phone %>
+    </td>
+    <td class=" ">
+      <!-- Hosp. contact home phone -->
+      <%= ev.contact_person_home_phone %>
 
-                  </td>
-                  <td class=" ">
-                    <!-- Hosp. contact cell -->
-                    <%= event.hospitalities.first.contact_person_cell_phone %>
+    </td>
+    <td class=" ">
+      <!-- Hosp. contact cell -->
+      <%= ev.contact_person_cell_phone %>
 
-                  </td>
-                  <td class=" ">
-                    <!-- Hosp. address -->
-                    <%= event.hospitalities.first.address %>
+    </td>
+    <td class=" ">
+      <!-- Hosp. address -->
+      <%= ev.address %>
 
-                  </td>
-                  <td class=" ">
-                    <!-- min guests -->
-                    <%= event.hospitalities.first.display_min_capacity %>
+    </td>
+    <td class=" ">
+      <!-- min guests -->
+      <%= ev.display_min_capacity %>
 
-                  </td> 
-                  <td class=" ">
-                    <!-- max guests -->
-                    <%= event.hospitalities.first.display_max_capacity %>
+    </td> 
+    <td class=" ">
+      <!-- max guests -->
+      <%= ev.display_max_capacity %>
 
-                  </td>
-                  <td class=" ">
-                    <!-- assigned guests -->
-                     [--] 
+    </td>
+    <td class=" ">
+      <!-- assigned guests -->
+       [--] 
 
-                  </td> 
-                </tr>
+    </td> 
+  </tr>
+<% end %>
