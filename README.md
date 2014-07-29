@@ -1,5 +1,7 @@
 ##Event Registration application
 
+[ ![Codeship Status for hdfelix/ypw-reg](https://www.codeship.io/projects/a401b450-f996-0131-e120-6a9599d1e39b/status)](https://www.codeship.io/projects/28912)
+
 Repo: https://bitbucket.org/hdfelix/ypw-reg
 
 This is an event registration management site. You can use this site to manage registrations short one-day events that require
