@@ -14,7 +14,12 @@ no hospitality accomodations as well as multi-day events where hospitality accom
 * ...
 
 ## Setup
-To get started, clone this repo and run the following commands from your terminal:
+To get started, clone this repo and run:
+```
+$ bundle
+```
+
+The the site is configured to use PostgreSQL for all environments (Development|Test|Production). Make sure you install and configure PostgreSQL before running the following commands from your terminal:
 ```
 $ bundle
 $ rake db:create
@@ -36,3 +41,4 @@ rake ypreg:create_admin
 * Hospitality TYpes - Hospitality::HOSPITALITY_TYPE
 * Payment Types - Registration::PAYMENT_TYPE
 
+[Finish]
