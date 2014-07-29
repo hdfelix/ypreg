@@ -3,6 +3,7 @@
 FactoryGirl.define do
 	sequence(:title) {|n| "Sample Event #{n}" }
   tmp_date = Time.now + 2.months
+
   factory :event do
     title { generate(:title) }
 		event_type '3'  #

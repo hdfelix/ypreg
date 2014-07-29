@@ -41,11 +41,12 @@ feature 'User manages a location' do
 end
 
 feature 'User destroys location' do
-	before(:all) do
-		@loc = create(:location)
-	end
+	#before(:all) do
+	#	@loc = create(:location)
+	#end
 
 	scenario ' - successfully' do
+		create(:location)
 		visit '/locations'
 		expect{
 			first(:link, 'Delete').click

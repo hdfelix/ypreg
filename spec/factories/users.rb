@@ -9,4 +9,12 @@ FactoryGirl.define do
 		password 'secretpassword'
 		password_confirmation 'secretpassword'
 	end
+
+#  factory :confirmed_user, parent: :user, aliases: [:contact_person] do
+  factory :confirmed_user, parent: :user, aliases: [:contact_person] do
+    after(:build) do |cu|
+      cu.confirm!
+      cu.hospitality ||= FactoryGirl.build(:hospitality, :contact_person => cu)
+    end
+  end
 end
