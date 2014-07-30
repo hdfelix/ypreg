@@ -5,6 +5,10 @@ FactoryGirl.define do
   max_cap = min_cap + rand(1..3)
   
   factory :hospitality do
+    # before(:build) do
+    #   FactoryGirl.create(:confirmed_user, id:100)
+    # end
+
     name { Faker::Name.last_name }
     description { Faker::Lorem.sentence } 
     address1 { Faker::Address.street_address } #generate(:address1) }
@@ -17,9 +21,19 @@ FactoryGirl.define do
     min_capacity min_cap
     max_capacity max_cap
 
-    after(:build) do |h|
-      h.contact_person ||= FactoryGirl.build(:confirmed_user, :hospitality => h)
+    after(:build) do |hospitality|
+      hospitality.contact_person ||= FactoryGirl.build(:confirmed_user)
     end
+
+
+    #factory(:hospitality_with) do
+    #contact_person {[FactoryGirl.create(:confirmed_user), ]}
+    #contact_person_id 100
+  #end
+
+    # after(:build) do |h|
+    #   h.contact_person ||= FactoryGirl.build(:confirmed_user, :hospitality => h)
+    # end
     #association :contact_person, factory: :confirmed_user
     #h.contact_person { |cu| cu.association(:hospitality) }
   end

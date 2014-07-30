@@ -1,7 +1,7 @@
 class Hospitality < ActiveRecord::Base
 	
 	has_and_belongs_to_many :events
-	has_one :contact_person, class_name: 'User', foreign_key: 'hospitality_id' #, inverse_of: :hospitality
+	has_one :contact_person, class_name: 'User' #, foreign_key: 'user_id' #, inverse_of: :hospitality
 
 	validates :name, presence: true
 	validates :address1, presence: true
@@ -9,7 +9,7 @@ class Hospitality < ActiveRecord::Base
 	validates :state_abbrv, presence: true
 	validates :zipcode, presence: true
 	validates :hospitality_type, presence: true
-	validates :contact_person_id, presence: true
+	validates :contact_person, presence: true
 
 	HOSPITALITY_TYPE = [['Home',1],['Retreat Center',2],['Hotel/Motel',3]]
 	
