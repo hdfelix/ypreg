@@ -14,7 +14,7 @@ development:
   encoding: unicode 
   database: ypreg_development
   pool: 5
-  username: lisaburricks
+  username: hdfelix
   password: 
 
 # Warning: The database defined as "test" will be erased and
@@ -25,7 +25,7 @@ test:
   encoding: unicode
   database: ypreg_test
   pool: 5
-  username: lisaburricks
+  username: hdfelix
   password:
 
 #test:
