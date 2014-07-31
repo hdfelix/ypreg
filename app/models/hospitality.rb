@@ -2,7 +2,8 @@ class Hospitality < ActiveRecord::Base
 	
 	has_and_belongs_to_many :events
 	has_one :contact_person, class_name: 'User' #, foreign_key: 'user_id' #, inverse_of: :hospitality
-
+  belongs_to :locality
+  
 	validates :name, presence: true
 	validates :address1, presence: true
 	validates :city, presence: true
