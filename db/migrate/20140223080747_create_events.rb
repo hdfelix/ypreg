@@ -11,6 +11,5 @@ class CreateEvents < ActiveRecord::Migration
 			t.date :registration_close_date
       t.timestamps
     end
-	add_index :events, :location_id, name: 'location_id_ix'
   end
 end
