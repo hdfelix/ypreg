@@ -21,6 +21,13 @@ RSpec.configure do |config|
 	config.include ApplicationHelper
 	config.include FeatureLoginMacros
 
+	# Save time when using  FactoryGirl Methods
+	config.include FactoryGirl::Syntax::Methods
+
+  #config.before(:suite) do
+  #  FactoryGirl.lint
+  #end
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -50,6 +57,4 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   #config.order = "random"
-	# Save time when using  FactoryGirl Methods
-	config.include FactoryGirl::Syntax::Methods
 end
