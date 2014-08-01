@@ -20,13 +20,8 @@ ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migratio
 RSpec.configure do |config|
 	config.include ApplicationHelper
 	config.include FeatureLoginMacros
-
-	# Save time when using  FactoryGirl Methods
-	config.include FactoryGirl::Syntax::Methods
-
-  #config.before(:suite) do
-  #  FactoryGirl.lint
-  #end
+  config.include Devise::TestHelpers, type: :controller
+  config.extend ControllerMacros, type: :controller
 
   # ## Mock Framework
   #
