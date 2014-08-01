@@ -7,10 +7,10 @@ class HospitalitiesController < ApplicationController
 	end
 
   def show
+    #@hospitality set with 'before_action'
   end
 
   def new
-		#@event = Hospitality.find(params[:event_id])
 		@hospitality = Hospitality.new
 		authorize @hospitality
   end
@@ -29,6 +29,7 @@ class HospitalitiesController < ApplicationController
 	end
 
 	def edit
+    #@hospitality set with 'before_action'
 	end
 
 	def update
@@ -44,6 +45,7 @@ class HospitalitiesController < ApplicationController
 	end
 
   def destroy
+    #@hospitality set wtih 'before_action'
 		if @hospitality.destroy
 			flash[:notice] = "Hospitality #{ @hospitality.name }deleted successfully."
 			redirect_to events_url
