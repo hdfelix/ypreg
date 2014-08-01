@@ -49,9 +49,17 @@ feature 'Signed-in user' do
 	end
 
 	#Create this test once we allow for individual payments through the site
-	scenario ' - with all fields'
+	#scenario ' - with all fields'
 end
 
 feature 'User is unsuccessful in creating a registration' do
-	scenario ' - sees error messages'
+	let (:authed_admin) {
+		create_logged_in_admin
+	}
+
+  before(:all) do
+    @event = create(:event)
+  end
+
+	#scenario ' - sees error messages'  #Currently registration doesn't require any user input; if this changes we can write this test
 end
