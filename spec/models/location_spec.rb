@@ -7,15 +7,15 @@ describe Location, :type => :model do
 	end
 
 	it "is invalid without a name" do
-		expect(build(:location, name: nil)).to have(1).errors_on(:name)	
+    build(:location, name: nil).should_not be_valid
 	end
 
 	it "is invalid without a description" do
-		expect(Location.new(description: nil)).to have(1).errors_on(:description)
+    build(:location, description: nil).should_not be_valid
 	end
 	
 	it "is invalid without an address1 line" do
-		expect(Location.new(address1: nil)).to have(1).errors_on(:address1)
+    build(:location, address1: nil).should_not be_valid
 	end
 
 	it "does not allow two localities with the same address"
