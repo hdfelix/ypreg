@@ -7,7 +7,7 @@ describe HospitalitiesController, :type => :controller do
       h1 = create(:hospitality)
       h2 = create(:hospitality)
       get 'index'
-      expect(assigns(:hospitalities)).to eq([h1,h2]) 
+      expect(assigns(:hospitalities)).to match_array([h1,h2]) 
     end
   end
 
@@ -18,7 +18,7 @@ describe HospitalitiesController, :type => :controller do
       expect(assigns(:hospitality)).to eq hospitality 
     end
     it 'renders the :show template' do
-     hospitality = create(:hospitality)
+      hospitality = FactoryGirl.create(:hospitality)
       get :show, id: hospitality 
       expect(response).to render_template :show
     end 

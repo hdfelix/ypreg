@@ -2,15 +2,15 @@ require 'rails_helper'
 
 feature 'User manages a location' do
 
-	let(:authed_user) {
-		create_logged_in_user
+	let(:authed_admin) {
+		create_logged_in_admin
 		@location = create(:location)
 	}		
 
 	scenario ' by acessing the index & new views' do
-			visit locations_path(authed_user)
+			visit locations_path(authed_admin)
 			expect(page).to have_content('Location')
-			visit new_location_path(authed_user)
+			visit new_location_path(authed_admin)
 			expect(page).to have_content('New Location')
 	end
 

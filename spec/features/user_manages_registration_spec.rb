@@ -19,15 +19,15 @@ feature 'Signed-out user views events' do
 end
 
 feature 'Signed-in user' do
-	let (:authed_user) {
-		create_logged_in_user
+	let (:authed_admin) {
+		create_logged_in_admin
 	}
 	before :each do
-		@event = FactoryGirl.create(:event)
+		@event = create(:event)
 	end
 
 	scenario '- can register for an event' do
-		visit root_path(authed_user)
+		visit root_path(authed_admin)
 		expect(page).to have_content('Register')
 		expect(page).to_not have_content('Sign in to register')
 	end
@@ -35,7 +35,7 @@ feature 'Signed-in user' do
 	#For now, client wants all payments to be done through locality
 	scenario ' - registers successfully with required fields' do
 
-		visit root_path(authed_user)
+		visit root_path(authed_admin)
 		#save_and_open_page
 		first(:link, 'Register').click   #figure out how to click on the register button for @event (href="/registrations/new?event_id=1")
 
