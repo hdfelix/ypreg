@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe Event, :type => :model do
-	it "has a valid factory" do expect(build(:event)).to be_valid
+	it "has a valid factory" do 
+    expect(build(:event)).to be_valid
 	end
 
 	it "is valid with all attributes" do
