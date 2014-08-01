@@ -91,25 +91,27 @@ feature 'User edits an event' do
 
 	scenario ' - can access edit_event_path' do
 		visit edit_event_path(@event,authed_admin)
-    save_and_open_page
 		expect(page).to have_content 'Edit Event'
 	end
 
 	scenario ' - successfully' do
-		visit edit_event_path(@event)
+		visit edit_event_path(@event, authed_admin)
 		click_button 'Submit'
 		expect(page).to have_content "Event was successfully updated."
 	end
 end
 
 feature 'User destroys event' do
+  let (:authed_admin) {
+    create_logged_in_admin
+  }
 
 	before(:all) do
 		@event = create(:event)
 	end
 
 	scenario 'Successfully' do
-		visit '/events'
+		visit events_path(authed_admin)
 		expect{ 
 			first(:link, 'Delete').click
 		}.to change(Event, :count).by(-1)
