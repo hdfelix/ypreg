@@ -13,7 +13,6 @@ feature 'User creates an event' do
 		expect(page).to have_content('Event')
 
 		visit new_event_path(authed_admin)
-    save_and_open_page
 		expect(page).to have_content('NEW EVENT')
   end
 
@@ -33,7 +32,7 @@ feature 'User creates an event' do
 		expect(page).to have_content('Event was successfully created.')
 		
 		within 'h2' do
-			expect(page).to have_content 'EVENTS'
+			expect(page).to have_content 'Events'
 		end
 
 		expect(page).to have_content @event.title
@@ -59,7 +58,7 @@ feature 'User creates an event' do
 		expect(page).to have_content('Event was successfully created.')
 		
 		within 'h2' do
-			expect(page).to have_content 'EVENTS'
+			expect(page).to have_content 'Events'
 		end
 
 		expect(page).to have_content @event.title
