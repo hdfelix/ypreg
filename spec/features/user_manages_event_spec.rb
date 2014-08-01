@@ -11,8 +11,10 @@ feature 'User creates an event' do
 	scenario '- can access the Events index' do
 		visit events_path(authed_admin)
 		expect(page).to have_content('Event')
+
 		visit new_event_path(authed_admin)
-		expect(page).to have_content('New event')
+    save_and_open_page
+		expect(page).to have_content('NEW EVENT')
   end
 
 	scenario ' - successfully with required fields' do
