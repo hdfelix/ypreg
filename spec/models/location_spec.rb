@@ -18,5 +18,19 @@ describe Location, :type => :model do
     expect(build(:location, address1: nil)).to_not be_valid
 	end
 
-	it "does not allow two localities with the same address"
+  # Add an index to make this test pass; validators work on attributes, not on entries (objects)
+	#it "does not allow two locations with the same address" do
+  #  create(:location,
+  #                   address1: '100 Street',
+  #                   city: 'Town',
+  #                   state_abbrv: 'FT',
+  #                   zipcode: '00000')
+  #  expect(build(:location,
+  #               address1: '100 Street',
+  #               city: 'Town',
+  #               state_abbrv: 'FT',
+  #               zipcode: '00000')
+  #        ).to_not be_valid
+  #end
 end	
+
