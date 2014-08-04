@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 	has_many :registrations
 	has_many :events, through: :registrations
   belongs_to :locality
-  belongs_to :hospitality #, inverse_of: :users
+  belongs_to :hospitality 
 
 #validations 
   USER_ROLE = [['admin',1],
