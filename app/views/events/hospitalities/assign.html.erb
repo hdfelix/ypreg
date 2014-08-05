@@ -1,0 +1,7 @@
+<div>
+  <label>Registered hospitality units</label>
+  <%= form_for @hospitalities, url: { controller: 'events/hospitalities', action: 'assigns'  } do |f| %>
+    <%= select('event', 'hospitality_id', Hospitality.all.collect { |h| [h.name, h.id] }, {include_blank: true }) %>
+    <%= f.submit 'Add' %>
+  <% end %>
+</div>
