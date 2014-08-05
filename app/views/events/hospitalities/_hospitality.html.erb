@@ -1,4 +1,4 @@
-  <tr class="odd">
+<tr id="event_hospitality_<%= @hospitality.id %>" class="odd">
     <td class=" sorting_1">
       <!-- Hosp. name -->
       <%= @hospitality.name %>
@@ -34,4 +34,7 @@
        [--] 
 
     </td> 
+    <td class= " ">
+      <%= link_to 'remove', hospitality_remove_path(event_id: @event,id: @hospitality), method: :delete, data: { confirm: 'Are your sure?' }, remote: true %>
+    </td>
   </tr>

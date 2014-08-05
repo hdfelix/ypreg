@@ -258,7 +258,7 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <%= link_to 'add available hospitality',"#{@event.id}/hospitalities/assign", id: 'add_event_hospitality', remote: true %>
+                <%= link_to 'Add available hospitality',"#{@event.id}/hospitalities/assign", id: 'add_event_hospitality', remote: true %>
               </div>
               <div class="col-md-3">
                 <div id="visit-stat-table_filter" class="datatables_filter">
@@ -307,6 +307,8 @@
 
                      [Assigned Guests] 
 
+                  </th>
+                  <th  role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
                   </th>
                 </tr>
               </thead>

@@ -9,6 +9,7 @@ YpwReg::Application.routes.draw do
 
   get 'events/:event_id/hospitalities/assign', to: 'events/hospitalities#assign', as: :hospitality_assign
   post 'events/:event_id/hospitalities/assigns', to: 'events/hospitalities#assigns', as: :hospitality_assigns
+  delete 'events/:event_id/hospitalities/destroy', to: 'events/hospitalities#destroy', as: :hospitality_remove
 
 	resources :locations
 	resources :localities
