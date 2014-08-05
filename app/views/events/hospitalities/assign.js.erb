@@ -1,1 +1,1 @@
-$('#add_event_hospitality').hide().after('<%= j render("form") %>');
+$('#add_event_hospitality').hide().after("<%= j(render partial: 'form', locals: {event: @event }) %>");
