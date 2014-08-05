@@ -31,7 +31,7 @@ class Hospitality < ActiveRecord::Base
 	end
 
   def contact_person_home_phone
-    home_phone = User.where('id = ?', self.contact_person_id).first.home_phone
+    home_phone = self.contact_person.home_phone
     if home_phone.nil?
       '--'
     else
@@ -40,7 +40,7 @@ class Hospitality < ActiveRecord::Base
   end
 
   def contact_person_cell_phone
-    cell_phone = User.where('id = ?', self.contact_person_id).first.cell_phone
+    cell_phone = self.contact_person.cell_phone 
     if cell_phone.nil?
       '--'
     else
