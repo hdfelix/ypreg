@@ -2,7 +2,6 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/rails'
 
@@ -20,6 +19,9 @@ ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migratio
 RSpec.configure do |config|
 	config.include ApplicationHelper
 	config.include FeatureLoginMacros
+  config.include WaitForAjax
+#  config.include Devise::TestHelpers, type: :controller
+  config.extend ControllerMacros, type: :controller
 
   # ## Mock Framework
   #
@@ -50,6 +52,4 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   #config.order = "random"
-	# Save time when using  FactoryGirl Methods
-	config.include FactoryGirl::Syntax::Methods
 end
