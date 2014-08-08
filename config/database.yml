@@ -25,7 +25,7 @@ test:
   encoding: unicode
   database: ypreg_test
   pool: 5
-  # username: hdfelix
+  # username: hdfelix removed username for testing
   # password:
 
 #test:
