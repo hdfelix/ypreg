@@ -53,7 +53,7 @@ Event.create(
 print "Creating Users...\n"
 #Create an admin user
 admin= User.new(
-  name: 'Hector D Felix',
+  name: 'Hector D. Felix',
   email: 'hdfelix@gmail.com', 
   password: 'chiracha',
   password_confirmation: 'chiracha')

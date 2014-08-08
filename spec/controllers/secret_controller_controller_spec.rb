@@ -1,5 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SecretControllerController do
+describe SecretControllerController, :type => :controller do
 
 end

@@ -3,6 +3,8 @@ class Event < ActiveRecord::Base
 	has_many	:registrations
 	#has_many :users
 	has_many :users, through: :registrations
+	has_many :localities, through: :users
+  has_and_belongs_to_many :hospitalities
 
 	#skip_before_filter :verify_authenticity_token
 
@@ -23,7 +25,7 @@ class Event < ActiveRecord::Base
 
 	def participating_localities
 		loc_array = []
-		self.registrations.all.each do |registration|
+		self.registrations.each do |registration|
 			loc_array << Locality.find(registration.user.locality_id)
 		end
 		loc_array
