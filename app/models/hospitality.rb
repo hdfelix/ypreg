@@ -1,8 +1,9 @@
 class Hospitality < ActiveRecord::Base
 	
 	has_and_belongs_to_many :events
-	has_one :contact_person, class_name: 'User' #, foreign_key: 'user_id' #, inverse_of: :hospitality
-
+	has_one :contact_person, class_name: 'User' 
+  belongs_to :locality
+  
 	validates :name, presence: true
 	validates :address1, presence: true
 	validates :city, presence: true
@@ -30,7 +31,7 @@ class Hospitality < ActiveRecord::Base
 	end
 
   def contact_person_home_phone
-    home_phone = User.where('id = ?', self.contact_person_id).first.home_phone
+    home_phone = self.contact_person.home_phone
     if home_phone.nil?
       '--'
     else
@@ -39,7 +40,7 @@ class Hospitality < ActiveRecord::Base
   end
 
   def contact_person_cell_phone
-    cell_phone = User.where('id = ?', self.contact_person_id).first.cell_phone
+    cell_phone = self.contact_person.cell_phone 
     if cell_phone.nil?
       '--'
     else

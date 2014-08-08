@@ -1,0 +1,40 @@
+<tr id="event_hospitality_<%= @hospitality.id %>" class="odd">
+    <td class=" sorting_1">
+      <!-- Hosp. name -->
+      <%= @hospitality.name %>
+
+    </td>
+    <td class=" ">
+      <!-- Hosp. contact home phone -->
+      <%= @hospitality.contact_person_home_phone %>
+
+    </td>
+    <td class=" ">
+      <!-- Hosp. contact cell -->
+      <%= @hospitality.contact_person_cell_phone %>
+
+    </td>
+    <td class=" ">
+      <!-- Hosp. address -->
+      <%= @hospitality.address %>
+
+    </td>
+    <td class=" ">
+      <!-- min guests -->
+      <%= @hospitality.display_min_capacity %>
+
+    </td> 
+    <td class=" ">
+      <!-- max guests -->
+      <%= @hospitality.display_max_capacity %>
+
+    </td>
+    <td class=" ">
+      <!-- assigned guests -->
+       [--] 
+
+    </td> 
+    <td class= " ">
+      <%= link_to 'remove', hospitality_remove_path(event_id: @event,id: @hospitality), method: :delete, data: { confirm: 'Are your sure?' }, remote: true %>
+    </td>
+  </tr>

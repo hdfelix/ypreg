@@ -40,5 +40,11 @@ module YpwReg
 				request_specs: false
 			g.fixture_replacement :factory_girl, dir: "spec/factories"
 		end
+    
+    console do
+      #This block is called only when running console, so we can safely require pry here.
+      require 'pry'
+      config.console = Pry
+     end
   end
 end

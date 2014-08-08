@@ -14,8 +14,8 @@ development:
   encoding: unicode 
   database: ypreg_development
   pool: 5
-  username: lisaburricks
-  password: 
+  # username: hdfelix
+  # password: 
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -25,8 +25,8 @@ test:
   encoding: unicode
   database: ypreg_test
   pool: 5
-  username: lisaburricks
-  password:
+  # username: hdfelix
+  # password: 
 
 #test:
 #  adapter: sqlite3
@@ -34,7 +34,7 @@ test:
 #  pool: 5
 #  timeout: 5000
 #
-#production:
+# production:
 #  adapter: sqlite3
 #  database: db/production.sqlite3
 #  pool: 5

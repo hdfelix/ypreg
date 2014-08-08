@@ -7,16 +7,30 @@ describe Location, :type => :model do
 	end
 
 	it "is invalid without a name" do
-		expect(build(:location, name: nil)).to have(1).errors_on(:name)	
+    expect(build(:location, name: nil)).to_not be_valid
 	end
 
 	it "is invalid without a description" do
-		expect(Location.new(description: nil)).to have(1).errors_on(:description)
+    expect(build(:location, description: nil)).to_not be_valid
 	end
 	
 	it "is invalid without an address1 line" do
-		expect(Location.new(address1: nil)).to have(1).errors_on(:address1)
+    expect(build(:location, address1: nil)).to_not be_valid
 	end
 
-	it "does not allow two localities with the same address"
+  # Add an index to make this test pass; validators work on attributes, not on entries (objects)
+	#it "does not allow two locations with the same address" do
+  #  create(:location,
+  #                   address1: '100 Street',
+  #                   city: 'Town',
+  #                   state_abbrv: 'FT',
+  #                   zipcode: '00000')
+  #  expect(build(:location,
+  #               address1: '100 Street',
+  #               city: 'Town',
+  #               state_abbrv: 'FT',
+  #               zipcode: '00000')
+  #        ).to_not be_valid
+  #end
 end	
+
