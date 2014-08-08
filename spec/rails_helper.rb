@@ -19,7 +19,8 @@ ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migratio
 RSpec.configure do |config|
 	config.include ApplicationHelper
 	config.include FeatureLoginMacros
-  config.include Devise::TestHelpers, type: :controller
+  config.include WaitForAjax
+#  config.include Devise::TestHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
 
   # ## Mock Framework
