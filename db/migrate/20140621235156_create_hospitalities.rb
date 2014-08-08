@@ -3,7 +3,6 @@ class CreateHospitalities < ActiveRecord::Migration
     create_table :hospitalities do |t|
       t.string :name
       t.text :description
-      t.integer :contact_person_id
       t.string :address1
       t.string :address2
       t.string :city

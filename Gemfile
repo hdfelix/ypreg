@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.1'
+gem 'rails', '4.1.4'
+
+#Entity diagrams
+group :development do
+  gem 'railroady'
+end
 
 #Asset pipeline - is this gem needed? (http://guides.rubyonrails.org/asset_pipeline.html)
 #gem 'sprockets-rails', :require => 'sprockets/railtie'
@@ -48,7 +53,7 @@ gem 'figaro'
 
 group :doc do
 	# bundle exec rake doc:rails generates the API under doc/api.
-	gem 'sdoc', require: false
+	gem 'sdoc' #require: false
 end
 
 #serve static_assets
@@ -56,19 +61,20 @@ gem 'rails_12factor', group: :production
 
 # Added from 'Everyday Rails Testing with Rspec book (with latest versions as of 15MAR14)
 group :development, :test do
-	gem "rspec-rails" #, "~> 2.14.1"
-	gem "factory_girl_rails", "~> 4.4.0"
-	gem "faker", "~>1.2.0"
-	gem "capybara" #, "~> 2.2.1"
-	gem "capybara-webkit"
-	gem "guard-rspec"
-	gem "database_cleaner", "~> 1.2.0"
-	gem "launchy", "~>2.4.2"
-	gem "selenium-webdriver", "~> 2.39.0"
-	#gem "letter_opener"
+	gem 'rspec-rails' #, '~> 2.14.1'
+  gem 'rspec-collection_matchers'
+	gem 'factory_girl_rails', '~> 4.4.0'
+	gem 'faker', '~>1.2.0'
+	gem 'capybara' #, '~> 2.2.1'
+	gem 'capybara-webkit'
+	gem 'guard-rspec'
+	gem 'database_cleaner', '~> 1.2.0'
+	gem 'launchy', '~>2.4.2'
+	gem 'selenium-webdriver', '~> 2.39.0'
+	#gem 'letter_opener'
 
 	#Generate database diagrams
-	gem "railroad"
+	gem 'railroad'
 
 	#Add Pry for debugging
 	gem 'pry'
@@ -80,7 +86,7 @@ group :development, :test do
 	gem 'quiet_assets'
 	gem 'awesome_print'
 	gem 'better_errors'
-	gem "binding_of_caller"
+	gem 'binding_of_caller'
 
 end
 
@@ -100,4 +106,4 @@ end
 # gem 'debugger', group: [:development, :test]
 
 #App Monitoring
-gem 'newrelic_rpm'
+#gem 'newrelic_rpm'

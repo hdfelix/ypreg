@@ -1,20 +1,23 @@
-require 'spec_helper'
+require 'rails_helper'
 
 feature 'User creates an event' do
-
+  let (:authed_admin) {
+    create_logged_in_admin
+  }
 	before(:all) do
 		@event = create(:event)
 	end
 
 	scenario '- can access the Events index' do
-		visit events_path
+		visit events_path(authed_admin)
 		expect(page).to have_content('Event')
-		visit new_event_path
-		expect(page).to have_content('New event')
+
+		visit new_event_path(authed_admin)
+		expect(page).to have_content('NEW EVENT')
   end
 
 	scenario ' - successfully with required fields' do
-		visit new_event_path
+		visit new_event_path(authed_admin)
 		expect{
 			fill_in 'event[title]', with: @event.title
 			select 'One-day', from: 'Event type'
@@ -28,7 +31,7 @@ feature 'User creates an event' do
 		expect(current_path).to eq events_path
 		expect(page).to have_content('Event was successfully created.')
 		
-		within 'h1' do
+		within 'h2' do
 			expect(page).to have_content 'Events'
 		end
 
@@ -36,7 +39,7 @@ feature 'User creates an event' do
 	end
 
 	scenario ' - with all fields' do
-		visit new_event_path
+		visit new_event_path(authed_admin)
 
 		expect{
 			fill_in 'event[title]', with: @event.title
@@ -54,7 +57,7 @@ feature 'User creates an event' do
 		expect(current_path).to eq events_path
 		expect(page).to have_content('Event was successfully created.')
 		
-		within 'h1' do
+		within 'h2' do
 			expect(page).to have_content 'Events'
 		end
 
@@ -62,48 +65,54 @@ feature 'User creates an event' do
 	end
 
 	scenario ' - unsuccessfully with no data' do
-		visit new_event_path
+		visit new_event_path(authed_admin)
 		expect{
 			click_button 'Submit'
 			expect(page).to have_content 'Error creating the event'
-		}.not_to change(Event, :count).by(1)
+		}.not_to change(Event, :count)
 	end	
 	
 	scenario ' - unsuccessfully with no title' do
-		visit new_event_path
+		visit new_event_path(authed_admin)
 		expect{
 			click_button 'Submit'
 			expect(page).to have_content 'Error creating the event'
-		}.not_to change(Event, :count).by(1)
+		}.not_to change(Event, :count)
 	end
 end
 
 feature 'User edits an event' do
+  let (:authed_admin) {
+    create_logged_in_admin
+  }
 	 
 	before(:all) do
 		@event = create(:event)
 	end
 
 	scenario ' - can access edit_event_path' do
-		visit edit_event_path(@event)
-		expect(page).to have_content 'Edit event'
+		visit edit_event_path(@event,authed_admin)
+		expect(page).to have_content 'Edit Event'
 	end
 
 	scenario ' - successfully' do
-		visit edit_event_path(@event)
+		visit edit_event_path(@event, authed_admin)
 		click_button 'Submit'
 		expect(page).to have_content "Event was successfully updated."
 	end
 end
 
 feature 'User destroys event' do
+  let (:authed_admin) {
+    create_logged_in_admin
+  }
 
 	before(:all) do
 		@event = create(:event)
 	end
 
 	scenario 'Successfully' do
-		visit '/events'
+		visit events_path(authed_admin)
 		expect{ 
 			first(:link, 'Delete').click
 		}.to change(Event, :count).by(-1)

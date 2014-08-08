@@ -1,17 +1,18 @@
-require 'spec_helper'
+require 'rails_helper'
 include Warden::Test::Helpers
 
 module FeatureLoginMacros
-	def create_logged_in_user
-		user = FactoryGirl.create(:user)
-		user.confirm!
-		user.save
+	def create_logged_in_admin
+		admin = FactoryGirl.create(:admin)
+		admin.confirm!
+    admin.current_sign_in_at = Time.now
+		admin.save
 
-    login(user)
-    user
+    login(admin)
+    admin
 	end
 
-  def login(user)
-		login_as user, scope: :user
+  def login(admin)
+		login_as admin, scope: :user
   end
 end

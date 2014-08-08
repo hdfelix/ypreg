@@ -7,9 +7,7 @@ class EventsController < ApplicationController
   end
 
   def show
-
-		# load summary for all localities into  in a loop here
-		@event = Event.find(params[:id])
+    #@event set with 'before_action'
 		@stats =  @event.load_locality_summary
   end
 
@@ -19,6 +17,7 @@ class EventsController < ApplicationController
   end
 
   def edit
+    #@event set with 'before_action'
   end
 
   def create
@@ -34,6 +33,7 @@ class EventsController < ApplicationController
   end
 
   def update
+    #@event set with 'before_action'
 		if @event.update(event_params)
 			redirect_to @event, notice: 'Event was successfully updated.'
 		else
@@ -44,6 +44,7 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
+    #@event set with 'before_action'
 		if @event.destroy
 			flash[:notice] = "Event #{@event.title}deleted successfully."
 			redirect_to events_url

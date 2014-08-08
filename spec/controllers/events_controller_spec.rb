@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe EventsController do
+describe EventsController, :type => :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Event. As you add validations to Event, be sure to
