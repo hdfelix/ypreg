@@ -20,7 +20,7 @@ env:
 notifications:
      email:
          recipients:
-             - hdfelix@gmail.com
+             - lisaburricks@gmail.com
 script:
   - bundle exec rake db:create
   - bundle exec rake db:migrate
