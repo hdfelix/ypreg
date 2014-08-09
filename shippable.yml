@@ -15,7 +15,7 @@ before_script:
   - cp config/database.shippable.yml config/database.yml
   - psql -c 'create database ypreg_test;' -U postgres
   - rake db:migrate
-script:
+script: rake ci:setup:rspec spec
   - rspec -f JUnit -o shippable/testresults/results.xml
 after_success :
   - git push -f git@heroku.com:ypreg.git master
