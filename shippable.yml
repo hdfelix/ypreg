@@ -10,6 +10,8 @@ env:
     - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
 
 before_script:
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
   - cp config/database.shippable.yml config/database.yml
   - psql -c 'create database ypreg_test;' -U postgres
   - rake db:migrate
