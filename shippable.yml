@@ -8,17 +8,17 @@ env:
   global:
     - APP_NAME=ypreg
     - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
-
 before_script:
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
+  # Use DB settings specific for shippable
   - cp config/database.shippable.yml config/database.yml
   - psql -c 'create database ypreg_test;' -U postgres
   - rake db:migrate
-
+script:
+  - rspec -f JUnit -o shippable/testresults/results.xml
 after_success :
   - git push -f git@heroku.com:ypreg.git master
-
 notifications:
   email:
     recipients:
