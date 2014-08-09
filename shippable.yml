@@ -1,23 +1,18 @@
 language: ruby
 
 rvm:
-  # - 1.8.7
-  # - 1.9.2
-  # - 1.9.3
-  # - 2.0.0
- - 2.1.0
  - 2.1.1
- - 2.1.2
-   #- jruby-18mode
-   #- jruby-19mode
-   #- rbx
-   #- ruby-head
-   #- jruby-head
-   #- ree
+ #- 2.1.2
 
 env:
-  - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+  global:
+    - APP_NAME=ypreg
+    - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+
+after_success :
+  - git push -f git@heroku.com:ypreg.git master
+
 notifications:
-     email:
-         recipients:
-             - hdfelix@gmail.com
+  email:
+    recipients:
+      - hdfelix@gmail.com
