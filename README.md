@@ -1,5 +1,9 @@
 ##Event Registration application
 
+[ ![Codeship Status for hdfelix/ypw-reg](https://www.codeship.io/projects/a401b450-f996-0131-e120-6a9599d1e39b/status)](https://www.codeship.io/projects/28912)
+  
+[![Build Status](https://api.shippable.com/projects/53e5166cd60f5e8b028aa0f1/badge/tdd)](https://www.shippable.com/projects/53e5166cd60f5e8b028aa0f1)
+  
 Repo: https://bitbucket.org/hdfelix/ypw-reg
 
 This is an event registration management site. You can use this site to manage registrations short one-day events that require
@@ -14,9 +18,12 @@ no hospitality accomodations as well as multi-day events where hospitality accom
 * ...
 
 ## Setup
-To get started, clone this repo and run the following commands from your terminal:
+To get started, clone this repo and run:
 ```
 $ bundle
+```
+The site is configured to use PostgreSQL for all environments (Development|Test|Production). Make sure you install and configure PostgreSQL before running the following commands from your terminal:
+```
 $ rake db:create
 $ rake db:migrate
 ```
@@ -36,3 +43,4 @@ rake ypreg:create_admin
 * Hospitality TYpes - Hospitality::HOSPITALITY_TYPE
 * Payment Types - Registration::PAYMENT_TYPE
 
+[Finish]
