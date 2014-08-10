@@ -4,7 +4,9 @@ class Event < ActiveRecord::Base
 	#has_many :users
 	has_many :users, through: :registrations
 	has_many :localities, through: :users
-  has_and_belongs_to_many :hospitalities
+  #has_and_belongs_to_many :hospitalities
+  has_many :events_hospitalities
+  has_many :hospitalities, through: :events_hospitalities 
 
 	#skip_before_filter :verify_authenticity_token
 

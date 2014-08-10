@@ -1,6 +1,6 @@
-class CreateEventsHospitalities < ActiveRecord::Migration
+class CreateEventHospitalities < ActiveRecord::Migration
   def change
-    create_table :events_hospitalities, id: false do |t|
+    create_table :event_hospitalities do |t| #removed id: false...
 			t.integer :event_id
 			t.integer :hospitality_id
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140729223503) do
+ActiveRecord::Schema.define(version: 20140810213324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 20140729223503) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "event_hospitalities", force: true do |t|
+    t.integer "event_id"
+    t.integer "hospitality_id"
+  end
+
+  add_index "event_hospitalities", ["event_id", "hospitality_id"], name: "index_event_hospitalities_on_event_id_and_hospitality_id", using: :btree
 
   create_table "events", force: true do |t|
     t.string   "title"
@@ -41,13 +48,6 @@ ActiveRecord::Schema.define(version: 20140729223503) do
 
   add_index "events", ["location_id"], name: "location_id_ix", using: :btree
 
-  create_table "events_hospitalities", id: false, force: true do |t|
-    t.integer "event_id"
-    t.integer "hospitality_id"
-  end
-
-  add_index "events_hospitalities", ["event_id", "hospitality_id"], name: "index_events_hospitalities_on_event_id_and_hospitality_id", using: :btree
-
   create_table "hospitalities", force: true do |t|
     t.string  "name"
     t.text    "description"
@@ -61,6 +61,14 @@ ActiveRecord::Schema.define(version: 20140729223503) do
     t.string  "max_capacity"
     t.string  "min_capacity"
   end
+
+  create_table "hospitality_assignments", force: true do |t|
+    t.integer "events_hospitalities_id"
+    t.integer "registraitons_id"
+  end
+
+  add_index "hospitality_assignments", ["events_hospitalities_id"], name: "index_hospitality_assignments_on_events_hospitalities_id", using: :btree
+  add_index "hospitality_assignments", ["registraitons_id"], name: "index_hospitality_assignments_on_registraitons_id", using: :btree
 
   create_table "localities", force: true do |t|
     t.string   "city"
@@ -93,8 +101,10 @@ ActiveRecord::Schema.define(version: 20140729223503) do
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "event_hospitalities_id"
   end
 
+  add_index "registrations", ["event_hospitalities_id"], name: "index_registrations_on_event_hospitalities_id", using: :btree
   add_index "registrations", ["event_id"], name: "index_registrations_on_event_id", using: :btree
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
@@ -126,7 +136,6 @@ ActiveRecord::Schema.define(version: 20140729223503) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["hospitality_id"], name: "index_users_on_hospitality_id", using: :btree
   add_index "users", ["locality_id"], name: "index_users_on_locality_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
