@@ -4,7 +4,8 @@ class CreateHospitalities < ActiveRecord::Migration
 			t.integer :event_id
 			t.integer :lodging_id
     end
-		add_index :hospitalities, ["event_id", "lodging_id"]
+		#add_index :hospitalities, ["event_id", "lodging_id"], unique: true
+
 	  add_index :events, :location_id, name: 'location_id_ix'
   end
 end

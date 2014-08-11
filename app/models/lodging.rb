@@ -2,7 +2,7 @@ class Lodging < ActiveRecord::Base
 	
 	#has_and_belongs_to_many :events
   has_many :hospitalities
-  has_many :events, through: :hospitalities
+  has_many :events, -> { uniq }, through: :hospitalities
 	has_one :contact_person, class_name: 'User' 
   belongs_to :locality
   
