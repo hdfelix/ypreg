@@ -26,13 +26,6 @@ ActiveRecord::Schema.define(version: 20140810213324) do
     t.datetime "updated_at"
   end
 
-  create_table "event_hospitalities", force: true do |t|
-    t.integer "event_id"
-    t.integer "hospitality_id"
-  end
-
-  add_index "event_hospitalities", ["event_id", "hospitality_id"], name: "index_event_hospitalities_on_event_id_and_hospitality_id", using: :btree
-
   create_table "events", force: true do |t|
     t.string   "title"
     t.integer  "location_id"
@@ -49,32 +42,25 @@ ActiveRecord::Schema.define(version: 20140810213324) do
   add_index "events", ["location_id"], name: "location_id_ix", using: :btree
 
   create_table "hospitalities", force: true do |t|
-    t.string  "name"
-    t.text    "description"
-    t.string  "address1"
-    t.string  "address2"
-    t.string  "city"
-    t.string  "state_abbrv"
-    t.integer "zipcode"
-    t.string  "hospitality_type"
-    t.integer "locality_id"
-    t.string  "max_capacity"
-    t.string  "min_capacity"
+    t.integer "event_id"
+    t.integer "lodging_id"
   end
+
+  add_index "hospitalities", ["event_id", "lodging_id"], name: "index_hospitalities_on_event_id_and_lodging_id", using: :btree
 
   create_table "hospitality_assignments", force: true do |t|
-    t.integer "events_hospitalities_id"
-    t.integer "registraitons_id"
+    t.integer "hospitality_id"
+    t.integer "registration_id"
   end
 
-  add_index "hospitality_assignments", ["events_hospitalities_id"], name: "index_hospitality_assignments_on_events_hospitalities_id", using: :btree
-  add_index "hospitality_assignments", ["registraitons_id"], name: "index_hospitality_assignments_on_registraitons_id", using: :btree
+  add_index "hospitality_assignments", ["hospitality_id"], name: "index_hospitality_assignments_on_hospitality_id", using: :btree
+  add_index "hospitality_assignments", ["registration_id"], name: "index_hospitality_assignments_on_registration_id", using: :btree
 
   create_table "localities", force: true do |t|
     t.string   "city"
     t.string   "state_abbrv"
     t.integer  "contact_id"
-    t.integer  "hospitality_contact_id"
+    t.integer  "lodging_contact_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -92,6 +78,20 @@ ActiveRecord::Schema.define(version: 20140810213324) do
     t.integer  "max_capacity"
   end
 
+  create_table "lodgings", force: true do |t|
+    t.string  "name"
+    t.text    "description"
+    t.string  "address1"
+    t.string  "address2"
+    t.string  "city"
+    t.string  "state_abbrv"
+    t.integer "zipcode"
+    t.string  "lodging_type"
+    t.integer "locality_id"
+    t.string  "max_capacity"
+    t.string  "min_capacity"
+  end
+
   create_table "registrations", force: true do |t|
     t.string   "payment_type"
     t.boolean  "has_been_paid"
@@ -101,11 +101,11 @@ ActiveRecord::Schema.define(version: 20140810213324) do
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "event_hospitalities_id"
+    t.integer  "hospitalities_id"
   end
 
-  add_index "registrations", ["event_hospitalities_id"], name: "index_registrations_on_event_hospitalities_id", using: :btree
   add_index "registrations", ["event_id"], name: "index_registrations_on_event_id", using: :btree
+  add_index "registrations", ["hospitalities_id"], name: "index_registrations_on_hospitalities_id", using: :btree
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20140810213324) do
     t.decimal  "cell_phone"
     t.decimal  "work_phone"
     t.date     "birthday"
-    t.integer  "hospitality_id"
+    t.integer  "lodging_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

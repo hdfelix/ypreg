@@ -1,10 +1,9 @@
-
-<%= form_for(@hospitality, class: 'form-horizontal') do |f| %>
-  <% if @hospitality.errors.any? %>
+<%= form_for(@lodging, class: 'form-horizontal') do |f| %>
+  <% if @lodging.errors.any? %>
     <div id="error_explanation" class="alert alert-danger alert-dismissable">
-			<h4><strong><%= pluralize(@hospitality.errors.count, "error") %></strong> prohibited this event from being saved:</h4>
+			<h4><strong><%= pluralize(@lodging.errors.count, "error") %></strong> prohibited this event from being saved:</h4>
       <ul>
-				<% @hospitality.errors.full_messages.each do |msg| %>
+				<% @lodging.errors.full_messages.each do |msg| %>
 					<li><%= msg %></li>
 				<% end %>
       </ul>
@@ -25,7 +24,7 @@
 			<%= f.label :hospitality_type, class: 'col-md-2 control-label' %>
 			<div class="col-md-10">
 				<%= f.select :hospitality_type,
-					Hospitality::HOSPITALITY_TYPE, 
+					Lodging::LODGING_TYPE, 
 					options={placeholder: "Type"}, html_options={ class: 'form-control select' } %>
 			</div>
 		</div>

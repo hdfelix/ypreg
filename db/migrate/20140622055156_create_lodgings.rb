@@ -1,6 +1,6 @@
-class CreateHospitalities < ActiveRecord::Migration
+class CreateLodgings < ActiveRecord::Migration
   def change
-    create_table :hospitalities do |t|
+    create_table :lodgings do |t|
       t.string :name
       t.text :description
       t.string :address1
@@ -8,7 +8,7 @@ class CreateHospitalities < ActiveRecord::Migration
       t.string :city
       t.string :state_abbrv
       t.integer :zipcode
-      t.string :hospitality_type
+      t.string :lodging_type
 			t.integer :locality_id
       t.string :max_capacity
     end

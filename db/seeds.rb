@@ -82,11 +82,11 @@ scyp = User.new(
   scyp.update_attributes(role: 'scyp')
   scyp.update_attributes(locality_id: Locality.all.sample.id)
 
-#Create hospitalities
-#hospitality_type: Hospitality::HOSPITALITY_TYPE.sample
+#Create lodgings
+#lodging_type: Lodging::LODGING_TYPE.sample
 
-print "Creating Hospitalities...\n"
-hosp = Hospitality.new(
+print "Creating Lodgings...\n"
+lodging= Lodging.new(
           name: "Felixes",
           description: "Hector & Angela Felix's home",
           address1: '60 Georgetown',
@@ -97,8 +97,8 @@ hosp = Hospitality.new(
           min_capacity: 2,
           contact_person: User.first,
           locality_id: admin.locality_id,
-          hospitality_type: 1)
-hosp.save
+          lodging_type: 1)
+lodging.save
 
 #Create event registration
 print "Creating an event registration...\n"

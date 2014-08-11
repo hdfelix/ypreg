@@ -1,5 +1,5 @@
   <%= form_for @hospitalities, url: { controller: 'events/hospitalities', action: 'assigns'  } , remote: true do |f| %>
     <!--%= select('event', 'hospitality_id', Hospitality.all.collect { |h| [h.name, h.id] }, {include_blank: true }) %-->
-    <%= select('event', 'hospitality_id', list_unassigned_hospitalities.collect { |h| [h.name, h.id] }, {include_blank: true }) %>
+    <%= select('event', 'hospitality_id', list_unassigned_lodgings.collect { |h| [h.name, h.id] }, {include_blank: true }) %>
     <%= f.submit 'Add' %>
   <% end %>

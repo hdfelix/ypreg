@@ -42,7 +42,7 @@
 							<% end %>
 						</tr>
 						<tr>
-							<td class="text-right"><strong>Hospitality:</strong></td>
+							<td class="text-right"><strong>Lodging:</strong></td>
 							<% unless @locality.contact_id == nil %>
 								<td><%= User.find(@locality.contact_id).name %></td>
 								<td><%= mail_to User.find(@locality.contact_id).email %></td>

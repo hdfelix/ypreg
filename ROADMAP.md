@@ -46,7 +46,7 @@
 * [list reports created, and theming]
 * Graphs?  
 
-### v0.6: Hospitality
+### v0.6: Lodging 
 * Integration tests
 * Migration, Controller, Model
 * Initial view
