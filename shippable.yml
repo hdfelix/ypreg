@@ -20,6 +20,9 @@ script: rake ci:setup:rspec spec
 after_success :
   - git push -f git@heroku.com:ypreg.git master
 notifications:
-  email:
-    recipients:
-      - hdfelix@gmail.com
+     email:
+         recipients:
+             - hdfelix@gmail.com 
+             - lisaburricks@gmail.com
+after_success:
+  - git push -f git@heroku.com:ypreg.git master
