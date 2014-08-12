@@ -20,4 +20,7 @@ env:
 notifications:
      email:
          recipients:
-             - hdfelix@gmail.com
+             - hdfelix@gmail.com 
+             - lisaburricks@gmail.com
+after_success:
+  - git push -f git@heroku.com:ypreg.git master
