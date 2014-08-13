@@ -1,37 +1,37 @@
-<% event.hospitalities.each do |hosp| %>
+<% event.hospitalities.each do |hosp| lodging = hosp.lodging %>
   <tr id="event_hosp_<%= hosp.id %>" class="odd">
     <td class=" sorting_1">
       <!-- hosp name -->
-      <%= hosp.name %>
+      <%= lodging.name %>
 
     </td>
     <td class=" ">
-      <!-- Hosp. contact home phone -->
-      <%= hosp.contact_person_home_phone %>
+      <!-- Contact home phone -->
+      <%= lodging.contact_person_home_phone %>
 
     </td>
     <td class=" ">
-      <!-- Hosp. contact cell -->
-      <%= hosp.contact_person_cell_phone %>
+      <!-- Contact cell -->
+      <%= lodging.contact_person_cell_phone %>
 
     </td>
     <td class=" ">
-      <!-- Hosp. address -->
-      <%= hosp.address %>
+      <!-- Address -->
+      <%= lodging.address %>
 
     </td>
     <td class=" ">
-      <!-- min guests -->
-      <%= hosp.display_min_capacity %>
+      <!-- Min guests -->
+      <%= lodging.display_min_capacity %>
 
     </td> 
     <td class=" ">
-      <!-- max guests -->
-      <%= hosp.display_max_capacity %>
+      <!-- Max guests -->
+      <%= lodging.display_max_capacity %>
 
     </td>
     <td class=" ">
-      <!-- assigned guests -->
+      <!-- Assigned guests -->
        [--] 
 
     </td> 

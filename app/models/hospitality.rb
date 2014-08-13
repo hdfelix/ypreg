@@ -4,5 +4,9 @@ class Hospitality < ActiveRecord::Base
   belongs_to :lodgings
   has_many :hospitality_assignments
   has_many :registrations, -> { uniq }, through: :hospitality_assignments
+
+  def lodging
+    Lodging.find(self.lodging_id)
+  end
   
 end
