@@ -77,9 +77,11 @@ group :development, :test do
 	gem 'railroad'
 
 	#Add Pry for debugging
-	gem 'pry'
+	gem 'pry-rails'
+  gem 'pry-debugger'
 	gem 'pry-byebug'
 	gem 'pry-stack_explorer'
+  gem 'pry-rescue'
 
 	#Annotate DB schema in models
 	gem 'annotate'
