@@ -1,3 +1,3 @@
 $('#add_hospitality').remove();
 $('#add_hospitality').show();
-$('#event_hospitalities').append('<%= j render(@hospitality) %>');
+$('#event_hospitalities').append('<%= j render partial: 'events/hospitalities/hospitality', locals: { hospitality: @hospitality } %>');

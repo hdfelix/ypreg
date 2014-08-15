@@ -35,6 +35,7 @@
 
     </td> 
     <td class= " ">
+      <% binding.pry %>
       <%= link_to 'remove', hospitality_remove_path(event_id: @event,id: @hospitality), method: :delete, data: { confirm: 'Are your sure?' }, remote: true %>
     </td>
   </tr>
