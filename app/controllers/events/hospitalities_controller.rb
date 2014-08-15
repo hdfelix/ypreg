@@ -7,9 +7,9 @@ class Events::HospitalitiesController < ApplicationController
 
   def assigns
     #calling lodging here hospitality; getting an error if I use @lodging on the assings.js render
-    @hospitality = Lodging.find(params[:lodging_id])
+    lodging = Lodging.find(params[:lodging_id])
     @event = Event.find(params[:event_id])
-    @event.hospitalities << Hospitality.create(event_id: @event.id, lodging_id: @hospitality.id)
+    @event.hospitalities << @hospitality = Hospitality.create(event_id: @event.id, lodging_id: lodging.id)
 
     respond_to do |format|
       format.html { redirect_to @event }
@@ -19,9 +19,7 @@ class Events::HospitalitiesController < ApplicationController
 
   def destroy
     @event = Event.find(params[:event_id])
-    binding.pry
     @hospitality = @event.hospitalities.find(params[:id])
-    binding.pry
     @event.hospitalities.delete(@hospitality)
 
     respond_to do |format|
