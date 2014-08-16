@@ -256,6 +256,17 @@
 									</div>
 								</span>
 								</li>
+								<li class="data-row">
+									<span class="data-name">Hospitality</span>
+									<span class="data-value">
+										<%= @chart_values["hosp_ratio"] %>
+									<div class="progress progress-xs">
+										<div class="progress-bar progress-bar-success" role="progressbar" aria_valuenow="<%= @chart_values["hosp_value_now"] %>" aria-valuemin="0" aria-valuemax="<%= @chart_values["hosp_value_max"] %>" style="<%= @chart_values["hosp_ratio_width_percentage"] %>">
+											<span class="sr-only">10%</span>
+										</div>
+									</div>
+								</span>
+								</li>
 							</ul>
 
 							<h5 class="label label-default"><i class="fa fa-info-circle"></i> Global stats</h5>
