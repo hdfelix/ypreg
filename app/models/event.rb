@@ -54,7 +54,7 @@ class Event < ActiveRecord::Base
 			stats[loc]['actual_total_serving_ones'] = "[--]"
 			stats[loc]['actual_total_trainees'] = "[--]"
 			stats[loc]['actual_total_helpers'] = "[--]"
-			stats[loc]['actual_amount_paid'] = 73 * self.registration_cost
+      stats[loc]['actual_amount_paid'] = 0
 			stats[loc]['balance'] = stats[loc]['actual_amount_paid'] - stats[loc]['amount_due']
 		end
     stats
