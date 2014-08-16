@@ -14,6 +14,7 @@ YpwReg::Application.routes.draw do
 	resources :hospitalities
 	resources :events do
 		resources :registrations, except: [:index], controller: 'events/registrations'  #, only:  [:index, :new, :create]
+    resources :hospitality_assignments, only: [:index], controller: 'events/hospitality_assignments'
 	end
 
   devise_for :user, controllers: { registrations: "users/registrations" }
