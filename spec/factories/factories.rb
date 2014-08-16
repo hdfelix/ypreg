@@ -18,10 +18,10 @@ FactoryGirl.define do
     factory :admin, traits: [:admin]
   end	
 
-  factory :confirmed_user, parent: :user, aliases: [:contact_person, :hospitality_contact] do
+  factory :confirmed_user, parent: :user, aliases: [:contact_person, :lodging_contact] do
     after(:build) do |cu|
       cu.confirm!
-      #cu.hospitality ||= FactoryGirl.build(:hospitality, :contact_person => cu)
+      #cu.lodging ||= FactoryGirl.build(:lodging, :contact_person => cu)
     end
   end
 
@@ -57,14 +57,14 @@ FactoryGirl.define do
   factory :locality do
 		city { Faker::Address.city }
 		state_abbrv  'CA' #{ Faker::Address.state_abbr }
-    hospitality_contact_id '1' # { hospitality_contact }
+    lodging_contact_id '1' # { lodging_contact }
   end
 
-  ## Hospitality factories
+  ## Lodging factories
   min_cap = rand(1..3)
   max_cap = min_cap + rand(1..3)
   
-  factory :hospitality do
+  factory :lodging do
     # before(:build) do
     #   FactoryGirl.create(:confirmed_user, id:100)
     # end
@@ -76,26 +76,26 @@ FactoryGirl.define do
     city { Faker::Address.city }
     state_abbrv  'CA' #{ Faker::Address.state_abbr }
     zipcode { Faker::Address.zip_code }
-    hospitality_type "1"
+    lodging_type "1"
     min_capacity min_cap
     max_capacity max_cap
 
-    after(:build) do |hospitality|
-      hospitality.contact_person ||= FactoryGirl.build(:confirmed_user)
-      hospitality.locality ||= FactoryGirl.build(:locality)
+    after(:build) do |lodging|
+      lodging.contact_person ||= FactoryGirl.build(:confirmed_user)
+      lodging.locality ||= FactoryGirl.build(:locality)
     end
 
 
-    #factory(:hospitality_with) do
+    #factory(:lodging_with) do
     #contact_person {[FactoryGirl.create(:confirmed_user), ]}
     #contact_person_id 100
   #end
 
     # after(:build) do |h|
-    #   h.contact_person ||= FactoryGirl.build(:confirmed_user, :hospitality => h)
+    #   h.contact_person ||= FactoryGirl.build(:confirmed_user, :lodging => h)
     # end
     #association :contact_person, factory: :confirmed_user
-    #h.contact_person { |cu| cu.association(:hospitality) }
+    #h.contact_person { |cu| cu.association(:lodging) }
   end
  
   ## Event factories

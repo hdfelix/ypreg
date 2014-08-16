@@ -1,10 +1,11 @@
 class Event < ActiveRecord::Base
 	belongs_to :location
 	has_many	:registrations
-	#has_many :users
 	has_many :users, through: :registrations
 	has_many :localities, through: :users
-  has_and_belongs_to_many :hospitalities
+  has_many :hospitalities, -> { uniq }
+  has_many :lodgings, -> { uniq }, through: :hospitalities
+  #has_many :hospitality_assignments
 
 	#skip_before_filter :verify_authenticity_token
 

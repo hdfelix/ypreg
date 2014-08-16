@@ -1,32 +1,32 @@
 <tr id="event_hospitality_<%= @hospitality.id %>" class="odd">
     <td class=" sorting_1">
       <!-- Hosp. name -->
-      <%= @hospitality.name %>
+      <%= @hospitality.lodging.name %>
 
     </td>
     <td class=" ">
       <!-- Hosp. contact home phone -->
-      <%= @hospitality.contact_person_home_phone %>
+      <%= @hospitality.lodging.contact_person_home_phone %>
 
     </td>
     <td class=" ">
       <!-- Hosp. contact cell -->
-      <%= @hospitality.contact_person_cell_phone %>
+      <%= @hospitality.lodging.contact_person_cell_phone %>
 
     </td>
     <td class=" ">
       <!-- Hosp. address -->
-      <%= @hospitality.address %>
+      <%= @hospitality.lodging.address %>
 
     </td>
     <td class=" ">
       <!-- min guests -->
-      <%= @hospitality.display_min_capacity %>
+      <%= @hospitality.lodging.display_min_capacity %>
 
     </td> 
     <td class=" ">
       <!-- max guests -->
-      <%= @hospitality.display_max_capacity %>
+      <%= @hospitality.lodging.display_max_capacity %>
 
     </td>
     <td class=" ">
@@ -35,6 +35,11 @@
 
     </td> 
     <td class= " ">
-      <%= link_to 'remove', hospitality_remove_path(event_id: @event,id: @hospitality), method: :delete, data: { confirm: 'Are your sure?' }, remote: true %>
+      <%- # Update this remove button or create an assigned_hospitality partial to use
+          # when removing assigned hospitalities from the table; currently, you have to 
+          # refresh before the 'remove' link works b/c of this link to needing
+          # ':id' for hospitalities/_hospitality partial and ':lodging_id' when it is now
+          # used for assigned_hospitalities -%>
+      <%= link_to 'remove', hospitality_remove_path(event_id: @event, id: @hospitality), method: :delete, data: { confirm: 'Are your sure?' }, remote: true %>
     </td>
   </tr>

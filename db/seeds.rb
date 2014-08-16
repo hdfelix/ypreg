@@ -31,10 +31,6 @@ print "Creating Localities...\n"
   )
 end
 
-#Create hospitalities
-#print "Creating Hospitalities...\n"
-#hospitality_type: Hospitality::HOSPITALITY_TYPE.sample
-
 #Create Test event
 print "Creating Events...\n"
 tmp_date = Time.now + rand(1..3).months
@@ -85,4 +81,42 @@ scyp = User.new(
   scyp.save
   scyp.update_attributes(role: 'scyp')
   scyp.update_attributes(locality_id: Locality.all.sample.id)
+
+#Create lodgings
+#lodging_type: Lodging::LODGING_TYPE.sample
+
+print "Creating Lodgings...\n"
+lodging= Lodging.new(
+          name: "Felixes",
+          description: "Hector & Angela Felix's home",
+          address1: '60 Georgetown',
+          city: 'Irvine',
+          state_abbrv: 'CA',
+          zipcode: '92612',
+          max_capacity: 5, 
+          min_capacity: 2,
+          contact_person: User.first,
+          locality_id: admin.locality_id,
+          lodging_type: 1)
+lodging.save
+
+lodging = FactoryGirl.create(:lodging)
+lodging.update_attributes(name: 'Lodging 1')
+
+lodging = FactoryGirl.create(:lodging)
+lodging.update_attributes(name: 'Lodging 2')
+
+#Create event registration
+print "Creating an event registration...\n"
+
+ev = Event.first
+reg = Registration.new(
+        payment_type: 1, 
+        has_been_paid: false,
+        payment_adjustment: ev.registration_cost - 10,
+        attend_as_serving_one: true,
+        user_id: User.first.id, 
+        event_id: ev.id)
+reg.save
+
 

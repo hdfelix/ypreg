@@ -7,8 +7,8 @@ module ApplicationHelper
 		end
 	end
 
-  def list_unassigned_hospitalities
+  def list_unassigned_lodgings
     ev = Event.find(params[:event_id])
-    Hospitality.where('id not in (?)', ev.hospitality_ids)
+    Lodging.where('id not in (?)', ev.hospitalities.pluck(:lodging_id))
   end
 end

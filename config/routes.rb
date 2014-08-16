@@ -1,7 +1,4 @@
 YpwReg::Application.routes.draw do
-  get "hospitality/index"
-  get "hospitality/show"
-  get "hospitality/new"
 	root 'welcome#index'
 
   get "welcome/index"
@@ -13,6 +10,7 @@ YpwReg::Application.routes.draw do
 
 	resources :locations
 	resources :localities
+  resources :lodgings
 	resources :hospitalities
 	resources :events do
 		resources :registrations, except: [:index], controller: 'events/registrations'  #, only:  [:index, :new, :create]
