@@ -1,4 +1,4 @@
-desc "Create initial admin user for YPReg proejct"
+desc "Create initial admin user for YPReg project"
 namespace :ypreg do
 	task create_admin: :environment do
 		print "\n\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
