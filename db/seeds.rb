@@ -100,6 +100,12 @@ lodging= Lodging.new(
           lodging_type: 1)
 lodging.save
 
+lodging = FactoryGirl.create(:lodging)
+lodging.update_attributes(name: 'Lodging 1')
+
+lodging = FactoryGirl.create(:lodging)
+lodging.update_attributes(name: 'Lodging 2')
+
 #Create event registration
 print "Creating an event registration...\n"
 
