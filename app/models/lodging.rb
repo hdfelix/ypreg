@@ -5,6 +5,8 @@ class Lodging < ActiveRecord::Base
   has_many :events, -> { uniq }, through: :hospitalities
 	has_one :contact_person, class_name: 'User' 
   belongs_to :locality
+
+  accepts_nested_attributes_for :contact_person
   
 	validates :name, presence: true
 	validates :address1, presence: true

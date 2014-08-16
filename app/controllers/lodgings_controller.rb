@@ -8,15 +8,18 @@ class LodgingsController < ApplicationController
 
   def show
     #@lodging set with 'before_action'
+    binding.pry
   end
 
   def new
-		@lodging= Lodging.new
+		@lodging = Lodging.new
+    @lodging.build_contact_person
 		authorize @lodging
   end
 
 	def create 
-		@lodging= Lodging.new(lodging_params)
+		@lodging = Lodging.new(lodging_params)
+    @lodging.contact_person = User.find(params[:contact_person][:id])
 		authorize @lodging
 
 		if @lodging.save
@@ -33,8 +36,9 @@ class LodgingsController < ApplicationController
 	end
 
 	def update
+    @lodging.contact_person = User.find(params[:contact_person][:id])
 
-		if @lodging.update(lodging_params)
+		if @lodging.update_attributes(lodging_params)
 			flash[:notice] = 'lodging was updated successfully.'
 			redirect_to @lodging
 		else
@@ -63,7 +67,7 @@ class LodgingsController < ApplicationController
 	end
 	
 	def lodging_params
-		params.require(:lodging).permit(:name, :lodging_type, :contact_person_id, :locality_id, :max_capacity, :address1, :address2, :city, :state_abbrv, :zipcode)
+		params.require(:lodging).permit(:name, :lodging_type, :locality_id, :max_capacity, :address1, :address2, :city, :state_abbrv, :zipcode, contact_person: [:id ])
 
 	end
 end

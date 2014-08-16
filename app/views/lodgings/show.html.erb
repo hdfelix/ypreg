@@ -65,7 +65,7 @@
 						<strong>Contact:</strong>
 					</div>
 					<div class="col-sm-8">
-						<%= User.find(@lodging.contact_person_id).name %>
+						<%= User.find(@lodging.contact_person.id).name %>
 					</div>
 				</div>
 
@@ -106,6 +106,7 @@
 	<div class="col-md-12">
 		<%= link_to 'Edit', edit_lodging_path(@lodging), class: 'btn btn-primary'%>
 		<%= link_to 'Back', lodgings_path, class: 'btn btn-default' %>
+    <%= link_to 'Delete', @lodging, method: :delete, data: { confirm: 'Are you sure?' } %>
 	</div>
 </div>
 </div><!-- End lodging info -->

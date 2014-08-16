@@ -15,7 +15,7 @@
 						<tr style="font: bold">
 							<th>Name</th>
 							<th>Type</th>
-							<th>Conact Person</th>
+							<th>Contact Person</th>
 							<th>Locality</th>
 							<th>Max Cap.</th>
 							<th>Address</th>
@@ -28,7 +28,7 @@
 								<tr>
 									<td><%= link_to lodging.name, lodging %></td>
 									<td><%= lodging.lodging_type %></td>
-									<td><%= User.find(lodging.contact_person_id).name %></td>
+									<td><%= User.find(lodging.contact_person.id).name %></td>
 									<td><%= Locality.find(lodging.locality_id).city %></td> 
 									<td><%= lodging.max_capacity %></td> 
 									<td><%= lodging.display_address %></td>

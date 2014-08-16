@@ -78,7 +78,6 @@ class ApplicationController < ActionController::Base
       chart_values["hosp_ratio_width_percentage"] = "width: #{ (event_hospitalities_count.to_f / lodging_count.to_f) * 100 }%"
       chart_values["hosp_value_now"] = event_hospitalities_count 
       chart_values["hosp_value_max"] = lodging_count
-      binding.pry
 		end
 		chart_values		
 	end
