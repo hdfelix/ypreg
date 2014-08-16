@@ -8,7 +8,6 @@ class LodgingsController < ApplicationController
 
   def show
     #@lodging set with 'before_action'
-    binding.pry
   end
 
   def new
