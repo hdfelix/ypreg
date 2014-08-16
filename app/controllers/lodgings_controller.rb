@@ -48,7 +48,7 @@ class LodgingsController < ApplicationController
     #@lodging set wtih 'before_action'
 		if @lodging.destroy
 			flash[:notice] = "Lodging #{ @lodging.name }deleted successfully."
-			redirect_to events_url
+			redirect_to lodgings_url
 		else
 			flash[:error] = "lodging could not be deleted."
 			render action: 'index'
