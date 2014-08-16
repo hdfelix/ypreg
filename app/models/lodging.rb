@@ -16,6 +16,7 @@ class Lodging < ActiveRecord::Base
 	validates :lodging_type, presence: true
 	validates :contact_person, presence: true
 
+
 	LODGING_TYPE= [['Home',1],['Retreat Center',2],['Hotel/Motel',3]]
 	
 	def display_address

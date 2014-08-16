@@ -43,7 +43,7 @@
       <div class="form-group">
         <%= cp.label :contact_person, class: 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= cp.collection_select(:id, User.all, :id, :name, { include_blank: true }, { class: 'form-control' }) %>
+          <%= cp.collection_select(:id, User.is_not_contact_person, :id, :name, { include_blank: true }, { class: 'form-control' }) %>
           <!--%= link_to "Add user", new_user_path, class: 'pull-right' %-->
         </div>
         <br /></br />

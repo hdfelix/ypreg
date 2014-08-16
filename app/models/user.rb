@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   belongs_to :lodging #hospitality
 
 #validations 
+
+scope :is_not_contact_person, -> { where('lodging_id is null') }
   USER_ROLE = [['admin',1],
               ['scyp',2],
               ['ycat',3],
