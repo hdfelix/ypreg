@@ -109,3 +109,5 @@ end
 
 #App Monitoring
 #gem 'newrelic_rpm'
+
+ruby '2.1.1'
