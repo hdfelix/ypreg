@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
 
 #validations 
 
-scope :is_not_contact_person, -> { where('lodging_id is null') }
+  scope :is_not_other_contact_person, -> (lodging_id) { where('lodging_id IS NULL OR lodging_id = ?', lodging_id) }
+
   USER_ROLE = [['admin',1],
               ['scyp',2],
               ['ycat',3],
