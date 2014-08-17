@@ -12,6 +12,9 @@ end
 #gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 gem 'pg'
+#serve static_assets
+gem 'rails_12factor', group: :production
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -55,9 +58,6 @@ group :doc do
 	# bundle exec rake doc:rails generates the API under doc/api.
 	gem 'sdoc' #require: false
 end
-
-#serve static_assets
-gem 'rails_12factor', group: :production
 
 # Added from 'Everyday Rails Testing with Rspec book (with latest versions as of 15MAR14)
 group :development, :test do
