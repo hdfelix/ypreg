@@ -105,6 +105,7 @@ FactoryGirl.define do
 
   factory :event do
     title { generate(:title) }
+    description "This is the sample event description. Not much details here."
 		event_type '3'  #
     begin_date tmp_date 
     end_date (tmp_date + 3.days).strftime('%Y/%m/%d') 
