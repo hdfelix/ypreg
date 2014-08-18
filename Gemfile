@@ -77,6 +77,7 @@ group :development, :test do
 	gem 'railroad'
 
 	#Add Pry for debugging
+  gem 'pry'
 	gem 'pry-rails'
   gem 'pry-debugger'
 	gem 'pry-byebug'
