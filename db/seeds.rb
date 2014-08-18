@@ -118,5 +118,3 @@ reg = Registration.new(
         user_id: User.first.id, 
         event_id: ev.id)
 reg.save
-
-

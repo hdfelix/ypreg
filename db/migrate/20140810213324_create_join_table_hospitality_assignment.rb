@@ -4,6 +4,6 @@ class CreateJoinTableHospitalityAssignment < ActiveRecord::Migration
       t.references :hospitality, index: true
       t.references :registration, index: true
     end
-    add_index :hospitality_assignments, ["hospitality_id", "registration_id"], unique: true, name: 'hospitality_assignments'
+    add_index :hospitality_assignments, ["hospitality_id", "registration_id"], unique: true, name: 'hosp_assignmts'
   end
 end
