@@ -42,9 +42,13 @@ module YpwReg
 		end
     
     console do
-      #This block is called only when running console, so we can safely require pry here.
-      require 'pry'
-      config.console = Pry
+      if Rails.env.production?
+        config.console = IRB
+      else
+        #This block is called only when running console, so we can safely require pry here.
+        require 'pry'
+        config.console = Pry
+      end
      end
   end
 end
