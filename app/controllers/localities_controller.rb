@@ -1,5 +1,5 @@
 class LocalitiesController < ApplicationController
-  before_action :set_locality, only: [ :show, :edit, :destroy]
+  before_action :set_locality, only: [ :show, :edit, :update, :destroy]
 
 	def index
 		@localities = Locality.all
@@ -31,7 +31,6 @@ class LocalitiesController < ApplicationController
 	end
 
 	def update
-
 		if @locality.update(locality_params)
 			flash[:notice] = 'Locality was updated successfully.'
 			redirect_to @locality
