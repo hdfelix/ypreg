@@ -65,6 +65,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    colorize (0.7.3)
     columnize (0.8.9)
     database_cleaner (1.2.0)
     debug_inspector (0.0.2)
@@ -97,6 +98,7 @@ GEM
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.5)
+    gli (2.12.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -179,6 +181,10 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.4)
       sprockets-rails (~> 2.0)
+    rails-erb-lint (1.1.0)
+      actionpack (= 4.1.4)
+      colorize
+      gli (= 2.12.0)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -223,6 +229,8 @@ GEM
       powerpack (~> 0.0.6)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
+    rubocop-rspec (1.1.0)
+      rubocop (~> 0.23)
     ruby-progressbar (1.5.1)
     rubyzip (1.1.6)
     sass (3.2.19)
@@ -302,10 +310,12 @@ DEPENDENCIES
   railroad
   railroady
   rails (= 4.1.4)
+  rails-erb-lint
   rails_12factor
   rspec-collection_matchers
   rspec-rails
   rubocop
+  rubocop-rspec
   sass-rails (~> 4.0.0)
   sdoc
   selenium-webdriver (~> 2.39.0)

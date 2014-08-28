@@ -73,6 +73,9 @@ group :development, :test do
 	gem 'launchy', '~>2.4.2'
 	gem 'selenium-webdriver', '~> 2.39.0'
   gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rails-erb-lint'
+
   # gem 'haml-lint', require: false
 	# gem 'letter_opener'
 
