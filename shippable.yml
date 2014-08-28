@@ -2,7 +2,6 @@ language: ruby
 
 rvm:
  - 2.1.1
- #- 2.1.2
 
 env:
   global:
@@ -26,7 +25,6 @@ notifications:
      email:
          recipients:
              - hdfelix@gmail.com 
-             - lisaburricks@gmail.com
 script:
   - bundle exec rake db:create
   - bundle exec rake db:migrate
