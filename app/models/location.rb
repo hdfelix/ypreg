@@ -1,12 +1,66 @@
+# Places where events can be held
 class Location < ActiveRecord::Base
-	validates :name, presence: true, uniqueness: true
-	validates :address1, presence: true
-	validates :city, presence: true
-	#validates :state, presence: true  #How do we validate for states now that they are in a hash variable?
-	validates :zipcode, presence: true
+  validates :name, presence: true, uniqueness: true
+  validates :address1, presence: true
+  validates :city, presence: true
+  # validates :state, presence: true
+  # How do we validate for states now that they are in a hash variable?
+  validates :zipcode, presence: true
 
-	has_many :events
+  has_many :events
 
-	STATE_LIST =[['Alabama','AL'],['Alaska','AK'],['Arizona','AZ'],['Arkansas','AR'],['California','CA'],['Colorado','CO'],['Connecticut','CT'],['Delaware','DE'],['District of Columbia','DC'],['Florida','FL'],['Georgia','GA'],['Hawaii','HI'],['Idaho','ID'],['Illinois','IL'],['Indiana','IN'],['Iowa','IA'],['Kansas','KS'],['Kentucky','KY'],['Louisiana','LA'],['Maine','ME'],['Maryland','MD'],['Massachusetts','MA'],['Michigan','MI'],['Minnesota','MN'],['Mississippi','MS'],['Missouri','MO'],['Montana','MT'],['Nebraska','NE'],['Nevada','NV'],['New Hampshire','NH'],['New Jersey','NJ'],['New Mexico','NM'],['New York','NY'],['North Carolina','NC'],['North Dakota','ND'],['Ohio','OH'],['Oklahoma','OK'],['Oregon','OR'],['Pennsylvania','PA'],['Puerto Rico','PR'],['Rhode Island','RI'],['South Carolina','SC'],['South Dakota','SD'],['Tennessee','TN'],['Texas','TX'],['Utah','UT'],['Vermont','VT'],['Virginia','VA'],['Washington','WA'],['West Virginia','WV'],['Wisconsin','WI'],['Wyoming','WY']]
-
+  STATE_LIST = [
+    %w(Alabama AL),
+    %w(Alaska AK),
+    %w(Arizona AZ),
+    %w(Arkansas AR),
+    %w(California CA),
+    %w(Colorado CO),
+    %w(Connecticut CT),
+    %w(Delaware DE),
+    %w(District of Columbia DC),
+    %w(Florida FL),
+    %w(Georgia GA),
+    %w(Hawaii HI),
+    %w(Idaho ID),
+    %w(Illinois IL),
+    %w(Indiana IN),
+    %w(Iowa IA),
+    %w(Kansas KS),
+    %w(Kentucky KY),
+    %w(Louisiana LA),
+    %w(Maine ME),
+    %w(Maryland MD),
+    %w(Massachusetts MA),
+    %w(Michigan MI),
+    %w(Minnesota MN),
+    %w(Mississippi MS),
+    %w(Missouri MO),
+    %w(Montana MT),
+    %w(Nebraska NE),
+    %w(Nevada NV),
+    %w(New Hampshire NH),
+    %w(New Jersey NJ),
+    %w(New Mexico NM),
+    %w(New York NY),
+    %w(North Carolina NC),
+    %w(North Dakota ND),
+    %w(Ohio OH),
+    %w(Oklahoma OK),
+    %w(Oregon OR),
+    %w(Pennsylvania PA),
+    %w(Puerto Rico PR),
+    %w(Rhode Island RI),
+    %w(South Carolina SC),
+    %w(South Dakota SD),
+    %w(Tennessee TN),
+    %w(Texas TX),
+    %w(Utah UT),
+    %w(Vermont VT),
+    %w(Virginia VA),
+    %w(Washington WA),
+    %w(West Virginia WV),
+    %w(Wisconsin WI),
+    %w(Wyoming WYi)
+  ]
 end
