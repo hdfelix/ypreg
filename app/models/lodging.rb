@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: lodgings
+#
+#  id           :integer          not null, primary key
+#  name         :string(255)
+#  description  :text
+#  address1     :string(255)
+#  address2     :string(255)
+#  city         :string(255)
+#  state_abbrv  :string(255)
+#  zipcode      :integer
+#  lodging_type :string(255)
+#  locality_id  :integer
+#  max_capacity :string(255)
+#  min_capacity :string(255)
+#
+
 # Places for hospitality (home, hotel room, retreat center lodging unit, etc.
 class Lodging < ActiveRecord::Base
   # has_and_belongs_to_many :events

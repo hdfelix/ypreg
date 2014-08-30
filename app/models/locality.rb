@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: localities
+#
+#  id                 :integer          not null, primary key
+#  city               :string(255)
+#  state_abbrv        :string(255)
+#  contact_id         :integer
+#  lodging_contact_id :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
 # A local church
 class Locality < ActiveRecord::Base
   has_many :users

@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: locations
+#
+#  id           :integer          not null, primary key
+#  name         :string(255)
+#  description  :text
+#  address1     :string(255)
+#  address2     :string(255)
+#  city         :string(255)
+#  state_abbrv  :string(255)
+#  zipcode      :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#  max_capacity :integer
+#
+
 # Places where events can be held
 class Location < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true

@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: hospitalities
+#
+#  id         :integer          not null, primary key
+#  event_id   :integer
+#  lodging_id :integer
+#
+
 # Hospitality model - A lodging available for an event
 class Hospitality < ActiveRecord::Base
   belongs_to :events

@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id                      :integer          not null, primary key
+#  title                   :string(255)
+#  location_id             :integer
+#  event_type              :integer
+#  begin_date              :date
+#  end_date                :date
+#  registration_cost       :decimal(, )
+#  registration_open_date  :date
+#  registration_close_date :date
+#  created_at              :datetime
+#  updated_at              :datetime
+#  description             :string(255)
+#
+
 # Events model - one-time events, conferences, or retreats
 class Event < ActiveRecord::Base
   belongs_to :location
