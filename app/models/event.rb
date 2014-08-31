@@ -26,6 +26,16 @@ class Event < ActiveRecord::Base
   has_many :lodgings, -> { uniq }, through: :hospitalities
   # has_many :hospitality_assignments
 
+  delegate :name,
+           :description,
+           :address1,
+           :address2,
+           :city,
+           :state_abbrv,
+           :zipcode,
+           :max_capacity,
+           to: :location
+
   # skip_before_filter :verify_authenticity_token
 
   validates :event_type, presence: true

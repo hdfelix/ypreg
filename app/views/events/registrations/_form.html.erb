@@ -17,7 +17,8 @@
 			<div class="row">
 				<div class="col-md-2"><strong>Location:</strong></div>
 				<div class="col-md-10">
-					<%= @event.location.name %>
+          <!-- law of demeter delegate -->
+					<%= @event.location_name %>
 					<span><%=event_location( @event ) %></span>
 				</div>
 			</div>

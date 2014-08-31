@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     # Values for Attendance aria chart
     if Event.any?
       next_event = Event.where('end_date >= ?', Time.now.to_date).first
-      location_capacity = next_event.location.max_capacity
+      location_capacity = next_event.max_capacity
       registration_count = next_event.registrations.count
 
       chart_values['att_ratio'] =
