@@ -1,0 +1,113 @@
+<div class="content">
+  <div class="main-header">
+    <h2>Hospitality Assignments</h2>
+    <em>hospitality assingments for <%= @event.title %></em>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="widget widget-table">
+        <div class="widget-header">
+          <h3><i class="fa fa-table"></i>Hospitality Units</h3>
+        </div>
+        <div class="widget-content">
+          <table class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Lodging</td>
+                <td>Min</td>
+                <td>Max</td>
+              </tr>
+            </thead>
+            <tbody>
+              <% @event.hospitalities.each  do |hosp| %>
+                <tr>
+                  <td><%= hosp.name %></td>
+                  <td><%= hosp.min_capacity %></td>
+                  <td><%= hosp.max_capacity %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+      <div class="widget widget-table">
+        <div class="widget-header">
+          <h3><i class="fa fa-table"></i>Participating Localities</h3>
+        </div>
+        <div class="widget-content">
+          <table class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Lodging</td>
+                <td>Total Saints</td>
+              </tr>
+            </thead>
+            <tbody>
+              <% @event.localities.each do |loc| %>
+                <tr>
+                  <td><%= loc.city %></td>
+                  <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="widget widget-table">
+        <div class="widget-header">
+          <h3><i class="fa fa-table"></i>Registered Saints</h3>
+        </div>
+        <div class="widget-content">
+          <table class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Locality</td>
+                <td>Name</td>
+              </tr>
+            </thead>
+            <tbody>
+              <% @event.registrations.each  do |reg| %>
+                <tr>
+                  <td><%= reg.name %></td>
+                  <td><%= reg.name%></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+      <div class="widget widget-table">
+        <div class="widget-header">
+          <h3><i class="fa fa-table"></i>Assigned Hospitalities</h3>
+        </div>
+        <div class="widget-content">
+          <table class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Locality</td>
+                <td>Name</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr colspan="3">[...]</tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
