@@ -1,30 +1,31 @@
+# Default application policiy for restful actions
 class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-		raise Pundit::NotAuthorizedError, "must be logged in" unless user
+    fail Pundit::NotAuthorizedError, 'must be logged in' unless user
     @user = user
     @record = record
   end
 
   def index?
-		false
+    false
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    scope.where(id: record.id).exists?
   end
 
   def create?
-		user.present? && (user.role?(:admin))
+    user.present? && (user.role?(:admin))
   end
 
   def new?
-		create?
+    create?
   end
 
   def update?
-		user.present? && (user.role?(:admin))
+    user.present? && (user.role?(:admin))
   end
 
   def edit?
@@ -32,11 +33,10 @@ class ApplicationPolicy
   end
 
   def destroy?
-		update?
+    update?
   end
 
   def scope
-		record.class #Pundit.policy_scope!(user, record.class)
+    record.class # Pundit.policy_scope!(user, record.class)
   end
 end
-

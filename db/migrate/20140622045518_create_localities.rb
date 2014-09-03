@@ -4,7 +4,7 @@ class CreateLocalities < ActiveRecord::Migration
       t.string :city
       t.string :state_abbrv
       t.integer :contact_id
-			t.integer :hospitality_contact_id
+			t.integer :lodging_contact_id
 
       t.timestamps
     end

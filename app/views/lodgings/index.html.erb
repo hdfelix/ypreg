@@ -1,0 +1,56 @@
+<div class="content">
+	<div class="main-header">
+		<h2>LODGING</H2>
+		<em>list of available lodging locations for conterences and retreats</em>
+	</div>
+
+	<div class="col-md-12">
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<h3><i class="fa fa-table"></i></h3>
+			</div>
+			<div class="widget-content">
+				<table class="table table-striped">
+					<thead>
+						<tr style="font: bold">
+							<th>Name</th>
+							<th>Type</th>
+							<th>Contact Person</th>
+							<th>Locality</th>
+							<th>Max Cap.</th>
+							<th>Address</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<% if @lodgings.all.count > 0 %>
+							<% @lodgings.each do |lodging| %>
+								<tr>
+									<td><%= link_to lodging.name, lodging %></td>
+									<td><%= lodging.lodging_type %></td>
+									<td><%= User.find(lodging.contact_person.id).name %></td>
+									<td><%= Locality.find(lodging.locality_id).city %></td> 
+									<td><%= lodging.max_capacity %></td> 
+									<td><%= lodging.display_address %></td>
+
+										<td><%= link_to 'Edit', edit_lodging_path(lodging) %>&nbsp;
+										<!--%= link_to 'Delete',event_lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' } %-->
+									</td>
+								</tr>
+							<% end %>
+						<% else %>
+							<tr><td colspan=7><center>No Lodgings in the database...</center></td></tr>
+						<% end %>
+					<tbody>
+				</table>
+
+				<%= link_to new_lodging_path, class: 'btn btn-default' do %>
+					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
+					New Lodging
+				<% end %>
+
+			</div>
+		</div>
+	</div>
+</div>
+

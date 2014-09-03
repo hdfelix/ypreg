@@ -1,10 +1,9 @@
-
-<%= form_for(@hospitality, class: 'form-horizontal') do |f| %>
-  <% if @hospitality.errors.any? %>
+<%= form_for(@lodging, class: 'form-horizontal') do |f| %>
+  <% if @lodging.errors.any? %>
     <div id="error_explanation" class="alert alert-danger alert-dismissable">
-			<h4><strong><%= pluralize(@hospitality.errors.count, "error") %></strong> prohibited this event from being saved:</h4>
+			<h4><strong><%= pluralize(@lodging.errors.count, "error") %></strong> prohibited this event from being saved:</h4>
       <ul>
-				<% @hospitality.errors.full_messages.each do |msg| %>
+				<% @lodging.errors.full_messages.each do |msg| %>
 					<li><%= msg %></li>
 				<% end %>
       </ul>
@@ -22,10 +21,10 @@
 		<br /><br />
 
 		<div class="form-group">
-			<%= f.label :hospitality_type, class: 'col-md-2 control-label' %>
+			<%= f.label :lodging_type, class: 'col-md-2 control-label' %>
 			<div class="col-md-10">
-				<%= f.select :hospitality_type,
-					Hospitality::HOSPITALITY_TYPE, 
+				<%= f.select :lodging_type,
+					Lodging::LODGING_TYPE, 
 					options={placeholder: "Type"}, html_options={ class: 'form-control select' } %>
 			</div>
 		</div>
@@ -40,14 +39,16 @@
 		</div>
 		<br /><br />	
 
-		<div class="form-group">
-			<%= f.label :contact_person_id, class: 'col-md-2 control-label' %>
-			<div class="col-md-10">
-				<%= f.collection_select(:contact_person_id, User.all, :id, :name, {include_blank: true}, {class: 'form-control'}) %>
-				<!--%= link_to "Add user", new_user_path, class: 'pull-right' %-->
-			</div>
-			<br /></br />
-		</div>
+    <%= fields_for :contact_person, @lodging.contact_person do |cp| %> 
+      <div class="form-group">
+        <%= cp.label :contact_person, class: 'col-md-2 control-label' %>
+        <div class="col-md-10">
+          <%= cp.collection_select(:id, User.is_not_contact_person, :id, :name, { include_blank: true }, { class: 'form-control' }) %>
+          <!--%= link_to "Add user", new_user_path, class: 'pull-right' %-->
+        </div>
+        <br /></br />
+      </div>
+    <% end %>
 
 		<div class="form-group">
 			<%= f.label :max_capacity, class: 'col-md-2 control-label' %>
@@ -100,7 +101,7 @@
 	<div class="form-group">
 		<div class= "col-md-12">
 			<span class="pull-right">
-				<%= link_to 'Back', hospitalities_path, class: 'btn btn-default' %>
+				<%= link_to 'Back', lodgings_path, class: 'btn btn-default' %>
 				<%= f.submit "Submit", class: 'btn btn-primary' %>
 			</span>
 		</div>

@@ -22,7 +22,6 @@ YpwReg::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this).
   config.serve_static_assets = false
 
-	 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
@@ -62,11 +61,11 @@ YpwReg::Application.configure do
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   # config.assets.precompile += %w( search.js )
 
-	# Add vendor path for Kingadmin theme
-#		config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
-		#config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
-	#config.assets.paths += Dir["#{Rails.root}/vendor/assets/kingsboard-v1.1/*"].sort_by { |dir| -dir.size }
-	
+  # Add vendor path for Kingadmin theme
+  # config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+  # config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+  # config.assets.paths += Dir["#{Rails.root}/vendor/assets/kingsboard-v1.1/*"].sort_by { |dir| -dir.size }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
@@ -83,5 +82,5 @@ YpwReg::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-	config.action_mailer.default_url_options = { :host => 'ypreg.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'ypreg.herokuapp.com' }
 end

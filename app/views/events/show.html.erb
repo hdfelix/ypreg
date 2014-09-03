@@ -258,7 +258,7 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <%= link_to 'Add available hospitality',"#{@event.id}/hospitalities/assign", id: 'add_event_hospitality', remote: true %>
+                <%= link_to 'Add lodging as hospitality',"#{@event.id}/hospitalities/assign", id: 'add_hospitality', remote: true %>
               </div>
               <div class="col-md-3">
                 <div id="visit-stat-table_filter" class="datatables_filter">
@@ -285,7 +285,7 @@
                   </th>
                   <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 51px;" aria-label="Visits: activate to sort column ascending">
 
-                     Cell Phone
+                     Cell
 
                   </th>
                   <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
@@ -313,10 +313,14 @@
                 </tr>
               </thead>
               <tbody id="event_hospitalities" role="alert" aria-live="polite" aria-relevant="all">
-              <%= render partial: 'hospitalities/info_form', locals: {event: @event} %>
+              <%= render partial: 'lodgings/info_form', locals: {event: @event} %>
               </tbody>
             </table>
             <div class='row'><!-- pagination footer -->
+              <div class='col-md-6'>
+                <%= link_to 'Hospitality Assigment', event_hospitality_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
+              </div>
+              <div class='col-md-6'></div>
               <!-- Add code for records displayed, pagination -->
             </div>
         </div>

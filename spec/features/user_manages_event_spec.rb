@@ -43,6 +43,7 @@ feature 'User creates an event' do
 
 		expect{
 			fill_in 'event[title]', with: @event.title
+      fill_in 'event[description]', with: @event.description
 			find("#event_event_type").find(:xpath, "option[2]").select_option
 			select 'Conference', from: 'Event type'
 			find("#event_location_id").find(:xpath, 'option[2]').select_option

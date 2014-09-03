@@ -1,0 +1,42 @@
+<% event.hospitalities.each do |hosp| lodging = hosp.lodging %>
+  <tr id="event_hospitalities_<%= hosp.id %>" class="odd">
+    <td class=" sorting_1">
+      <!-- hosp name -->
+      <%= lodging.name %>
+
+    </td>
+    <td class=" ">
+      <!-- Contact home phone -->
+      <%= lodging.contact_person_home_phone %>
+
+    </td>
+    <td class=" ">
+      <!-- Contact cell -->
+      <%= lodging.contact_person_cell_phone %>
+
+    </td>
+    <td class=" ">
+      <!-- Address -->
+      <%= lodging.address %>
+
+    </td>
+    <td class=" ">
+      <!-- Min guests -->
+      <%= lodging.display_min_capacity %>
+
+    </td> 
+    <td class=" ">
+      <!-- Max guests -->
+      <%= lodging.display_max_capacity %>
+
+    </td>
+    <td class=" ">
+      <!-- Assigned guests -->
+       [--] 
+
+    </td> 
+    <td class=" ">
+      <%= link_to 'remove', hospitality_remove_path(id: hosp, event_id: event), method: :delete, data: { confirm: "Are you sure?" }, remote: true %>
+    </td>
+  </tr>
+<% end %>
