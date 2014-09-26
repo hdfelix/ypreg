@@ -85,7 +85,7 @@ group :development, :test do
   # Add Pry for debugging
   gem 'pry'
   gem 'pry-rails'
-  gem 'pry-debugger'
+  #gem 'pry-debugger'
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
   gem 'pry-rescue'
