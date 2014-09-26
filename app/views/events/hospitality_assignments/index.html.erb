@@ -17,6 +17,7 @@
                 <td>Lodging</td>
                 <td>Min</td>
                 <td>Max</td>
+                <td>Assign to</td>
               </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                   <td><%= hosp.name %></td>
                   <td><%= hosp.min_capacity %></td>
                   <td><%= hosp.max_capacity %></td>
+                  <td><select></select></td>
                 </tr>
               <% end %>
             </tbody>
@@ -45,6 +47,7 @@
               <tr style="font: bold">
                 <td>Lodging</td>
                 <td>Total Saints</td>
+                <td>Assigned beds</td>
               </tr>
             </thead>
             <tbody>
@@ -52,6 +55,7 @@
                 <tr>
                   <td><%= loc.city %></td>
                   <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
+                  <td>[...]</td>
                 </tr>
               <% end %>
             </tbody>
