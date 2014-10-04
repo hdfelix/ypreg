@@ -65,8 +65,7 @@ YpwReg::Application.configure do
    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
    config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   # config.assets.paths += Dir["#{Rails.root}/vendor/assets/kingsboard-v1.1/*"].sort_by { |dir| -dir.size }
-
-  # Ignore bad email addresses and do not raise email delivery errors.
+# Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 

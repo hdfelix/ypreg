@@ -18022,7 +18022,6 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
 }(jQuery);
 $( document ).ready(function() {
-  alert('in events.js');
 	$('#event_begin_date').datepicker(
 		{dateformat: 'yy-mm-dd'});
   alert("jquery working");
