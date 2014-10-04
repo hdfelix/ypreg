@@ -89,4 +89,22 @@ class Event < ActiveRecord::Base
       'locality_id = ? and attend_as_serving_one = ?',
       locality.id, true).count
   end
+
+  def assigned_hospitalities
+    lodging_ids = self.hospitalities.pluck(:lodging_id)
+    lodgings = []
+    lodging_ids.each do |lodging_id|
+      lodgings << Lodging.find(lodging_id)
+    end
+    lodgings
+  end
+
+  def unassigned_hospitalities
+    ids = [] 
+    assigned = self.assigned_hospitalities
+    assigned.each do |hospitality|
+      ids << hospitality.id
+    end
+    Lodging.where.not(id: ids).first
+  end
 end

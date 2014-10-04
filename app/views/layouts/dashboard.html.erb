@@ -19,6 +19,10 @@
 	<!-- kingAdmin skin -->
 	<!--%= stylesheet_link_tag		"fullbright", media: "all" %-->
 	<!--%= stylesheet_link_tag		"slategray", media: "all" %-->
+
+  <!-- for gem rails-jquery-cdn -->
+  <%= jquery_include_tag :google %>
+
 	<%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 
@@ -188,7 +192,7 @@
 										<% end %>
 									</ul>
 								</li>
-								<li><a href="#" class="js-sub-menu-toggle"><i class="fa fa-list fw"></i><span class="text">Reports</span>
+								<li><a href="#" class="js-sub-menu-toggle"><i class="fa fa-list fa-fw"></i><span class="text">Reports</span>
 									<i class="toggle-icon fa fa-angle-left"></i></a>
 									<ul class="sub-menu">
 										<li>[Report pages here]</li>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User adds an event hospitality location' do
+feature 'User adds an event lodging' do
   let (:authed_admin) {
     create_logged_in_admin
   }
@@ -8,16 +8,11 @@ feature 'User adds an event hospitality location' do
 		@event = create(:event)
 	end
 
-  #scenario '- clicks on \'Add Event Hospitality\'' do
-  #  #visit hospitality_assign_path(authed_admin)
-  #  visit event_path(@event, authed_admin)
-  #  wait_for_ajax
-  #  expect(page).to have_content('Add')
-  #  #find('#available_hospitalities_id').find(:xpath, 'option[1]').select_option
-  #end
-  scenario '- adds one event hospitality'
-  scenario '- adds multiple event hospitalities'
+  scenario 'can add available lodgings to the event'
+  scenario 'cannot add the same lodging twice'
 end
 
-
-
+feature 'User manages hospitality allocation by locality' do
+  scenario 'assigns a hospitality to a locality'
+  scenario 'cannot assign a hospitality that is already assigned to another locality'
+end

@@ -11,24 +11,28 @@
           <h3><i class="fa fa-table"></i>Hospitality Units</h3>
         </div>
         <div class="widget-content">
-          <table class="table table-striped">
-            <thead>
-              <tr style="font: bold">
-                <td>Lodging</td>
-                <td>Min</td>
-                <td>Max</td>
-              </tr>
-            </thead>
-            <tbody>
-              <% @event.hospitalities.each  do |hosp| %>
-                <tr>
-                  <td><%= hosp.name %></td>
-                  <td><%= hosp.min_capacity %></td>
-                  <td><%= hosp.max_capacity %></td>
+          <%= form_for( @event, class: 'form-horizontal', remote: true) do |f| %>
+            <table class="table table-striped">
+              <thead>
+                <tr style="font: bold">
+                  <td>Lodging</td>
+                  <td>Min</td>
+                  <td>Max</td>
+                  <td>Assign to</td>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <% @event.hospitalities.each  do |hosp| %>
+                  <tr>
+                    <td><%= hosp.name %></td>
+                    <td><%= hosp.min_capacity %></td>
+                    <td><%= hosp.max_capacity %></td>
+                    <td><%= collection_select(:event, :localities, @event.localities, :id, :city, include_blank: 'select' ) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
         </div>
       </div>
     </div>
@@ -45,6 +49,7 @@
               <tr style="font: bold">
                 <td>Lodging</td>
                 <td>Total Saints</td>
+                <td>Assigned beds</td>
               </tr>
             </thead>
             <tbody>
@@ -52,6 +57,7 @@
                 <tr>
                   <td><%= loc.city %></td>
                   <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
+                  <td>[...]</td>
                 </tr>
               <% end %>
             </tbody>
@@ -68,22 +74,25 @@
           <h3><i class="fa fa-table"></i>Registered Saints</h3>
         </div>
         <div class="widget-content">
-          <table class="table table-striped">
-            <thead>
-              <tr style="font: bold">
-                <td>Locality</td>
-                <td>Name</td>
-              </tr>
-            </thead>
-            <tbody>
-              <% @event.registrations.each  do |reg| %>
-                <tr>
-                  <td><%= reg.name %></td>
-                  <td><%= reg.name%></td>
+          <%= form_for(@event, class: 'form-horizontal', remote: true) do |f| %>
+            <table class="table table-striped">
+              <thead>
+                <tr style="font: bold">
+                  <td>Locality</td>
+                  <td></td>
+                  <td>Name</td>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <% @event.localities.each do |locality| %>
+                  <tr>
+                    <td><%= locality.city %><td>
+                        <td><%= collection_select(:event, :registrations, @event.registrations, :id, :name, include_blank: 'select') %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
         </div>
       </div>
     </div>
@@ -110,4 +119,9 @@
       </div>
     </div>
   </div>
+    <div class="row">
+      <div class="col-md-12">
+        <%= link_to 'Back', @event, class: "btn btn-default" %>
+      </div>
+    </div>
 </div>

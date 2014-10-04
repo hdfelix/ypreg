@@ -21,7 +21,7 @@ gem 'font-awesome-rails'
 
 # CSS Framework
 # Using the bootstrap file provided with the KingAdmin theme
-# gem 'bootstrap-sass', '~> 3.1.1'
+gem 'bootstrap-sass', '~> 3.1.1'
 # gem 'anjlab-bootstrap-rails',
 #   require: 'bootstrap-rails',
 #   github: 'anjlab/bootstrap-rails',
@@ -37,8 +37,10 @@ gem 'coffee-rails', '~> 4.0.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+# gem 'jquery-rails'
+# gem 'jquery-ui-rails'
+gem 'jquery-rails-cdn'
+gem 'jquery-ui-rails', '~> 4.2.1'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
@@ -85,7 +87,7 @@ group :development, :test do
   # Add Pry for debugging
   gem 'pry'
   gem 'pry-rails'
-  gem 'pry-debugger'
+  #gem 'pry-debugger'
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
   gem 'pry-rescue'

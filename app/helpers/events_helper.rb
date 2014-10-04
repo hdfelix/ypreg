@@ -13,7 +13,7 @@ module EventsHelper
   def event_dates(event)
     content_tag(:span) do
       if event.begin_date && event.end_date
-        "#{event.begin_date.strftime('%m/%d/%y')} - \ 
+        "#{event.begin_date.strftime('%m/%d/%y')} - \
         #{event.end_date.strftime('%m/%d/%y')}".html_safe
       else
         'TBA'
@@ -33,8 +33,7 @@ module EventsHelper
   end
 
   def display_event(event)
-    if event_type = Event::EVENT_TYPE
-      .detect { |a| a.include?(event.event_type) }
+    if event_type = Event::EVENT_TYPE .detect { |a| a.include?(event.event_type) }
       event_type[0]
     else
       '--'
