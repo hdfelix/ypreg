@@ -13,7 +13,12 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require bootstrap
-//= require_directory ./kingadmin
+//= require kingadmin/king-elements
+//= require kingadmin/king-components
+//= require kingadmin/king-common
+//= require kingadmin/king-form-layouts
+//= require kingadmin/king-page
+// require_directory ./kingadmin
 // require_self
 //= require_tree .
 

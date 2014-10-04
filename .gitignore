@@ -30,5 +30,8 @@ spec/Guardfile
 # Ignore application configuration
 /config/application.yml
 
-#My code snippets file
+# My code snippets file
 snippets.html.erb
+
+# Public assets
+/public/assets
