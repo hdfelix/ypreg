@@ -11,7 +11,7 @@
           <h3><i class="fa fa-table"></i>Hospitality Units</h3>
         </div>
         <div class="widget-content">
-          <%= form_for( @event, class: 'form-horizontal', remote: true ) do |f| %>
+          <%= form_for( @event, class: 'form-horizontal', remote: true) do |f| %>
             <table class="table table-striped">
               <thead>
                 <tr style="font: bold">
@@ -27,7 +27,7 @@
                     <td><%= hosp.name %></td>
                     <td><%= hosp.min_capacity %></td>
                     <td><%= hosp.max_capacity %></td>
-                    <td><%= collection_select(:event, :localities, @event.localities, :id, :city, { prompt: true }) %></td>
+                    <td><%= collection_select(:event, :localities, @event.localities, :id, :city, include_blank: 'select' ) %></td>
                   </tr>
                 <% end %>
               </tbody>
@@ -74,7 +74,7 @@
           <h3><i class="fa fa-table"></i>Registered Saints</h3>
         </div>
         <div class="widget-content">
-          <%= form_for(@event, class: 'form-horizontal', remote: true ) do |f| %>
+          <%= form_for(@event, class: 'form-horizontal', remote: true) do |f| %>
             <table class="table table-striped">
               <thead>
                 <tr style="font: bold">
@@ -87,7 +87,7 @@
                 <% @event.localities.each do |locality| %>
                   <tr>
                     <td><%= locality.city %><td>
-                        <td><%= collection_select(:event, :registrations, @event.registrations, :id, :name, { prompt: true }) %></td>
+                        <td><%= collection_select(:event, :registrations, @event.registrations, :id, :name, include_blank: 'select') %></td>
                   </tr>
                 <% end %>
               </tbody>
