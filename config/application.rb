@@ -14,6 +14,9 @@ module YpwReg
 
     config.assets.initialize_on_precompile = false
 
+    # for jquery-rails-cdn
+    config.assets.precompile += ['jquery.js']
+
     config.assets.paths << Rails.root.join('app/assets/stylesheets/kingadmin')
     config.assets.paths << Rails.root.join('app/assets/javascripts/kingadmin')
     config.assets.paths << Rails.root.join('fonts')
