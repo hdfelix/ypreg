@@ -18024,7 +18024,6 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 $( document ).ready(function() {
 	$('#event_begin_date').datepicker(
 		{dateformat: 'yy-mm-dd'});
-  alert("jquery working");
 //	$("#event_end_date").datepicker(
 //		{dateformat: 'yy-mm-dd'});
 //	$("#event_registration_open_date").datepicker(
