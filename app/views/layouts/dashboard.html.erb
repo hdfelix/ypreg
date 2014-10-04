@@ -20,21 +20,8 @@
 	<!--%= stylesheet_link_tag		"fullbright", media: "all" %-->
 	<!--%= stylesheet_link_tag		"slategray", media: "all" %-->
 
-  <%= javascript_include_tag "jquery.2.1.1.min.js" %>
-  <!--script>var $j = jQuery.noConflict(true);</script>
-  <script> 
-    $(document).ready(function(){
-      console.log($j().jquery); // This prints v2.1.1
-    });
-  </script-->
-
-  <!--%= javascript_include_tag "jquery.2.1.0.min.js" %>
-  <script>var $ = jQuery.noConflict(true);</script>
-  <script> 
-    $(document).ready(function(){
-      console.log($().jquery); // This prints v2.1.0
-    });
-  </script-->
+  <!-- for gem rails-jquery-cdn -->
+  <%= jquery_include_tag :google %>
 
 	<%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
