@@ -1,8 +1,7 @@
 ##Event Registration application
 
-[![Build Status](https://api.shippable.com/projects/53e3cdb446dac01201c65b20/badge/master)](https://www.shippable.com/projects/53e3cdb446dac01201c65b20)
-
-Repo: https://bitbucket.org/hdfelix/ypw-reg
+[![Build Status](https://api.shippable.com/projects/54330a6a7a7fb11eaa6491a6/badge?branchName=master)](https://app.shippable.com/projects/54330a6a7a7fb11eaa6491a6/builds/latest)
+Repo: https://github.com/hdfelix/ypreg.git
 
 This is an event registration management site. You can use this site to manage registrations short one-day events that require
 no hospitality accomodations as well as multi-day events where hospitality accomodations are necessary.  
