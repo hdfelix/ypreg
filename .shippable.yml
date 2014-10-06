@@ -18,7 +18,8 @@ before_script:
   - psql -c 'create database ypreg_test;' -U postgres
   - mkdir -p shippable/testresults
 script:
-  - xvfb-run bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
+  # - xvfb-run bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
+  - rspec spec/*
 notifications:
   email:
     recipients:
