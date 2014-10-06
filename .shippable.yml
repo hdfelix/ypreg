@@ -1,0 +1,27 @@
+language: ruby
+
+rvm:
+  - 2.0.0
+ 
+env:
+  - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+
+notifications:
+  email:
+    recipients:
+      - hdfelix@gmail.com
+
+addons:
+  postgresql: '9.3'
+
+before_script:
+  - psql -c 'create database ypreg_test;' -U postgres
+  - mkdir -p shippable/testresults
+script:
+  - xvfb-run bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
+notifications:
+  email:
+    recipients:
+      - hdfelix@gmail.com
+after_success:
+  - git push -f git@heroku.com:ypreg.git master
