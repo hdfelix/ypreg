@@ -6,7 +6,9 @@ rvm:
   - 2.1.1
  
 env:
-  - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+  global:
+    - DISPLAY=:99.0
+    - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
 
 notifications:
   email:
@@ -15,6 +17,9 @@ notifications:
 
 addons:
   postgresql: '9.3'
+  firefox: "28.0"
+services:
+  - selenium
 
 before_script:
   - psql -c 'create database ypreg_test;' -U postgres
