@@ -17,10 +17,11 @@ module YpwReg
     # for jquery-rails-cdn
     config.assets.precompile += ['jquery.js']
 
-    config.assets.paths << Rails.root.join('app/assets/stylesheets/kingadmin')
-    config.assets.paths << Rails.root.join('app/assets/javascripts/kingadmin')
-    config.assets.paths << Rails.root.join('fonts')
-    config.assets.paths << Rails.root.join('ico')
+    config.assets.paths << Rails.root.join('app','assets','stylesheets','kingadmin')
+    config.assets.paths << Rails.root.join('app','assets','javascripts','kingadmin')
+    config.assets.paths << Rails.root.join('app','assets','fonts')
+    config.assets.paths << Rails.root.join('app','assets','ico')
+    config.assets.precompile += %w( .svg, .eot, .woff, .ttf )
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run 'rake -D time' for a list of tasks for finding time zone names. Default is UTC.

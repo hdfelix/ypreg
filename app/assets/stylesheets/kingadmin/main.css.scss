@@ -1,13 +1,13 @@
-/*	
+/*
 *	############################################################################
-*	
+*
 *	KINGADMIN Admin Dashboard Style
 *	---------------------------------------------------------------------
 *
 *	Version		1.2
 *	Author		The Develovers
 *	Copyright	Copyright 2014 The Develovers
-*	
+*
 *	############################################################################
 */
 /* ========================================================================
@@ -3270,7 +3270,7 @@ table.fc-border-separate {
   display: none;
 }
 
-/* X-editable - v1.5.1 
+/* X-editable - v1.5.1
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
 * http://github.com/vitalets/x-editable
 * Copyright (c) 2013 Vitaliy Potapov; Licensed MIT */
@@ -3288,8 +3288,8 @@ table.fc-border-separate {
   /* overwriting bootstrap line-height. See #133 */
 }
 
-/* 
-  BS3 width:1005 for inputs breaks editable form in popup 
+/*
+  BS3 width:1005 for inputs breaks editable form in popup
   See: https://github.com/vitalets/x-editable/issues/393
 */
 .editableform .form-control {
@@ -7954,9 +7954,9 @@ fieldset[disabled] .note-editor .btn-link:focus {
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: asset-url("../fonts/glyphicons-halflings-regular.eot");
-  src: asset-url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), 
-			 asset-url("../fonts/glyphicons-halflings-regular.woff") format("woff"), 
-			 asset-url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), 
+  src: asset-url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"),
+			 asset-url("../fonts/glyphicons-halflings-regular.woff") format("woff"),
+			 asset-url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"),
 			 asset-url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
 }
 
@@ -12581,29 +12581,29 @@ input {
 }
 @font-face {
   font-family: "latolight";
-  src: asset-url('../fonts/lato-lig-webfont.eot');
-  src: asset-url('../fonts/lato-lig-webfont.eot?#iefix') format('eot'), 
-			 asset-url('../fonts/lato-lig-webfont.woff') format('woff'), 
-			 asset-url('../fonts/lato-lig-webfont.ttf') format('truetype'), 
-			 asset-url('../fonts/lato-lig-webfont.svg') format('svg');
+  src: url(font-path('lato-lig-webfont.eot'));
+  src: url(font-path('lato-lig-webfont.eot?#iefix')) format('eot'),
+			 url(font-path('lato-lig-webfont.woff')) format('woff'),
+			 url(font-path('lato-lig-webfont.ttf')) format('truetype'),
+			 url(font-path('lato-lig-webfont.svg')) format('svg');
 }
 
 @font-face {
   font-family: "latoregular";
-  src: asset-url('../fonts/lato-reg-webfont.eot');
-  src: asset-url('../fonts/lato-reg-webfont.eot?#iefix') format('eot'), 
-			 asset-url('../fonts/lato-reg-webfont.woff') format('woff'), 
-			 asset-url('../fonts/lato-reg-webfont.ttf') format('truetype'), 
-			 asset-url('../fonts/lato-reg-webfont.svg') format('svg');
+  src: url(font-path('lato-reg-webfont.eot'));
+  src: url(font-path('lato-reg-webfont.eot?#iefix')) format('eot'),
+			 url(font-path('lato-reg-webfont.woff')) format('woff'),
+			 url(font-path('lato-reg-webfont.ttf')) format('truetype'),
+			 url(font-path('lato-reg-webfont.svg')) format('svg');
 }
 
 @font-face {
   font-family: "latobold";
-  src: asset-url('../fonts/lato-bol-webfont.eot');
-  src: asset-url('../fonts/lato-bol-webfont.eot?#iefix') format('eot'), 
-	     asset-url('../fonts/lato-bol-webfont.woff') format('woff'), 
-			 asset-url('../fonts/lato-bol-webfont.ttf') format('truetype'), 
-			 asset-url('../fonts/lato-bol-webfont.svg') format('svg');
+  src: url(font-path('lato-bol-webfont.eot'));
+  src: url(font-path('lato-bol-webfont.eot?#iefix')) format('eot'),
+	     url(font-path('lato-bol-webfont.woff')) format('woff'),
+			 url(font-path('lato-bol-webfont.ttf')) format('truetype'),
+			 url(font-path('lato-bol-webfont.svg')) format('svg');
 }
 
 .wrapper {
