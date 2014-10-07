@@ -35,3 +35,6 @@ snippets.html.erb
 
 # Public assets
 /public/assets
+
+# Simplecov
+/coverage

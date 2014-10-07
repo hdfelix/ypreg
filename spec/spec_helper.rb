@@ -21,7 +21,7 @@ require 'simplecov-csv'
 #   SimpleCov::Formatter::CSVFormatter
 # ]
 # SimpleCov.coverate_dir(ENV["COVERAGE_REPORTS"])
-SimpleCov.start 'rails'
+SimpleCov.start #'rails'
 puts 'required simplecov'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
