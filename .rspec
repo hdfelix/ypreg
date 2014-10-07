@@ -1,3 +1,2 @@
 --color
---format RspecJunitFormatter
---out <%= ENV['CI_REPORTS'] %>/results.xml
+--format documentation

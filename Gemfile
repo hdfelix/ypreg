@@ -75,8 +75,9 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'database_cleaner', '~> 1.2.0'
   gem 'launchy', '~>2.4.2'
-  gem 'simplecov'
-  gem 'simplecov-csv'
+  gem 'simplecov', require: false
+  gem 'simplecov-csv', require: false
+  gem 'coverband'
   gem 'rspec_junit_formatter'
 
   gem 'selenium-webdriver', '~> 2.39.0'
