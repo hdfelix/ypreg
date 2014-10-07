@@ -1,0 +1,39 @@
+language: ruby
+
+cache: bundler
+
+rvm:
+  - 2.1.1
+ 
+env:
+  global:
+    - DISPLAY=:99.0
+    - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+
+notifications:
+  email:
+    recipients:
+      - hdfelix@gmail.com
+
+addons:
+  postgresql: '9.3'
+  firefox: "28.0"
+services:
+  - selenium
+
+before_script:
+  - psql -c 'create database ypreg_test;' -U postgres
+  - mkdir -p shippable/testresults
+  - /etc/init.d/xvfb start
+script:
+  # - xvfb-run bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
+  - rspec spec/features/*.rb
+  # Add other test files to run...
+after_script:
+  - /etc/init.d/xvfb stop
+notifications:
+  email:
+    recipients:
+      - hdfelix@gmail.com
+after_success:
+  - git push -f https://github.com/hdfelix/ypreg.git 
