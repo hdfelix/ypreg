@@ -33,7 +33,6 @@ after_script:
   - /etc/init.d/xvfb stop
 notifications:
   email:
-    recipients:
-      - hdfelix@gmail.com
-after_success:
-  - git push -f https://github.com/hdfelix/ypreg.git 
+    recipients: - hdfelix@gmail.com
+# after_success:
+#   - git push -f heroku master 

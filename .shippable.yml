@@ -1,29 +1,28 @@
 language: ruby
-
 cache: bundler
-
 rvm:
   - 2.1.1
- 
 env:
   global:
+    - APP_NAME=ypreg
     - DISPLAY=:99.0
     - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
-
+    - secure: N0owYhOkEswuosa/5X8EH45xHSCzDD2sPkOxWKpXBiev+Itjtu4orV+knUZT3TvwDYgjx1PBG2e18cRnvCnbHk/3oDKOi6txEIsQXBZOEYTE7TcEYAZ6yU8PMRona5zGmRhwS3J7aLD4UNiAr0AtMQTA9thA3DbLq/tR3FRu6jhOCcZaPWJbnf1WTUTiLZLbUqLtKfyCKhkL4l6mPGqzfC2OVugFMQK0LerJDgoLjw2hM+X7NXYsgZM6QItEsUv0f05tqA7J7qsxpRafWLNryTd75Te922DV/G8omv0F2kYJAByP9S6NybZTCuDp/fNWjGrvP7cIlG7Eh3v9MGbmaw==
 notifications:
   email:
     recipients:
       - hdfelix@gmail.com
-
 addons:
   postgresql: '9.3'
   firefox: "28.0"
 services:
   - selenium
-
+before_install:
+  - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 before_script:
-  - psql -c 'create database ypreg_test;' -U postgres
   - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
+  - psql -c 'create database ypreg_test;' -U postgres
   - /etc/init.d/xvfb start
 script:
   # - xvfb-run bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
@@ -36,4 +35,7 @@ notifications:
     recipients:
       - hdfelix@gmail.com
 after_success:
-  - git push -f https://github.com/hdfelix/ypreg.git 
+  - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
+  - git remote -v | grep ^heroku || heroku git:remote --app ypreg 
+  - git push -f heroku master 
+  - heroku run rake db:migrate --app ypgreg
