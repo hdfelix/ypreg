@@ -9,8 +9,11 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-// require jquery
+// require jquery     //using jquery-rails-cdn and jquery-ui-rails gems
+//= require jquery.turbolinks
 //= require jquery_ujs
+//= require turbolinks
+//= require_tree .
 //= require jquery.ui.all
 //= require bootstrap
 //= require kingadmin/king-elements
@@ -20,5 +23,4 @@
 //= require kingadmin/king-page
 // require_directory ./kingadmin
 // require_self
-//= require_tree .
 
