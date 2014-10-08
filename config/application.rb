@@ -18,7 +18,7 @@ module YpwReg
     config.assets.precompile += ['jquery.js']
 
     config.assets.paths << Rails.root.join('app','assets','stylesheets','kingadmin-v1.2')
-    config.assets.paths << Rails.root.join('app','assets','javascripts','kingadmin')
+    config.assets.paths << Rails.root.join('app','assets','javascripts','kingadmin-v1.2')
     config.assets.paths << Rails.root.join('app','assets','fonts')
     config.assets.paths << Rails.root.join('app','assets','ico')
     config.assets.precompile += %w( .svg, .eot, .woff, .ttf )

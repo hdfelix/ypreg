@@ -317,7 +317,7 @@ $(document).ready(function(){
 	/********************************************/
 
 	var kingTour = new Tour({
-		basePath: "/dev/kingadmin-v12/",
+		basePath: "/kingadmin-v.12/",
 		steps: [
 			{	
 				element: "#tour-searchbox",
