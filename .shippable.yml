@@ -22,11 +22,11 @@ before_install:
 before_script:
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
-  - psql -c 'create database ypreg_test;' -U postgres
+    # - psql -c 'create database ypreg_test;' -U postgres
   - /etc/init.d/xvfb start
 script:
-  # - xvfb-run bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
-  - rspec spec/features/*.rb
+   - xvfb-run bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
+  # - rspec spec/features/*.rb
   # Add other test files to run...
 after_script:
   - /etc/init.d/xvfb stop
