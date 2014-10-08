@@ -10,17 +10,17 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 // require jquery     //using jquery-rails-cdn and jquery-ui-rails gems
-//= require jquery.turbolinks
+// jquery.turbolinks
 //= require jquery_ujs
-//= require turbolinks
+// turbolinks
 //= require_tree .
 //= require jquery.ui.all
 //= require bootstrap
-//= require kingadmin/king-elements
-//= require kingadmin/king-components
-//= require kingadmin/king-common
-//= require kingadmin/king-form-layouts
-//= require kingadmin/king-page
-// require_directory ./kingadmin
+//= require kingadmin-v1.2/king-elements
+//= require kingadmin-v1.2/king-components
+//= require kingadmin-v1.2/king-common
+//= require kingadmin-v1.2/king-form-layouts
+//= require kingadmin-v1.2/king-page
+// require_directory ./kingadmin-v1.2
 // require_self
 
