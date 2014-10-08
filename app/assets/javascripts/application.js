@@ -13,8 +13,10 @@
 //= require jquery_ujs
 //= require_tree .
 //= require jquery.ui.all
+//= jquery.dataTables.bootstrap
 //= require bootstrap
-//= require kingadmin-v1.2/bootstrap-tour.custom.js
+//= require kingadmin-v1.2/bootstrap-tour.custom
+//= require kingadmin-v1.2/king-table
 //= require kingadmin-v1.2/king-elements
 //= require kingadmin-v1.2/king-components
 //= require kingadmin-v1.2/king-common

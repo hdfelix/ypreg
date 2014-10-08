@@ -17,8 +17,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
-	config.include ApplicationHelper
 	config.include FeatureLoginMacros
+	config.include ApplicationHelper
   config.include WaitForAjax
 #  config.include Devise::TestHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
