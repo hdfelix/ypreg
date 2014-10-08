@@ -14,10 +14,10 @@
 //= require_tree .
 //= require jquery.ui.all
 //= require bootstrap
+//= require kingadmin-v1.2/bootstrap-tour.custom.js
 //= require kingadmin-v1.2/king-elements
 //= require kingadmin-v1.2/king-components
 //= require kingadmin-v1.2/king-common
-//= require kingadmin-v1.2/king-form-layouts
 //= require kingadmin-v1.2/king-page
 // require_directory ./kingadmin-v1.2
 // require_self
