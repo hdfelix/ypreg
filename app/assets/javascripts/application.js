@@ -10,9 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 // require jquery     //using jquery-rails-cdn and jquery-ui-rails gems
-// jquery.turbolinks
 //= require jquery_ujs
-// turbolinks
 //= require_tree .
 //= require jquery.ui.all
 //= require bootstrap
