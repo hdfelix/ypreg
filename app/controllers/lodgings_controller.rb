@@ -18,6 +18,7 @@ class LodgingsController < ApplicationController
 
   def create
     @lodging = Lodging.new(lodging_params)
+
     if !params[:contact_person][:id].empty?
       @lodging.contact_person = User.find(params[:contact_person][:id])
     end
