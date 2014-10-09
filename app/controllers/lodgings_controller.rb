@@ -18,7 +18,10 @@ class LodgingsController < ApplicationController
 
   def create
     @lodging = Lodging.new(lodging_params)
-    @lodging.contact_person = User.find(params[:contact_person][:id])
+    if !params[:contact_person][:id].empty?
+      @lodging.contact_person = User.find(params[:contact_person][:id])
+    end
+      
     authorize @lodging
 
     if @lodging.save
