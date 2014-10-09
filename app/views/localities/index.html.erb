@@ -38,7 +38,8 @@
 				</table>
 				
 				<% if policy(Locality.new).new? %>
-					<%= link_to new_locality_path, class: 'btn btn-default' do %>
+          <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
+					<%= link_to new_locality_path, class: 'btn btn-primary' do %>
 						<%= content_tag(:i, '', class: "fa fa-plus-square") %>
 						New Locality
 					<% end %>
@@ -47,5 +48,4 @@
 			</div>
 		</div>
 	</div>
-
 </div>
