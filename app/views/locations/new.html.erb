@@ -1,9 +1,16 @@
-<h1>New Location</h1>
-<div class="row">
-	<div class="col-md-6">
-		<%= render partial: 'form' %>
-		<br />
-		<%= link_to 'Back', locations_path %>
+<div class="content">
+  <div class="main-header">
+    <h2>New Location</h2>
+    <em>create a new location</em>
+  </div>
+  <br />
+  <div class="col-md-8">
+    <!-- New Location form -->
+    <div class="widget">
+      <div class="widget-header"><h3><i class="fa fa-edit"></i></h3></div>
+      <div class="widget-content">
+		    <%= render partial: 'form' %>
+      </div>
+    </div>
 	</div>
 </div>
-

@@ -1,48 +1,87 @@
-<%= form_for(@location) do |f| %>
+<%= form_for(@location, class: 'form-horizontal') do |f| %>
   <% if @location.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
-
+    <div id="error_explanation" class="alert alert-danger alert-dismissable">
+      <h4><strong>
+          <%= pluralize(@location.errors.count, "error") %></strong>
+      &nbsp;prohibited this location from being saved:</h4>
       <ul>
-      <% @location.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @location.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="form-group">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, class: 'form-control', placeholder: "Enter the location name" %>
+    <%= f.label :name, class: 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :name, class: 'form-control',
+        placeholder: "Enter the location name" %>
+    </div>
   </div>
+
   <div class="form-group">
-    <%= f.label :description %><br>
-    <%= f.text_field :description, class: 'form-control', placeholder: "Enter a description" %>
+    <%= f.label :description, class: 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :description, class: 'form-control',
+        placeholder: "Enter a description" %>
+  </div>
 	</div>
+
 	<div class="form-group">
-			<%= f.label :max_capacity %>
-			<%= f.text_field :max_capacity, class: 'form-control', placeholder: "Max capacity at location (persons)" %>
+			<%= f.label :max_capacity, class: 'col-md-2 control-label' %>
+      <div class="col-md-10">
+        <%= f.text_field :max_capacity, class: 'form-control',
+          placeholder: "Max capacity at location (persons)" %>
+      </div>
 	</div>
+
   <div class="form-group">
-    <%= f.label :address1 %><br>
-    <%= f.text_field :address1, class: 'form-control', placeholder: "Enter an address" %>
+    <%= f.label :address1, class: 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :address1, class: 'form-control',
+        placeholder: "Enter an address" %>
+    </div>
 	</div>
+
 	<div class="form-group">
-		<%= f.label :address2 %>
-		<%= f.text_field :address2, class: 'form-control' "" %>
+		<%= f.label :address2, class: 'col-md-2 control-label' %>
+    <div class="col-md-10">
+		  <%= f.text_field :address2, class: 'form-control' "" %>
+    </div>
 	</div>
+
 	<div class="form-group">
-		<%= f.label :city %>
-		<%= f.text_field :city, class: 'form-control', placeholder: "Enter a city" %>
+		<%= f.label :city, class: 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :city, class: 'form-control',
+        placeholder: "Enter a city" %>
+    </div>
 	</div>
+
 	<div class="form-group">
-		<%= f.label :state_abbrv, 'State' %>
-		<%= f.select :state_abbrv, Location::STATE_LIST, {include_blank: true, selected: 'CA'}, {class: 'form-control'} %>
+		<%= f.label :state_abbrv, 'State', class: 'col-md-2 control-label'  %>
+    <div class="col-md-10">
+      <%= f.select :state_abbrv, Location::STATE_LIST,
+        {include_blank: true, selected: 'CA'}, {class: 'form-control'} %>
+    </div>
 	</div>
+
 	<div class="form-group">
-		<%= f.label :zipcode %>
-		<%= f.text_field :zipcode, class: 'form-control', maxlength: 5, placeholder: "Enter a zipcode" %> </div>
-  <div class="actions">
-    <%= f.submit %>
+		<%= f.label :zipcode, class: 'col-md-2 control-label'  %>
+    <div class="col-md-10">
+      <%= f.text_field :zipcode, class: 'form-control', maxlength: 5,
+        placeholder: "Enter a zipcode" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-12">
+      <span class="pull-right">
+		    <%= link_to 'Back', locations_path, class: 'btn btn-default' %>
+        <%= f.submit "Subit", class: 'btn btn-primary' %>
+      </span>
+    </div>
+    <br />
   </div>
 <% end %>
