@@ -12,15 +12,17 @@
 // require jquery     //using jquery-rails-cdn and jquery-ui-rails gems
 //= require jquery_ujs
 //= require_tree .
-//= require jquery.ui.all
-//= jquery.dataTables.bootstrap
 //= require bootstrap
-//= require kingadmin-v1.2/bootstrap-tour.custom
-//= require kingadmin-v1.2/king-table
-//= require kingadmin-v1.2/king-elements
-//= require kingadmin-v1.2/king-components
-//= require kingadmin-v1.2/king-common
-//= require kingadmin-v1.2/king-page
-// require_directory ./kingadmin-v1.2
+//= jquery.dataTables.bootstrap
+//= modernizer
+//= require jquery.ui.all
+//= require_directory ./kingadmin-v1.2/.
+
+// require kingadmin-v1.2/bootstrap-tour.custom
+// require kingadmin-v1.2/king-table
+// require kingadmin-v1.2/king-elements
+// require kingadmin-v1.2/king-components
+// require kingadmin-v1.2/king-common
+// require kingadmin-v1.2/king-page
 // require_self
 

@@ -2,11 +2,11 @@
 
 $( document ).ready(function() {
   $('#event_begin_date').datepicker(
-    {dateformat: 'yy-mm-dd'});
+    {format: 'dd-mm-yyyy'});
   $("#event_end_date").datepicker(
-    {dateformat: 'yy-mm-dd'});
+    {format: 'dd-mm-yyyy'});
   $("#event_registration_open_date").datepicker(
-    {dateformat: 'yy-mm-dd'});
+    {format: 'dd/mmd/yyyy'});
   $("#event_registration_close_date").datepicker(
-    {dateformat: 'yy-mm-dd'});
-});
+    {format: 'dd-mm-yyyy'});
+})
