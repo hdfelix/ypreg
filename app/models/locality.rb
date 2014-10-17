@@ -1,6 +1,7 @@
 # A local church
 class Locality < ActiveRecord::Base
   has_many :users
+  has_many :hospitality_assignments
   has_and_belongs_to_many :lodgings
 
   validates :city, presence: true
