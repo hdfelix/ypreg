@@ -3,10 +3,10 @@ class Event < ActiveRecord::Base
   belongs_to :location
   has_many :registrations
   has_many :users, through: :registrations
-  has_many :localities, through: :users
+  has_many :localities, -> { uniq }, through: :users
   has_many :hospitalities, -> { uniq }
   has_many :lodgings, -> { uniq }, through: :hospitalities
-  # has_many :hospitality_assignments
+  has_many :hospitality_assignments, through: :hospitalities
 
   # skip_before_filter :verify_authenticity_token
 
@@ -30,7 +30,7 @@ class Event < ActiveRecord::Base
     registrations.each do |registration|
       loc_array << Locality.find(registration.user.locality_id)
     end
-    loc_array
+    loc_array.uniq
   end
 
   def load_locality_summary
@@ -38,7 +38,7 @@ class Event < ActiveRecord::Base
       |hash, key| hash[key] = Hash.new { |h, k| h[k] = Array.new }
     end
 
-    localities.each do |locality|
+    localities.uniq.each do |locality|
       calculate_locality_statistics(stats, locality)
     end
     stats
