@@ -28,7 +28,7 @@ feature 'User manages a location' do
 			fill_in 'location[city]', with: @location.city
 			find("#location_state_abbrv").find(:xpath, "option[@value=\'#{@location.state_abbrv}\']").select_option
 			fill_in 'location[zipcode]', with: @location.zipcode
-			click_button 'Create Location'
+			click_button 'Submit'
 		}.to change(Location, :count)
 		expect(current_path).to eq locations_path
 		expect(page).to have_content('Location was created successfully.')
@@ -39,7 +39,7 @@ feature 'User manages a location' do
 		@loc = Location.all.first
 		visit edit_location_path(@loc, authed_admin)
 		fill_in 'location[name]', with: 'My location'
-		click_button 'Update Location'
+		click_button 'Submit'
 	end
 end
 
