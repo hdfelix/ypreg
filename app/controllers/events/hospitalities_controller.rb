@@ -6,7 +6,8 @@ class Events::HospitalitiesController < ApplicationController
   end
 
   def assigns
-    # calling lodging here hospitality; getting an error if I use @lodging on the assings.js render
+    # calling lodging here hospitality; getting an error if I use @lodging 
+    # on the assings.js render
     lodging = Lodging.find(params[:lodging_id])
     @event = Event.find(params[:event_id])
     @event.hospitalities << @hospitality = Hospitality.create(event_id: @event.id, lodging_id: lodging.id)

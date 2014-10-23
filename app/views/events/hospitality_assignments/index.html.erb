@@ -11,71 +11,79 @@
           <h3><i class="fa fa-table"></i>Hospitality Units</h3>
         </div>
         <div class="widget-content">
-          <%= form_for( @event, class: 'form-horizontal', remote: true) do |f| %>
+          <%= form_for( @event, url: {controller: 'events/hospitality_assignments', action: 'assign_lodging_to_locality' }, class: 'form-horizontal', remote: true) do |f| %>
+            <table id="hospitality_units" class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Lodging</td>
+                <td>Min</td>
+                <td>Max</td>
+                <td>Assign to</td>
+              </tr>
+            </thead>
+            <tbody>
+            <% @event.hospitalities.each  do |hosp| %>
+              <tr id=<%= "#{hosp.id}" %>>
+              <td><%= hosp.name %></td>
+              <td><%= hosp.min_capacity %></td>
+              <td><%= hosp.max_capacity %></td>
+              <td><%= collection_select(
+                :event,
+                :localities,
+                @event.localities,
+                :id, 
+                :city,
+                { include_blank: 'select',
+                  selected: hosp.locality_id_before_type_cast }) %> <!-- TODO: why like this? -->
+                </td>
+              </tr>
+            <% end %>
+              </tbody>
+            </table>
+          <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2"></div>
+      <div class="col-md-5">
+        <div class="widget widget-table">
+          <div class="widget-header">
+            <h3><i class="fa fa-table"></i>Participating Localities</h3>
+          </div>
+          <div class="widget-content">
             <table class="table table-striped">
               <thead>
                 <tr style="font: bold">
                   <td>Lodging</td>
-                  <td>Min</td>
-                  <td>Max</td>
-                  <td>Assign to</td>
+                  <td>Total Saints</td>
+                  <td>Beds Allocated</td>
                 </tr>
               </thead>
               <tbody>
-                <% @event.hospitalities.each  do |hosp| %>
-                  <tr>
-                    <td><%= hosp.name %></td>
-                    <td><%= hosp.min_capacity %></td>
-                    <td><%= hosp.max_capacity %></td>
-                    <td><%= collection_select(:event, :localities, @event.localities, :id, :city, include_blank: 'select' ) %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          <% end %>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-2"></div>
-    <div class="col-md-5">
-      <div class="widget widget-table">
-        <div class="widget-header">
-          <h3><i class="fa fa-table"></i>Participating Localities</h3>
-        </div>
-        <div class="widget-content">
-          <table class="table table-striped">
-            <thead>
-              <tr style="font: bold">
-                <td>Lodging</td>
-                <td>Total Saints</td>
-                <td>Assigned beds</td>
-              </tr>
-            </thead>
-            <tbody>
               <% @event.localities.each do |loc| %>
                 <tr>
-                  <td><%= loc.city %></td>
-                  <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
-                  <td>[...]</td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+                <td><%= loc.city %></td>
+                <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
+                <td><%= @event.assigned_hospitality_beds %></td>
+              </tr>
+            <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-5">
-      <div class="widget widget-table">
-        <div class="widget-header">
-          <h3><i class="fa fa-table"></i>Registered Saints</h3>
-        </div>
-        <div class="widget-content">
-          <%= form_for(@event, class: 'form-horizontal', remote: true) do |f| %>
-            <table class="table table-striped">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="widget widget-table">
+          <div class="widget-header">
+            <h3><i class="fa fa-table"></i>Registered Saints</h3>
+          </div>
+          <div class="widget-content">
+            <%= form_for(@event, class: 'form-horizontal', remote: true) do |f| %>
+              <table class="table table-striped">
               <thead>
                 <tr style="font: bold">
                   <td>Locality</td>
@@ -84,44 +92,47 @@
                 </tr>
               </thead>
               <tbody>
-                <% @event.localities.each do |locality| %>
-                  <tr>
-                    <td><%= locality.city %><td>
-                        <td><%= collection_select(:event, :registrations, @event.registrations, :id, :name, include_blank: 'select') %></td>
+              <% @event.localities.each do |locality| %>
+                <tr id=<%= "#{locality.id}" %>>
+                <td><%= locality.city %><td>
+                    <td><%= collection_select(:event, :registrations, @event.registrations, :id, :name, include_blank: 'select') %></td>
                   </tr>
                 <% end %>
-              </tbody>
-            </table>
-          <% end %>
-        </div>
-      </div>
-    </div>
+                  </tbody>
+                </table>
+              <% end %>
+              </div>
+            </div>
+          </div>
 
-    <div class="col-md-2"></div>
-    <div class="col-md-5">
-      <div class="widget widget-table">
-        <div class="widget-header">
-          <h3><i class="fa fa-table"></i>Assigned Hospitalities</h3>
+          <div class="col-md-2"></div>
+          <div class="col-md-5">
+            <div class="widget widget-table">
+              <div class="widget-header">
+                <h3><i class="fa fa-table"></i>Assigned Hospitalities</h3>
+              </div>
+              <div class="widget-content">
+                <table class="table table-striped">
+                  <thead>
+                    <tr style="font: bold">
+                      <td>Locality</td>
+                      <td>Name</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>[locality]</td>
+                    <td>[name]</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="widget-content">
-          <table class="table table-striped">
-            <thead>
-              <tr style="font: bold">
-                <td>Locality</td>
-                <td>Name</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr colspan="3">[...]</tr>
-            </tbody>
-          </table>
+        <div class="row">
+          <div class="col-md-12">
+            <%= link_to 'Back', @event, class: "btn btn-default" %>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-    <div class="row">
-      <div class="col-md-12">
-        <%= link_to 'Back', @event, class: "btn btn-default" %>
-      </div>
-    </div>
-</div>

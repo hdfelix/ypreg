@@ -4,8 +4,24 @@ YpwReg::Application.routes.draw do
   get 'welcome/index'
   get 'dashboard/index'
 
-  get 'events/:event_id/hospitalities/assign', to: 'events/hospitalities#assign', as: :hospitality_assign
-  post 'events/:event_id/hospitalities/assigns', to: 'events/hospitalities#assigns', as: :hospitality_assigns
+  resources :events do
+    get 'hospitalities/assign',
+      to: 'events/hospitalities#assign',
+      as: :hospitality_assign
+
+    post 'hospitalities/assigns',
+      to: 'events/hospitalities#assigns',
+      as: :hospitality_assigns
+
+    post 'hospitality_assignments/assign_lodging_to_locality',
+      to: 'events/hospitality_assignments#assign_lodging_to_locality',
+      as: :hospitality_assignment_for_locality
+
+    post 'hospitality_assignments/unassign_lodging_from_locality',
+      to: 'events/hospitality_assignments#unassign_lodging_from_locality',
+      as: :hospitality_unassignment_for_locality
+  end
+
   delete 'events/:event_id/hospitalities/destroy', to: 'events/hospitalities#destroy', as: :hospitality_remove
 
   resources :locations

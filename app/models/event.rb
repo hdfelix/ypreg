@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   has_many :registrations
   has_many :users, through: :registrations
   has_many :localities, -> { uniq }, through: :users
-  has_many :hospitalities, -> { uniq }
+  has_many :hospitalities #, -> { uniq }
   has_many :lodgings, -> { uniq }, through: :hospitalities
   has_many :hospitality_assignments, through: :hospitalities
 
@@ -90,7 +90,7 @@ class Event < ActiveRecord::Base
       locality.id, true).count
   end
 
-  def assigned_hospitalities
+  def assigned_lodgings_as_hospitality
     lodging_ids = self.hospitalities.pluck(:lodging_id)
     lodgings = []
     lodging_ids.each do |lodging_id|
@@ -99,12 +99,23 @@ class Event < ActiveRecord::Base
     lodgings
   end
 
-  def unassigned_hospitalities
+  def unassigned_lodgings_as_hospitality
     ids = [] 
-    assigned = self.assigned_hospitalities
+    assigned = self.assigned_lodgings_as_hospitality
     assigned.each do |hospitality|
       ids << hospitality.id
     end
     Lodging.where.not(id: ids).first
+  end
+
+  def assigned_hospitality_beds
+    beds = 0
+    lodging_ids = self.hospitalities.
+      where.not(locality_id: nil).pluck(:lodging_id)
+
+    lodging_ids.each do |l|
+    beds = beds + Lodging.find(l).min_capacity.to_i
+    end
+    beds
   end
 end

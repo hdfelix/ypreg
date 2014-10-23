@@ -45,18 +45,18 @@ ActiveRecord::Schema.define(version: 20141013042023) do
   create_table "hospitalities", force: true do |t|
     t.integer "event_id"
     t.integer "lodging_id"
+    t.integer "locality_id"
   end
 
-  add_index "hospitalities", ["event_id", "lodging_id"], name: "index_hospitalities_on_event_id_and_lodging_id", using: :btree
+  add_index "hospitalities", ["locality_id"], name: "index_hospitalities_on_locality_id", using: :btree
 
   create_table "hospitality_assignments", force: true do |t|
     t.integer "hospitality_id"
     t.integer "registration_id"
-    t.integer "locality_id"
   end
 
+  add_index "hospitality_assignments", ["hospitality_id", "registration_id"], name: "hosp_assignmts", unique: true, using: :btree
   add_index "hospitality_assignments", ["hospitality_id"], name: "index_hospitality_assignments_on_hospitality_id", using: :btree
-  add_index "hospitality_assignments", ["locality_id"], name: "index_hospitality_assignments_on_locality_id", using: :btree
   add_index "hospitality_assignments", ["registration_id"], name: "index_hospitality_assignments_on_registration_id", using: :btree
 
   create_table "localities", force: true do |t|
@@ -104,11 +104,11 @@ ActiveRecord::Schema.define(version: 20141013042023) do
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "hospitalities_id"
+    t.integer  "hospitality_id"
   end
 
   add_index "registrations", ["event_id"], name: "index_registrations_on_event_id", using: :btree
-  add_index "registrations", ["hospitalities_id"], name: "index_registrations_on_hospitalities_id", using: :btree
+  add_index "registrations", ["hospitality_id"], name: "index_registrations_on_hospitality_id", using: :btree
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
