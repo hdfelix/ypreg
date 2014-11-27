@@ -169,7 +169,7 @@ lodging = Lodging.new(
           zipcode: '92612',
           max_capacity: 5,
           min_capacity: 2,
-          contact_person: User.first,
+          contact_person: User.where(email: 'hdfelix@gmail.com').first,
           locality_id: Locality.all.sample.id,
           lodging_type: 1)
 lodging.save
@@ -181,6 +181,7 @@ for i in 1..30 do  #not adding 1 to idx (added lodging above already)
     name: "Lodging #{i}",
     contact_person: user,
     locality_id: user.locality_id)
+  lodging.save
   print '.'
 end
 
