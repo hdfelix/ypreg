@@ -2,7 +2,8 @@
 class Locality < ActiveRecord::Base
   has_many :users
   has_many :hospitality_assignments
-  has_and_belongs_to_many :lodgings
+  has_many :lodgings
+  #has_and_belongs_to_many :lodgings
 
   validates :city, presence: true
   validates :state_abbrv, presence: true
