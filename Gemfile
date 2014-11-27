@@ -67,6 +67,7 @@ gem 'rails_12factor', group: :production
 # Added from 'Everyday Rails Testing with Rspec book
 # (with latest versions as of 15MAR14)
 group :development, :test do
+  gem 'shoulda-matchers'
   gem 'rspec-rails' # , '~> 2.14.1'
   gem 'rspec-collection_matchers'
   gem 'factory_girl_rails', '~> 4.4.0'
