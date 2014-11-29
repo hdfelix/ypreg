@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 describe Locality, type: :model do
-  it 'it has a valid factory' do
-    expect(build(:locality)).to be_valid
-  end
-
   it 'is valid with city, state_abbrv' do
     expect(build(:locality, city: 'Newington', state_abbrv: 'CT')).to be_valid
   end
