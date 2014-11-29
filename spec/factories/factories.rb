@@ -4,6 +4,9 @@ require 'faker'
 
 FactoryGirl.define do
 
+  # factory :address do
+  # end
+
   ## User factories
 	factory :user do
 		name {Faker::Name.first_name}		
@@ -16,7 +19,13 @@ FactoryGirl.define do
       role 'admin'
     end
 
+    trait :yp do
+      role 'yp'
+    end
+
     factory :admin, traits: [:admin]
+    factory :contact, class: :user
+    factory :locality_contact, class: :user # TODO: needed?
   end	
 
   factory :confirmed_user, parent: :user, aliases: [:contact_person, :lodging_contact] do
@@ -45,58 +54,37 @@ FactoryGirl.define do
 		zipcode { Faker::Address.zip_code }
     max_capacity '200'
   end
-	
-	factory :invalid_location, parent: :location  do
-		name nil
-		address1 nil
-		city nil
-		state_abbrv nil
-		zipcode nil
-	end
 
   ## Locality factories
   factory :locality do
 		city { Faker::Address.city }
 		state_abbrv  'CA' #{ Faker::Address.state_abbr }
-    lodging_contact_id '1' # { lodging_contact }
+    # lodging_contact
+    
+    trait :with_3_saints do
+      after(:create) do |instance|
+        FactoryGirl.create_list(:user, 3, locality: instance)
+      end
+    end
   end
 
   ## Lodging factories
   min_cap = rand(1..3)
   max_cap = min_cap + rand(1..3)
-  
-  factory :lodging do
-    # before(:build) do
-    #   FactoryGirl.create(:confirmed_user, id:100)
-    # end
 
-    name 'bob' #{ Faker::Name.last_name }
-    description { Faker::Lorem.sentence } 
+  factory :lodging do
+    sequence(:name) { |n| "Household #{n}" }
+    description "Description for #{:name}"
     address1 { Faker::Address.street_address } #generate(:address1) }
     address2 ''
     city { Faker::Address.city }
-    state_abbrv  'CA' #{ Faker::Address.state_abbr }
+    state_abbrv  'CA' 
     zipcode { Faker::Address.zip_code }
     lodging_type "1"
     min_capacity min_cap
     max_capacity max_cap
-
-    after(:build) do |lodging|
-      lodging.contact_person ||= FactoryGirl.build(:confirmed_user)
-      lodging.locality ||= FactoryGirl.build(:locality)
-    end
-
-
-    #factory(:lodging_with) do
-    #contact_person {[FactoryGirl.create(:confirmed_user), ]}
-    #contact_person_id 100
-  #end
-
-    # after(:build) do |h|
-    #   h.contact_person ||= FactoryGirl.build(:confirmed_user, :lodging => h)
-    # end
-    #association :contact_person, factory: :confirmed_user
-    #h.contact_person { |cu| cu.association(:lodging) }
+    locality
+    contact_person { create(:confirmed_user) }
   end
  
   ## Event factories
@@ -113,14 +101,102 @@ FactoryGirl.define do
     registration_close_date (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d') 
 		registration_cost '10'
 		location
+
+    factory :event_with_registrations do
+      ignore do
+        registrations_count 3
+      end
+
+      after(:create) do |event, evaluator|
+        create_list(:registration, evaluator.registrations_count, event: event)
+      end
+    end
+
+    factory :event_yp_conference do
+      ignore do
+        users_count 5
+        lodgings_count 2
+        hospitalities_count 3
+      end
+
+      after(:create) do |event, evaluator|
+        users = create_list(:user, 5, role: 'yp')
+        create_list(:lodging, 2)
+        users.each do |user|
+          create_list(:registration, 5, event: event, user: user)
+          create(:hospitality, event: event, lodging: Lodging.find(1), locality: create(:locality))
+          create(:hospitality, event: event, lodging: Lodging.find(2), locality: create(:locality))
+        end
+
+        Registration.find(1..3) do |registration|
+          create(:hospitality_assignment, hospitality: Hospitality.find(1), registration: registration)
+        end
+
+        Registration.find(4..5) do |registration|
+          create(:hospitality_assignment, hospitality: Hospitality.find(2), registration: registration)
+        end
+      end
+    end
+
+    trait :with_1_locality_with_3_registrations do
+      after(:create) do |instance|
+        loc = FactoryGirl.create(:locality, :with_3_saints)
+        User.where(locality_id: loc.id).each do |usr|
+          FactoryGirl.create(
+            :registration,
+            user_id: usr.id,
+            event_id: instance.id)
+        end
+      end
+    end
+
+    trait :with_2_localities_with_3_registrations_each do
+      after(:create) do |instance|
+        loc1 = FactoryGirl.create(:locality, :with_3_saints)
+        loc2 = FactoryGirl.create(:locality, :with_3_saints)
+        User.where(locality_id: loc1.id).each do |usr|
+          FactoryGirl.create(
+            :registration,
+            user_id: usr.id,
+            event_id: instance.id)
+        end
+
+        User.where(locality_id: loc2.id).each do |usr|
+          FactoryGirl.create(
+            :registration,
+            user_id: usr.id,
+            event_id: instance.id)
+        end
+      end
+    end
   end
 
   ## Registration factories
   factory :registration do
-    payment_type "5"
+    payment_type "Cash"
     has_been_paid false
     payment_adjustment "5"
-    user nil
-    event nil
+    attend_as_serving_one false
+    user 
+    event
+
+    trait :serving_one do
+      attend_as_serving_one true
+    end
+
+    trait :with_hospitality do
+      hospitality
+    end
+  end
+
+  factory :hospitality do
+    event
+    lodging
+    locality
+  end
+
+  factory :hospitality_assignment do
+    hospitality
+    registration
   end
 end
