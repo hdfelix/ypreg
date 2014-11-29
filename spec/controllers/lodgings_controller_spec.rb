@@ -3,7 +3,8 @@ require 'rails_helper'
 describe LodgingsController, :type => :controller do
 
   describe "GET 'index'" do
-    it 'it lists all @lodgings' do
+    it 'lists all @lodgings' do
+      Lodging.delete_all  # TODO: Why am I seeing Lodgings before this call?
       h1 = create(:lodging)
       h2 = create(:lodging)
       get 'index'
