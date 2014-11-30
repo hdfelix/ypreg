@@ -52,7 +52,7 @@ print "\nCreating #{count} Events: "
 tmp_date = Time.now + rand(1..3).months
 
 Event.create(
-  title: Faker::Lorem.words(1).first.capitalize + ' ' + Faker::Lorem.words(1).first.capitalize,
+  title: Faker::Name.event_name + ' '+ Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..2),
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -66,8 +66,7 @@ print '.'
 tmp_date = Time.now + rand(3..4).months
 
 Event.create(
-  title: Faker::Lorem.words(1).first.capitalize + ' ' +
-    Faker::Lorem.words(1).first.capitalize,
+  title: Faker::Name.event_name + ' '+ Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..3),
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -81,8 +80,7 @@ print '.'
 tmp_date = Time.now + rand(4..7).months
 
 Event.create(
-  title: Faker::Lorem.words(1).first.capitalize + ' ' + 
-    Faker::Lorem.words(1).first.capitalize,
+  title: Faker::Name.event_name + ' '+ Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..3),
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
