@@ -56,8 +56,6 @@ describe Event, :type => :model do
     end
   end
 
-  describe "#registered_saints_from_locality"
-
   describe "#registered_saints_from_locality" do
     it "returns a hash with registered users per locality" do
       event = create(:event_with_registrations,
@@ -71,12 +69,29 @@ describe Event, :type => :model do
     end
   end
 
-  describe "#registered_localities" do
-    it "returns localities with registered saints" do
-      event = create(:event_with_registrations)
-      loc1 = event.registrations.first.user.locality
-      loc2 = event.registrations.second.user.locality
-      expect(event.registered_localities).to contain_exactly(loc1,loc2)
+  describe "#registered_saints_per_locality"
+  describe "#total_registrations_by_role" do
+    it "returns the number of registrations per locality for the given role" do
+      reg   = create(:registration, :yp)
+      event = reg.event
+      loc   = reg.user.locality
+      role  = reg.user.role
+
+      expect(event.total_registrations_by_role(loc,role)).to eq(1)
     end
   end
+  describe "#registered_serving_ones" do
+    it "returns the number of serving ones from a locality attending the event" do
+      reg   = create(:registration, :serving_one)
+      event = reg.event
+      loc   = reg.user.locality
+
+      expect(event.registered_serving_ones(loc)).to eq(1)
+    end
+  end
+  describe "#assigned_lodgings_as_hospitality"
+  describe "#unassigned_lodgings_as_hospitality"
+  describe "#assigned_hospitality_beds"
+  describe "#load_locality_summary"
+
 end

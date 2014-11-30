@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   has_many :registrations
   has_many :users, through: :registrations
   has_many :localities, -> { uniq }, through: :users
-  has_many :hospitalities #, -> { uniq }
+  has_many :hospitalities # , -> { uniq }
   has_many :lodgings, -> { uniq }, through: :hospitalities
   has_many :hospitality_assignments, through: :hospitalities
 
@@ -27,10 +27,66 @@ class Event < ActiveRecord::Base
 
   def participating_localities
     loc_array = []
-    registrations.each do |registration|
-      loc_array << Locality.find(registration.user.locality_id)
+    if registrations.count > 0
+      registrations.each do |registration|
+        loc_array << Locality.find(registration.user.locality_id)
+      end
     end
     loc_array.uniq
+  end
+
+  def registered_saints_from_locality(locality)
+    User.joins(:registrations).where(locality_id: locality.id)
+  end
+
+  def registered_saints_per_locality
+    # TODO: Implement
+  end
+
+  def total_registrations_by_role(locality, role)
+    users.where('locality_id = ? and role = ?', locality.id, role).count
+  end
+
+  def registered_serving_ones(locality)
+    users.where(
+      'locality_id = ? and attend_as_serving_one = ?',
+      locality.id, true).count
+  end
+
+  def assigned_lodgings_as_hospitality
+    lodging_ids = hospitalities.pluck(:lodging_id)
+    lodgings = []
+    lodging_ids.each do |lodging_id|
+      lodgings << Lodging.find(lodging_id)
+    end
+    lodgings
+  end
+
+  def unassigned_lodgings_as_hospitality
+    ids = []
+    assigned = assigned_lodgings_as_hospitality
+    assigned.each do |hospitality|
+      ids << hospitality.id
+    end
+    Lodging.where.not(id: ids).first
+  end
+
+  def assigned_hospitality_beds
+    beds_assigned = Hash.new
+
+    hospitalities.each do |h|
+      loc_id = h.locality_id_before_type_cast
+      loc_name = nil
+      unless loc_id.nil?
+        loc_name = Locality.find(h.locality_id_before_type_cast).city
+        if beds_assigned[loc_name].nil?
+          beds_assigned[loc_name] = 0
+        end
+        lodging_min_capacity = Lodging.find(h.lodging_id).min_capacity.to_i
+        beds_assigned[loc_name] = beds_assigned[loc_name] + lodging_min_capacity
+      end
+    end
+    beds_assigned
   end
 
   def load_locality_summary
@@ -43,6 +99,8 @@ class Event < ActiveRecord::Base
     end
     stats
   end
+
+  protected
 
   def calculate_locality_statistics(stats, locality)
     loc = locality.city
@@ -59,7 +117,7 @@ class Event < ActiveRecord::Base
   def assign_totals(stats, locality)
     loc = locality.city
     stats[loc]['total_yp'] = total_registrations_by_role(locality, 'yp')
-    stats[loc]['total_serving_ones'] = total_registered_events(locality)
+    stats[loc]['total_serving_ones'] = registered_serving_ones(locality)
     stats[loc]['total_trainees'] =
       total_registrations_by_role(locality, 'trainee')
     stats[loc]['total_helpers'] =
@@ -78,44 +136,5 @@ class Event < ActiveRecord::Base
     stats[loc]['actual_total_trainees'] = '[--]'
     stats[loc]['actual_total_helpers'] = '[--]'
     stats[loc]['actual_amount_paid'] = 73 * registration_cost
-  end
-
-  def total_registrations_by_role(locality, role)
-    users.where('locality_id = ? and role = ?', locality.id, role).count
-  end
-
-  def total_registered_events(locality)
-    users.where(
-      'locality_id = ? and attend_as_serving_one = ?',
-      locality.id, true).count
-  end
-
-  def assigned_lodgings_as_hospitality
-    lodging_ids = self.hospitalities.pluck(:lodging_id)
-    lodgings = []
-    lodging_ids.each do |lodging_id|
-      lodgings << Lodging.find(lodging_id)
-    end
-    lodgings
-  end
-
-  def unassigned_lodgings_as_hospitality
-    ids = [] 
-    assigned = self.assigned_lodgings_as_hospitality
-    assigned.each do |hospitality|
-      ids << hospitality.id
-    end
-    Lodging.where.not(id: ids).first
-  end
-
-  def assigned_hospitality_beds
-    beds = 0
-    lodging_ids = self.hospitalities.
-      where.not(locality_id: nil).pluck(:lodging_id)
-
-    lodging_ids.each do |l|
-    beds = beds + Lodging.find(l).min_capacity.to_i
-    end
-    beds
   end
 end

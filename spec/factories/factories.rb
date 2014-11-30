@@ -194,6 +194,13 @@ FactoryGirl.define do
       attend_as_serving_one true
     end
 
+    trait :yp do
+      user { create(:user, role: 'yp') }
+    end
+
+    trait :scyp do
+      user { create(:user, role: 'scyp') }
+    end
     trait :with_hospitality do
       hospitality
     end
