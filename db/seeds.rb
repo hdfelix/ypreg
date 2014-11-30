@@ -168,7 +168,7 @@ lodging = Lodging.new(
           max_capacity: 5,
           min_capacity: 2,
           contact_person: User.where(email: 'hdfelix@gmail.com').first,
-          locality_id: Locality.all.sample.id,
+          locality: Locality.all.sample,
           lodging_type: 1)
 lodging.save
 print '.'
