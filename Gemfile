@@ -88,7 +88,7 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
 
   # gem 'haml-lint', require: false
-  # gem 'letter_opener'
+  gem 'letter_opener', group: :development
 
   # Generate database diagrams
   gem 'railroad'
@@ -96,10 +96,10 @@ group :development, :test do
   # Add Pry for debugging
   gem 'pry'
   gem 'pry-rails'
-  #gem 'pry-debugger'
-  gem 'pry-byebug'
-  gem 'pry-stack_explorer'
+  gem 'pry-debugger'
   gem 'pry-rescue'
+  gem 'pry-stack_explorer'
+  # gem 'pry-byebug'
 
   # Annotate DB schema in models
   gem 'annotate'
