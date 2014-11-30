@@ -105,7 +105,7 @@ FactoryGirl.define do
 
     factory :event_with_registrations do
       ignore do
-        registrations_count 3
+        registrations_count 2
         ensure_unique_locality false
       end
 

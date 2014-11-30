@@ -32,25 +32,51 @@ describe Event, :type => :model do
 
       it "returns the remaining number of available registrations" do
         loc = build_stubbed(:location, max_capacity: 20)
-        event = create(:event_with_registrations, registrations_count: 3, location: loc)
+        event = create(:event_with_registrations,
+                       registrations_count: 3,
+                       location: loc)
 
         expect(event.remaining_spaces).to eq (17)
       end
     end
   end
 
-  # describe "#participating_localities" do
-  #   event = create(:event_with_registrations)
-  # end
+  describe "#participating_localities" do
+    it "returns the localities participating in the event" do
+      event = create(
+        :event_with_registrations,
+        registrations_count: 2,
+        ensure_unique_locality: false)
+      loc1 = event.registrations.first.user.locality
+      loc2 = event.registrations.second.user.locality
 
-  describe "#registered_saints_per_locality" do
-    # it "returns a hash with registered users per locality" do
-    #   localities = FactoryGirl.create_list(:locality, 3)
-    #   users = FactoryGirl.create_list(:user, 3, locality_id: localities[1].id)
-    #   users << FactoryGirl.create_list(:user, 2, locality_id: localities[2].id)
-    #   users << FactoryGirl.create_list(:user, 4, loclity_id: localities[4].id)
+      participating_localities = event.participating_localities
+      expect(participating_localities.count).to eq 2
+      expect(participating_localities).to contain_exactly(loc1,loc2)
+    end
+  end
 
-    #   # expect  
-    # end
+  describe "#registered_saints_from_locality"
+
+  describe "#registered_saints_from_locality" do
+    it "returns a hash with registered users per locality" do
+      event = create(:event_with_registrations,
+                     registrations_count: 2,
+                     ensure_unique_locality: true)
+      loc  = event.participating_localities.first
+      usr1 = event.registrations.first.user
+      usr2 = event.registrations.second.user
+
+      expect(event.registered_saints_from_locality(loc)).to contain_exactly(usr1,usr2)
+    end
+  end
+
+  describe "#registered_localities" do
+    it "returns localities with registered saints" do
+      event = create(:event_with_registrations)
+      loc1 = event.registrations.first.user.locality
+      loc2 = event.registrations.second.user.locality
+      expect(event.registered_localities).to contain_exactly(loc1,loc2)
+    end
   end
 end
