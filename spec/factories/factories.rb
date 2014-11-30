@@ -8,12 +8,13 @@ FactoryGirl.define do
   # end
 
   ## User factories
-	factory :user do
-		name {Faker::Name.first_name}		
-		#lastname {Faker::Name.last_name}
-		email {Faker::Internet.email}
-		password 'secretpassword'
-		password_confirmation 'secretpassword'
+  factory :user do
+    name {Faker::Name.first_name}		
+    #lastname {Faker::Name.last_name}
+    email {Faker::Internet.email}
+    password 'secretpassword'
+    password_confirmation 'secretpassword'
+    locality
 
     trait :admin do
       role 'admin'
@@ -37,30 +38,30 @@ FactoryGirl.define do
 
   ## Location factories
 
-	#city_array = ['This City', 'That City', 'Other City', 'City', 'Far City']
-	#sate_array = ['CT', 'CA']
-	
-	#sequence(:name) { |n| "Sample Location #{n}" }
-	#sequence(:description) { |n| "This is an example description for location #{n}" }
-	#sequence(:address1) { |n| "#{n} Sample St" }
-	
+  #city_array = ['This City', 'That City', 'Other City', 'City', 'Far City']
+  #sate_array = ['CT', 'CA']
+
+  #sequence(:name) { |n| "Sample Location #{n}" }
+  #sequence(:description) { |n| "This is an example description for location #{n}" }
+  #sequence(:address1) { |n| "#{n} Sample St" }
+
   factory :location do
-		name { Faker::Address.street_name } #{ generate(:name) }
-		description { Faker::Lorem.sentence } #generate(:description) }
-		address1 { Faker::Address.street_address } #generate(:address1) }
-		address2 ''
-		city { Faker::Address.city }
-		state_abbrv  'CA' #{ Faker::Address.state_abbr }
-		zipcode { Faker::Address.zip_code }
+    name { Faker::Address.street_name } #{ generate(:name) }
+    description { Faker::Lorem.sentence } #generate(:description) }
+    address1 { Faker::Address.street_address } #generate(:address1) }
+    address2 ''
+    city { Faker::Address.city }
+    state_abbrv  'CA' #{ Faker::Address.state_abbr }
+    zipcode { Faker::Address.zip_code }
     max_capacity '200'
   end
 
   ## Locality factories
   factory :locality do
-		city { Faker::Address.city }
-		state_abbrv  'CA' #{ Faker::Address.state_abbr }
+    city { Faker::Address.city }
+    state_abbrv  'CA' #{ Faker::Address.state_abbr }
     # lodging_contact
-    
+
     trait :with_3_saints do
       after(:create) do |instance|
         FactoryGirl.create_list(:user, 3, locality: instance)
@@ -86,29 +87,38 @@ FactoryGirl.define do
     locality
     contact_person { create(:confirmed_user) }
   end
- 
+
   ## Event factories
-	sequence(:title) {|n| "Sample Event #{n}" }
+  # sequence(:title) {|n| "Sample Event #{n}" }
   tmp_date = Time.now + 2.months
 
   factory :event do
-    title { generate(:title) }
+    title {Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type }
     description "This is the sample event description. Not much details here."
-		event_type '3'  #
+    event_type '3'  #
     begin_date tmp_date 
     end_date (tmp_date + 3.days).strftime('%Y/%m/%d') 
     registration_open_date (tmp_date - 1.month).strftime('%Y/%m/%d') 
     registration_close_date (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d') 
-		registration_cost '10'
-		location
+    registration_cost '10'
+    location
 
     factory :event_with_registrations do
       ignore do
         registrations_count 3
+        ensure_unique_locality false
       end
 
       after(:create) do |event, evaluator|
-        create_list(:registration, evaluator.registrations_count, event: event)
+        if evaluator.ensure_unique_locality
+          locality = create(:locality)
+          evaluator.registrations_count.times do
+            user = create(:user, locality: locality)
+            create(:registration, event: event, user: user)
+          end
+        else
+          create_list(:registration, evaluator.registrations_count, event: event)
+        end
       end
     end
 
