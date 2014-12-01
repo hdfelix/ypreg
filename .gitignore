@@ -38,3 +38,7 @@ snippets.html.erb
 
 # Simplecov
 /coverage
+
+# Rubocop
+.rubocop_todo.yml
+
