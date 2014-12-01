@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
+ruby "2.1.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.4'
-ruby '2.0.0'
+# gem 'rails', '4.1.4'
+gem 'rails', '4.1.2'
+
 
 # Entity diagrams
 group :development do
@@ -96,13 +98,11 @@ group :development, :test do
   # Add Pry for debugging
   gem 'pry'
   gem 'pry-rails'
-  gem 'pry-debugger'
   gem 'pry-rescue'
-  gem 'pry-stack_explorer'
-  # gem 'pry-byebug'
+  gem 'pry-byebug'
 
   # Annotate DB schema in models
-  gem 'annotate'
+  # gem 'annotate'
 
   gem 'quiet_assets'
   gem 'awesome_print'
@@ -112,20 +112,3 @@ end
 
 # Geographic data
 # gem 'carmen-rails', '~> 1.0.0'
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
-# App Monitoring
-# gem 'newrelic_rpm'
-
-ruby '2.1.1'
