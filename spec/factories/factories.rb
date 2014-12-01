@@ -86,6 +86,14 @@ FactoryGirl.define do
     max_capacity max_cap
     locality
     contact_person { create(:confirmed_user) }
+
+    trait :with_min_cap_of_3 do
+      min_capacity 3
+    end
+    
+    trait :with_max_cap_of_5 do
+      max_capacity 5
+    end
   end
 
   ## Event factories
@@ -122,6 +130,7 @@ FactoryGirl.define do
       end
     end
 
+    # YP Conference with 5 registered YP
     factory :event_yp_conference do
       ignore do
         users_count 5
