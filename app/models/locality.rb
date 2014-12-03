@@ -3,6 +3,8 @@ class Locality < ActiveRecord::Base
   has_many :users
   has_many :hospitality_assignments
   has_many :lodgings
+  belongs_to :contact, class_name: 'User', foreign_key: 'contact_id'
+  belongs_to :lodging_contact, class_name: 'User', foreign_key: 'lodging_contact_id'
   #has_and_belongs_to_many :lodgings
 
   validates :city, presence: true
