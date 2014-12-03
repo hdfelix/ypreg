@@ -2,6 +2,23 @@ require 'rails_helper'
 
 describe Location, :type => :model do
 
+  describe 'Associations' do
+    it { should have_many :events }
+  end
+
+  describe 'Validations' do
+    it { should validate_presence_of :name }
+    it { should validate_presence_of :address1 }
+    it { should validate_presence_of :city }
+    # it { should validate_presence_of :state }
+    it { should validate_presence_of :zipcode }
+    it { should validate_uniqueness_of :name }
+  end
+
+  describe 'Constants' do
+    it { should have_constant :STATE_LIST }
+  end
+
 	it "is valid with name, description, and address (has valid factory)" do
 		expect(build(:location)).to be_valid
 	end
