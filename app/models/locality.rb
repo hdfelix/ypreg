@@ -5,7 +5,7 @@ class Locality < ActiveRecord::Base
   has_many :lodgings
   belongs_to :contact, class_name: 'User', foreign_key: 'contact_id'
   belongs_to :lodging_contact, class_name: 'User', foreign_key: 'lodging_contact_id'
-  #has_and_belongs_to_many :lodgings
+  # has_and_belongs_to_many :lodgings
 
   validates :city, presence: true
   validates :state_abbrv, presence: true
@@ -25,9 +25,5 @@ class Locality < ActiveRecord::Base
       contact = User.find(contact_id)
       "#{contact.name} (#{contact.email})"
     end
-  end
-
-  def hospitality_contact_for
-    # self.hospitality_contact_id
   end
 end
