@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Event, type: :model do
 
-  describe Event, 'Associations' do
+  describe 'Associations' do
     it { should belong_to :location }
     it { should have_many :registrations }
     it { should have_many :users }
@@ -12,7 +12,7 @@ describe Event, type: :model do
     it { should have_many :hospitality_assignments }
   end
 
-  describe Event, 'Validations'do
+  describe 'Validations'do
     it { should validate_presence_of :event_type }
     it { should validate_presence_of :title }
     it { should validate_presence_of :begin_date }
@@ -22,7 +22,7 @@ describe Event, type: :model do
     it { should have_constant :EVENT_TYPE }
   end
 
-  describe Event, 'Scopes' do
+  describe 'Scopes' do
     describe '#remaining_spaces' do
       it 'returns the max capacity of spaces when there are no registrations' do
         event = build_stubbed(:event)
