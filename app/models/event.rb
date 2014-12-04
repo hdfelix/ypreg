@@ -72,9 +72,10 @@ class Event < ActiveRecord::Base
   end
 
   def assigned_hospitality_beds
-    beds_assigned = Hash.new
+    beds_assigned = {}
 
     hospitalities.each do |h|
+      # TODO: Why is 'before_type_cast' needed here?
       loc_id = h.locality_id_before_type_cast
       loc_name = nil
       unless loc_id.nil?
