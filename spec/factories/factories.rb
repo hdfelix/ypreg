@@ -3,33 +3,24 @@
 require 'faker'
 
 FactoryGirl.define do
-
-  # factory :address do
-  # end
-
   ## User factories
-  factory :user do
+  factory :user, aliases: [:contact, :locality_contact, :lodging_contact] do
     name {Faker::Name.first_name}		
-    #lastname {Faker::Name.last_name}
     email {Faker::Internet.email}
     password 'secretpassword'
     password_confirmation 'secretpassword'
     locality
 
-    trait :admin do
+    trait :with_admin_role do
       role 'admin'
     end
 
     trait :yp do
       role 'yp'
     end
-
-    factory :admin, traits: [:admin]
-    factory :contact, class: :user
-    factory :locality_contact, class: :user # TODO: needed?
   end	
 
-  factory :confirmed_user, parent: :user, aliases: [:contact_person, :lodging_contact] do
+  factory :confirmed_user, parent: :user, aliases: [:contact_person] do
     after(:build) do |cu|
       cu.confirm!
       #cu.lodging ||= FactoryGirl.build(:lodging, :contact_person => cu)
@@ -60,7 +51,8 @@ FactoryGirl.define do
   factory :locality do
     city { Faker::Address.city }
     state_abbrv  'CA' #{ Faker::Address.state_abbr }
-    # lodging_contact
+    #contact
+    #lodging_contact
 
     trait :with_3_saints do
       after(:create) do |instance|
