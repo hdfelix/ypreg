@@ -5,8 +5,8 @@ require 'faker'
 FactoryGirl.define do
   ## User factories
   factory :user, aliases: [:contact, :locality_contact, :lodging_contact] do
-    name {Faker::Name.first_name}		
-    email {Faker::Internet.email}
+    name { Faker::Name.first_name }
+    email { Faker::Internet.email }
     password 'secretpassword'
     password_confirmation 'secretpassword'
     locality
@@ -18,31 +18,22 @@ FactoryGirl.define do
     trait :yp do
       role 'yp'
     end
-  end	
+  end
 
   factory :confirmed_user, parent: :user, aliases: [:contact_person] do
     after(:build) do |cu|
       cu.confirm!
-      #cu.lodging ||= FactoryGirl.build(:lodging, :contact_person => cu)
     end
   end
 
   ## Location factories
-
-  #city_array = ['This City', 'That City', 'Other City', 'City', 'Far City']
-  #sate_array = ['CT', 'CA']
-
-  #sequence(:name) { |n| "Sample Location #{n}" }
-  #sequence(:description) { |n| "This is an example description for location #{n}" }
-  #sequence(:address1) { |n| "#{n} Sample St" }
-
   factory :location do
-    name { Faker::Address.street_name } #{ generate(:name) }
-    description { Faker::Lorem.sentence } #generate(:description) }
-    address1 { Faker::Address.street_address } #generate(:address1) }
+    name { Faker::Address.street_name }
+    description { Faker::Lorem.sentence }
+    address1 { Faker::Address.street_address }
     address2 ''
     city { Faker::Address.city }
-    state_abbrv  'CA' #{ Faker::Address.state_abbr }
+    state_abbrv 'CA'
     zipcode { Faker::Address.zip_code }
     max_capacity '200'
   end
@@ -50,9 +41,7 @@ FactoryGirl.define do
   ## Locality factories
   factory :locality do
     city { Faker::Address.city }
-    state_abbrv  'CA' #{ Faker::Address.state_abbr }
-    #contact
-    #lodging_contact
+    state_abbrv 'CA'
 
     trait :with_3_saints do
       after(:create) do |instance|
@@ -68,12 +57,12 @@ FactoryGirl.define do
   factory :lodging do
     sequence(:name) { |n| "Household #{n}" }
     description "Description for #{:name}"
-    address1 { Faker::Address.street_address } #generate(:address1) }
+    address1 { Faker::Address.street_address }
     address2 ''
     city { Faker::Address.city }
-    state_abbrv  'CA' 
+    state_abbrv 'CA'
     zipcode { Faker::Address.zip_code }
-    lodging_type "1"
+    lodging_type '1'
     min_capacity min_cap
     max_capacity max_cap
     locality
@@ -82,24 +71,23 @@ FactoryGirl.define do
     trait :with_min_cap_of_3 do
       min_capacity 3
     end
-    
+
     trait :with_max_cap_of_5 do
       max_capacity 5
     end
   end
 
   ## Event factories
-  # sequence(:title) {|n| "Sample Event #{n}" }
   tmp_date = Time.now + 2.months
 
   factory :event do
-    title {Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type }
-    description "This is the sample event description. Not much details here."
-    event_type '3'  #
-    begin_date tmp_date 
-    end_date (tmp_date + 3.days).strftime('%Y/%m/%d') 
-    registration_open_date (tmp_date - 1.month).strftime('%Y/%m/%d') 
-    registration_close_date (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d') 
+    title { Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type }
+    description 'This is the sample event description. Not much details here.'
+    event_type '3'
+    begin_date tmp_date
+    end_date { (tmp_date + 3.days).strftime('%Y/%m/%d') }
+    registration_open_date { (tmp_date - 1.month).strftime('%Y/%m/%d') }
+    registration_close_date { (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d') }
     registration_cost '10'
     location
 
@@ -130,7 +118,7 @@ FactoryGirl.define do
         hospitalities_count 3
       end
 
-      after(:create) do |event, evaluator|
+      after(:create) do |event|
         users = create_list(:user, 5, role: 'yp')
         create_list(:lodging, 2)
         users.each do |user|
@@ -184,11 +172,11 @@ FactoryGirl.define do
 
   ## Registration factories
   factory :registration do
-    payment_type "Cash"
+    payment_type 'Cash'
     has_been_paid false
-    payment_adjustment "5"
+    payment_adjustment '5'
     attend_as_serving_one false
-    user 
+    user
     event
 
     trait :serving_one do
