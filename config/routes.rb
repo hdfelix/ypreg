@@ -20,6 +20,12 @@ YpwReg::Application.routes.draw do
     post 'hospitality_assignments/unassign_lodging_from_locality',
       to: 'events/hospitality_assignments#unassign_lodging_from_locality',
       as: :hospitality_unassignment_for_locality
+
+    post 'hospitality_assignments/assign_registration_user_to_hospitality',
+      to: 'events/hospitality_assignments#assign_registration_user_to_hospitality',
+      as: :hospitality_assignment_for_saint
+
+    # add :hospitality_unassignment_for_saint
   end
 
   delete 'events/:event_id/hospitalities/destroy', to: 'events/hospitalities#destroy', as: :hospitality_remove
