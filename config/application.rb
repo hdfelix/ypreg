@@ -17,10 +17,10 @@ module YpwReg
     # for jquery-rails-cdn
     config.assets.precompile += ['jquery.js']
 
-    config.assets.paths << Rails.root.join('app','assets','stylesheets','kingadmin-v1.2')
-    config.assets.paths << Rails.root.join('app','assets','javascripts','kingadmin-v1.2')
-    config.assets.paths << Rails.root.join('app','assets','fonts')
-    config.assets.paths << Rails.root.join('app','assets','ico')
+    config.assets.paths << Rails.root.join('app', 'assets', 'stylesheets', 'kingadmin-v1.2')
+    config.assets.paths << Rails.root.join('app', 'assets', 'javascripts', 'kingadmin-v1.2')
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+    config.assets.paths << Rails.root.join('app', 'assets', 'ico')
     config.assets.precompile += %w( .svg, .eot, .woff, .ttf )
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
@@ -53,6 +53,17 @@ module YpwReg
         require 'pry'
         config.console = Pry
       end
-     end
+    end
+
+    # http://stackoverflow.com/a/7412056
+    ActionDispatch::Callbacks.after do
+      # Reload the factories
+      return unless (Rails.env.development? || Rails.env.test?)
+
+      unless FactoryGirl.factories.blank? # first init will load factories, this should only run on subsequent reloads
+        FactoryGirl.factories.clear
+        FactoryGirl.find_definitions
+      end
+    end
   end
 end
