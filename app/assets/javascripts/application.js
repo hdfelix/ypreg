@@ -24,5 +24,5 @@
 // require kingadmin-v1.2/king-components
 // require kingadmin-v1.2/king-common
 // require kingadmin-v1.2/king-page
+// require kingadmin-v1.2/select2
 // require_self
-
