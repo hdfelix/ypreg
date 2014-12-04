@@ -1,11 +1,13 @@
 # Model for a registration to an event
 class Registration < ActiveRecord::Base
+  PAYMENT_TYPE = [['Cash', 1], ['Check', 2]]
+
   belongs_to :user
   belongs_to :event
   has_many :hospitality_assignments
   has_many :hospitalities, -> { uniq }, through: :hospitality_assignments
 
-  delegate :name, :email, :cell_phone, :home_phone, :work_phone, :birthday, #...
+  delegate :name, :email, :cell_phone, :home_phone, :work_phone, :birthday,
+    :lodging_id, # ...
            to: :user
-  PAYMENT_TYPE = [['Cash', 1], ['Check', 2]]
 end
