@@ -24,10 +24,10 @@ count = 5
 print "\nCreating #{count} Locations: "
 count.times do
   Location.create(
-    name: Faker::Name.name,
+    name: Faker::Name.location_name,
     description: Faker::Lorem.sentence,
     address1: Faker::Address.street_address,
-    city: Faker::Address.city,
+    city: Faker::Address.ypreg_city,
     state_abbrv: Faker::Address.state_abbr,
     zipcode: Faker::Address.zip_code,
     max_capacity: rand(50..200).round(-1)
@@ -40,7 +40,7 @@ count = 10
 print "\nCreating #{count} Localities: "
 count.times do
   Locality.create(
-    city: Faker::Address.city,
+    city: Faker::Address.ypreg_city,
     state_abbrv: Faker::Address.state_abbr
   )
   print '.'
