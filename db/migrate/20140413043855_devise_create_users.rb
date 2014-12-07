@@ -7,6 +7,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
 			
 			##Customization
 			t.string	 :name
+      t.references :locality, index: true
+      t.references :lodgings, index: true
+
       ## Recoverable 
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
