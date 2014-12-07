@@ -53,10 +53,12 @@ ActiveRecord::Schema.define(version: 20141013042023) do
   create_table "hospitality_assignments", force: true do |t|
     t.integer "hospitality_id"
     t.integer "registration_id"
+    t.integer "locality_id"
   end
 
-  add_index "hospitality_assignments", ["hospitality_id", "registration_id"], name: "hosp_assignmts", unique: true, using: :btree
+  add_index "hospitality_assignments", ["hospitality_id", "registration_id", "locality_id"], name: "hosp_assignmts", unique: true, using: :btree
   add_index "hospitality_assignments", ["hospitality_id"], name: "index_hospitality_assignments_on_hospitality_id", using: :btree
+  add_index "hospitality_assignments", ["locality_id"], name: "index_hospitality_assignments_on_locality_id", using: :btree
   add_index "hospitality_assignments", ["registration_id"], name: "index_hospitality_assignments_on_registration_id", using: :btree
 
   create_table "localities", force: true do |t|
