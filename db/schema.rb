@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013042023) do
+ActiveRecord::Schema.define(version: 20140818054348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,19 +28,19 @@ ActiveRecord::Schema.define(version: 20141013042023) do
 
   create_table "events", force: true do |t|
     t.string   "title"
-    t.integer  "location_id"
     t.integer  "event_type"
     t.date     "begin_date"
     t.date     "end_date"
     t.decimal  "registration_cost"
     t.date     "registration_open_date"
     t.date     "registration_close_date"
+    t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
   end
 
-  add_index "events", ["location_id"], name: "location_id_ix", using: :btree
+  add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
 
   create_table "hospitalities", force: true do |t|
     t.integer "event_id"
@@ -48,7 +48,9 @@ ActiveRecord::Schema.define(version: 20141013042023) do
     t.integer "locality_id"
   end
 
+  add_index "hospitalities", ["event_id"], name: "index_hospitalities_on_event_id", using: :btree
   add_index "hospitalities", ["locality_id"], name: "index_hospitalities_on_locality_id", using: :btree
+  add_index "hospitalities", ["lodging_id"], name: "index_hospitalities_on_lodging_id", using: :btree
 
   create_table "hospitality_assignments", force: true do |t|
     t.integer "hospitality_id"
@@ -69,6 +71,9 @@ ActiveRecord::Schema.define(version: 20141013042023) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "localities", ["contact_id"], name: "index_localities_on_contact_id", using: :btree
+  add_index "localities", ["lodging_contact_id"], name: "index_localities_on_lodging_contact_id", using: :btree
 
   create_table "locations", force: true do |t|
     t.string   "name"
@@ -97,6 +102,8 @@ ActiveRecord::Schema.define(version: 20141013042023) do
     t.string  "min_capacity"
   end
 
+  add_index "lodgings", ["locality_id"], name: "index_lodgings_on_locality_id", using: :btree
+
   create_table "registrations", force: true do |t|
     t.string   "payment_type"
     t.boolean  "has_been_paid"
@@ -107,16 +114,20 @@ ActiveRecord::Schema.define(version: 20141013042023) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "hospitality_id"
+    t.integer  "locality_id"
   end
 
   add_index "registrations", ["event_id"], name: "index_registrations_on_event_id", using: :btree
   add_index "registrations", ["hospitality_id"], name: "index_registrations_on_hospitality_id", using: :btree
+  add_index "registrations", ["locality_id"], name: "index_registrations_on_locality_id", using: :btree
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "name"
+    t.integer  "locality_id"
+    t.integer  "lodgings_id"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -132,7 +143,6 @@ ActiveRecord::Schema.define(version: 20141013042023) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
-    t.integer  "locality_id"
     t.decimal  "home_phone"
     t.decimal  "cell_phone"
     t.decimal  "work_phone"
@@ -142,6 +152,7 @@ ActiveRecord::Schema.define(version: 20141013042023) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["locality_id"], name: "index_users_on_locality_id", using: :btree
+  add_index "users", ["lodgings_id"], name: "index_users_on_lodgings_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

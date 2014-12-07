@@ -9,7 +9,7 @@ class CreateLodgings < ActiveRecord::Migration
       t.string :state_abbrv
       t.integer :zipcode
       t.string :lodging_type
-			t.integer :locality_id
+			t.references :locality, index: true
       t.string :max_capacity
     end
   end
