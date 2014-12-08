@@ -74,13 +74,13 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'rspec-rails' # , '~> 2.14.1'
   gem 'rspec-collection_matchers'
-  gem 'factory_girl_rails', '~> 4.4.0'
+  gem 'factory_girl_rails' # , '~> 4.4.0'
   gem 'faker', '~>1.2.0'
   # gem 'ffaker'
   gem 'capybara' # , '~> 2.2.1'
   gem 'capybara-webkit'
   gem 'guard-rspec'
-  gem 'database_cleaner', '~> 1.2.0'
+  gem 'database_cleaner'
   gem 'launchy', '~>2.4.2'
   gem 'simplecov', require: false
   gem 'simplecov-csv', require: false
