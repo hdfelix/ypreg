@@ -44,13 +44,15 @@ class Event < ActiveRecord::Base
   end
 
   def total_registrations_by_role(locality, role)
-    users.where('locality_id = ? and role = ?', locality.id, role).count
+    #TODO ambiguous locality_id error - is this the best way to write the query (adding the tablename)?
+    # users.where('locality_id = ? and role = ?', locality.id, role).count
+    users.where('users.locality_id = ? and users.role = ?', locality.id, role).count
   end
 
   def registered_serving_ones(locality)
-    users.where(
-      'locality_id = ? and attend_as_serving_one = ?',
-      locality.id, true).count
+    #TODO ambiguous locality_id error
+    # users.where('locality_id = ? and attend_as_serving_one = ?',locality.id, true).count
+    users.where('users.locality_id = ? and attend_as_serving_one = ?',locality.id, true).count
   end
 
   def assigned_lodgings_as_hospitality
@@ -72,22 +74,14 @@ class Event < ActiveRecord::Base
   end
 
   def assigned_hospitality_beds
-    beds_assigned = {}
-
-    hospitalities.each do |h|
-      # TODO: Why is 'before_type_cast' needed here?
-      loc_id = h.locality_id_before_type_cast
-      loc_name = nil
-      unless loc_id.nil?
-        loc_name = Locality.find(h.locality_id_before_type_cast).city
-        if beds_assigned[loc_name].nil?
-          beds_assigned[loc_name] = 0
-        end
-        lodging_min_capacity = Lodging.find(h.lodging_id).min_capacity.to_i
-        beds_assigned[loc_name] = beds_assigned[loc_name] + lodging_min_capacity
+    hospitalities.inject({}) do |beds_hash, h|
+      unless h.locality.nil?
+        city = h.locality.city
+        beds_hash[city] ||= 0
+        beds_hash[city] += h.lodging.min_capacity
       end
+      beds_hash
     end
-    beds_assigned
   end
 
   def load_locality_summary
@@ -105,8 +99,9 @@ class Event < ActiveRecord::Base
 
   def calculate_locality_statistics(stats, locality)
     loc = locality.city
+    # TODO: ambiguous locality_id
     stats[loc]['grand_total'] =
-      users.where('locality_id = ?', locality.id).count
+      users.where('users.locality_id = ?', locality.id).count
     assign_totals(stats, locality)
     stats[loc]['amount_due'] =
       stats[loc]['grand_total'] * registration_cost
