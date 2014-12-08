@@ -98,8 +98,8 @@ ActiveRecord::Schema.define(version: 20140818054348) do
     t.integer "zipcode"
     t.string  "lodging_type"
     t.integer "locality_id"
-    t.string  "max_capacity"
-    t.string  "min_capacity"
+    t.integer "min_capacity"
+    t.integer "max_capacity"
   end
 
   add_index "lodgings", ["locality_id"], name: "index_lodgings_on_locality_id", using: :btree
