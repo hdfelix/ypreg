@@ -204,5 +204,6 @@ FactoryGirl.define do
   factory :hospitality_assignment do
     hospitality
     registration
+    locality
   end
 end
