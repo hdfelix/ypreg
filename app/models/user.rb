@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   # validations
 
-  scope :is_not_contact_person, -> { where('lodging_id is null') }
+  scope :is_not_contact_person, -> { joins('LEFT JOIN lodgings ON lodgings.contact_person_id = users.id WHERE lodgings.id IS NULL') }
   USER_ROLE = [
     ['admin', 1],
     ['scyp', 2],
@@ -28,6 +28,12 @@ class User < ActiveRecord::Base
     ['guest', 12]
   ]
 
+  # Scopes
+  def not_contact_person_drop_down_collection
+    User.is_not_contact_person << self
+  end
+
+  # Interace
   def role?(base_role)
     role == base_role.to_s
   end

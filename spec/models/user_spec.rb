@@ -10,7 +10,6 @@ describe User, type: :model do
     it { should have_many :registrations }
     it { should have_many :events }
     it { should belong_to :locality }
-    it { should belong_to :lodging }
   end
   describe 'Scopes' do
     describe 'is_not_contact_person' do
@@ -22,6 +21,20 @@ describe User, type: :model do
         create(:lodging, contact_person: usr1)
 
         expect(User.is_not_contact_person).to eq([usr2])
+      end
+    end
+
+    describe '#not_contact_person_drop_down_collection' do
+      it 'returns users that are not contact_person with self for Lodging _form
+      contact person collection' do
+        Lodging.delete_all
+        User.delete_all
+        lodge = create(:lodging)
+        create(:lodging)
+        user_list = create_list(:confirmed_user, 2)
+
+        expect(lodge.contact_person.not_contact_person_drop_down_collection)
+          .to eq(user_list + [lodge.contact_person])
       end
     end
   end
