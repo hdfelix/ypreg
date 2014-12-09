@@ -13,9 +13,8 @@ class HospitalityAssignment < ActiveRecord::Base
   end
 
   def locality
-    Locality.find(hospitality.locality_id)
+    Locality.find(locality_id)
   end
-
 
   def saint
     User.find(registration.user_id)

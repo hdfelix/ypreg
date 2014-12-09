@@ -10,7 +10,8 @@ class CreateLodgings < ActiveRecord::Migration
       t.integer :zipcode
       t.string :lodging_type
 			t.references :locality, index: true
-      t.string :max_capacity
+      t.integer :min_capacity
+      t.integer :max_capacity
     end
   end
 end

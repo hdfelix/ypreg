@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 describe Event, type: :model do
 
   describe 'Associations' do
@@ -27,7 +26,7 @@ describe Event, type: :model do
       it 'returns the max capacity of spaces when there are no registrations' do
         event = build_stubbed(:event)
 
-        expect(event.remaining_spaces).to eq (event.location.max_capacity)
+        expect(event.remaining_spaces).to eq(event.location.max_capacity)
       end
 
       it 'returns the remaining number of available registrations' do
@@ -36,19 +35,29 @@ describe Event, type: :model do
                        registrations_count: 3,
                        location: loc)
 
-        expect(event.remaining_spaces).to eq (17)
+        expect(event.remaining_spaces).to eq(17)
       end
     end
   end
 
   describe '#participating_localities' do
     it 'returns the localities participating in the event' do
-      event = create(
-        :event_with_registrations,
-        registrations_count: 2,
-        ensure_unique_locality: false)
-      loc1 = event.registrations.first.user.locality
-      loc2 = event.registrations.second.user.locality
+      # event = create(
+      #   :event_with_registrations,
+      #   registrations_count: 2,
+      #   ensure_unique_locality: false)
+      # loc1 = event.registrations.first.user.locality
+      # loc2 = event.registrations.second.user.locality
+      event = create(:event)
+      loc1  = create(:locality)
+      loc2  = create(:locality)
+      usr1  = create(:user, locality: loc1)
+      usr2  = create(:user, locality: loc2)
+
+      reg1  = create(:registration, user: usr1)
+      reg2  = create(:registration, user: usr2)
+
+      event.registrations << [reg1, reg2]
 
       participating_localities = event.participating_localities
       expect(participating_localities.count).to eq 2
@@ -70,6 +79,7 @@ describe Event, type: :model do
   end
 
   describe '#registered_saints_per_locality'
+
   describe '#total_registrations_by_role' do
     it 'returns the number of registrations per locality for the given role' do
       reg   = create(:registration, :yp)
@@ -104,6 +114,11 @@ describe Event, type: :model do
     end
 
     it 'should not return lodgings not registered as hospitality for an event' do
+      Lodging.delete_all
+      Locality.delete_all
+      Hospitality.delete_all
+      Event.delete_all
+
       ev      = create(:event)
       loc     = create(:locality)
       lodge1  = create(:lodging)
@@ -119,6 +134,10 @@ describe Event, type: :model do
   describe '#unassigned_lodgings_as_hospitality' do
     it 'returns lodgings not registered as hospitality for an event' do
       Lodging.delete_all
+      Locality.delete_all
+      Hospitality.delete_all
+      Event.delete_all
+
       ev      = create(:event)
       loc     = create(:locality)
       lodge1  = create(:lodging)
