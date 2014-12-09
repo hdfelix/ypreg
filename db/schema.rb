@@ -100,8 +100,10 @@ ActiveRecord::Schema.define(version: 20140818054348) do
     t.integer "locality_id"
     t.integer "min_capacity"
     t.integer "max_capacity"
+    t.integer "contact_person_id"
   end
 
+  add_index "lodgings", ["contact_person_id"], name: "index_lodgings_on_contact_person_id", using: :btree
   add_index "lodgings", ["locality_id"], name: "index_lodgings_on_locality_id", using: :btree
 
   create_table "registrations", force: true do |t|
@@ -147,7 +149,6 @@ ActiveRecord::Schema.define(version: 20140818054348) do
     t.decimal  "cell_phone"
     t.decimal  "work_phone"
     t.date     "birthday"
-    t.integer  "lodging_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

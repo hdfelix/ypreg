@@ -175,10 +175,11 @@ print '.'
 
 for i in 1..30 do  #not adding 1 to idx (added lodging above already)
   user = User.all.sample
-  lodging = FactoryGirl.create(:lodging,
+  lodging = FactoryGirl.create(
+    :lodging,
     name: "Lodging #{i}",
     contact_person: user,
-    locality_id: user.locality_id)
+    locality: user.locality)
   lodging.save
   print '.'
 end

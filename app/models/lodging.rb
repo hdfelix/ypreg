@@ -12,8 +12,8 @@ class Lodging < ActiveRecord::Base
 
   has_many :hospitalities, inverse_of: :hospitalities
   has_many :events, -> { uniq }, through: :hospitalities
-  has_one :contact_person, class_name: 'User'
   belongs_to :locality
+  belongs_to :contact_person, class_name: 'User'
 
   accepts_nested_attributes_for :contact_person
 

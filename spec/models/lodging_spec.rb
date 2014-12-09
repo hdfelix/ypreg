@@ -17,8 +17,8 @@ describe Lodging, type: :model do
 
   describe 'Associations' do
     it { should have_many(:events).through(:hospitalities) } # how to test 'uniq'
-    # it { should have_one :contact_person }
     it { should belong_to :locality }
+    it { should belong_to :contact_person }
     it { should accept_nested_attributes_for :contact_person }
   end
   describe 'Interface' do
