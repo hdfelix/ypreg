@@ -51,6 +51,7 @@
 
 ### v0.17
 * Write missing tests for models
+* Before Hospitality Assignment refactorings
 
 ### v0.18: Hospitality Assignment
 * Main view
