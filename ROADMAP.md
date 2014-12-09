@@ -51,8 +51,6 @@
 
 ### v0.17
 * Write missing tests for models
-* Refactoring
- * Law of Demeter?
 
 ### v0.18: Hospitality Assignment
 * Main view
