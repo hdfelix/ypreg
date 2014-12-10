@@ -1,6 +1,7 @@
 # Places for hospitality (home, hotel room, retreat center lodging unit, etc.
 class Lodging < ActiveRecord::Base
-  LODGING_TYPE = [['Home', 1], ['Retreat Center', 2], ['Hotel/Motel', 3]]
+  # LODGING_TYPE = [['Home', 1], ['Retreat Center', 2], ['Hotel/Motel', 3]]
+  LODGING_TYPE = { 1 => 'Home', 2 => 'Retreat Center', 3 => 'Hotel/Motel' }
 
   validates :name, presence: true
   validates :address1, presence: true
