@@ -7,6 +7,13 @@ YpwReg::Application.configure do
   # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
 
+  # Note: In rails 4.0/4.1 The default rails test environment
+  # ( config/environments/test.rb ) is not threadsafe - 
+  # see https://github.com/rails/rails/issues/15089. If you experience random
+  # errors about missing constants, adding config.allow_concurrency = false to 
+  # config/environements/test.rb should solve the issue.
+   config.allow_concurrency = false
+
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that
   # preloads Rails for running tests, you may have to set it to true.
