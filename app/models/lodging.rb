@@ -67,4 +67,14 @@ class Lodging < ActiveRecord::Base
       max_capacity
     end
   end
+
+  def users_that_are_not_contact_people
+    users = User.not_contact_persons
+    unless self.contact_person.nil?
+      users << self.contact_person
+      users
+    end
+    users
+  end
+
 end

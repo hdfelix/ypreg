@@ -21,6 +21,23 @@ describe Lodging, type: :model do
     it { should belong_to :contact_person }
     it { should accept_nested_attributes_for :contact_person }
   end
+
+  describe 'Scopes' do
+    describe '#users_that_are_not_contact_people' do
+      it 'returns users that are not contact_persons' do
+        Lodging.delete_all
+        User.delete_all
+        lodge = create(:lodging)
+        create(:lodging)
+        user_list = create_list(:confirmed_user, 2)
+
+        expect(lodge.users_that_are_not_contact_people)
+          .to eq(user_list + [lodge.contact_person])
+      end
+    end
+
+  end
+
   describe 'Interface' do
     describe '#display_address_in_address_block_format' do
       it 'displays the lodging address' do
