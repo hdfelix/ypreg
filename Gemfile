@@ -77,17 +77,12 @@ group :development, :test do
   gem 'factory_girl_rails' # , '~> 4.4.0'
   gem 'faker', '~>1.2.0'
   # gem 'ffaker'
-  gem 'capybara' # , '~> 2.2.1'
-  gem 'capybara-webkit'
-  gem 'guard-rspec'
-  gem 'database_cleaner'
-  gem 'launchy', '~>2.4.2'
   gem 'simplecov', require: false
   gem 'simplecov-csv', require: false
   gem 'coverband'
   gem 'rspec_junit_formatter'
 
-  gem 'selenium-webdriver', '~> 2.39.0'
+  # gem 'selenium-webdriver', '~> 2.39.0'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
 
@@ -110,6 +105,14 @@ group :development, :test do
   gem 'awesome_print'
   gem 'better_errors'
   gem 'binding_of_caller'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'guard-rspec'
+  gem 'database_cleaner'
+  gem 'launchy', '~>2.4.2'
 end
 
 # Geographic data
