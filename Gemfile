@@ -68,51 +68,53 @@ end
 # serve static_assets
 gem 'rails_12factor', group: :production
 
-# Added from 'Everyday Rails Testing with Rspec book
-# (with latest versions as of 15MAR14)
 group :development, :test do
+  # Add Pry for debugging
+  gem 'pry'
+  # gem 'pry-rails'
+  gem 'pry-rescue'
+  gem 'pry-byebug'
+  gem 'binding_of_caller'
   gem 'shoulda-matchers'
-  gem 'rspec-rails' # , '~> 2.14.1'
+  gem 'rspec-rails'
   gem 'rspec-collection_matchers'
-  gem 'factory_girl_rails' # , '~> 4.4.0'
-  gem 'faker', '~>1.2.0'
+  gem 'factory_girl_rails'
+  gem 'faker'
   # gem 'ffaker'
   gem 'simplecov', require: false
   gem 'simplecov-csv', require: false
   gem 'coverband'
   gem 'rspec_junit_formatter'
-
-  # gem 'selenium-webdriver', '~> 2.39.0'
+  # Spring speeds up development by keeping your application running in the 
+  # background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
 
   # gem 'haml-lint', require: false
   gem 'letter_opener', group: :development
 
-  # Generate database diagrams
-  gem 'railroad'
-
-  # Add Pry for debugging
-  gem 'pry'
-  gem 'pry-rails'
-  gem 'pry-rescue'
-  gem 'pry-byebug'
-
   # Annotate DB schema in models
   # gem 'annotate'
 
-  gem 'quiet_assets'
+end
+
+group :development do
   gem 'awesome_print'
   gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'quiet_assets'
+  # gem 'rb-fsevent'
+  gem 'guard-livereload'
 end
 
 group :test do
   gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'selenium-webdriver'
   gem 'capybara-webkit'
   gem 'guard-rspec'
-  gem 'database_cleaner'
-  gem 'launchy', '~>2.4.2'
 end
 
 # Geographic data
