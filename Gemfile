@@ -25,7 +25,6 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'font-awesome-rails'
 
 # CSS Framework
-# Using the bootstrap file provided with the KingAdmin theme
 gem 'bootstrap-sass', '~> 3.1.1'
 # gem 'anjlab-bootstrap-rails',
 #   require: 'bootstrap-rails',
@@ -87,8 +86,6 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   # Spring speeds up development by keeping your application running in the 
   # background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-commands-rspec'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
 
@@ -106,6 +103,8 @@ group :development do
   gem 'quiet_assets'
   # gem 'rb-fsevent'
   gem 'guard-livereload'
+  gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :test do
