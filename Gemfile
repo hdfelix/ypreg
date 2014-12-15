@@ -67,6 +67,8 @@ end
 # serve static_assets
 gem 'rails_12factor', group: :production
 
+gem 'simple_form'
+
 group :development, :test do
   # Add Pry for debugging
   gem 'pry'
