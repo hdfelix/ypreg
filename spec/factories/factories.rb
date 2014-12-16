@@ -92,7 +92,7 @@ FactoryGirl.define do
     location
 
     factory :event_with_registrations do
-      ignore do
+      transient do
         registrations_count 2
         ensure_unique_locality false
       end
@@ -112,7 +112,7 @@ FactoryGirl.define do
 
     # YP Conference with 5 registered YP
     factory :event_yp_conference do
-      ignore do
+      transient do
         users_count 5
         lodgings_count 2
         hospitalities_count 3
