@@ -70,7 +70,7 @@ class Event < ActiveRecord::Base
     assigned.each do |hospitality|
       ids << hospitality.id
     end
-    Lodging.where.not(id: ids).first
+    Lodging.where.not(id: ids)
   end
 
   def assigned_hospitality_beds

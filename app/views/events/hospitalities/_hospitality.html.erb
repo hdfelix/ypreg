@@ -40,6 +40,6 @@
           # refresh before the 'remove' link works b/c of this link to needing
           # ':id' for hospitalities/_hospitality partial and ':lodging_id' when it is now
           # used for assigned_lodgings_as_hospitality -%>
-      <%= link_to 'remove', hospitality_remove_path(event_id: @event, id: @hospitality), method: :delete, data: { confirm: 'Are your sure?' }, remote: true %>
+      <%# <%= link_to 'remove', hospitality_remove_path(event_id: @event, id: @hospitality), method: :delete, data: { confirm: 'Are your sure?' }, remote: true %>
     </td>
   </tr>

@@ -72,7 +72,8 @@
           <div class="row">
             <div class="col-md-12">
               <br />
-              <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm'%>
+              <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Hospitality', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
             </div>
           </div>
 
@@ -318,7 +319,7 @@
             </table>
             <div class='row'><!-- pagination footer -->
               <div class='col-md-6'>
-                <%= link_to 'Hospitality Assigment', event_hospitality_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
+                <%= link_to 'Manage Hospitalities', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
               </div>
               <div class='col-md-6'></div>
               <!-- Add code for records displayed, pagination -->

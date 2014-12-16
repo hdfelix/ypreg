@@ -1,0 +1,16 @@
+Hospitality List
+<% @hospitalities.each do |h| %>
+  <ul>
+    <li><%= h.name %></li>
+  </ul>
+<% end %>
+
+Lodgings not providing hospitality
+<%= simple_form_for @event do |f| %>
+  <%= f.error_notification %>
+  <%= f.association :lodgings, as: :check_boxes, collection: @lodgings, label: false %>
+  <%= f.submit 'Save', class: 'btn btn-secondary btn-sm' %>
+  <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+<% end %>
+</br>
+
