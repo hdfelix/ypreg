@@ -110,7 +110,7 @@ describe Event, type: :model do
       create(:hospitality, event: ev, lodging: lodge1, locality: loc)
       create(:hospitality, event: ev, lodging: lodge2, locality: loc)
 
-      expect(ev.assigned_lodgings_as_hospitality).to eq([lodge1, lodge2])
+      expect(ev.assigned_lodgings_as_hospitality).to include(lodge1, lodge2)
     end
 
     it 'should not return lodgings not registered as hospitality for an event' do
@@ -146,7 +146,7 @@ describe Event, type: :model do
       create(:hospitality, event: ev, lodging: lodge1, locality: loc)
       create(:hospitality, event: ev, lodging: lodge2, locality: loc)
 
-      expect(ev.unassigned_lodgings_as_hospitality).to eq(lodge3)
+      expect(ev.unassigned_lodgings_as_hospitality).to eq([lodge3])
     end
 
     it 'should not return lodgings registered as hospitality for an event' do
