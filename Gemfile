@@ -41,9 +41,9 @@ gem 'coffee-rails', '~> 4.0.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-# gem 'jquery-rails'
+gem 'jquery-rails'
 # gem 'jquery-ui-rails'
-gem 'jquery-rails-cdn'
+# gem 'jquery-rails-cdn'
 gem 'jquery-ui-rails', '~> 4.2.1'
 # gem 'jquery-turbolinks'
 

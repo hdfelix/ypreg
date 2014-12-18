@@ -21,7 +21,7 @@
 	<!--%= stylesheet_link_tag		"slategray", media: "all" %-->
 
   <!-- for gem rails-jquery-cdn -->
-  <%= jquery_include_tag :google %>
+  <!--%= jquery_include_tag :google %-->
 
 	<%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -124,8 +124,8 @@
 										<div class="logged-user">
 											<div class="btn-group">
 												<a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-													<%= image_tag('user-avatar.png') %>
-													<span class="name"><%= current_user.name %></span><span class="caret"></span>
+													<!--%= image_tag('user-avatar.png') %-->
+													<span class="name"><%= current_user.name %></span>&nbsp;&nbsp;<span class="caret"></span>
 												</a>
 												<ul class="dropdown-menu" role="menu">
 													<li>
