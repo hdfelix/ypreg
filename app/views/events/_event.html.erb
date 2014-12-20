@@ -36,16 +36,16 @@
 				<br />
 				<strong><%= event_registration_dates(event) %></strong>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-4">
 				<h4><span>Cost:  </span><span><%= number_to_currency(event.registration_cost) %></span></h4>
 				<br />
 				<% if current_user %>
-					<%= link_to 'Manage', event, class: 'btn btn-default' %>
+					<%= link_to 'Manage', event, class: 'btn btn-default btn-sm' %>
 					<% if current_user.registrations.where(event_id: event).empty? %>
-						<%= link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary' %>
+						<%= link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary btn-sm' %>
 					<% end %>
 				<% else %>
-					<p><%= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary' %></p>
+					<p><%= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary btn-sm' %></p>
 				<% end %>
 			</div>
 		</div>
