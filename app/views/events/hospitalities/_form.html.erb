@@ -1,4 +1,0 @@
-<%= form_for @lodging, as: :lodging, url: { controller: 'events/hospitalities', action: 'assigns'}, html: { remote: true } do |f| %>
-  <%= select_tag('lodging_id', options_for_select(@lodging.collect{ |h| [h.name, h.id ]}), {include_blank: true }) %>
-  <%= f.submit 'Add' %>
-<% end %>
