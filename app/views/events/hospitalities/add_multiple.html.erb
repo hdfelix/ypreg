@@ -1,5 +1,5 @@
 <h1>Add Hospitalities</h1>
-<%= form_tg  do |f| %>
+<%= form_tag  do |f| %>
   <%= f.simple_fields_for :lodgings do |l| %>
     <%= l.association :lodgings, as: :check_boxes, collection: @lodgings, label: false %>
   <% end %>
@@ -19,4 +19,3 @@
   </ul>
 <% end %>
 
-<

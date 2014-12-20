@@ -5,6 +5,7 @@ class Events::HospitalityAssignmentsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
     @stats =  @event.load_locality_summary
+    @hospitalities = @event.hospitalities
     @assigned_lodgings_as_hospitality = @event.assigned_lodgings_as_hospitality
     @unassigned_lodgings_as_hospitality = @event.unassigned_lodgings_as_hospitality
     @participating_localities = @event.participating_localities
@@ -16,7 +17,7 @@ class Events::HospitalityAssignmentsController < ApplicationController
        }
     end
   end
-
+  
   def assign_lodging_to_locality
     # TODO: Add logic to update assignments
     @event = Event.find(params[:event_id])
