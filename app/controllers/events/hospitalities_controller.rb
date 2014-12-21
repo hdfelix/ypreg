@@ -54,7 +54,6 @@ class Events::HospitalitiesController < ApplicationController
   end
 
   def add
-    binding.pry
     @event = Event.find(params[:event_id])
     Lodging.find(params[:lodging_ids]).each do |l|
       @event.hospitalities << Hospitality.create(lodging: l)
