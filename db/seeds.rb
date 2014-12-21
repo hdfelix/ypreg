@@ -185,7 +185,7 @@ for i in 1..30 do  #not adding 1 to idx (added lodging above already)
 end
 
 # Create event registrations
-count = rand(0..total_users)
+count = rand(5..total_users)
 print "\nCreating #{count} event registrations: "
 
 ev = Event.first
