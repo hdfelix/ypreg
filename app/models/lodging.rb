@@ -10,6 +10,7 @@ class Lodging < ActiveRecord::Base
   validates :zipcode, presence: true
   validates :lodging_type, presence: true
   validates :contact_person, presence: true
+  validates :min_capacity, presence: true
 
   has_many :hospitalities, inverse_of: :hospitalities
   has_many :events, -> { uniq }, through: :hospitalities

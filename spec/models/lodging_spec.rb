@@ -13,6 +13,7 @@ describe Lodging, type: :model do
     it { should validate_presence_of :zipcode }
     it { should validate_presence_of :lodging_type }
     it { should validate_presence_of :contact_person }
+    it { should validate_presence_of :min_capacity }
   end
 
   describe 'Associations' do

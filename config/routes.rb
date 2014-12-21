@@ -22,7 +22,7 @@ YpwReg::Application.routes.draw do
         post 'assign'
       end
     end
-    resources :hospitality_assignments, only: [:index], controller: 'events/hospitality_locality_assignments' do
+    resources :hospitality_assignments, only: [:index], controller: 'events/hospitality_assignments' do
       collection do
         get 'assign'
       end

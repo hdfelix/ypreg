@@ -165,8 +165,8 @@ lodging = Lodging.new(
           city: 'Irvine',
           state_abbrv: 'CA',
           zipcode: '92612',
-          max_capacity: 5,
-          min_capacity: 2,
+          max_capacity: rand(3..5),
+          min_capacity: rand(1..3),
           contact_person: User.where(email: 'hdfelix@gmail.com').first,
           locality: Locality.all.sample,
           lodging_type: 1)
