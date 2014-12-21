@@ -75,7 +75,6 @@ class Event < ActiveRecord::Base
 
   def assigned_hospitality_beds
     hospitalities.inject({}) do |beds_hash, h|
-      binding.pry
       unless h.locality.nil?
         city = h.locality.city
         beds_hash[city] ||= 0
