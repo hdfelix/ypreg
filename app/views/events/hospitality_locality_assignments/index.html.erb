@@ -18,27 +18,25 @@
                 <td>Lodging</td>
                 <td>Min</td>
                 <td>Max</td>
-                <td>Assign to</td>
-                <td></td>
+                <td>Assigned to</td>
               </tr>
             </thead>
             <tbody>
               <% @event.hospitalities.each  do |hosp| %>
-                <%= fields_for hosp do |ha| %>
-                  <tr id=<%= "hospitality_#{hosp.id}" %>>
-                  <td><%= hosp.name %></td>
-                  <td><%= hosp.min_capacity %></td>
-                  <td><%= hosp.max_capacity %></td>
-                  <td><%= select_tag "hospitality_locality_ids[#{ hosp.id }][]",
-                    options_from_collection_for_select(
-                    @event.localities,
-                    "id",
-                    "city"),
-                    { include_blank: 'select',
-                      selected: hosp.locality_id_before_type_cast } %> <!-- TODO: why like this? --></td>
-                  <td><%# link_to 'Update', assign_event_hospitality_locality_assignments_path(@event) %></td>
+                <tr id=<%= "hospitality_#{hosp.id}" %>>
+                <td><%= hosp.name %></td>
+                <td><%= hosp.min_capacity %></td>
+                <td><%= hosp.max_capacity %></td>
+                <td><%= select_tag "hospitality_locality_ids[#{ hosp.id }][]",
+                  options_from_collection_for_select(
+                  @event.localities,
+                  "id",
+                  "city",
+                  selected: selected_locality(hosp)),
+                  {
+                    prompt: 'select locality'
+                  } %> <!-- TODO: why like this? --></td>
                 </tr>
-              <% end %>
             <% end %>
             </tbody>
           </table>
@@ -69,7 +67,6 @@
             <% @event.localities.each do |loc| %>
               <tr>
               <td><%= loc.city %></td>
-              <% binding.pry %>
               <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
               <td><%= @event.assigned_hospitality_beds[loc.city] %></td>
             </tr>
