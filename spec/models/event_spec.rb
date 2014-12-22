@@ -8,7 +8,7 @@ describe Event, type: :model do
     it { should have_many :localities }
     it { should have_many :hospitalities }
     # it { should have_many :lodgings }
-    it { should have_many :hospitality_assignments }
+    # it { should have_many :hospitality_assignments }
   end
 
   describe 'Validations'do
