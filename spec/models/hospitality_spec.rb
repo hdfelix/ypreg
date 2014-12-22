@@ -6,7 +6,8 @@ describe Hospitality, type: :model do
     it { should belong_to :event }
     it { should belong_to :lodging }
     it { should belong_to :locality }
-    it { should have_many :hospitality_assignments }
-    it { should have_many(:registrations).through(:hospitality_assignments) }
+    it { should belong_to :registration }
+    # it { should have_many :hospitality_assignments }
+    # it { should have_many(:registrations).through(:hospitality_assignments) }
   end
 end
