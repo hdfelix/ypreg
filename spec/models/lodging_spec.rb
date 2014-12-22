@@ -114,11 +114,6 @@ describe Lodging, type: :model do
 
         expect(lodging.display_min_capacity).to eq(2)
       end
-
-      it "displays '--' if no minimum capacity is recorded" do
-        lodging = create(:lodging, min_capacity: nil)
-        expect(lodging.display_min_capacity).to eq('--')
-      end
     end
 
     describe '#display_max_capacity' do
