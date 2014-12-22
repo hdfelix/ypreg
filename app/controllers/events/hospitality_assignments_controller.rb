@@ -1,8 +1,9 @@
 class Events::HospitalityAssignmentsController < ApplicationController
   skip_filter :verify_authenticity_token, :action
-  respond_to :html, :js
+  # respond_to :html, :js
 
   def index
+    binding.pry
     @event = Event.find(params[:event_id])
     @stats =  @event.load_locality_summary
     @hospitalities = @event.hospitalities
@@ -10,12 +11,12 @@ class Events::HospitalityAssignmentsController < ApplicationController
     @unassigned_lodgings_as_hospitality = @event.unassigned_lodgings_as_hospitality
     @participating_localities = @event.participating_localities
 
-    respond_to  do |format|
-      format.html
-       format.js {
-         render partial: 'events/hospitality_assignments/units'
-       }
-    end
+    # respond_to  do |format|
+    #   format.html
+    #     format.js {
+    #       render partial: 'events/hospitality_assignments/units'
+    #     }
+    # end
   end
   
   def assign_lodging_to_locality
@@ -30,7 +31,7 @@ class Events::HospitalityAssignmentsController < ApplicationController
       p 'success!'
       respond_with(@hospitality) do |f|
         f.html { redirect_to event_hospitality_assignments_path }
-        f.js { render partial: 'units' }
+        # f.js { render partial: 'units' }
       end
     else
       p 'could not assign lodging to locality'
