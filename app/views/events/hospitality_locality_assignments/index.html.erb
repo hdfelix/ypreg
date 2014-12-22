@@ -9,7 +9,6 @@
       <div class="widget-header">
         <h3><i class="fa fa-table"></i>Available Hospitalities</h3>
       </div>
-      <%#form_tag assign_event_hospitality_locality_assignments_path, method: :put do %>
       <%= form_tag assign_event_hospitality_locality_assignments_path(@event) do |f| %>
         <div class="widget-content">
           <table class="table table-striped">
@@ -34,7 +33,7 @@
                   "city",
                   selected: selected_locality(hosp)),
                   {
-                    prompt: 'select locality'
+                    prompt: '--'
                   } %> <!-- TODO: why like this? --></td>
                 </tr>
             <% end %>
@@ -66,7 +65,7 @@
             <tbody id='participating_localities_content'>
             <% @event.localities.each do |loc| %>
               <tr>
-              <td><%= loc.city %></td>
+                <td><%= loc.city %>, <%= loc.state_abbrv %></td>
               <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
               <td><%= @event.assigned_hospitality_beds[loc.city] %></td>
             </tr>
