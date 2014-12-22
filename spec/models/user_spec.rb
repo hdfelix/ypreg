@@ -24,4 +24,16 @@ describe User, type: :model do
       end
     end
   end
+
+  describe 'Interface' do
+    describe '#registration' do
+      it "returns the registration for the user to the event passed as a parameter" do
+        event         = create(:event_with_registrations, registrations_count: 1)
+        registration  = event.registrations.first
+        user          = registration.user
+
+        expect(user.registration(event)).to eq(registration)
+      end
+    end
+  end
 end
