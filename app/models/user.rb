@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :registrations
   has_many :events, through: :registrations
+  has_many :hospitalities, through: :registrations
   belongs_to :locality
   belongs_to :lodging
 
@@ -37,7 +38,33 @@ class User < ActiveRecord::Base
     role == base_role.to_s
   end
 
+  # private?
   def registration(event)
     Registration.where(user: self, event: event)[0]
+  end
+
+  # private?
+  def hospitality_registration_assignment(event)
+    HospitalityRegistrationAssignment.where(registration: registration(event))[0]
+  end
+
+  # private?
+  def assigned_hospitality(event,locality)
+    hra = hospitality_registration_assignment(event)
+    if hra.nil?
+      nil
+    else
+      hra.hospitality
+    end
+  end
+
+  # private?
+  def hospitality(event)
+    reg = registration(event)
+    if reg.nil?
+      nil
+    else
+      Hospitality.where(event: event, locality: locality)[0]
+    end
   end
 end

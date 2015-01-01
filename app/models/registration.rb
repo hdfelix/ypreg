@@ -4,9 +4,10 @@ class Registration < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :event
-  # has_many :hospitality_assignments, inverse_of: :registration
-  # has_many :hospitalities, -> { uniq }, through: :hospitality_assignments
-
+  belongs_to :locality
+  has_many :hospitality_registration_assignments, inverse_of: :registration
+  # has_many :hospitalities, -> { uniq }, through: :hospitality_registration_assignments
+  
   delegate :name, :email, :cell_phone, :home_phone, :work_phone, :birthday,
     :lodging_id, # ...
            to: :user

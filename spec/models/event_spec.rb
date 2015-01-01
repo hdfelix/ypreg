@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 describe Event, type: :model do
 
   describe 'Associations' do
@@ -7,8 +8,7 @@ describe Event, type: :model do
     it { should have_many :users }
     it { should have_many :localities }
     it { should have_many :hospitalities }
-    # it { should have_many :lodgings }
-    # it { should have_many :hospitality_assignments }
+    it { should have_many(:hospitality_registration_assignments).through(:hospitalities) }
   end
 
   describe 'Validations'do

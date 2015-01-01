@@ -7,6 +7,7 @@ class CreateJoinTableHospitalities < ActiveRecord::Migration
       t.references :event, index: true
       t.references :lodging, index: true
       t.references :locality, index: true
+      t.references :registration, index: true
     end
   end
 end

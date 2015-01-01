@@ -126,14 +126,6 @@ FactoryGirl.define do
           create(:hospitality, event: event, lodging: Lodging.find(1), locality: create(:locality))
           create(:hospitality, event: event, lodging: Lodging.find(2), locality: create(:locality))
         end
-
-        # Registration.find(1..3) do |registration|
-        #   create(:hospitality_assignment, hospitality: Hospitality.find(1), registration: registration)
-        # end
-
-        # Registration.find(4..5) do |registration|
-        #   create(:hospitality_assignment, hospitality: Hospitality.find(2), registration: registration)
-        # end
       end
     end
 
@@ -200,9 +192,9 @@ FactoryGirl.define do
     lodging
   end
 
-  # factory :hospitality_assignment do
-  #   hospitality
-  #   registration
-  #   locality
-  # end
+  factory :hospitality_registration_assignment do
+    hospitality
+    registration
+    locality
+  end
 end

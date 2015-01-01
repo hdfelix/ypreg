@@ -3,7 +3,6 @@ class Events::HospitalityAssignmentsController < ApplicationController
   # respond_to :html, :js
 
   def index
-    binding.pry
     @event = Event.find(params[:event_id])
     @stats =  @event.load_locality_summary
     @hospitalities = @event.hospitalities

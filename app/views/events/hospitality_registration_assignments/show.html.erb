@@ -1,0 +1,59 @@
+<div class="content">
+  <div class="main-header">
+    <h2><%= "Hospitality Assignments - #{ @locality.city.capitalize }" %></h2>
+    <em>Hospitality arrangement details</em>
+  </div>
+  <div class="col-md-6">
+    <div class="widget widget-table">
+      <div class="widget-header">
+        <h3><i class="fa fa-table"></i>Registered Saints</h3>
+      </div>
+      <%= form_tag assign_event_hospitality_registration_assignments_path(@event, locality_id: @locality) do |f| %>
+        <% if @event.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger alert-dismissable">
+            <h4><strong><%= pluralize(@event.errors.count, "error") %></strong> prohibited this event from being saved:</h4>
+            <ul>
+              <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="widget-content">
+        <table class="table table-striped">
+          <thead>
+            <tr style="font: bold">
+              <td>Saint</td>
+              <td>Age</td>
+              <td>Gender</td>
+              <td>Assigned to</td>
+            </tr>
+          </thead>
+          <tbody>
+          <% @event.registered_saints_from_locality(@locality).each  do |saint| %>
+          <tr id=<%= "saint_#{saint.id}" %>>
+            <td><%= saint.name %></td>
+            <td>[saint's age]</td>
+            <td>[saint's gender]</td>
+            <td><%= select_tag "saint_hospitality_ids[#{ saint.id }][]",
+              options_from_collection_for_select(
+                @locality.hospitalities(@event),
+                "id",
+                "name",
+                selected: selected_hospitality(saint,@locality)),
+              {
+                  prompt: '--'
+                } %> <!-- TODO: why like this? --></td>
+              </tr>
+            <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel-footer">
+            <%= submit_tag "Update Assignments", class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+          </div>
+        <% end %>
+        </div>
+      </div>
