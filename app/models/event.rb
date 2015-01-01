@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
   has_many :localities, -> { uniq }, through: :users
   has_many :hospitalities
   has_many :lodgings, -> { uniq }, through: :hospitalities
-  has_many :hospitality_assignments, through: :hospitalities
+  has_many :hospitality_registration_assignments, through: :hospitalities
 
   # skip_before_filter :verify_authenticity_token
 
@@ -70,7 +70,7 @@ class Event < ActiveRecord::Base
     assigned.each do |hospitality|
       ids << hospitality.id
     end
-    Lodging.where.not(id: ids).first
+    Lodging.where.not(id: ids)
   end
 
   def assigned_hospitality_beds

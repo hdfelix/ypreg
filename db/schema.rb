@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818054348) do
+ActiveRecord::Schema.define(version: 20141226192249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,22 +46,24 @@ ActiveRecord::Schema.define(version: 20140818054348) do
     t.integer "event_id"
     t.integer "lodging_id"
     t.integer "locality_id"
+    t.integer "registration_id"
   end
 
   add_index "hospitalities", ["event_id"], name: "index_hospitalities_on_event_id", using: :btree
   add_index "hospitalities", ["locality_id"], name: "index_hospitalities_on_locality_id", using: :btree
   add_index "hospitalities", ["lodging_id"], name: "index_hospitalities_on_lodging_id", using: :btree
+  add_index "hospitalities", ["registration_id"], name: "index_hospitalities_on_registration_id", using: :btree
 
-  create_table "hospitality_assignments", force: true do |t|
+  create_table "hospitality_registration_assignments", force: true do |t|
     t.integer "hospitality_id"
     t.integer "registration_id"
     t.integer "locality_id"
   end
 
-  add_index "hospitality_assignments", ["hospitality_id", "registration_id", "locality_id"], name: "hosp_assignmts", unique: true, using: :btree
-  add_index "hospitality_assignments", ["hospitality_id"], name: "index_hospitality_assignments_on_hospitality_id", using: :btree
-  add_index "hospitality_assignments", ["locality_id"], name: "index_hospitality_assignments_on_locality_id", using: :btree
-  add_index "hospitality_assignments", ["registration_id"], name: "index_hospitality_assignments_on_registration_id", using: :btree
+  add_index "hospitality_registration_assignments", ["hospitality_id", "registration_id", "locality_id"], name: "hosp_assignmts", unique: true, using: :btree
+  add_index "hospitality_registration_assignments", ["hospitality_id"], name: "index_hospitality_registration_assignments_on_hospitality_id", using: :btree
+  add_index "hospitality_registration_assignments", ["locality_id"], name: "index_hospitality_registration_assignments_on_locality_id", using: :btree
+  add_index "hospitality_registration_assignments", ["registration_id"], name: "index_hospitality_registration_assignments_on_registration_id", using: :btree
 
   create_table "localities", force: true do |t|
     t.string   "city"
@@ -100,8 +102,10 @@ ActiveRecord::Schema.define(version: 20140818054348) do
     t.integer "locality_id"
     t.integer "min_capacity"
     t.integer "max_capacity"
+    t.integer "contact_person_id"
   end
 
+  add_index "lodgings", ["contact_person_id"], name: "index_lodgings_on_contact_person_id", using: :btree
   add_index "lodgings", ["locality_id"], name: "index_lodgings_on_locality_id", using: :btree
 
   create_table "registrations", force: true do |t|
@@ -147,7 +151,6 @@ ActiveRecord::Schema.define(version: 20140818054348) do
     t.decimal  "cell_phone"
     t.decimal  "work_phone"
     t.date     "birthday"
-    t.integer  "lodging_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

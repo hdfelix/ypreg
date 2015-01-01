@@ -1,0 +1,81 @@
+<div class="content">
+  <div class="main-header">
+    <h2>Locality - Hospitality Assignment</h2>
+    <em>Assign available hospitalities to localities</em>
+  </div>
+  <div class="col-md-6">
+    <div class="widget widget-table">
+      <div class="widget-header">
+        <h3><i class="fa fa-table"></i>Available Hospitalities</h3>
+      </div>
+      <%= form_tag assign_event_hospitality_locality_assignments_path(@event) do |f| %>
+        <div class="widget-content">
+          <table class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Lodging</td>
+                <td>Min</td>
+                <td>Max</td>
+                <td>Assigned to</td>
+              </tr>
+            </thead>
+            <tbody>
+              <% @event.hospitalities.each  do |hosp| %>
+                <tr id=<%= "hospitality_#{hosp.id}" %>>
+                <td><%= hosp.name %></td>
+                <td><%= hosp.min_capacity %></td>
+                <td><%= hosp.max_capacity %></td>
+                <td><%= select_tag "hospitality_locality_ids[#{ hosp.id }][]",
+                  options_from_collection_for_select(
+                  @event.localities,
+                  "id",
+                  "city",
+                  selected: selected_locality(hosp)),
+                  {
+                    prompt: '--'
+                  } %> <!-- TODO: why like this? --></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-footer">
+          <%= submit_tag "Update Assignments", class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-5">
+      <div class="widget widget-table">
+        <div class="widget-header">
+          <h3><i class="fa fa-table"></i>Beds Allocated</h3>
+        </div>
+        <div class="widget-content">
+          <table class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Locality</td>
+                <td>Registered Saints</td>
+                <td>Beds Allocated</td>
+              </tr>
+            </thead>
+            <tbody id='participating_localities_content'>
+            <% @event.localities.each do |loc| %>
+              <tr>
+                <td><%= loc.city %>, <%= loc.state_abbrv %></td>
+              <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
+              <td><%= @event.assigned_hospitality_beds[loc.city] %></td>
+            </tr>
+          <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-footer">
+          &nbsp;
+        </div>
+      </div>
+    </div>
+  </div><!-- end row -->
+</div>

@@ -54,6 +54,7 @@
 * Before Hospitality Assignment refactorings
 
 ### v0.18: Hospitality Assignment
-* Main view
+* Manage Hospitalities view
+ * Add / remove Event hospitalities
 * Assigning Lodgings to Localities
 

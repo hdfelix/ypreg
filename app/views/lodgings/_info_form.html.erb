@@ -21,22 +21,19 @@
 
     </td>
     <td class=" ">
-      <!-- Min guests -->
-      <%= lodging.display_min_capacity %>
-
-    </td> 
-    <td class=" ">
-      <!-- Max guests -->
-      <%= lodging.display_max_capacity %>
+      <!-- Min / Max guests -->
+      <%= lodging.display_min_capacity %> / <%= lodging.display_max_capacity %>
 
     </td>
+    <td class=" ">
+      <!-- Assigned Localities -->
+       Assigned Localities
+
+    </td> 
     <td class=" ">
       <!-- Assigned guests -->
        [--] 
 
     </td> 
-    <td class=" ">
-      <%= link_to 'remove', hospitality_remove_path(id: hosp, event_id: event), method: :delete, data: { confirm: "Are you sure?" }, remote: true %>
-    </td>
   </tr>
 <% end %>

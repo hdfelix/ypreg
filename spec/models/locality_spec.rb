@@ -5,8 +5,6 @@ describe Locality, type: :model do
   describe 'Associations' do
     it { should have_many :users }
     it { should have_many :lodgings }
-    it { should have_many :hospitalities }
-    it { should have_many :hospitality_assignments }
     it { should belong_to :contact }
     it { should belong_to :lodging_contact }
   end

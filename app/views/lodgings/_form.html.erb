@@ -24,7 +24,7 @@
 			<%= f.label :lodging_type, class: 'col-md-2 control-label' %>
 			<div class="col-md-10">
 				<%= f.select :lodging_type,
-					Lodging::LODGING_TYPE, 
+					Lodging::LODGING_TYPE.invert, 
 					options={placeholder: "Type"}, html_options={ class: 'form-control select' } %>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 		<div class="form-group">
 			<%= f.label :locality_id, class: 'col-md-2 control-label' %>
 			<div class="col-md-10">
-				<%= f.collection_select(:locality_id,Locality.all, :id, :city, {include_blank: true}, {class: 'form-control'}) %>
+				<%= f.collection_select(:locality_id, Locality.all, :id, :city, {include_blank: true}, {class: 'form-control'}) %>
 				<!--%= link_to "Add a locality", new_locality_path, class: 'pull-right' %-->
 			</div>
 		</div>
@@ -43,13 +43,20 @@
       <div class="form-group">
         <%= cp.label :contact_person, class: 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= cp.collection_select(:id, User.is_not_contact_person, :id, :name, { include_blank: true }, { class: 'form-control' }) %>
+        <%= cp.collection_select(:id, User.not_contact_persons, :id, :name, { include_blank: true }, { class: 'form-control' }) %>
           <!--%= link_to "Add user", new_user_path, class: 'pull-right' %-->
         </div>
         <br /></br />
       </div>
     <% end %>
 
+		<div class="form-group">
+			<%= f.label :min_capacity, class: 'col-md-2 control-label' %>
+			<div class="col-md-10">
+				<%= f.text_field :min_capacity, autofocus: true, class: 'form-control', placeholder: "How many saints?" %>
+			</div>
+    </div>
+    
 		<div class="form-group">
 			<%= f.label :max_capacity, class: 'col-md-2 control-label' %>
 			<div class="col-md-10">
@@ -101,8 +108,8 @@
 	<div class="form-group">
 		<div class= "col-md-12">
 			<span class="pull-right">
-				<%= link_to 'Back', lodgings_path, class: 'btn btn-default' %>
 				<%= f.submit "Submit", class: 'btn btn-primary' %>
+				<%= link_to 'Back', lodgings_path, class: 'btn btn-default' %>
 			</span>
 		</div>
 		<br />

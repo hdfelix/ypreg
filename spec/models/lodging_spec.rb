@@ -13,14 +13,32 @@ describe Lodging, type: :model do
     it { should validate_presence_of :zipcode }
     it { should validate_presence_of :lodging_type }
     it { should validate_presence_of :contact_person }
+    it { should validate_presence_of :min_capacity }
   end
 
   describe 'Associations' do
     it { should have_many(:events).through(:hospitalities) } # how to test 'uniq'
-    # it { should have_one :contact_person }
     it { should belong_to :locality }
+    it { should belong_to :contact_person }
     it { should accept_nested_attributes_for :contact_person }
   end
+
+  describe 'Scopes' do
+    describe '#users_that_are_not_contact_people' do
+      it 'returns users that are not contact_persons' do
+        Lodging.delete_all
+        User.delete_all
+        lodge = create(:lodging)
+        create(:lodging)
+        user_list = create_list(:confirmed_user, 2)
+
+        expect(lodge.users_that_are_not_contact_people)
+          .to eq(user_list + [lodge.contact_person])
+      end
+    end
+
+  end
+
   describe 'Interface' do
     describe '#display_address_in_address_block_format' do
       it 'displays the lodging address' do
@@ -95,11 +113,6 @@ describe Lodging, type: :model do
         lodging = create(:lodging, min_capacity: 2)
 
         expect(lodging.display_min_capacity).to eq(2)
-      end
-
-      it "displays '--' if no minimum capacity is recorded" do
-        lodging = create(:lodging, min_capacity: nil)
-        expect(lodging.display_min_capacity).to eq('--')
       end
     end
 

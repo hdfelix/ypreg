@@ -35,8 +35,7 @@ feature 'User manages a location' do
 	end
 
 	scenario ' - edits a location' do
-		create(:location)
-		@loc = Location.all.first
+		@loc = create(:location)
 		visit edit_location_path(@loc, authed_admin)
 		fill_in 'location[name]', with: 'My location'
 		click_button 'Submit'

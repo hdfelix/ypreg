@@ -12,8 +12,8 @@ require 'faker'
 
 start_time = Time.now
 current_users_total = User.all.count
-current_Localities_total = Locality.all.count
-current_Lodgings_total = Lodging.all.count
+current_localities_total = Locality.all.count
+current_lodgings_total = Lodging.all.count
 current_events_total = Event.all.count
 current_locations_total = Location.all.count
 
@@ -36,12 +36,12 @@ count.times do
 end
 
 # Create 10 localities
-count = 10
 print "\nCreating #{count} Localities: "
-count.times do
+locality_names = ['Anaheim', 'Cypress', 'New Jerusalem', 'Buena Park', 'Huntington Beach', 'Irvine', 'San Juan Capistrano', 'San Diego', 'Orange', 'Bakers Field']
+until locality_names.count == 0 do
   Locality.create(
-    city: Faker::Address.ypreg_city,
-    state_abbrv: Faker::Address.state_abbr
+    city: locality_names.pop,
+    state_abbrv: 'CA'
   )
   print '.'
 end
@@ -52,7 +52,7 @@ print "\nCreating #{count} Events: "
 tmp_date = Time.now + rand(1..3).months
 
 Event.create(
-  title: Faker::Name.event_name + ' '+ Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
+  title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..2),
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -66,7 +66,7 @@ print '.'
 tmp_date = Time.now + rand(3..4).months
 
 Event.create(
-  title: Faker::Name.event_name + ' '+ Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
+  title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..3),
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -80,7 +80,7 @@ print '.'
 tmp_date = Time.now + rand(4..7).months
 
 Event.create(
-  title: Faker::Name.event_name + ' '+ Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
+  title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..3),
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -107,9 +107,9 @@ admin.update_attributes(role: 'admin')
 admin.update_attributes(locality_id: Locality.all.sample.id)
 admin.save
 
-print "."
+print '.'
 
-total_users =+ 1
+total_users += 1
 
 # Create yp accounts
 count = 100
@@ -126,11 +126,11 @@ for i in 1..(count + 1) do
   yp.update_attributes(role: 'yp')
   yp.update_attributes(locality_id: Locality.all.sample.id)
   yp.save
-  
+
   print '.'
 end
 
-total_users =+ count
+total_users += count
 
 # Create SCYP accounts
 count = 5
@@ -151,7 +151,7 @@ for i in 1..(count + 1) do
   print '.'
 end
 
-total_users =+ count
+total_users += count
 
 # Create lodgings
 # lodging_type: Lodging::LODGING_TYPE.sample
@@ -165,26 +165,27 @@ lodging = Lodging.new(
           city: 'Irvine',
           state_abbrv: 'CA',
           zipcode: '92612',
-          max_capacity: 5,
-          min_capacity: 2,
+          max_capacity: rand(3..5),
+          min_capacity: rand(1..3),
           contact_person: User.where(email: 'hdfelix@gmail.com').first,
           locality: Locality.all.sample,
           lodging_type: 1)
 lodging.save
 print '.'
 
-for i in 1..30 do  #not adding 1 to idx (added lodging above already)
-  user = User.all.sample
-  lodging = FactoryGirl.create(:lodging,
+for i in 1..30 do  # Not adding 1 to idx (added lodging above already)
+  user = User.joins('left join lodgings on lodgings.contact_person_id = users.id').where.not(role: 'yp').sample
+  lodging = FactoryGirl.create(
+    :lodging,
     name: "Lodging #{i}",
     contact_person: user,
-    locality_id: user.locality_id)
+    locality: user.locality)
   lodging.save
   print '.'
 end
 
 # Create event registrations
-count = rand(0..total_users)
+count = rand(5..total_users)
 print "\nCreating #{count} event registrations: "
 
 ev = Event.first
@@ -200,12 +201,12 @@ for i in 1..(count + 1) do
   print '.'
 end
 
-puts "Summary"
-puts "---------------------------------"
+puts 'Summary'
+puts '---------------------------------'
 puts "Prior users count:      #{current_users_total}. Added #{User.all.count}."
-puts "Prior localities count: #{current_Localities_total}. Added #{Locality.all.count}."
-puts "Prior lodgings count:   #{current_Lodgings_total}. Added #{Lodging.all.count}."
+puts "Prior localities count: #{current_localities_total}. Added #{Locality.all.count}."
+puts "Prior lodgings count:   #{current_lodgings_total}. Added #{Lodging.all.count}."
 puts "Prior events count:     #{current_events_total}. Added #{Event.all.count}."
 puts "Prior locations count:  #{current_locations_total}. Added #{Location.all.count}."
-puts "---------------------------------"
+puts '---------------------------------'
 puts "\n\nFinished in #{Time.now - start_time} seconds...\n\n"

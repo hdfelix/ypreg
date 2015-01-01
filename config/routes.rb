@@ -4,40 +4,37 @@ YpwReg::Application.routes.draw do
   get 'welcome/index'
   get 'dashboard/index'
 
-  resources :events do
-    get 'hospitalities/assign',
-      to: 'events/hospitalities#assign',
-      as: :hospitality_assign
-
-    post 'hospitalities/assigns',
-      to: 'events/hospitalities#assigns',
-      as: :hospitality_assigns
-
-    post 'hospitality_assignments/assign_lodging_to_locality',
-      to: 'events/hospitality_assignments#assign_lodging_to_locality',
-      as: :hospitality_assignment_for_locality
-
-    post 'hospitality_assignments/unassign_lodging_from_locality',
-      to: 'events/hospitality_assignments#unassign_lodging_from_locality',
-      as: :hospitality_unassignment_for_locality
-
-    post 'hospitality_assignments/assign_registration_user_to_hospitality',
-      to: 'events/hospitality_assignments#assign_registration_user_to_hospitality',
-      as: :hospitality_assignment_for_saint
-
-    # add :hospitality_unassignment_for_saint
-  end
-
   delete 'events/:event_id/hospitalities/destroy', to: 'events/hospitalities#destroy', as: :hospitality_remove
 
   resources :locations
   resources :localities
   resources :lodgings
-  resources :hospitalities
   resources :events do
+    resources :hospitalities, only: [:index, :new, :create], controller: 'events/hospitalities' do
+      collection do
+        post 'add'
+        put 'remove'
+      end
+    end
+    resources :hospitality_locality_assignments, only: [:index], controller: 'events/hospitality_locality_assignments', action: 'assign' do
+      collection do
+        put 'assign'
+        post 'assign\*locality'
+      end
+    end
+    resources :hospitality_registration_assignments, only: [:index, :show], controller: 'events/hospitality_registration_assignments' do
+      collection do
+        put 'assign'
+        post 'assign'
+      end
+    end
+    # resources :hospitality_assignments, only: [:index], controller: 'events/hospitality_assignments' do
+    #   collection do
+    #     get 'assign'
+    #   end
+    # end
     resources :registrations, except: [:index], controller: 'events/registrations'
-    resources :hospitality_assignments, only: [:index], controller: 'events/hospitality_assignments'
+    resources :hospitality_lodgings, only: [:index], controller: 'events/hospitality_lodgings'
   end
-
   devise_for :user, controllers: { registrations: 'users/registrations' }
 end

@@ -72,7 +72,8 @@
           <div class="row">
             <div class="col-md-12">
               <br />
-              <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm'%>
+              <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Hospitality', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
             </div>
           </div>
 
@@ -214,14 +215,14 @@
   <!-- hospitality info -->
   <div class='row'>
     <div class='col-md-12'>
-      <div class='widget'>
+      <div id='hospitality_info_widget' class='widget'>
         <div class='widget-header'>
           <div class="btn-group widget-header-toolbar">
             <a href="#" id="tour-focus" title="focus" class="btn-borderless btn-focus"><i class="fa fa-eye"></i></a>
             <a href="#" title="expand/collapse" class="btn-borderless btn-toggle-expand"><i class="fa fa-chevron-up"></i></a>
             <a href="#" title="remove" class="btn-borderless btn-remove"><i class="fa fa-times"></i></a>
           </div>
-          <h3><i class="fa fa-bar-chart-o"></i>hospitality info</h3>
+          <h3><i class="fa fa-bar-chart-o"></i>Hospitality Info</h3>
         </div>
         <div class='widget-content'>
           <div id="visit-stat-table_wrapper" class="datatables_wrapper" role="grid">
@@ -257,19 +258,6 @@
                   </label>
                 </div>
               </div>
-              <div class="col-md-3">
-                <%= link_to 'Add lodging as hospitality',"#{@event.id}/hospitalities/assign", id: 'add_hospitality', remote: true %>
-              </div>
-              <div class="col-md-3">
-                <div id="visit-stat-table_filter" class="datatables_filter">
-                  <label>
-
-                    search: 
-
-                    <input type="text" aria-controls="visit-stat-table"></input>
-                  </label>
-                </div>
-              </div>
             </div><!-- end row -->
             <table class="table table-sorting table-striped table-hover datatable dataTable" width="100%" cellspacing="0" cellpadding="0" aria-describedby="visit-stat-table_info" style="width: 100%;">
               <thead>
@@ -295,20 +283,18 @@
                   </th>
                   <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
 
-                     [Min Guests]
+                     Min / Max Guests
 
                   </th>
                   <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
 
-                     Max Guests
+                     Assigned Localities
 
                   </th>
                   <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
 
                      [Assigned Guests] 
 
-                  </th>
-                  <th  role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
                   </th>
                 </tr>
               </thead>
@@ -318,7 +304,9 @@
             </table>
             <div class='row'><!-- pagination footer -->
               <div class='col-md-6'>
-                <%= link_to 'Hospitality Assigment', event_hospitality_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
+                <%= link_to 'Manage Hospitalities', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
+                <%= link_to 'Assign to Localities', event_hospitality_locality_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
+                <%= link_to 'Assign Saints', event_hospitality_registration_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
               </div>
               <div class='col-md-6'></div>
               <!-- Add code for records displayed, pagination -->

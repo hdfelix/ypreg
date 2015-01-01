@@ -3,7 +3,7 @@ ruby "2.1.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '4.1.4'
-gem 'rails', '4.1.2'
+gem 'rails', '4.1.8'
 
 
 # Entity diagrams
@@ -25,7 +25,6 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'font-awesome-rails'
 
 # CSS Framework
-# Using the bootstrap file provided with the KingAdmin theme
 gem 'bootstrap-sass', '~> 3.1.1'
 # gem 'anjlab-bootstrap-rails',
 #   require: 'bootstrap-rails',
@@ -42,9 +41,9 @@ gem 'coffee-rails', '~> 4.0.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-# gem 'jquery-rails'
+gem 'jquery-rails'
 # gem 'jquery-ui-rails'
-gem 'jquery-rails-cdn'
+# gem 'jquery-rails-cdn'
 gem 'jquery-ui-rails', '~> 4.2.1'
 # gem 'jquery-turbolinks'
 
@@ -68,48 +67,55 @@ end
 # serve static_assets
 gem 'rails_12factor', group: :production
 
-# Added from 'Everyday Rails Testing with Rspec book
-# (with latest versions as of 15MAR14)
+gem 'simple_form'
+
 group :development, :test do
+  # Add Pry for debugging
+  gem 'pry'
+  # gem 'pry-rails'
+  gem 'pry-rescue'
+  gem 'pry-byebug'
+  gem 'binding_of_caller'
   gem 'shoulda-matchers'
-  gem 'rspec-rails' # , '~> 2.14.1'
+  gem 'rspec-rails'
   gem 'rspec-collection_matchers'
-  gem 'factory_girl_rails' # , '~> 4.4.0'
-  gem 'faker', '~>1.2.0'
+  gem 'factory_girl_rails'
+  gem 'faker'
   # gem 'ffaker'
-  gem 'capybara' # , '~> 2.2.1'
-  gem 'capybara-webkit'
-  gem 'guard-rspec'
-  gem 'database_cleaner'
-  gem 'launchy', '~>2.4.2'
   gem 'simplecov', require: false
   gem 'simplecov-csv', require: false
   gem 'coverband'
   gem 'rspec_junit_formatter'
-
-  gem 'selenium-webdriver', '~> 2.39.0'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
 
   # gem 'haml-lint', require: false
   gem 'letter_opener', group: :development
 
-  # Generate database diagrams
-  gem 'railroad'
-
-  # Add Pry for debugging
-  gem 'pry'
-  gem 'pry-rails'
-  gem 'pry-rescue'
-  gem 'pry-byebug'
-
   # Annotate DB schema in models
   # gem 'annotate'
 
-  gem 'quiet_assets'
+end
+
+group :development do
   gem 'awesome_print'
   gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'quiet_assets'
+  # gem 'rb-fsevent'
+  gem 'guard-livereload'
+  # Spring speeds up development by keeping your application running in the 
+  # background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem 'spring-commands-rspec'
+end
+
+group :test do
+  gem 'capybara', '~> 2.3.0'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'selenium-webdriver'
+  gem 'capybara-webkit'
+  gem 'guard-rspec'
 end
 
 # Geographic data

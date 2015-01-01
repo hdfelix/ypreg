@@ -92,7 +92,7 @@ FactoryGirl.define do
     location
 
     factory :event_with_registrations do
-      ignore do
+      transient do
         registrations_count 2
         ensure_unique_locality false
       end
@@ -112,7 +112,7 @@ FactoryGirl.define do
 
     # YP Conference with 5 registered YP
     factory :event_yp_conference do
-      ignore do
+      transient do
         users_count 5
         lodgings_count 2
         hospitalities_count 3
@@ -125,14 +125,6 @@ FactoryGirl.define do
           create_list(:registration, 5, event: event, user: user)
           create(:hospitality, event: event, lodging: Lodging.find(1), locality: create(:locality))
           create(:hospitality, event: event, lodging: Lodging.find(2), locality: create(:locality))
-        end
-
-        Registration.find(1..3) do |registration|
-          create(:hospitality_assignment, hospitality: Hospitality.find(1), registration: registration)
-        end
-
-        Registration.find(4..5) do |registration|
-          create(:hospitality_assignment, hospitality: Hospitality.find(2), registration: registration)
         end
       end
     end
@@ -198,10 +190,9 @@ FactoryGirl.define do
   factory :hospitality do
     event
     lodging
-    locality
   end
 
-  factory :hospitality_assignment do
+  factory :hospitality_registration_assignment do
     hospitality
     registration
     locality

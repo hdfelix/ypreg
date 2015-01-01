@@ -12,6 +12,7 @@ class CreateLodgings < ActiveRecord::Migration
 			t.references :locality, index: true
       t.integer :min_capacity
       t.integer :max_capacity
+      t.references :contact_person, index: true
     end
   end
 end

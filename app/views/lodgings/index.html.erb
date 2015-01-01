@@ -1,7 +1,7 @@
 <div class="content">
 	<div class="main-header">
 		<h2>LODGING</H2>
-		<em>list of available lodging locations for conterences and retreats</em>
+		<em>list of available lodging locations for conferences and retreats</em>
 	</div>
 
 	<div class="col-md-12">
@@ -28,7 +28,7 @@
 								<tr>
 									<td><%= link_to lodging.name, lodging %></td>
 									<td><%= lodging.lodging_type %></td>
-									<td><%= User.find(lodging.contact_person.id).name %></td>
+									<td><%= contact_person_name(lodging) %></td>
 									<td><%= Locality.find(lodging.locality_id).city %></td> 
 									<td><%= lodging.max_capacity %></td> 
 									<td><%= lodging.display_address_in_address_block_format %></td>

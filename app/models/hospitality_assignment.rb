@@ -1,4 +1,3 @@
-# A hospitality assigment for an event
 class HospitalityAssignment < ActiveRecord::Base
   belongs_to :registration, inverse_of: :hospitality_assignments
   belongs_to :hospitality, inverse_of: :hospitality_assignments
