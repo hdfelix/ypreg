@@ -16,10 +16,10 @@ YpwReg::Application.routes.draw do
         put 'remove'
       end
     end
-    resources :hospitality_locality_assignments, only: [:index], controller: 'events/hospitality_locality_assignments', action: 'assign' do
+    resources :hospitality_locality_assignments, only: [:index], controller: 'events/hospitality_locality_assignments' do
       collection do
         put 'assign'
-        post 'assign\*locality'
+        post 'assign\*locality', action: 'assign'
       end
     end
     resources :hospitality_registration_assignments, only: [:index, :show], controller: 'events/hospitality_registration_assignments' do
