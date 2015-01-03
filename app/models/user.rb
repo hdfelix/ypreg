@@ -7,11 +7,10 @@ class User < ActiveRecord::Base
 
   has_many :registrations
   has_many :events, through: :registrations
-  has_many :hospitalities, through: :registrations
   belongs_to :locality
-  belongs_to :lodging
 
   # validations
+  GENDER = ['Brother', 'Sister']
 
   USER_ROLE = [
     ['admin', 1],
@@ -36,6 +35,15 @@ class User < ActiveRecord::Base
    # Interface
   def role?(base_role)
     role == base_role.to_s
+  end
+
+  def age
+    if birthday.nil?
+      nil
+    else
+      tmp = Time.now - birthday
+      tmp
+    end
   end
 
   # private?
