@@ -48,6 +48,9 @@ class Event < ActiveRecord::Base
     role = options[:role]
     is_serving_one = options[:attend_as_serving_one] ||= false
 
+    if locality.nil? && role.nil?
+      binding.pry
+    end
     # if locality: nil
     if (locality.nil? && !role.nil?)
       if is_serving_one
@@ -66,12 +69,21 @@ class Event < ActiveRecord::Base
       else
         users.where(locality: locality).count
       end
+    # if neither locality, role nil
     elsif (!locality.nil? && !role.nil?) # locality: nil, role: nil, is_serving_one
       if is_serving_one
-        users.joins(:registrations)
-          .where(registrations: { attend_as_serving_ones: true }).count
+        tmp = users.joins(:registrations)
+          .where(locality: locality, role: role, 
+                 registrations: { attend_as_serving_one: true }).count
+        binding.pry
+        tmp
       else
         users.joins(:registrations).where(locality: locality, role: role).count
+      end
+    else # if both nil
+      if is_serving_one
+        users.joins(:registrations).where(registrations: { attend_as_serving_one: true }).count
+
       end
     end
   end
@@ -125,7 +137,6 @@ class Event < ActiveRecord::Base
   protected
 
   def calculate_locality_statistics(stats, locality)
-    binding.pry
     loc = locality.city
     # TODO: ambiguous locality_id
     stats[loc]['grand_total'] =
@@ -139,7 +150,6 @@ class Event < ActiveRecord::Base
   end
 
   def assign_totals(stats, locality)
-    binding.pry
     loc = locality.city
     stats[loc]['total_yp'] = total_registrations(role: 'yp', locality: locality)
     stats[loc]['total_serving_ones'] = registered_serving_ones(locality)
