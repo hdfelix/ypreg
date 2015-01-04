@@ -114,7 +114,7 @@ print '.'
 total_users += 1
 
 # Create yp accounts
-count = 100
+count = 50
 print "\n  YP accounts (#{count}): "
 
 for i in 1..(count + 1) do
@@ -159,23 +159,67 @@ end
 
 total_users += count
 
+# Create Trainee accounts
+count = 20
+print "\n  Trainee accounts(#{count}): "
+
+for i in 1..(count + 1) do
+  scyp = User.new(
+    name: "SCYP User#{i}",
+    gender: User::GENDER.sample,
+    birthday: (20..30).to_a.sample.years.ago,
+    email: "trainee_user#{i}@ypreg.com",
+    password: 'chiracha',
+    password_confirmation: 'chiracha')
+
+  scyp.skip_confirmation!
+  scyp.update_attributes(role: 'trainee')
+  scyp.update_attributes(locality_id: Locality.all.sample.id)
+  scyp.save
+
+  print '.'
+end
+
+# Create ycat  accounts
+count = 10
+print "\n  YCAT accounts(#{count}): "
+
+for i in 1..(count + 1) do
+  scyp = User.new(
+    name: "YCAT User#{i}",
+    gender: User::GENDER.sample,
+    birthday: (20..45).to_a.sample.years.ago,
+    email: "ycat_user#{i}@ypreg.com",
+    password: 'chiracha',
+    password_confirmation: 'chiracha')
+
+  scyp.skip_confirmation!
+  scyp.update_attributes(role: 'ycat')
+  scyp.update_attributes(locality_id: Locality.all.sample.id)
+  scyp.save
+
+  print '.'
+end
+
+total_users += count
+
 # Create lodgings
 # lodging_type: Lodging::LODGING_TYPE.sample
 
 count = 30
 print "\nCreating #{count} lodgings: "
 lodging = Lodging.new(
-          name: 'Felixes',
-          description: "Hector & Angela Felix's home",
-          address1: '60 Georgetown',
-          city: 'Irvine',
-          state_abbrv: 'CA',
-          zipcode: '92612',
-          max_capacity: rand(3..5),
-          min_capacity: rand(1..3),
-          contact_person: User.where(email: 'hdfelix@gmail.com').first,
-          locality: Locality.all.sample,
-          lodging_type: 1)
+  name: 'Felixes',
+  description: "Hector & Angela Felix's home",
+  address1: '60 Georgetown',
+  city: 'Irvine',
+  state_abbrv: 'CA',
+  zipcode: '92612',
+  max_capacity: rand(3..5),
+  min_capacity: rand(1..3),
+  contact_person: User.where(email: 'hdfelix@gmail.com').first,
+  locality: Locality.all.sample,
+  lodging_type: 1)
 lodging.save
 print '.'
 
@@ -195,14 +239,33 @@ count = rand(5..total_users)
 print "\nCreating #{count} event registrations: "
 
 ev = Event.first
-for i in 1..(count + 1) do
+yp_count = (count * 0.60).to_i
+
+# YP registrations
+yp_ids = User.limit(yp_count).where(role: 'yp').pluck(:id)
+while !yp_ids.empty?
   reg = Registration.new(
-          payment_type: 1,
-          has_been_paid: [true, false].sample,
-          payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
-          attend_as_serving_one: [true, false].sample,
-          user_id: User.all.sample.id,
-          event_id: ev.id)
+    payment_type: 1,
+    has_been_paid: [true, false].sample,
+    payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
+    attend_as_serving_one: false,
+    user: User.find(yp_ids.delete(yp_ids.sample)),
+    event_id: ev.id)
+  reg.save
+  print '.'
+end
+
+# non-YP registrations
+non_yp_count = count - yp_count
+non_yp_ids = User.limit(non_yp_count).where.not(role: 'yp').pluck(:id)
+while !non_yp_ids.empty?
+  reg = Registration.new(
+    payment_type: 1,
+    has_been_paid: [true, false].sample,
+    payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
+    attend_as_serving_one: [true, false].sample,
+    user: User.find(non_yp_ids.delete(non_yp_ids.sample)),
+    event_id: ev.id)
   reg.save
   print '.'
 end
