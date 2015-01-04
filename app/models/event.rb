@@ -43,16 +43,27 @@ class Event < ActiveRecord::Base
     # TODO: Implement
   end
 
-  def total_registrations_by_role(locality, role)
+  # def total_registrations_by_role(locality, role)
+  #   #TODO ambiguous locality_id error - is this the best way to write the query (adding the tablename)?
+  #   # users.where('locality_id = ? and role = ?', locality.id, role).count
+  #   binding.pry
+  #   users.where('users.locality_id = ? and users.role = ?', locality.id, role).count
+  # end
+
+  def total_registrations_by_role(options={})
+    locality = options[:locality]
+    role = options[:role]
     #TODO ambiguous locality_id error - is this the best way to write the query (adding the tablename)?
     # users.where('locality_id = ? and role = ?', locality.id, role).count
-    users.where('users.locality_id = ? and users.role = ?', locality.id, role).count
+    users.where(locality: locality, role: role).count
   end
-
   def registered_serving_ones(locality)
     #TODO ambiguous locality_id error
     # users.where('locality_id = ? and attend_as_serving_one = ?',locality.id, true).count
-    users.where('users.locality_id = ? and attend_as_serving_one = ?',locality.id, true).count
+    # users.where('users.locality_id = ? and attend_as_serving_one = ?',locality.id, true).count
+    users.joins(:registrations)
+      .where(locality: locality, registrations: {attend_as_serving_one: true})
+      .count
   end
 
   def assigned_lodgings_as_hospitality
@@ -112,12 +123,13 @@ class Event < ActiveRecord::Base
 
   def assign_totals(stats, locality)
     loc = locality.city
-    stats[loc]['total_yp'] = total_registrations_by_role(locality, 'yp')
+    # stats[loc]['total_yp'] = total_registrations_by_role(locality, 'yp')
+    stats[loc]['total_yp'] = total_registrations_by_role(locality: locality, role: 'yp')
     stats[loc]['total_serving_ones'] = registered_serving_ones(locality)
     stats[loc]['total_trainees'] =
-      total_registrations_by_role(locality, 'trainee')
+      total_registrations_by_role(locality: locality, role: 'trainee')
     stats[loc]['total_helpers'] =
-      total_registrations_by_role(locality, 'helper')
+      total_registrations_by_role(locality: locality, role: 'helper')
     stats[loc]['yp_so_ratio'] = '--'
     stats[loc]['yp_so_ratio'] =
       stats[loc]['total_yp'] /

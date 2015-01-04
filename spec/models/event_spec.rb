@@ -87,7 +87,7 @@ describe Event, type: :model do
       loc   = reg.user.locality
       role  = reg.user.role
 
-      expect(event.total_registrations_by_role(loc, role)).to eq(1)
+      expect(event.total_registrations_by_role(locality: loc, role: role)).to eq(1)
     end
   end
 
