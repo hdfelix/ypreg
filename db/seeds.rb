@@ -99,6 +99,8 @@ print "\n  Admins (1): "
 admin = User.new(
   name: 'Hector D. Felix',
   email: 'hdfelix@gmail.com',
+  cell_phone: '8888888888',
+  birthday: 38.years.ago,
   password: 'chiracha',
   password_confirmation: 'chiracha')
 
@@ -118,6 +120,8 @@ print "\n  YP accounts (#{count}): "
 for i in 1..(count + 1) do
   yp = User.new(
     name: "YP User#{i}",
+    birthday: (13..18).to_a.sample.years.ago,
+    gender: User::GENDER.sample,
     email: "yp_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha')
@@ -139,6 +143,8 @@ print "\n  SCYP accounts(#{count}): "
 for i in 1..(count + 1) do
   scyp = User.new(
     name: "SCYP User#{i}",
+    gender: User::GENDER.sample,
+    birthday: (18..60).to_a.sample.years.ago,
     email: "scyp_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha')
