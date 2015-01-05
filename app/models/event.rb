@@ -36,23 +36,60 @@ class Event < ActiveRecord::Base
   end
 
   def registered_saints_from_locality(locality)
-    User.joins(:registrations).where(locality_id: locality.id)
+    users.joins(:registrations).where(locality_id: locality.id)
   end
 
   def registered_saints_per_locality
     # TODO: Implement
   end
 
-  def total_registrations_by_role(locality, role)
-    #TODO ambiguous locality_id error - is this the best way to write the query (adding the tablename)?
-    # users.where('locality_id = ? and role = ?', locality.id, role).count
-    users.where('users.locality_id = ? and users.role = ?', locality.id, role).count
+  def total_registrations(options={})
+    locality = options[:locality]
+    role = options[:role]
+    is_serving_one = options[:attend_as_serving_one] ||= false
+
+    if locality.nil? && role.nil?
+    end
+    # if locality: nil
+    if (locality.nil? && !role.nil?)
+      if is_serving_one
+        users.joins(:registrations)
+          .where(role: role,
+                 registrations: { attend_as_serving_one: true }).count
+      else
+        users.where(role: role).count
+      end
+    # if role.nil
+    elsif (!locality.nil? && role.nil?) 
+      if is_serving_one
+        users.joins(:registrations)
+          .where(locality: locality,
+                 registrations: { attend_as_serving_one: true }).count
+      else
+        users.where(locality: locality).count
+      end
+    # if neither locality, role nil
+    elsif (!locality.nil? && !role.nil?) # locality: nil, role: nil, is_serving_one
+      if is_serving_one
+        tmp = users.joins(:registrations)
+          .where(locality: locality, role: role, 
+                 registrations: { attend_as_serving_one: true }).count
+        tmp
+      else
+        users.joins(:registrations).where(locality: locality, role: role).count
+      end
+    else # if both nil
+      if is_serving_one
+        users.joins(:registrations).where(registrations: { attend_as_serving_one: true }).count
+
+      end
+    end
   end
 
   def registered_serving_ones(locality)
-    #TODO ambiguous locality_id error
-    # users.where('locality_id = ? and attend_as_serving_one = ?',locality.id, true).count
-    users.where('users.locality_id = ? and attend_as_serving_one = ?',locality.id, true).count
+    users.joins(:registrations)
+      .where(locality: locality, registrations: {attend_as_serving_one: true})
+      .count
   end
 
   def assigned_lodgings_as_hospitality
@@ -112,12 +149,12 @@ class Event < ActiveRecord::Base
 
   def assign_totals(stats, locality)
     loc = locality.city
-    stats[loc]['total_yp'] = total_registrations_by_role(locality, 'yp')
+    stats[loc]['total_yp'] = total_registrations(role: 'yp', locality: locality)
     stats[loc]['total_serving_ones'] = registered_serving_ones(locality)
     stats[loc]['total_trainees'] =
-      total_registrations_by_role(locality, 'trainee')
+      total_registrations(role: 'trainee', locality: locality)
     stats[loc]['total_helpers'] =
-      total_registrations_by_role(locality, 'helper')
+      total_registrations(role: 'helper', locality: locality)
     stats[loc]['yp_so_ratio'] = '--'
     stats[loc]['yp_so_ratio'] =
       stats[loc]['total_yp'] /

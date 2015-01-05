@@ -34,14 +34,14 @@
           <% @event.registered_saints_from_locality(@locality).each  do |saint| %>
           <tr id=<%= "saint_#{saint.id}" %>>
             <td><%= saint.name %></td>
-            <td>[saint's age]</td>
-            <td>[saint's gender]</td>
+            <td><%= saint.age %></td>
+            <td><%= saint.gender %></td>
             <td><%= select_tag "saint_hospitality_ids[#{ saint.id }][]",
               options_from_collection_for_select(
                 @locality.hospitalities(@event),
                 "id",
                 "name",
-                selected: selected_hospitality(saint,@locality)),
+                selected: selected_hospitality(saint)),
               {
                   prompt: '--'
                 } %> <!-- TODO: why like this? --></td>

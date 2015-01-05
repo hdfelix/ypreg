@@ -7,17 +7,17 @@
     </td>
     <td class=" ">
       <!-- Contact home phone -->
-      <%= lodging.contact_person_home_phone %>
+      <%= format_phone_number(lodging.contact_person_home_phone) %>
 
     </td>
     <td class=" ">
       <!-- Contact cell -->
-      <%= lodging.contact_person_cell_phone %>
+      <%= format_phone_number(lodging.contact_person_cell_phone) %>
 
     </td>
     <td class=" ">
       <!-- Address -->
-      <%= lodging.address %>
+      <%= full_address(lodging,{two_lines: true}) %>
 
     </td>
     <td class=" ">
@@ -32,7 +32,7 @@
     </td> 
     <td class=" ">
       <!-- Assigned guests -->
-       [--] 
+      [--]
 
     </td> 
   </tr>

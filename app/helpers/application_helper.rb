@@ -12,12 +12,28 @@ module ApplicationHelper
     Lodging.where('id not in (?)', ev.hospitalities.pluck(:lodging_id))
   end
 
-  def full_address(addressable)
-    address = addressable.address1 + ' '
-    address += addressable.address2 unless addressable.address2.nil?
-    address += addressable.city + ', ' +
-      addressable.state_abbrv + ' ' +
-      addressable.zipcode.to_s
-    address
+  def full_address(addressable, options={})
+    two_lines = options[:two_lines] || false
+
+    unless addressable.address1.nil?
+      address = addressable.address1 + ' '
+      address += addressable.address2 unless addressable.address2.nil?
+      address += '<br />' if two_lines
+      address += addressable.city + ', ' +
+        addressable.state_abbrv + '&nbsp;&nbsp;' +
+        addressable.zipcode.to_s
+      address.html_safe
+    else
+      '--'
+    end
+  end
+
+  def format_phone_number(phone)
+    tmp = phone
+    if tmp.length == 7
+      tmp.insert(3,') ').insert(0,'(')
+    elsif tmp.length == 10
+      tmp.insert(6,'-').insert(3,') ').insert(0,'(')
+    end
   end
 end

@@ -75,6 +75,7 @@ class LodgingsController < ApplicationController
         :name,
         :lodging_type,
         :locality_id,
+        :min_capacity,
         :max_capacity,
         :address1,
         :address2,

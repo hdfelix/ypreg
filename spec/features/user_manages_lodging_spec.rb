@@ -22,10 +22,8 @@ feature 'User manages lodgings' do
     visit lodgings_path(authed_admin)
 
     click_link 'New Lodging'
-    save_and_open_page
 
     expect(page).to have_content('NEW LODGING')
-
 
     fill_in 'lodging[name]', with: @lodging.name
     select "#{ Lodging::LODGING_TYPE[@lodging.lodging_type.to_i] }", from: 'lodging[lodging_type]'
@@ -37,7 +35,6 @@ feature 'User manages lodgings' do
     fill_in 'lodging[address2]', with: @lodging.address2
     fill_in 'lodging[city]', with: @lodging.city
     find('#lodging_state_abbrv').find(:xpath, "option[@value=\'#{ @lodging.state_abbrv }\']").select_option
-    # select "#{Location::STATE_LIST[@lodging.state_abbrv]}", from: 'lodging[lodging_state_abbrv]'
     fill_in 'lodging[zipcode]', with: @lodging.zipcode
 
     click_button 'Submit'

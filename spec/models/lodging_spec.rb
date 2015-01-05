@@ -68,7 +68,7 @@ describe Lodging, type: :model do
         usr = create(:user, home_phone: '888_888_8888')
         lodging = create(:lodging, contact_person: usr)
 
-        expect(lodging.contact_person.home_phone).to eq(888_888_8888)
+        expect(lodging.contact_person.home_phone).to eq('888_888_8888')
       end
 
       it "displays '--' if home phone number is nil" do
@@ -84,7 +84,7 @@ describe Lodging, type: :model do
         usr = create(:user, cell_phone: '888_888_8888')
         lodging = create(:lodging, contact_person: usr)
 
-        expect(lodging.contact_person.cell_phone).to eq(888_888_8888)
+        expect(lodging.contact_person.cell_phone).to eq('888_888_8888')
       end
 
       it "displays '--' if cell phone number is nil" do

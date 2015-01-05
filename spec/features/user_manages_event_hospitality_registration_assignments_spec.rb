@@ -10,7 +10,7 @@ feature 'User manages hospitality registration assignments' do
 
     visit event_hospitality_registration_assignments_path(event, authed_admin)
 
-    expect(page). to have_content('Hospitality / Saint Assignments')
+    expect(page). to have_content('Saint to Hospitality Assignments')
   end
 
   scenario 'User manages hospitality registration assignments for a locality' do
@@ -21,7 +21,7 @@ feature 'User manages hospitality registration assignments' do
     
     visit event_hospitality_registration_assignment_path(event, locality, authed_admin)
 
-    expect(page).to have_content("Hospitality Assignments - #{ locality.city }")
+    expect(page).to have_content("Hospitality Assignments - #{ locality.city.capitalize }")
   end
 end
 
