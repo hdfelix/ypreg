@@ -49,7 +49,6 @@ class Event < ActiveRecord::Base
     is_serving_one = options[:attend_as_serving_one] ||= false
 
     if locality.nil? && role.nil?
-      binding.pry
     end
     # if locality: nil
     if (locality.nil? && !role.nil?)
@@ -75,7 +74,6 @@ class Event < ActiveRecord::Base
         tmp = users.joins(:registrations)
           .where(locality: locality, role: role, 
                  registrations: { attend_as_serving_one: true }).count
-        binding.pry
         tmp
       else
         users.joins(:registrations).where(locality: locality, role: role).count

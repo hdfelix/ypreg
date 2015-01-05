@@ -80,14 +80,15 @@ describe Event, type: :model do
 
   describe '#registered_saints_per_locality'
 
-  describe '#total_registrations_by_role' do
+  describe '#total_registrations' do
+    # TODO test all new options {}
     it 'returns the number of registrations per locality for the given role' do
       reg   = create(:registration, :yp)
       event = reg.event
       loc   = reg.user.locality
       role  = reg.user.role
 
-      expect(event.total_registrations_by_role(locality: loc, role: role)).to eq(1)
+      expect(event.total_registrations(role: role, locality: loc)).to eq(1)
     end
   end
 

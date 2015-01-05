@@ -137,20 +137,20 @@
           <tbody>
             <tr>
               <td>Young People</td>
-              <td>[yp]</td>
+              <td><%= @event.total_registrations(role: 'yp') %></td>
             </tr>
             <tr>
               <td>Serving Ones</td>
-              <td>[so]</td>
+              <td><%= @event.total_registrations(attend_as_serving_one: true) %></td>
             </tr>
             <tr>
             <tr>
               <td>Trainees</td>
-              <td>[Ts]</td>
+              <td><%= @event.total_registrations(role: 'trainee') %></td>
             </tr>
             <tr>
               <td>Helpers</td>
-              <td>[Hs]</td>
+              <td><%= @event.total_registrations(role: 'helper') %></td>
             </tr>
             <tr>
               <td>Family Attending</td>
@@ -158,11 +158,11 @@
             </tr>
             <tr>
               <td>YCAT</td>
-              <td>[Ys]</td>
+              <td><%= @event.total_registrations(role: 'ycat') %></td>
             </tr>
             <tr>
               <td>S/S Brothers</td>
-              <td>[SBs]</td>
+              <td><%= @event.total_registrations(role: 'speaking_brothers') %></td>
             </tr>
           </table>
         </div>
