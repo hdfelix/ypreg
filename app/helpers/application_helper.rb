@@ -36,4 +36,12 @@ module ApplicationHelper
       tmp.insert(6,'-').insert(3,') ').insert(0,'(')
     end
   end
+
+  def shorten(string, from, to, ellipsis=false)
+    if ellipsis
+      string.slice(from,(to - 3)) + '...'
+    else
+      string.slice(from,to)
+    end
+  end
 end
