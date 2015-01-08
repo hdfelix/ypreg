@@ -29,12 +29,15 @@ module ApplicationHelper
   end
 
   def format_phone_number(phone)
-    tmp = phone
-    if tmp.length == 7
-      tmp.insert(3,') ').insert(0,'(')
-    elsif tmp.length == 10
-      tmp.insert(6,'-').insert(3,') ').insert(0,'(')
+    unless phone.nil?
+      tmp = phone
+      if tmp.length == 7
+        tmp.insert(3,') ').insert(0,'(')
+      elsif tmp.length == 10
+        tmp.insert(6,'-').insert(3,') ').insert(0,'(')
+      end
     end
+      '--'
   end
 
   def shorten(string, from, to, ellipsis=false)

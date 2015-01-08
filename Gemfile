@@ -11,6 +11,11 @@ group :development do
   gem 'railroady'
 end
 
+group :development do
+  # Get warnings about inefficient queries
+  gem 'bullet'
+end
+
 # Asset pipeline - is this gem needed? (http://guides.rubyonrails.org/asset_pipeline.html)
 # gem 'sprockets-rails', :require => 'sprockets/railtie'
 

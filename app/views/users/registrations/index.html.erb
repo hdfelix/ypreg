@@ -1,0 +1,58 @@
+<div class="content">
+	<div class="main-header">
+		<h2>System Accounts</H2>
+		<em>list of users accounts in the system</em>
+	</div>
+
+	<div class="col-md-12">
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<h3><i class="fa fa-table"></i></h3>
+			</div>
+			<div class="widget-content">
+				<table class="table table-striped">
+					<thead>
+						<tr style="font: bold">
+              <th>Role</th>
+              <th>Gender</th>
+							<th>Name (Gender)</th>
+							<th>Email</th>
+							<th>Age</th>
+							<th>Locality</th>
+							<th>Phone</th>
+							<th>Last Backround Check</th>
+              <th>Last Sign in</th>
+						</tr>
+					</thead>
+          <tbody>
+            <% if @users.all.count > 0 %>
+              <% @users.each do |user| %>
+                <tr>
+                  <td><%= user.role.capitalize %></td>
+                  <td><%= user.gender %></td>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.age %></td>
+                  <td><%= user.locality.city %></td>
+                  <td>C: <%= format_phone_number(user.cell_phone) %><br />
+                      H: <%= format_phone_number(user.home_phone) %><br />
+                      W: <%= format_phone_number(user.work_phone) %></td>
+                  <td><%= format_date(user.last_background_check) %></td>
+                  <td><%= format_date(user.last_sign_in_at) %></td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr><td colspan=9><center>No Users in the database...</center></td></tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
+				<%#= link_to new_session_url, class: 'btn btn-primary' do %>
+					<%#= content_tag(:i, '', class: "fa fa-plus-square") %>
+          <!-- New User -->
+				<%# end %>
+
+			</div>
+		</div>
+	</div>
+</div>
