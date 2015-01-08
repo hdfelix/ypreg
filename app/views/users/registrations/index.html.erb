@@ -1,6 +1,6 @@
 <div class="content">
 	<div class="main-header">
-		<h2>Users</H2>
+		<h2>System Accounts</H2>
 		<em>list of users accounts in the system</em>
 	</div>
 
@@ -28,15 +28,17 @@
             <% if @users.all.count > 0 %>
               <% @users.each do |user| %>
                 <tr>
-                  <td><%= user.role %></td>
+                  <td><%= user.role.capitalize %></td>
                   <td><%= user.gender %></td>
                   <td><%= user.name %></td>
                   <td><%= user.email %></td>
                   <td><%= user.age %></td>
                   <td><%= user.locality.city %></td>
-                  <td><%= format_phone_number(user.cell_phone) %></td>
-                  <td><%= user.last_background_check %></td>
-                  <td><%= user.last_sign_in_at %></td>
+                  <td>C: <%= format_phone_number(user.cell_phone) %><br />
+                      H: <%= format_phone_number(user.home_phone) %><br />
+                      W: <%= format_phone_number(user.work_phone) %></td>
+                  <td><%= format_date(user.last_background_check) %></td>
+                  <td><%= format_date(user.last_sign_in_at) %></td>
                 </tr>
               <% end %>
             <% else %>

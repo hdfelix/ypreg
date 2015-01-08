@@ -36,5 +36,6 @@ YpwReg::Application.routes.draw do
   end
   devise_scope :user do
     get '/users', to: 'users/registrations#index', as: 'users'
+    get '/user/:id', to: 'users/registrations#show', as: 'user'
   end
 end
