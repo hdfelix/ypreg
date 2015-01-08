@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
     dashboard_index_path
   end
 
+  def after_sign_out_path_for(resource)
+    request.referer
+  end
+
   def user_not_authorized
     flash[:error] = 'You are not authorized to perform this action.'
     redirect_to(request.referrer || root_path)

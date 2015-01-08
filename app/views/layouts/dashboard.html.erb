@@ -190,6 +190,9 @@
 										<% if policy(Lodging.all).index? %>
 											<li><%= link_to lodgings_url do %><span class="text">Lodging</span><% end %></li>
 										<% end %>
+										<% if policy(Registration.all).index? %>
+											<li><%= link_to users_url do %><span class="text">Users</span><% end %></li>
+										<% end %>
 									</ul>
 								</li>
 								<li><a href="#" class="js-sub-menu-toggle"><i class="fa fa-list fa-fw"></i><span class="text">Reports</span>
