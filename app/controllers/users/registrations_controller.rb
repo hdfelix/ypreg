@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   def index
-    @users = User.all
+    @users = User.includes(:locality).all
   end
 end
