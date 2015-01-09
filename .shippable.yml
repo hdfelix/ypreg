@@ -1,5 +1,5 @@
 language: ruby
-cache: bundler
+cache: true
 rvm:
   - 2.1.2
 env:
@@ -36,6 +36,7 @@ notifications:
       - hdfelix@gmail.com
 after_success:
   - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
-  - git remote -v | grep ^heroku || heroku git:remote --app ypreg 
-  - git push -f heroku master 
-  - heroku run rake db:migrate --app ypreg
+    # - git remote -v | grep ^heroku || heroku git:remote --app ypreg-staging
+  - git remote -v | grep ^heroku || heroku git:remote --app ypreg-staging
+  - git push -f staging master 
+  - heroku run rake db:migrate --app ypreg-staging
