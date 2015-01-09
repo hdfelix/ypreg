@@ -19,9 +19,10 @@
 							<th>Email</th>
 							<th>Age</th>
 							<th>Locality</th>
-							<th>Phone</th>
-							<th>Last Backround Check</th>
+							<th style="width: 150px">Phone</th>
+							<th>Backround Check</th>
               <th>Last Sign in</th>
+              <th></th>
 						</tr>
 					</thead>
           <tbody>
@@ -29,7 +30,7 @@
               <% @users.each do |user| %>
                 <tr>
                   <td><%= user.role.capitalize %></td>
-                  <td><%= user.gender %></td>
+                  <td><%= user.gender.to_s[0] %></td>
                   <td><%= user.name %></td>
                   <td><%= user.email %></td>
                   <td><%= user.age %></td>
@@ -39,6 +40,7 @@
                       W: <%= format_phone_number(user.work_phone) %></td>
                   <td><%= format_date(user.last_background_check) %></td>
                   <td><%= format_date(user.last_sign_in_at) %></td>
+                  <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
                 </tr>
               <% end %>
             <% else %>
