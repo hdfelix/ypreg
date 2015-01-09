@@ -32,10 +32,13 @@ YpwReg::Application.routes.draw do
     resources :registrations, except: [:index], controller: 'events/registrations'
     resources :hospitality_lodgings, only: [:index], controller: 'events/hospitality_lodgings'
   end
-  devise_for :user, except: [:destroy], controllers: { registrations: 'users/registrations' } do
+
+  # http://stackoverflow.com/a/22158715
+  devise_for :users, path_names: { edit: 'user' }, except: [:destroy], controllers: { registrations: 'users/registrations' } do
   end
+
   devise_scope :user do
     get '/users', to: 'users/registrations#index', as: 'users'
-    get '/user/:id', to: 'users/registrations#show', as: 'user'
+    post '/user/:id', to: 'users/registrations#show', as: 'user'
   end
 end
