@@ -1,12 +1,33 @@
-<h2>Resend confirmation instructions</h2>
+<div class="wrapper full-page-wrapper page-login text-center">
+  <div class="inner page">
+		<div class="logo"><a href="index.html"><%=image_tag('kingadmin-logo.png', alt:'') %></a></div>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
+    <div class="login-box center-block">
+      <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+        <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+        <p class="title">Resend Confirmation Info</p>
+        <div class="form-group">
+          <%= f.label :email, class: 'control-label sr-only' %>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: "Enter email" %>
+              <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            </div>
+          </div>
+        </div>
+        <br />
 
-  <div><%= f.submit "Resend confirmation instructions" %></div>
-<% end %>
+        <%= content_tag(:button, type: :submit, class: 'btn btn-custom-secondary btn-lg btn-block') do %>
+          <i class="fa fa-arrow-circle-o-right"></i>
+          Resend confirmation instructions
+        <% end %>
+      <% end %>
+      <br />
 
-<%= render "devise/shared/links" %>
+      <div class="links">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

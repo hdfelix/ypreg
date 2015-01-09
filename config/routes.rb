@@ -34,7 +34,9 @@ YpwReg::Application.routes.draw do
   end
 
   # http://stackoverflow.com/a/22158715
-  devise_for :users, path_names: { edit: 'user' }, except: [:destroy], controllers: { registrations: 'users/registrations' } do
+  devise_for :users, path_names: { edit: 'user' }, except: [:destroy], controllers: { registrations: 'users/registrations', 
+                                                                                      passwords: 'users/passwords',
+                                                                                      confirmations: 'users/confirmations' } do
   end
 
   devise_scope :user do
