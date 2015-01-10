@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby ENV["RUBY_VERSION"]
+ruby ENV["CUSTOM_RUBY_VERSION"]
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '4.1.4'
