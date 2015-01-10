@@ -16,11 +16,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.find(params[:id])
 
     if @user.update(admin_update_params)
-      binding.pry
       flash[:notice] = "#{ @user.name }'s profile was updated successfully."
       redirect_to users_path
     else
-      binding.pry
       flash[:error] = "There was an error updating the profile for #{ @user.name }."
       render action: 'edit'
     end
