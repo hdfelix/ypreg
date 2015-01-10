@@ -17,55 +17,37 @@
           <p id="notice"><%= notice %></p>
 
           <div class="row">
-            <div class="col-sm-6">
-              <strong><span class="pull-right">Type of event:</span></strong>
-            </div>
             <div class="col-sm-5">
+              <strong><span class="pull-right">Type:</span></strong>
+            </div>
+            <div class="col-sm-6">
               <%= display_event(@event) %>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-sm-6">
-              <strong><span class="pull-right">Begin Date:</span></strong>
-            </div>
             <div class="col-sm-5">
-              <%= format_date(@event.begin_date) %>
+              <strong><span class="pull-right">Dates:</span></strong>
             </div>
-          </div>
-          
-          <div class="row">
             <div class="col-sm-6">
-              <strong><span class="pull-right">End date: </span></strong>
-            </div>
-            <div class="col-sm-5">
+              <%= format_date(@event.begin_date) %> -
               <%= format_date(@event.end_date) %>
             </div>
           </div>
-
           <div class="row">
-            <div class="col-sm-6">
-              <strong><span class="pull-right">Registration opens: </span></strong>
-            </div>
             <div class="col-sm-5">
-              <%= format_date(@event.registration_open_date) %>
+              <strong><span class="pull-right">Registration:</span></strong>
             </div>
-          </div>
-
-          <div class="row">
             <div class="col-sm-6">
-              <strong><span class="pull-right">Registration  closes: </span></strong>
-            </div>
-            <div class="col-sm-5">
+              <%= format_date(@event.registration_open_date) %> - 
               <%= format_date(@event.registration_close_date) %>
             </div>
           </div>
-
           <div class="row">
-            <div class="col-sm-6">
-              <strong><span class="pull-right">Registration cost:</span></strong>
-            </div>
             <div class="col-sm-5">
+              <strong><span class="pull-right">Cost:</span></strong>
+            </div>
+            <div class="col-sm-6">
               <%= (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA" %>
             </div>
           </div>
