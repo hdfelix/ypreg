@@ -60,7 +60,6 @@ class ApplicationController < ActionController::Base
     # Values for Attendance aria chart
     unless Event.all.count == 0
       next_event = Event.where('end_date >= ?', Time.now.to_date).first
-      binding.pry
       unless next_event.nil?
         location_capacity = next_event.location.max_capacity
         registration_count = next_event.registrations.count
