@@ -19,6 +19,11 @@
 #  database: db/production.sqlite3
 #  pool: 5
 #  timeout: 5000
+staging:
+  adapter: postgresql
+  encoding: unicode
+  database: ypreg_staging
+  pool: 5
 
 development:
   adapter: postgresql
