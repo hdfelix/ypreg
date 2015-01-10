@@ -60,45 +60,47 @@ class ApplicationController < ActionController::Base
     # Values for Attendance aria chart
     if Event.any?
       next_event = Event.where('end_date >= ?', Time.now.to_date).first
-      location_capacity = next_event.location.max_capacity
-      registration_count = next_event.registrations.count
+      unless next_event.nil?
+        location_capacity = next_event.location.max_capacity
+        registration_count = next_event.registrations.count
 
-      chart_values['att_ratio'] =
-        "#{ registration_count } / #{ location_capacity }"
-      chart_values['att_ratio_width_percentage'] =
-        "width: #{( registration_count.to_f / location_capacity.to_f) * 100 }%"
-      chart_values['att_value_now'] = registration_count
-      chart_values['att_value_max'] = location_capacity
+        chart_values['att_ratio'] =
+          "#{ registration_count } / #{ location_capacity }"
+        chart_values['att_ratio_width_percentage'] =
+          "width: #{( registration_count.to_f / location_capacity.to_f) * 100 }%"
+        chart_values['att_value_now'] = registration_count
+        chart_values['att_value_max'] = location_capacity
 
-      # Values for Localities aria chart
-      total_localities = Locality.all.count
-      next_event_localities =
-        Event.where('end_date >= ?', Time.now.to_date)
+        # Values for Localities aria chart
+        total_localities = Locality.all.count
+        next_event_localities =
+          Event.where('end_date >= ?', Time.now.to_date)
           .first.participating_localities.count
-      chart_values['loc_ratio'] =
-        "#{ next_event_localities } / #{ total_localities }"
-      if total_localities != 0
-        chart_values['loc_ratio_width_percentage'] =
-          "width: #{ ((next_event_localities.to_f / total_localities.to_f) * 100).to_i }%"
-      else
-        chart_values['loc_ratio'] = 'width: 0'
-      end
-      chart_values['loc_value_now'] = next_event_localities
-      chart_values['loc_value_max'] = total_localities
+        chart_values['loc_ratio'] =
+          "#{ next_event_localities } / #{ total_localities }"
+        if total_localities != 0
+          chart_values['loc_ratio_width_percentage'] =
+            "width: #{ ((next_event_localities.to_f / total_localities.to_f) * 100).to_i }%"
+        else
+          chart_values['loc_ratio'] = 'width: 0'
+        end
+        chart_values['loc_value_now'] = next_event_localities
+        chart_values['loc_value_max'] = total_localities
 
-      # Values for Hospitality aria chart
-      event_hospitalities_count = next_event.hospitalities.count
-      lodging_count = Lodging.count
-      chart_values['hosp_ratio'] =
-        "#{ event_hospitalities_count} / #{ lodging_count}"
-      if event_hospitalities_count != 0
-        chart_values['hosp_ratio_width_percentage'] =
-          "width: #{ (event_hospitalities_count.to_f / lodging_count.to_f) * 100 }%"
-      else
-        chart_values['hosp_ratio_width_percentage'] = 'width: 0'
+        # Values for Hospitality aria chart
+        event_hospitalities_count = next_event.hospitalities.count
+        lodging_count = Lodging.count
+        chart_values['hosp_ratio'] =
+          "#{ event_hospitalities_count} / #{ lodging_count}"
+        if event_hospitalities_count != 0
+          chart_values['hosp_ratio_width_percentage'] =
+            "width: #{ (event_hospitalities_count.to_f / lodging_count.to_f) * 100 }%"
+        else
+          chart_values['hosp_ratio_width_percentage'] = 'width: 0'
+        end
+        chart_values['hosp_value_now'] = event_hospitalities_count
+        chart_values['hosp_value_max'] = lodging_count
       end
-      chart_values['hosp_value_now'] = event_hospitalities_count
-      chart_values['hosp_value_max'] = lodging_count
     end
     chart_values
   end
