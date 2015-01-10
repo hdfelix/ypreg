@@ -1,7 +1,7 @@
 language: ruby
 cache: true
 rvm:
-  - 2.1.0
+  - 2.0.0-p598
 env:
   global:
     - APP_NAME=ypreg-staging
