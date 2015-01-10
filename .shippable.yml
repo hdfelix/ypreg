@@ -4,14 +4,15 @@ rvm:
   - 2.1.2
 env:
   global:
-    - APP_NAME=ypreg
+    - APP_NAME=ypreg-staging
+    - DEV_EMAIL=hdfelix@gmail.com
     - DISPLAY=:99.0
     - CIREPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
     - secure: N0owYhOkEswuosa/5X8EH45xHSCzDD2sPkOxWKpXBiev+Itjtu4orV+knUZT3TvwDYgjx1PBG2e18cRnvCnbHk/3oDKOi6txEIsQXBZOEYTE7TcEYAZ6yU8PMRona5zGmRhwS3J7aLD4UNiAr0AtMQTA9thA3DbLq/tR3FRu6jhOCcZaPWJbnf1WTUTiLZLbUqLtKfyCKhkL4l6mPGqzfC2OVugFMQK0LerJDgoLjw2hM+X7NXYsgZM6QItEsUv0f05tqA7J7qsxpRafWLNryTd75Te922DV/G8omv0F2kYJAByP9S6NybZTCuDp/fNWjGrvP7cIlG7Eh3v9MGbmaw==
 notifications:
   email:
     recipients:
-      - hdfelix@gmail.com
+      - $DEV_EMAIL
 addons:
   postgresql: '9.3'
   firefox: "28.0"
@@ -25,15 +26,20 @@ before_script:
   - psql -c 'create database ypreg_test;' -U postgres
   - /etc/init.d/xvfb start
 script:
-   - bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
-  # - rspec spec/features/*.rb
+  # - bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
+  - bundle exec rspec spec/features/* # -o shippable/testresults/results.xml
+  - bundle exec rspec spec/models/* # -o shippable/testresults/results.xml
+  # - bundle exec rspec spec/views/* -o shippable/testresults/results.xml
+  # - bundle exec rspec spec/controllers/* -o shippabel/testresults/results.xml
   # Add other test files to run...
 after_script:
   - /etc/init.d/xvfb stop
 notifications:
   email:
     recipients:
-      - hdfelix@gmail.com
+      - $DEV_NAME
+after_success:
+  - git push -f git@heroku.com:$APP_NAME.git master
 # after_success:
 #   - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
 #     # - git remote -v | grep ^heroku || heroku git:remote --app ypreg-staging
