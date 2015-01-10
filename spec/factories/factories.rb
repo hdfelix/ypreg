@@ -120,11 +120,10 @@ FactoryGirl.define do
 
       after(:create) do |event|
         users = create_list(:user, 5, role: 'yp')
-        create_list(:lodging, 2)
         users.each do |user|
           create_list(:registration, 5, event: event, user: user)
-          create(:hospitality, event: event, lodging: Lodging.find(1), locality: create(:locality))
-          create(:hospitality, event: event, lodging: Lodging.find(2), locality: create(:locality))
+          create(:hospitality, event: event, lodging: create(:lodging), locality: create(:locality))
+          create(:hospitality, event: event, lodging: create(:lodging), locality: create(:locality))
         end
       end
     end
