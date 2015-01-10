@@ -17,14 +17,14 @@ addons:
   postgresql: '9.3'
   firefox: "28.0"
 services:
-  - selenium
+  # - selenium
 before_install:
   - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 before_script:
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
   - psql -c 'create database ypreg_test;' -U postgres
-  - /etc/init.d/xvfb start
+  #   - /etc/init.d/xvfb start
 script:
   # - bundle exec rspec spec/*.rb -o shippable/testresults/results.xml
   - bundle exec rspec spec/features/* # -o shippable/testresults/results.xml
@@ -33,7 +33,7 @@ script:
   # - bundle exec rspec spec/controllers/* -o shippabel/testresults/results.xml
   # Add other test files to run...
 after_script:
-  - /etc/init.d/xvfb stop
+  # - /etc/init.d/xvfb stop
 notifications:
   email:
     recipients:
