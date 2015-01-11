@@ -1,2 +1,55 @@
-<h1>Registrations#index</h1>
-<p>Find me in app/views/registrations/index.html.erb</p>
+<div class="content">
+	<div class="main-header">
+		<h2>Registrations</H2>
+		<em>list of people ttending this event</em>
+	</div>
+
+	<div class="col-md-12">
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<h3><i class="fa fa-table"></i></h3>
+			</div>
+			<div class="widget-content">
+				<table class="table table-striped">
+					<thead>
+						<tr style="font: bold">
+              <th>Role</th>
+              <th>Gender</th>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Age</th>
+							<th>Locality</th>
+							<th style="width: 150px">Phone</th>
+              <th>Payment Adjustment</th>
+              <th>Paid?</th>
+              <th></th>
+						</tr>
+					</thead>
+          <tbody>
+            <% if @event.registrations.count > 0 %>
+              <% @event.registrations.each do |r| %>
+                <tr>
+                  <td><%= r.user.role.capitalize %></td>
+                  <td><%= r.user.gender.to_s[0] %></td>
+                  <td><%= r.user.name %></td>
+                  <td><%= r.user.email %></td>
+                  <td><%= r.user.age %></td>
+                  <td><%= r.user.locality.city %></td>
+                  <td>C: <%= format_phone_number(r.user.cell_phone) %><br />
+                      H: <%= format_phone_number(r.user.home_phone) %><br />
+                      W: <%= format_phone_number(r.user.work_phone) %></td>
+                  <td><%= number_to_currency(r.payment_adjustment) %></td>
+                  <td><%= r.has_been_paid %></td>
+                  <td><%= link_to 'Edit', edit_event_registration_path(@event,r) %></td>
+                </tr> 
+              <% end %>
+            <% else %>
+              <tr><td colspan=9><center>No one registered for this event...</center></td></tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'Back', event_registrations_path(@event), class: 'btn btn-default' %>
+			</div>
+		</div>
+	</div>
+</div>

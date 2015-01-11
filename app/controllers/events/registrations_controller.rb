@@ -1,5 +1,7 @@
 class Events::RegistrationsController < ApplicationController
-  # No index action since registrations are scoped to events
+  def index
+    @event = Event.find(params[:event_id])
+  end
 
   def show
     @event = Event.find(params[:event_id])
@@ -20,21 +22,33 @@ class Events::RegistrationsController < ApplicationController
       flash[:error] = 'Error creating registration'
       render 'new'
     end
+  end
 
-    def destroy
-      if @registration.destroy
-        flash[:notice] = 'Registration deleted successfully.'
-        redirect_to events_url
-      else
-        flash[:error] = 'Registration could not be deleted.'
-        render action: 'index'
-      end
+  def edit
+    @event = Event.find(params[:event_id])
+    @id = params[:id]
+    # @registration = @event.registrations.find(params[:id])
+    binding.pry
+    t = 2
+  end
+  
+  def update
+    binding.pry
+  end
+
+  def destroy
+    if @registration.destroy
+      flash[:notice] = 'Registration deleted successfully.'
+      redirect_to events_url
+    else
+      flash[:error] = 'Registration could not be deleted.'
+      render action: 'index'
     end
   end
+end
 
-  private
+private
 
-  def registration_params
-    params.require(:registration).permit(:event_id, :attend_as_serving_one)
-  end
+def registration_params
+  params.require(:registration).permit(:event_id, :attend_as_serving_one)
 end

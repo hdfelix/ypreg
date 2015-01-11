@@ -29,8 +29,8 @@ YpwReg::Application.routes.draw do
         post 'assign'
       end
     end
-    resources :registrations, except: [:index], controller: 'events/registrations'
     resources :hospitality_lodgings, only: [:index], controller: 'events/hospitality_lodgings'
+    resources :registrations, controller: 'events/registrations'
   end
 
   # http://stackoverflow.com/a/22158715
