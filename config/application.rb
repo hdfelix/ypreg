@@ -58,7 +58,7 @@ module YpwReg
     end
 
     # http://stackoverflow.com/a/7412056
-    if (Rails.env.development? || Rails.env.test?)
+    if (Rails.env.development? || Rails.env.test? || Rails.env.staging?)
       ActionDispatch::Callbacks.after do
         # Reload the factories
         unless FactoryGirl.factories.blank? # first init will load factories, this should only run on subsequent reloads
