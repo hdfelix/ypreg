@@ -41,6 +41,9 @@ test:
   encoding: unicode
   database: ypreg_test
   pool: 5
+  # from shippable:
+  # <<: $default
+  # database: ypreg_test
   # username: hdfelix removed username for testing
   # password:
 

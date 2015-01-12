@@ -5,10 +5,11 @@ rvm:
 env:
   global:
     - APP_NAME=ypreg-staging
+    - secure: WABlLwmqueXiPRF7bd+rhBC4BxdtItLxSxArVMpVNub67ousluk/GPzp6SZSbKcjWPzMEYX5aWU7pWVWRuNs/OpfYyc9EevVlcDjwoeQuxwqZieQBUZushmcyS37iAazCpGRu3xkqmfyu9or7FuJGztsLq7CFBescWO6dDkX72WVMXBW9VdVM/rZg/nyvYedrz2BDh2hByIscA/G9HpP/qfUs6GCeQERWGaibSXIutwhM8n11PfMRZ8jlIz0YcY6Id62O4Mee0E9ioSEvL8ZTGkblkMeeIoK02ReI0TGhlynWvNPKmPWnfg9iRuT0pvGInotBTl/PsVesvhyNh6QOA==
     - DEV_EMAIL=hdfelix@gmail.com
     - DISPLAY=:99.0
     - CIREPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
-    - secure: N0owYhOkEswuosa/5X8EH45xHSCzDD2sPkOxWKpXBiev+Itjtu4orV+knUZT3TvwDYgjx1PBG2e18cRnvCnbHk/3oDKOi6txEIsQXBZOEYTE7TcEYAZ6yU8PMRona5zGmRhwS3J7aLD4UNiAr0AtMQTA9thA3DbLq/tR3FRu6jhOCcZaPWJbnf1WTUTiLZLbUqLtKfyCKhkL4l6mPGqzfC2OVugFMQK0LerJDgoLjw2hM+X7NXYsgZM6QItEsUv0f05tqA7J7qsxpRafWLNryTd75Te922DV/G8omv0F2kYJAByP9S6NybZTCuDp/fNWjGrvP7cIlG7Eh3v9MGbmaw==
+  # - secure: N0owYhOkEswuosa/5X8EH45xHSCzDD2sPkOxWKpXBiev+Itjtu4orV+knUZT3TvwDYgjx1PBG2e18cRnvCnbHk/3oDKOi6txEIsQXBZOEYTE7TcEYAZ6yU8PMRona5zGmRhwS3J7aLD4UNiAr0AtMQTA9thA3DbLq/tR3FRu6jhOCcZaPWJbnf1WTUTiLZLbUqLtKfyCKhkL4l6mPGqzfC2OVugFMQK0LerJDgoLjw2hM+X7NXYsgZM6QItEsUv0f05tqA7J7qsxpRafWLNryTd75Te922DV/G8omv0F2kYJAByP9S6NybZTCuDp/fNWjGrvP7cIlG7Eh3v9MGbmaw==
 notifications:
   email:
     recipients:
@@ -31,7 +32,6 @@ script:
   - bundle exec rspec spec/models/* # -o shippable/testresults/results.xml
   # - bundle exec rspec spec/views/* -o shippable/testresults/results.xml
   # - bundle exec rspec spec/controllers/* -o shippabel/testresults/results.xml
-  # Add other test files to run...
 after_script:
   # - /etc/init.d/xvfb stop
 notifications:
@@ -39,11 +39,10 @@ notifications:
     recipients:
       - $DEV_NAME
 after_success:
-  - rake assets:precompile
-  - git push -f git@heroku.com:$APP_NAME.git master
+  #   - rake assets:precompile
+  #   - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
+  #   - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME
+  #   - git push -f heroku master
+    # - git push -f git@heroku.com:$APP_NAME.git master
 # after_success:
-#   - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
-#     # - git remote -v | grep ^heroku || heroku git:remote --app ypreg-staging
-#   - git remote -v | grep ^heroku || heroku git:remote --app ypreg-staging
-#   - git push -f staging master 
 #   - heroku run rake db:migrate --app ypreg-staging
