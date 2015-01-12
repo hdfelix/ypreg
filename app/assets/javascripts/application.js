@@ -11,10 +11,11 @@
 // about supported directives.
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
 //= require_directory ./kingadmin-v1.2/.
 //= require bootstrap
 //= jquery.dataTables.bootstrap
+// require_tree .
+//= require_self
 //= modernizer
 //= require jquery.ui.all
 

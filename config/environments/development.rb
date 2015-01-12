@@ -1,6 +1,6 @@
 YpwReg::Application.configure do
   # from http://guides.rubyonrails.org/asset_pipeline.html#local-precompilation
-  config.assets.prefix = "/dev-assets"
+  # config.assets.prefix = "/dev-assets"
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.allow_forgery_protection = false

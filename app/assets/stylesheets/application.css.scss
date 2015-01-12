@@ -1,10 +1,12 @@
 //import skin css files here 
+/*
+ *= require jquery.ui.datepicker
+ */
 
+@import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "main";
-@import "font-awesome";
-
 
 .site-logo {
 	margin: 5px 0px;
