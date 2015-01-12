@@ -34,7 +34,8 @@ spec/Guardfile
 snippets.html.erb
 
 # Public assets
-/public/assets
+# /public/assets
+/public/dev-assets
 
 # Simplecov
 /coverage

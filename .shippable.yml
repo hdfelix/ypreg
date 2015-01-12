@@ -38,10 +38,7 @@ notifications:
   email:
     recipients:
       - $DEV_NAME
-# after_success:
-  # - bundle exec rake assets:precompile
-  # - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
-  # - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME
-    # - git push -f heroku master
-    # - git push -f git@heroku.com:$APP_NAME.git master
-    #- heroku run rake db:migrate --app ypreg-staging
+after_success:
+  - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
+  - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME
+  - git push -f git@heroku.com:$APP_NAME.git master

@@ -17,7 +17,7 @@ module YpwReg
     config.autoload_paths += Dir["#{Rails.root.to_s}/app/models/*"].find_all { |f| File.stat(f).directory? }
 
     # for jquery-rails-cdn
-    config.assets.precompile += ['jquery.js']
+    # config.assets.precompile += ['jquery.js']
 
     config.assets.paths << Rails.root.join('app', 'assets', 'stylesheets', 'kingadmin-v1.2')
     config.assets.paths << Rails.root.join('app', 'assets', 'javascripts', 'kingadmin-v1.2')

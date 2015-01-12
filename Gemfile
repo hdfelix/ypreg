@@ -17,20 +17,21 @@ group :development do
 end
 
 # Asset pipeline - is this gem needed? (http://guides.rubyonrails.org/asset_pipeline.html)
-# gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'sprockets-rails', '>= 2.1.4' #, :require => 'sprockets/railtie'
 
 gem 'pg'
 gem 'foreigner'
 gem 'immigrant'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'sass-rails', '>= 3.2'
+gem 'autoprefixer-rails'
 
 # Font Awesome
 gem 'font-awesome-rails'
 
 # CSS Framework
-gem 'bootstrap-sass', '~> 3.1.1'
 # gem 'anjlab-bootstrap-rails',
 #   require: 'bootstrap-rails',
 #   github: 'anjlab/bootstrap-rails',

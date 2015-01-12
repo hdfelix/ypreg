@@ -13,7 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-//= require bootstrap
+// require bootstrap
+//= require bootstrap-sprockets
 //= jquery.dataTables.bootstrap
 //= modernizer
 //= require jquery.ui.all
