@@ -9,12 +9,11 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//= require_directory ./kingadmin-v1.2/.
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-// require bootstrap
-//= require bootstrap-sprockets
+//= require_directory ./kingadmin-v1.2/.
+//= require bootstrap
 //= jquery.dataTables.bootstrap
 //= modernizer
 //= require jquery.ui.all
