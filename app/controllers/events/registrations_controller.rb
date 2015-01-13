@@ -27,13 +27,20 @@ class Events::RegistrationsController < ApplicationController
   def edit
     @event = Event.find(params[:event_id])
     @id = params[:id]
-    # @registration = @event.registrations.find(params[:id])
-    binding.pry
-    t = 2
+    @registration = @event.registrations.find(params[:id])
   end
   
   def update
-    binding.pry
+    @event = Event.find(params[:event_id])
+    @registration = Registration.find(params[:id])
+
+    if @registration.update_attributes(registration_params)
+      flash[:notice] = 'Registration created succesfully'
+      redirect_to root_path
+    else
+      flash[:error] = 'Error creating registration'
+      render 'new'
+    end
   end
 
   def destroy
@@ -50,5 +57,5 @@ end
 private
 
 def registration_params
-  params.require(:registration).permit(:event_id, :attend_as_serving_one)
+  params.require(:registration).permit(:payment_type, :payment_adjustment, :attend_as_serving_one)
 end

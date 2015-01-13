@@ -1,6 +1,6 @@
 # Model for a registration to an event
 class Registration < ActiveRecord::Base
-  PAYMENT_TYPE = [['Cash', 1], ['Check', 2]]
+  PAYMENT_TYPE = ['Cash', 'Check']
 
   belongs_to :user
   belongs_to :event

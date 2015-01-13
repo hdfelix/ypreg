@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20150102150339) do
   create_table "registrations", force: true do |t|
     t.string   "payment_type"
     t.boolean  "has_been_paid"
-    t.decimal  "payment_adjustment"
+    t.integer  "payment_adjustment"
     t.boolean  "attend_as_serving_one"
     t.integer  "user_id"
     t.integer  "event_id"
