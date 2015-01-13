@@ -20,6 +20,13 @@ Thanks for the help, Joe. I really appreciate it. Here's some background about t
 ```
 But I'm not confident I'm doing things correctly. Any help along the lines of properly handling asset pipeline on production (or CI to staging) would be very much appreciated.
 
+
+The staging app on heroku is ypreg-staging.herokuapp.com. I've added you as a collaborator.
+the github app is hdfelix/ypreg.
+
+My contact info: hdfelix@gmail.com.
+
+
 Thanks!
 
 Hector
