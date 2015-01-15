@@ -22,6 +22,8 @@
 							<th style="width: 150px">Phone</th>
               <th>Payment Adjustment</th>
               <th>Paid?</th>
+              <th>Medical Release Form?</th>
+              <th>Serving?</th>
               <th></th>
 						</tr>
 					</thead>
@@ -39,7 +41,9 @@
                       H: <%= format_phone_number(r.user.home_phone) %><br />
                       W: <%= format_phone_number(r.user.work_phone) %></td>
                   <td><%= number_to_currency(r.payment_adjustment) %></td>
-                  <td><%= r.has_been_paid %></td>
+                  <td><%= display_yes_no(r.has_been_paid) %></td>
+                  <td><%= display_yes_no(r.attend_as_serving_one) %></td>
+                  <td><%= display_yes_no(r.has_medical_release_form) %></td>
                   <td><%= link_to 'Edit', edit_event_registration_path(@event,r) %></td>
                 </tr> 
               <% end %>
