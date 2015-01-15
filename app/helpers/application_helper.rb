@@ -41,6 +41,14 @@ module ApplicationHelper
     end
   end
 
+  def display_yes_no(boolean)
+    if boolean
+      "Yes"
+    else
+      "No"
+    end
+  end
+
   def shorten(string, from, to, ellipsis=false)
     if ellipsis
       string.slice(from,(to - 3)) + '...'

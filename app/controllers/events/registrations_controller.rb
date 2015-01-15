@@ -36,7 +36,8 @@ class Events::RegistrationsController < ApplicationController
 
     if @registration.update_attributes(registration_params)
       flash[:notice] = 'Registration created succesfully'
-      redirect_to root_path
+      # redirect_to root_path
+      redirect_to event_registrations_path(@event)
     else
       flash[:error] = 'Error creating registration'
       render 'new'
@@ -57,5 +58,5 @@ end
 private
 
 def registration_params
-  params.require(:registration).permit(:payment_type, :payment_adjustment, :attend_as_serving_one)
+  params.require(:registration).permit(:payment_type, :payment_adjustment, :has_been_paid, :attend_as_serving_one, :has_medical_release_form)
 end
