@@ -30,3 +30,12 @@ I've updated heroku so that's working now.
 
 Best wishes
 Joe
+
+
+### Continuous Integration with Codeship
+
+Have you worked through this guide?
+(https://devcenter.heroku.com/articles/codeship) It explains it pretty
+well, it's actually pretty simple with that guide. You should be able to
+easily set it up so that any changes to master on GH are built and
+tested on CI and then, once 'passed', automatically deployed to heroku.
