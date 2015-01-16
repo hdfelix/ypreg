@@ -15,6 +15,9 @@
 //= require_directory ./kingadmin-v1.2/.
 //= require bootstrap-sprockets
 //= require bootstrap-datepicker
+// the datepicker is initialized in app/assets/javascripts/events.js which was
+// probably imported with require_tree before. It looks like you've removed the
+// require tree import deliberately, if not you need to add the = after // to actually import it
 //= require events
 //= jquery.dataTables.bootstrap
 //= require_self
