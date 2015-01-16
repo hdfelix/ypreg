@@ -13,12 +13,17 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require_directory ./kingadmin-v1.2/.
-//= require bootstrap
+//= require bootstrap-sprockets
+//= require bootstrap-datepicker
+//= require events
 //= jquery.dataTables.bootstrap
-// require_tree .
 //= require_self
-//= modernizer
-
+//= require modernizr
+// ------------------
+// Not required are below
+// if they should be required you need to add '=' after // like they are above
+// ------------------
+// require_tree .
 // require kingadmin-v1.2/bootstrap-tour.custom
 // require kingadmin-v1.2/king-table
 // require kingadmin-v1.2/king-elements

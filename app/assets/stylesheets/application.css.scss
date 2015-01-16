@@ -1,33 +1,9 @@
-//import skin css files here 
-/*
- *= require jquery.ui.datepicker
- */
-
+// import skin css files here
+// it's important not to mix sass imports with
+// sprocket requires as they are incompatible
+@import 'jquery.ui.datepicker';
 @import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "main";
-
-.site-logo {
-	margin: 5px 0px;
-}
-
-//links on nav for unauthenticated users
-nav.a:hover {color:white;}
-
-span.nav {
-	color: white;
-}
-
-//Forms
-.table th.text-right, .table td.text-right {
-	text-align: right;
-	width: 27%;
-	padding-right: 3%;
-}
-
-.form-group {
-	padding-bottom: 30px;
-}
-
-
+@import "base";

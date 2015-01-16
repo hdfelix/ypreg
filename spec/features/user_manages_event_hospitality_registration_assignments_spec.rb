@@ -18,7 +18,7 @@ feature 'User manages hospitality registration assignments' do
     user          = create(:user)
                     create(:registration, event: event, user: user)
     locality      = event.localities.first
-    
+
     visit event_hospitality_registration_assignment_path(event, locality, authed_admin)
 
     expect(page).to have_content("Hospitality Assignments - #{ locality.city.capitalize }")
