@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150102150339) do
     t.integer  "event_type"
     t.date     "begin_date"
     t.date     "end_date"
-    t.decimal  "registration_cost"
+    t.integer  "registration_cost"
     t.date     "registration_open_date"
     t.date     "registration_close_date"
     t.integer  "location_id"
