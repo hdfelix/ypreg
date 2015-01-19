@@ -56,6 +56,14 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit_locality_payments
+    @event = Event.find(params[:event_id])
+  end
+
+  def update_locality_payments
+    binding.pry
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

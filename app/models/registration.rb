@@ -11,4 +11,12 @@ class Registration < ActiveRecord::Base
   delegate :name, :email, :cell_phone, :home_phone, :work_phone, :birthday,
     :lodging_id, # ...
            to: :user
+
+  after_create :create_event_locality
+
+  private
+
+  def create_event_locality
+    EventLocality.find_or_create_by(event: self.event, locality: self.user.locality)
+  end
 end

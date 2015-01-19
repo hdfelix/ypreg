@@ -4,6 +4,8 @@ class Event < ActiveRecord::Base
   has_many :registrations
   has_many :users, through: :registrations
   has_many :localities, -> { uniq }, through: :users
+  has_many :event_localities
+  # has_many :localities, through: :events_localities
   has_many :hospitalities
   has_many :lodgings, -> { uniq }, through: :hospitalities
   has_many :hospitality_registration_assignments, through: :hospitalities
