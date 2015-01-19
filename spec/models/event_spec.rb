@@ -6,7 +6,9 @@ describe Event, type: :model do
     it { should belong_to :location }
     it { should have_many :registrations }
     it { should have_many :users }
-    it { should have_many :localities }
+    # it { should have_many :localities }
+    it { should have_many :event_localities }
+    it { should have_many(:localities).through(:events_localities) }
     it { should have_many :hospitalities }
     it { should have_many(:hospitality_registration_assignments).through(:hospitalities) }
   end
