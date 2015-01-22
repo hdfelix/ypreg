@@ -1,9 +1,5 @@
-// import skin css files here
-// it's important not to mix sass imports with
-// sprocket requires as they are incompatible
 @import 'jquery.ui.datepicker';
-@import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "main";
+@import "kingadmin-v1.2/base";
 @import "base";
