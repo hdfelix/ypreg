@@ -1,0 +1,21 @@
+.site-logo {
+  margin: 5px 0px;
+}
+
+//links on nav for unauthenticated users
+nav.a:hover {color:white;}
+
+span.nav {
+  color: white;
+}
+
+//Forms
+.table th.text-right, .table td.text-right {
+  text-align: right;
+  width: 27%;
+  padding-right: 3%;
+}
+
+.form-group {
+  padding-bottom: 30px;
+}

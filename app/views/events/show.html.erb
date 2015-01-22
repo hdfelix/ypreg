@@ -27,20 +27,20 @@
 
           <div class="row">
             <div class="col-sm-5">
-              <strong><span class="pull-right">Dates:</span></strong>
-            </div>
-            <div class="col-sm-6">
-              <%= format_date(@event.begin_date) %> -
-              <%= format_date(@event.end_date) %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-5">
               <strong><span class="pull-right">Registration:</span></strong>
             </div>
             <div class="col-sm-6">
               <%= format_date(@event.registration_open_date) %> - 
               <%= format_date(@event.registration_close_date) %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-5">
+              <strong><span class="pull-right">Dates:</span></strong>
+            </div>
+            <div class="col-sm-6">
+              <%= format_date(@event.begin_date) %> -
+              <%= format_date(@event.end_date) %>
             </div>
           </div>
           <div class="row">
@@ -57,6 +57,8 @@
               <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
               <%= link_to 'Hospitality', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
               <%= link_to 'Registrations', event_registrations_path(@event), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Payments', edit_locality_payments_path(@event), class: 'btn btn-primary btn-sm' %>
+
             </div>
           </div>
 

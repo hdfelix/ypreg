@@ -13,4 +13,12 @@ class Registration < ActiveRecord::Base
 
   validates_inclusion_of :has_been_paid, in: [true, false]
   validate :has_medical_release_form, presence: true
+
+  after_create :create_event_locality
+
+  private
+
+  def create_event_locality
+    EventLocality.find_or_create_by(event: self.event, locality: self.user.locality)
+  end
 end

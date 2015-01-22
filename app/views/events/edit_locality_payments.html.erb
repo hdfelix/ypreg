@@ -1,0 +1,38 @@
+<div class="main-header">
+  <h2>Manage Locality Payments</h2>
+  <em>Update which localities have submitted registration payments</em>
+</div>
+
+<div class="col-md-12">
+  <div class="widget widget-table">
+    <div class="widget-header">
+      <h3><i class="fa fa-table"><strong>Participating Localities</strong></i></h3>
+    </div>
+    <%= form_tag update_locality_payments_path, method: :put do %>
+      <div class="widget-content">
+        <table class="table table-striped">
+          <thead>
+            <tr style="font: bold">
+              <td>Locality</td>
+              <td>Paid?</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <% @event.localities.each do |l| %>
+              <tr>
+                <td><%= l.city %></td>
+                <td>...<td>
+                <td>...</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <div class="panel-footer">
+      <%= submit_tag "Update Payments", class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+    </div>
+  <% end %>
+  </div>
+</div>

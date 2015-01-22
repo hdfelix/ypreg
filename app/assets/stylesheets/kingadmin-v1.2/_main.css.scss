@@ -12829,7 +12829,7 @@ code {
   .top-bar .top-bar-right {
     float: right;
     position: relative;
-    top: 2px;
+    top: 4px;
   }
 }
 .top-bar .searchbox {
@@ -13054,8 +13054,9 @@ code {
   color: #fff;
 }
 .top-bar .logged-user .dropdown-menu {
-  left: -36px;
-  top: 31px;
+  left: auto;
+  right: 0;
+  top: 25px;
   padding: 0;
 }
 .top-bar .logged-user .dropdown-menu > li {

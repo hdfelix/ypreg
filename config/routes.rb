@@ -5,6 +5,15 @@ YpwReg::Application.routes.draw do
   get 'dashboard/index'
 
   delete 'events/:event_id/hospitalities/destroy', to: 'events/hospitalities#destroy', as: :hospitality_remove
+  get 'events/:event_id/edit_locality_payments',
+    to: 'events#edit_locality_payments',
+    controller: 'events',
+    as: :edit_locality_payments
+
+  post 'event/:event_id/update_locality_payments',
+    to: 'events#update_locality_registrations',
+    controller: 'events',
+    as: :update_locality_payments
 
   resources :locations
   resources :localities

@@ -43,6 +43,42 @@
 		</div>
 
 		<div class="form-group">
+			<%=f.label :registration_cost, class: 'col-md-2 control-label' %>
+			<div class="col-md-4">
+				<div class="input-group">
+					<span class='input-group-addon'>$</span>
+					<%= f.text_field :registration_cost, class: 'form-control', placeholder: 'Cost' %>
+					<span class='input-group-addon'>.00</span>
+				</div>
+			</div>
+			<div class="col-md-6"> </div>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend>Event Dates</legend>
+
+		<div class="form-group">
+			<%= f.label :registration_open_date, class: 'col-md-2 control-label' %>
+			<div class="col-md-4">
+        <div class="input-group input-append date">
+          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				  <%= f.text_field :registration_open_date, class: 'form-control', placeholder: "Enter the date registration opens" %>
+        </div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<%= f.label :registration_close_date, class: 'col-md-2 control-label' %>
+			<div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+				  <%= f.text_field :registration_close_date, class: 'form-control', placeholder: "Enter the date registration closes" %>
+        </div>
+			</div>
+		</div>
+
+		<div class="form-group">
 			<%= f.label :begin_date, class: 'col-md-2 control-label' %>
 			<div class="col-md-4">
         <div class="input-group">
@@ -63,42 +99,6 @@
 		</div>
 	</fieldset>
 
-	<fieldset>
-		<legend>Registration Details</legend>
-
-		<div class="form-group">
-			<%=f.label :registration_cost, class: 'col-md-3 control-label' %>
-			<div class="col-md-4">
-				<div class="input-group">
-					<span class='input-group-addon'>$</span>
-					<%= f.text_field :registration_cost, class: 'form-control', placeholder: 'Cost' %>
-					<span class='input-group-addon'>.00</span>
-				</div>
-			</div>
-			<div class="col-md-6"> </div>
-		</div>
-
-		<div class="form-group">
-			<%= f.label :registration_open_date, class: 'col-md-3 control-label' %>
-			<div class="col-md-4">
-        <div class="input-group input-append date">
-          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-				  <%= f.text_field :registration_open_date, class: 'form-control', placeholder: "Enter the date registration opens" %>
-        </div>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<%= f.label :registration_close_date, class: 'col-md-3 control-label' %>
-			<div class="col-md-4">
-        <div class="input-group">
-          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-				  <%= f.text_field :registration_close_date, class: 'form-control', placeholder: "Enter the date registration closes" %>
-        </div>
-			</div>
-		</div>
-	</fieldset>
-
 	<div class="form-group">
 		<div class= "col-md-12">
 			<span class="pull-right">
@@ -106,7 +106,5 @@
 				<%= f.submit "Submit", class: 'btn btn-primary' %>
 			</span>
 		</div>
-		<br />
 	</div>
-
 <% end %>
