@@ -32,6 +32,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def locality_city
+    if locality.city.nil?
+      ""
+    else
+      locality.city
+    end
+  end
+
   def registration(event)
     Registration.where(user: self, event: event)[0]
   end
