@@ -11,6 +11,7 @@ class Events::RegistrationsController < ApplicationController
   def new
     @event = Event.find(params[:event_id])
     @registration = Registration.new
+    # @registration = Registration.new(user: current_user)
   end
 
   def create
