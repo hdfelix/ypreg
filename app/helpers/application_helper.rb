@@ -41,6 +41,14 @@ module ApplicationHelper
     end
   end
 
+  def format_titleize(string)
+    if string.nil?
+      '--'
+    else
+      string.titleize
+    end
+  end
+
   def display_yes_no(boolean)
     if boolean
       "Yes"
