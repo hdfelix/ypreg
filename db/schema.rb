@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150119070710) do
     t.integer  "event_type"
     t.date     "begin_date"
     t.date     "end_date"
-    t.integer  "registration_cost"
+    t.decimal  "registration_cost"
     t.date     "registration_open_date"
     t.date     "registration_close_date"
     t.integer  "location_id"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20150119070710) do
   create_table "registrations", force: true do |t|
     t.string   "payment_type"
     t.boolean  "has_been_paid"
-    t.integer  "payment_adjustment"
+    t.decimal  "payment_adjustment"
     t.boolean  "attend_as_serving_one"
     t.integer  "user_id"
     t.integer  "event_id"

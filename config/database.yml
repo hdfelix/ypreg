@@ -25,6 +25,14 @@ staging:
   database: ypreg_staging
   pool: 5
 
+production:
+  adapter: postgresql
+  encoding: unicode 
+  database: ypreg_production
+  pool: 5
+  # username: hdfelix
+  # password: 
+
 development:
   adapter: postgresql
   encoding: unicode 
