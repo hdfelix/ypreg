@@ -101,6 +101,7 @@ admin = User.new(
   email: 'hdfelix@gmail.com',
   cell_phone: '8888888888',
   birthday: 38.years.ago,
+  gender: 'B',
   password: 'chiracha',
   password_confirmation: 'chiracha')
 
