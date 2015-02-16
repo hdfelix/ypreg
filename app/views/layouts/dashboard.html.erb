@@ -220,12 +220,13 @@
                     No Events</h5>
               <% end %>
               <ul class="list-unstyled list-info-sidebar bottom-30px">
+                <% binding.pry %>
                 <li class="data-row">
                   <span class="data-name">Attendance</span>
                   <span class="data-value">
                     <% if Event.all.count > 0 %>
                       <%= @chart_values["att_ratio"] %>
-                    <% else  %>
+                    <% else %>
                       0 / 0
                     <% end %>
                     <div class="progress progress-xs">
@@ -238,7 +239,7 @@
                 <li class="data-row">
                   <span class="data-name">Localities</span>
                   <span class="data-value">
-                    <% if Locality.all.count > 0 %>
+                    <% if Event.all.count > 0 %>
                       <%= @chart_values["loc_ratio"] %>
                     <% else  %>
                       0 / 0
@@ -253,7 +254,7 @@
                 <li class="data-row">
                   <span class="data-name">Hospitality</span>
                   <span class="data-value">
-                    <% if Locality.all.count > 0 %>
+                    <% if Event.all.count > 0 %>
                       <%= @chart_values["hosp_ratio"] %>
                     <% else  %>
                       0 / 0
