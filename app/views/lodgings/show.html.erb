@@ -2,7 +2,7 @@
 	<div class="row">
 	<div class="main-header">
 		<h2><%= @lodging.name %></h2>
-		<em><%= "a [H.Type] in #{ Locality.find(@lodging.locality_id).city }" %></em>
+    <em><%= "a #{ Lodging::LODGING_TYPE[@lodging.lodging_type.to_i] } in #{ Locality.find(@lodging.locality_id).city }" %></em>
 	</div>
 </div>
 <div class="row">
@@ -29,7 +29,7 @@
 						<strong>Type:</strong>
 					</div>
 					<div class="col-sm-8">
-						[Type]
+          <%= Lodging::LODGING_TYPE[@lodging.lodging_type.to_i] %>
 					</div>
 				</div>
 
