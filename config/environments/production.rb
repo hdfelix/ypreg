@@ -62,7 +62,7 @@ YpwReg::Application.configure do
   # config.assets.precompile += %w( search.js )
 
   # Add vendor path for Kingadmin theme
-   config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+   config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.js)
    config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   # config.assets.paths += Dir["#{Rails.root}/vendor/assets/kingsboard-v1.1/*"].sort_by { |dir| -dir.size }
 # Ignore bad email addresses and do not raise email delivery errors.
