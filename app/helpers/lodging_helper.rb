@@ -4,18 +4,8 @@ module LodgingHelper
   end
 
   def min_max_capacity(lodging)
-    str = ""
-    if lodging.min_capacity.nil?
-      str = '-'
-    else
-      str = lodging.min_capacity.to_s
-    end
-    str += ' \ '
-    if lodging.max_capacity.nil?
-      str += '-'
-    else
-      str += lodging.max_capacity.to_s
-    end
-    str
+    low = lodging.min_capacity ? lodging.min_capacity.to_s : '-'
+    high = lodging.max_capacity ? lodging.max_capacity.to_s : '-'
+    [low, high].join(' \ ')
   end
 end
