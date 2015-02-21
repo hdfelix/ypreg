@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119070710) do
+ActiveRecord::Schema.define(version: 20150220181838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150119070710) do
   create_table "events_localities", force: true do |t|
     t.integer "event_id"
     t.integer "locality_id"
-    t.boolean "submitted_registration_payment_check"
+    t.boolean "submitted_registration_payment_check", default: false
   end
 
   add_index "events_localities", ["event_id"], name: "index_events_localities_on_event_id", using: :btree
