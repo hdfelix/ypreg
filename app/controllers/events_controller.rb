@@ -58,6 +58,7 @@ class EventsController < ApplicationController
 
   def edit_locality_payments
     @event = Event.find(params[:event_id])
+    @event_localities = EventLocality.where(event: @event)
   end
 
   def update_locality_payments

@@ -13,17 +13,17 @@
         <table class="table table-striped">
           <thead>
             <tr style="font: bold">
+              <td></td>
               <td>Locality</td>
               <td>Paid?</td>
-              <td></td>
             </tr>
           </thead>
           <tbody>
-            <% @event.localities.each do |l| %>
+            <% @event_localities.each do |el| %>
               <tr>
-                <td><%= l.city %></td>
-                <td>...<td>
-                <td>...</td>
+                <td><%= check_box_tag "locality_paid_ids[]", el.submitted_registration_payment_check %></td>
+                <td><%= el.locality.city %></td>
+                <td><%= el.submitted_registration_payment_check %><td>
               </tr>
             <% end %>
           </tbody>
