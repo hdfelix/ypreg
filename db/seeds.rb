@@ -245,13 +245,15 @@ yp_count = (count * 0.60).to_i
 # YP registrations
 yp_ids = User.limit(yp_count).where(role: 'yp').pluck(:id)
 while !yp_ids.empty?
+  user = User.find(yp_ids.delete(yp_ids.sample))
   reg = Registration.new(
     payment_type: 'check',
-    has_been_paid: [true, false].sample,
+    has_been_paid: false,
     payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
     attend_as_serving_one: false,
-    user: User.find(yp_ids.delete(yp_ids.sample)),
-    event_id: ev.id)
+    user: user, 
+    event: ev,
+    locality: user.locality)
   reg.save
   print '.'
 end
@@ -260,13 +262,15 @@ end
 non_yp_count = count - yp_count
 non_yp_ids = User.limit(non_yp_count).where.not(role: 'yp').pluck(:id)
 while !non_yp_ids.empty?
+  user = User.find(non_yp_ids.delete(non_yp_ids.sample))
   reg = Registration.new(
     payment_type: 'Check',
-    has_been_paid: [true, false].sample,
+    has_been_paid: false,
     payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
     attend_as_serving_one: [true, false].sample,
-    user: User.find(non_yp_ids.delete(non_yp_ids.sample)),
-    event_id: ev.id)
+    user: user,
+    event: ev,
+    locality: user.locality)
   reg.save
   print '.'
 end
