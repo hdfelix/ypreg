@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
           chart_values['pmt_ratio_width_percentage'] =
             "width: #{ ((next_event_payments.to_f / total_registrations.to_f) * 100).to_i }%"
         else
-          chart_values['pmt_ratio'] = 'width: 0'
+          chart_values['pmt_ratio_width_percentage'] = 'width: 0'
         end
         chart_values['pmt_value_now'] = next_event_payments
         chart_values['pmt_value_max'] = total_registrations
