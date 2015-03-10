@@ -100,6 +100,22 @@ class ApplicationController < ActionController::Base
         end
         chart_values['hosp_value_now'] = event_hospitalities_count
         chart_values['hosp_value_max'] = lodging_count
+
+        # Values for Payments aria chart
+        total_registrations = next_event.registrations.all.count
+        next_event_payments =
+          Event.where('end_date >= ?', Time.now.to_date)
+          .first.registrations.where(has_been_paid: true).all.count
+        chart_values['pmt_ratio'] =
+          "#{ next_event_payments } / #{ total_registrations }"
+        if total_registrations != 0
+          chart_values['pmt_ratio_width_percentage'] =
+            "width: #{ ((next_event_payments.to_f / total_registrations.to_f) * 100).to_i }%"
+        else
+          chart_values['pmt_ratio'] = 'width: 0'
+        end
+        chart_values['pmt_value_now'] = next_event_payments
+        chart_values['pmt_value_max'] = total_registrations
       end
     end
     chart_values
