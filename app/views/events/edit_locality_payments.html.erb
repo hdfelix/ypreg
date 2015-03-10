@@ -6,24 +6,26 @@
 <div class="col-md-12">
   <div class="widget widget-table">
     <div class="widget-header">
-      <h3><i class="fa fa-table"><strong>Participating Localities</strong></i></h3>
+      <h3><i class="fa fa-table">&nbsp;Participating Localities</i></h3>
     </div>
     <%= form_tag update_locality_payments_path, method: :put do %>
       <div class="widget-content">
         <table class="table table-striped">
           <thead>
-            <tr style="font: bold">
+            <tr style="font-weight: bold">
               <td></td>
               <td>Locality</td>
+              <td>Registrations</td>
               <td>Paid?</td>
             </tr>
           </thead>
           <tbody>
             <% @event_localities.each do |el| %>
               <tr>
-                <td><%= check_box_tag "locality_paid_ids[]", el.submitted_registration_payment_check %></td>
+                <td><%= check_box_tag "locality_paid_ids[]", el.locality.id %></td>
                 <td><%= el.locality.city %></td>
-                <td><%= el.submitted_registration_payment_check %><td>
+                <td><%= @event.registrations.where(locality: el.locality).all.count %></td>
+                <td><%= display_yes_no(el.submitted_registration_payment_check) %></td>
               </tr>
             <% end %>
           </tbody>

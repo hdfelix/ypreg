@@ -146,7 +146,7 @@ class Event < ActiveRecord::Base
       stats[loc]['grand_total'] * registration_cost
     assign_grand_totals(stats, locality)
     stats[loc]['balance'] =
-      stats[loc]['actual_amount_paid'] - stats[loc]['amount_due']
+      stats[loc]['amount_due'] - stats[loc]['actual_amount_paid']
   end
 
   def assign_totals(stats, locality)
@@ -170,6 +170,10 @@ class Event < ActiveRecord::Base
     stats[loc]['actual_total_serving_ones'] = '[--]'
     stats[loc]['actual_total_trainees'] = '[--]'
     stats[loc]['actual_total_helpers'] = '[--]'
-    stats[loc]['actual_amount_paid'] = 73 * registration_cost
+    stats[loc]['actual_amount_paid'] = locality_amount_paid(locality)
+  end
+
+  def locality_amount_paid(locality)
+    self.registration_cost * Registration.where(event: self, locality: locality, has_been_paid: true).count
   end
 end

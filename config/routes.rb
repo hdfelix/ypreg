@@ -10,8 +10,8 @@ YpwReg::Application.routes.draw do
     controller: 'events',
     as: :edit_locality_payments
 
-  post 'event/:event_id/update_locality_payments',
-    to: 'events#update_locality_registrations',
+  put 'event/:event_id/update_locality_payments',
+    to: 'events#update_locality_payments',
     controller: 'events',
     as: :update_locality_payments
 
