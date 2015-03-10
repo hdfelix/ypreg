@@ -74,8 +74,7 @@ class ApplicationController < ActionController::Base
         # Values for Localities aria chart
         total_localities = Locality.all.count
         next_event_localities =
-          Event.where('end_date >= ?', Time.now.to_date)
-          .first.participating_localities.count
+          next_event.participating_localities.count
         chart_values['loc_ratio'] =
           "#{ next_event_localities } / #{ total_localities }"
         if total_localities != 0
@@ -104,8 +103,7 @@ class ApplicationController < ActionController::Base
         # Values for Payments aria chart
         total_registrations = next_event.registrations.all.count
         next_event_payments =
-          Event.where('end_date >= ?', Time.now.to_date)
-          .first.registrations.where(has_been_paid: true).all.count
+          next_event.registrations.where(has_been_paid: true).all.count
         chart_values['pmt_ratio'] =
           "#{ next_event_payments } / #{ total_registrations }"
         if total_registrations != 0
