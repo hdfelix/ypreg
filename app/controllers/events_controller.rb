@@ -67,7 +67,6 @@ class EventsController < ApplicationController
     # registrations     = Registration.where(event: @event, locality: localities)
     # event_localities  = EventLocality.where(event: @event, locality: localities)
 
-    binding.pry
     ActiveRecord::Base.transaction do
       localities.each do |loc|
         registrations     = Registration.where(event: @event, locality: loc)
@@ -75,7 +74,6 @@ class EventsController < ApplicationController
 
         # Flip 'has_been_paid' value for registrations of selected locality
         registrations.each do |reg|
-          binding.pry
           if reg.has_been_paid == true
             reg.update_attributes(has_been_paid: false)
           else

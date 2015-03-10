@@ -9,7 +9,6 @@ class Events::RegistrationsController < ApplicationController
   end
 
   def new
-    binding.pry
     @event = Event.find(params[:event_id])
     @registration = Registration.new
     # @registration = Registration.new(user: current_user)
@@ -17,7 +16,6 @@ class Events::RegistrationsController < ApplicationController
 
   def create
     @event = Event.find(params[:event_id])
-    binding.pry
     @registration = current_user.registrations.build(registration_params)
     if @registration.save
       flash[:notice] = 'Registration created succesfully'
@@ -36,7 +34,6 @@ class Events::RegistrationsController < ApplicationController
   
   def update
     @event = Event.find(params[:event_id])
-    binding.pry
     @registration = registration.find(params[:id])
 
     if @registration.update_attributes(registration_params)
@@ -61,7 +58,6 @@ end
 private
 
 def registration_params
-  binding.pry
   params.require(:registration).permit(:payment_type, :payment_adjustment, :has_been_paid, :has_medical_release_form, :attend_as_serving_one)
     .merge({event_id: params[:event_id]})
     .merge({locality_id: current_user.id})
