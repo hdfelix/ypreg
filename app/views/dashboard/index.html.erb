@@ -1,19 +1,19 @@
 <div class="main-header">
-	<h2>DASHBOARD</h2>
-		<em>information on up-coming events</em>
+  <h2>DASHBOARD</h2>
+    <em>information on up-coming events</em>
 </div>
 
 <div class="main-content">
-	<div class="row">
-		<div class="col-md-9">
-			<div class="panel-group" id="events">
-				<h3>Upcoming events</h3>
-				<% if @events.any? %>
-					<%= render partial: 'events/event', collection: @events %>
-				<% else %>
-					<center>There aren't any up-coming events.</center>
-				<% end %>
-			</div><!-- panel group -->
-		</div><!-- col -->
-	</div> <!-- row -->
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel-group" id="events">
+        <h3>Upcoming events</h3>
+        <% if @events.any? %>
+          <%= render partial: 'events/event', collection: @events %>
+        <% else %>
+          <center>There aren't any up-coming events.</center>
+        <% end %>
+      </div><!-- panel group -->
+    </div><!-- col -->
+  </div> <!-- row -->
 </div>

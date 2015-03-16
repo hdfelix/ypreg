@@ -1,106 +1,118 @@
 <div class="content">
-	<div class="main-header">
-		<h2>Udate Profile</h2>
-		<!--h3>Edit--> <!--%= resource_name.to_s.humanize %--><!--/h3-->
-		<em>Update the user profile</em>
-	</div>
-	<br />
+  <div class="main-header">
+    <h2>Udate Profile</h2>
+    <!--h3>Edit--> <!--%= resource_name.to_s.humanize %--><!--/h3-->
+    <em>Update the user profile</em>
+  </div>
+  <br />
 
-<div class="col-md-8">
-	<!-- EDIT USER FORM -->
-	<div class="widget">
-		<div class="widget-header"><h3><i class="fa fa-edit"></i></div>
-		<div class="widget-content">
-			<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-				<%= devise_error_messages! %>
+  <div class="col-md-8">
+    <!-- EDIT USER FORM -->
+    <div class="widget">
+      <div class="widget-header"><h3><i class="fa fa-edit"></i></div>
+        <div class="widget-content">
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name, id: @user.id), html: { method: :put }) do |f| %>
+            <%= devise_error_messages! %>
 
-				<fieldset>
-					<legend>Credentials</legend>
-					<div class="form-group">
-						<%= f.label :type, 'User Type', class: 'col-md-2 control-label' %>
-						<div class="col-md-10">
-							<%= f.select :type, User::USER_TYPE, {include_blank: true}, {class: 'form-control'} %>
-						</div>
-					</div>
-					<div class="form-group">
-						<%= f.label :email, class: 'col-md-2 control-label' %>
-						<div class="col-md-10">
-							<%= f.email_field :email, autofocus: true, class: 'form-control' %>
-						</div>
-					</div>
+          <fieldset>
+            <legend>Credentials</legend>
+            <div class="form-group">
+              <%= f.label :role, 'User Role', class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.select :role, User::USER_ROLE, {include_blank: true }, {class: 'form-control'} %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :email, class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+              </div>
+            </div>
 
-					<div class="form-group">
-						<% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-							<div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-						<% end %>
-					</div>
+            <div class="form-group">
+              <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+            </div>
 
-					<div class="form-group">
-						<%= f.label :password, class: 'col-md-2 control-label' %> <i>(leave blank if you don't want to change it)</i>
-						<div class="col-md-10">
-							<%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-						</div>
-					</div>
+            <!--div class="form-group">
+              <%= f.label :password, class: 'col-md-2 control-label' %> <i>(leave blank if you don't want to change it)</i>
+              <div class="col-md-10">
+                <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+              </div>
+            </div>
 
-					<div class="form-group">
-						<%= f.label :password_confirmation, class: 'col-md-2 control-label' %>
-						<div class="col-md-10">
-							<%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
-						</div>
-					</div>
+            <div class="form-group">
+              <%= f.label :password_confirmation, class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+              </div>
+            </div>
 
-					<div class="form-group">
-						<%= f.label :current_password, class: 'col-md-2 control-label' %> 						
-						<div class="col-md-10">
-							<i>(we need your current password to confirm your changes)</i>
-							<%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
-						</div>
-					</div>
-				</fieldset>
+            <div class="form-group">
+              <%= f.label :current_password, class: 'col-md-2 control-label' %> 						
+              <div class="col-md-10">
+                <i>(we need your current password to confirm your changes)</i>
+                <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
+              </div>
+            </div-->
+          </fieldset>
 
-				<fieldset>
-					<legend>Personal Information</legend>
-					<div class="form-group">
-						<%= f.label :home_phone, class: 'col-md-2 control-label' %>
-						<div class="col-md-10">
-							<%= f.text_field :home_phone, autofocus: true, class: 'form-control' %>
-						</div>
-					</div>
-					<div class="form-group">
-						<%= f.label :cell_phone, class: 'col-md-2 control-label' %>
-						<div class="col-md-10">
-							<%= f.text_field :cell_phone, autofocus: true, class: 'form-control' %>
-						</div>
-					</div>
-					<div class="form-group">
-						<%= f.label :work_phone, class: 'col-md-2 control-label' %>
-						<div class="col-md-10">
-							<%= f.text_field :work_phone, autofocus: true, class: 'form-control' %>
-						</div>
-					</div>
-					<div class="form-group">
-						<%= f.label :birthday, class: 'col-md-2 control-label' %>
-						<div class="col-md-10">
-							<%= f.text_field :birthday, class: 'form-control' %>
-						</div>
-					</div>
-				</fieldset>
-			</div>
+          <fieldset>
+            <legend>General Information</legend>
+            <div class="form-group">
+              <%= f.label :name, 'Name', class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :gender, '', class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.select :gender, User::GENDER, {include_blank: true }, {class: 'form-control'} %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :home_phone, class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.text_field :home_phone, autofocus: true, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :cell_phone, class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.phone_field :cell_phone, autofocus: true, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :work_phone, class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.text_field :work_phone, autofocus: true, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :birthday, class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.text_field :birthday, class: 'form-control' %>
+              </div>
+            </div>
+          </fieldset>
+        </div>
 
-			<div class="widget-footer">
-				<%= f.submit "Update", class: 'btn btn-success' %>
-				<%= link_to "Back", :back, class: 'btn btn-default' %>
-			</div>
-		<% end %>
-	</div>
+        <div class="widget-footer">
+          <%= f.submit "Update", class: 'btn btn-success' %>
+          <%= link_to "Back", :back, class: 'btn btn-default' %>
+        </div>
+      <% end %>
+      </div>
 
-<fieldset>
-	<legend>Cancel my account</legend>
-	<div class="col-md-12">
-		<br />
-		<span>
-			<%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %>
-		</span>
-	</div>
-</fieldset>
+      <fieldset>
+        <legend>Cancel my account</legend>
+        <div class="col-md-12">
+          <br />
+          <span>
+            <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' %>
+          </span>
+        </div>
+      </fieldset>
 

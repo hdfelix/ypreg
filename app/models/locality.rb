@@ -1,27 +1,37 @@
+# A local church
 class Locality < ActiveRecord::Base
-	has_and_belongs_to_many :hospitalities
+  has_many :users
+  has_many :lodgings
+  belongs_to :contact, class_name: 'User', foreign_key: 'contact_id'
+  belongs_to :lodging_contact, class_name: 'User', foreign_key: 'lodging_contact_id'
+  # has_and_belongs_to_many :lodgings
 
-	validates :city, presence: true
-	validates :state_abbrv, presence: true
+  validates :city, presence: true
+  validates :state_abbrv, presence: true
 
-	def display_contact
-		if self.contact_id == nil
-			"--"
-		else
-			User.find(self.contact_id).name
-		end
-	end
+  def display_contact
+    if contact_id.nil?
+      '--'
+    else
+      User.find(contact_id).name
+    end
+  end
 
-	def display_contact_with_contact_info
-		if self.contact_id == nil
-			"--"
-		else
-			contact = User.find(self.contact_id)
-			"#{contact.name} (#{contact.email})"
-		end
-	end
+  def display_contact_with_contact_info
+    if contact_id.nil?
+      '--'
+    else
+      contact = User.find(contact_id)
+      "#{contact.name} (#{contact.email})"
+    end
+  end
 
-	def hospitality_contact_for
-		#self.hospitality_contact_id
-	end
+  def hospitalities(event)
+    tmp = Hospitality.where(event: event, locality: self)
+    tmp
+  end
+  
+  def hospitality_lodgings(event)
+    Lodging.joins(:hospitalities).where(locality: self, event: event)
+  end
 end

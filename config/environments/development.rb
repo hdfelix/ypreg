@@ -1,7 +1,9 @@
 YpwReg::Application.configure do
+  # from http://guides.rubyonrails.org/asset_pipeline.html#local-precompilation
+  # config.assets.prefix = "/dev-assets"
   # Settings specified here will take precedence over those in config/application.rb.
 
-	config.allow_forgery_protection = false
+  config.allow_forgery_protection = false
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -29,8 +31,8 @@ YpwReg::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
-	#ActionMailer
-	config.action_mailer.default_url_options = { host: 'localhost:3000' }
-	config.action_mailer.delivery_method = :letter_opener #:smtp
-	config.action_mailer.perform_deliveries = true
+  #ActionMailer
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.delivery_method = :letter_opener #:smtp
+  config.action_mailer.perform_deliveries = true
 end

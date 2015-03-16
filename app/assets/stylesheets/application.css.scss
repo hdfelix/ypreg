@@ -1,28 +1,5 @@
-//import skin css files here 
-@import "bootstrap.css";
-@import "main.css";
-@import "font-awesome.css";
-
-.site-logo {
-	margin: 5px 0px;
-}
-
-//links on nav for unauthenticated users
-nav.a:hover {color:white;}
-
-span.nav {
-	color: white;
-}
-
-//Forms
-.table th.text-right, .table td.text-right {
-	text-align: right;
-	width: 27%;
-	padding-right: 3%;
-}
-
-.form-group {
-	padding-bottom: 30px;
-}
-
-
+@import 'jquery.ui.datepicker';
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "kingadmin-v1.2/base";
+@import "base";

@@ -1,80 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>YPReg Registration</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="YPReg - Event Registration">
-	<meta name="author" content="Hector D. Felix (hdfnet@gmail.com)">
+<title>YPReg Registration</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="YPReg - Event Registration">
+<meta name="author" content="Hector D. Felix (hdfnet@gmail.com)">
 
-	<%= stylesheet_link_tag    "application" %>
+<%= stylesheet_link_tag    "application" %>
 
-	<!-- kingsboard CSS -->
-	<%= stylesheet_link_tag		"main", media: "all" %>
-	<%= stylesheet_link_tag		"font-awesome", media: "all" %>
-	 
-	<!-- kingsboard skin -->
-	<!--%= stylesheet_link_tag		"fullbright", media: "all" %-->
-	<!--%= stylesheet_link_tag		"slategray", media: "all" %-->
+<!-- kingsboard CSS -->
+<%= stylesheet_link_tag   "main", media: "all" %>
+<%= stylesheet_link_tag   "font-awesome", media: "all" %>
 
-	<%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+<!-- kingsboard skin -->
+<!--%= stylesheet_link_tag    "fullbright", media: "all" %-->
+<!--%= stylesheet_link_tag    "slategray", media: "all" %-->
+
+<!-- TESTING -->
+<!-- for gem rails-jquery-cdn -->
+<!-- %= jquery_include_tag :google %-->
+<%= javascript_include_tag "jquery-2.1.0" %>
+<%= javascript_include_tag "application" %>
+<%= csrf_meta_tags %>
 
 
-	<!-- Fav and touch icons  -->
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/kingadmin-favicon144x144.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/kingadmin-favicon114x114.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/kingadmin-favicon72x72.png">
-	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/kingadmin-favicon57x57.png">
-	<link rel="shortcut icon" href="assets/ico/favicon.png">
+<!-- Fav and touch icons  -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/kingadmin-favicon144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/kingadmin-favicon114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/kingadmin-favicon72x72.png">
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/kingadmin-favicon57x57.png">
+<link rel="shortcut icon" href="assets/ico/favicon.png">
 </head>
 <body>
-	<div class="dashboard">
-		<div class="wrapper">
-			<!-- TOP GENERAL ALERT -->
-			<% if flash[:notice] %>
-				<div class="alert alert-success top-general-alert">
-					<a type="button" class="close">&times;</a>
-					<%= flash[:notice] %>
-				</div>
-			<% elsif flash[:error] %>
-				<div class="alert alert-danger top-general-alert">
-					<a type="button" class="close">&times;</a>
-					<%= flash[:error] %>
-				</div>
-				<% elsif flash[:alert] %>
-				<div class="alert alert-danger top-general-alert">
-					<a type="button" class="close">&times;</a>
-					<%= flash[:alert] %>
-				</div>
-			<% end %>
-			<!-- END TOP GENERAL ALERT -->
+  <div class="dashboard">
+    <div class="wrapper">
+      <!-- TOP GENERAL ALERT -->
+      <% if flash[:notice] %>
+        <div class="alert alert-success top-general-alert">
+        <a type="button" class="close">&times;</a>
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:error] %>
+        <div class="alert alert-danger top-general-alert">
+        <a type="button" class="close">&times;</a>
+        <%= flash[:error] %>
+      </div>
+    <% elsif flash[:alert] %>
+        <div class="alert alert-danger top-general-alert">
+        <a type="button" class="close">&times;</a>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+      <!-- END TOP GENERAL ALERT -->
 
-			<!-- TOP BAR -->
-			<% unless ((params[:controller] == 'devise/sessions' or params[:controller] == 'users/registrations')) and (params[:action] == 'new') %>
-				<div class="top-bar">
-					<div class="container">
-						<div class="row">
-							<!-- logo -->
-							<div class="col-md-2">
-								<%= link_to image_tag('kingadmin-logo-white.png', alt: 'YPReg site', class: 'nav'), root_path %>
-							</div>
-							<!-- end logo -->
-							<div class="col-md-10">
-								<%= link_to new_user_session_path, class:'pull-right' do %>
-									<span class="nav">Sign in</span>
-								<% end %>
-							</div>
-						</div>
-					</div>
-				</div>
-			<% end %>
-			<!-- END TOP BAR -->
-
-			<%= yield %>
-		</div>
-	</div>
-
+      <!-- TOP BAR -->
+      <% unless ((params[:controller] == 'devise/sessions' or params[:controller] == 'users/registrations')) and (params[:action] == 'new') %>
+        <div class="top-bar">
+        <div class="container">
+          <div class="row">
+            <!-- logo -->
+            <div class="col-md-2">
+              <%= link_to image_tag('kingadmin-logo-white.png', alt: 'YPReg site', class: 'nav'), root_path %>
+            </div>
+            <!-- end logo -->
+            <div class="col-md-10">
+              <%= link_to new_user_session_path, class:'pull-right' do %>
+                <span class="nav">Sign in</span>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+      <!-- END TOP BAR -->
+      <div class="container">
+        <br /><br /><br />
+        <%= yield %>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

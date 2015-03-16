@@ -1,0 +1,170 @@
+<div class="content">
+  <div class="main-header">
+    <h2>Hospitality Assignments</h2>
+    <em>hospitality assingments for <%= @event.title %></em>
+  </div>
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="widget widget-table">
+        <div class="widget-header">
+          <h3><i class="fa fa-table"></i>Hospitality Units</h3>
+        </div>
+        <div class="widget-content">
+          <%= form_for(@event, url: {
+            controller: 'events/hospitality_assignments',
+            action:     'assign_lodging_to_locality' },
+            class:      'form-horizontal', remote: true) do |f|
+          %>
+            <table id="hospitality_units" class="table table-striped">
+              <thead>
+                <tr style="font: bold">
+                  <td>Lodging</td>
+                  <td>Min</td>
+                  <td>Max</td>
+                  <td>Assign to</td>
+                </tr>
+              </thead>
+              <tbody>
+                <% @event.hospitalities.each  do |hosp| %>
+                  <tr id=<%= "#{hosp.id}" %>>
+                  <td><%= hosp.name %></td>
+                  <td><%= hosp.min_capacity %></td>
+                  <td><%= hosp.max_capacity %></td>
+                  <td><%= collection_select(
+                    :event,
+                    :localities,
+                    @event.localities,
+                    :id, 
+                    :city,
+                    { include_blank: 'select',
+                      selected: hosp.locality_id_before_type_cast }, remote: true) %> <!-- TODO: why like this? -->
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2"></div>
+      <div class="col-md-5">
+        <div class="widget widget-table">
+          <div class="widget-header">
+            <h3><i class="fa fa-table"></i>Participating Localities</h3>
+          </div>
+          <div class="widget-content">
+            <table class="table table-striped">
+              <thead>
+                <tr style="font-weight: bold">
+                  <td>Locality</td>
+                  <td>Registered Saints</td>
+                  <td>Beds Allocated</td>
+                </tr>
+              </thead>
+              <tbody id='participating_localities_content'>
+              <% @event.localities.each do |loc| %>
+                <tr>
+                <td><%= loc.city %></td>
+                <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
+                <td><%= @event.assigned_hospitality_beds[loc.city] %></td>
+              </tr>
+            <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div><!-- end row -->
+
+    <div class="row">
+      <div class="col-md-5">
+        <div class="widget widget-table">
+          <div class="widget-header">
+            <h3><i class="fa fa-table"></i>Registered Saints</h3>
+          </div>
+
+          <div class="widget-content">
+            <select></select>
+            
+            <%= form_for(@event, 
+              url: { 
+                controller: 'events/hospitality_assignments',
+                action:     'assign_registration_user_to_hospitality'
+              },
+              class: 'form-horizontal', remote: true) do |f|
+            %>
+              <table class="table table-striped">
+                <thead>
+                  <tr style="font: bold">
+                    <td>Locality</td>
+                    <td></td>
+                    <td>Name</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @event.localities.each do |locality| %>
+                    <tr id=<%= "#{locality.id}" %>>
+                      <td><%= locality.city %><td>
+                      <td><%= collection_select(
+                        :event,
+                        :registrations,
+                        @event.registrations,
+                        :id,
+                        :name,
+                        { include_blank: 'select',
+                          selected: 0 }) %>
+                      </td>
+                        <!-- TODO: select proper id -->
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2"></div>
+      <div class="col-md-5">
+        <div class="widget widget-table">
+          <div class="widget-header">
+            <h3><i class="fa fa-table"></i>Assigned Hospitalities</h3>
+          </div>
+          <div class="widget-content">
+            <table class="table table-striped">
+              <thead>
+                <tr style="font: bold">
+                  <td>Locality</td>
+                  <td>Name</td>
+                </tr>
+              </thead>
+              <tbody>
+              <!-- TODO: Write code to display missing info -->
+              <% @event.hospitality_assignments.each do |ha| %>
+                <tr>
+                <td>[loc]</td>
+                <td>[name]</td>
+              </tr>
+            <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div><!-- end row -->
+          
+    <div class="row">
+      <div class="col-md-12">
+        <%= link_to 'Back', @event, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+
+  
+  <%= javascript_tag do %>
+    window.eventHospitalityAssignmentsURL = "<%=j event_hospitality_assignments_url %>";
+    window.currentEvent = "<%=j @event.id.to_s %>";
+  <% end %>

@@ -1,31 +1,12 @@
+# Hospitality model - A lodging available for an event
 class Hospitality < ActiveRecord::Base
-	
-	has_and_belongs_to_many :events
-	has_one :contact
+  belongs_to :event, inverse_of: :hospitalities
+  belongs_to :lodging
+  belongs_to :locality
+  has_many :hospitality_registration_assignments, inverse_of: :hospitality
+  has_many :registrations, -> { uniq }, through: :hospitality_registration_assignments
 
-	validates :name, presence: true
-	validates :address1, presence: true
-	validates :city, presence: true
-	validates :state_abbrv, presence: true
-	validates :zipcode, presence: true
-	validates :hospitality_type, presence: true
-	validates :contact_person_id, presence: true
-
-	HOSPITALITY_TYPE = [['Home',1],['Retreat Center',2],['Hotel/Motel',3]]
-	
-	def display_address
-		if (self.address1 != nil && self.city != nil && self.state_abbrv != nil && self.zipcode != nil)
-		"#{self.address1} \n #{self.city}, #{self.state_abbrv}  #{self.zipcode}" 
-		else
-			"--"
-		end
-	end
-
-	def display_description
-		if self.description == nil
-			'--'
-		else
-			self.description
-		end
-	end
+  delegate :name, :description, :address1, :address2, :city, :state_abbrv,
+    :zipcode, :lodging_type, :locality_id, :max_capacity, :min_capacity,
+    to: :lodging
 end

@@ -1,19 +1,27 @@
 <!--% @stats.each do |locality_stats| %-->
-<% @event.participating_localities.each do |loc| %>
+
+<% if @event.participating_localities.count > 0 %>
+	<% @event.participating_localities.each do |loc| %>
+		<tr>
+			<td><%= loc.city %></td>
+			<td><%= @stats["#{loc.city}"]['grand_total'] %></td>
+			<td><%= @stats["#{loc.city}"]['total_yp'] %></td>
+			<td><%= @stats["#{loc.city}"]['total_serving_ones'] %></td>
+			<td><%= @stats["#{loc.city}"]['total_trainees'] %></td>
+			<td><%= @stats["#{loc.city}"]['total_helpers'] %></td>
+      <td><%= @stats["#{loc.city}"]['yp_so_ratio'] %></td>
+			<td><%= number_to_currency(@stats["#{loc.city}"]['amount_due']) %></td>
+			<td><%= @stats["#{loc.city}"]['actual_grand_total'] %></td>
+			<td><%= @stats["#{loc.city}"]['actual_total_yp'] %></td>
+			<td><%= @stats["#{loc.city}"]['actual_total_serving_ones'] %></td>
+			<td><%= @stats["#{loc.city}"]['actual_total_trainees'] %></td>
+			<td><%= @stats["#{loc.city}"]['actual_total_helpers'] %></td>
+			<td><%= number_to_currency(@stats["#{loc.city}"]['actual_amount_paid']) %></td>
+			<td><%= number_to_currency(@stats["#{loc.city}"]['balance']) %></td>
+		</tr>
+	<% end %>
+<% else %>
 	<tr>
-		<td><%= loc.city %></td>
-		<td><%= @stats["#{loc.city}"]["grand_total"] %></td>
-		<td><%= @stats["#{loc.city}"]["total_yp"] %></td>
-		<td><%= @stats["#{loc.city}"]["total_serving_ones"] %></td>
-		<td><%= @stats["#{loc.city}"]["total_trainees"] %></td>
-		<td><%= @stats["#{loc.city}"]["total_helpers"] %></td>
-		<td><%= @stats["#{loc.city}"]["amount_due"] %></td>
-		<td><%= @stats["#{loc.city}"]["actual_grand_total"] %></td>
-		<td><%= @stats["#{loc.city}"]["actual_total_yp"] %></td>
-		<td><%= @stats["#{loc.city}"]["actual_total_serving_ones"] %></td>
-		<td><%= @stats["#{loc.city}"]["actual_total_trainees"] %></td>
-		<td><%= @stats["#{loc.city}"]["actual_total_helpers"] %></td>
-		<td><%= @stats["#{loc.city}"]["actual_amount_paid"] %></td>
-		<td><%= @stats["#{loc.city}"]["balance"] %></td>
+		<td colspan="14" class="text-center">There are no registrations for this event.</td>
 	</tr>
 <% end %>

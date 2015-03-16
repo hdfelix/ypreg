@@ -1,0 +1,6 @@
+AllCops:
+  RunRailsCops: true
+  # Include:
+  #   - '**/RakeFile'
+  # Exclude:
+  #   - 'config/**/*'

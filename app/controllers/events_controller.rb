@@ -1,68 +1,122 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [ :show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
     @events = Event.all
-		authorize @events
+    authorize @events
   end
 
+  # GET /event/1
   def show
-
-		# load summary for all localities into  in a loop here
-		@event = Event.find(params[:id])
-		@stats = @event.load_locality_summary(Locality.first)
-
+    # @event set with 'before_action'
+    @stats =  @event.load_locality_summary
   end
 
   def new
     @event = Event.new
-		authorize @event
+    authorize @event
   end
 
   def edit
+    # @event set with 'before_action'
   end
 
   def create
-		@event = Event.new(event_params)
-		authorize @event
+    @event = Event.new(event_params)
+    authorize @event
 
-		if @event.save
-			redirect_to events_path, notice: 'Event was successfully created.' 
-		else
-			flash[:error] = "Error creating the event."
-			render action: 'new'
-		end
+    if @event.save
+      redirect_to events_path, notice: 'Event was successfully created.'
+    else
+      flash[:error] = 'Error creating the event.'
+      render action: 'new'
+    end
   end
 
+  # POST /event/1
   def update
-		if @event.update(event_params)
-			redirect_to @event, notice: 'Event was successfully updated.'
-		else
-			flash[:error] = "Event could not be updated."
-			render action: 'edit'
-		end
+    # @event set with 'before_action'
+    if @event.update(event_params)
+      redirect_to @event, notice: 'Event was successfully updated.'
+    else
+      flash[:error] = 'Event could not be updated.'
+      render action: 'edit'
+    end
   end
 
   # DELETE /events/1
   def destroy
-		if @event.destroy
-			flash[:notice] = "Event #{@event.title}deleted successfully."
-			redirect_to events_url
-		else
-			flash[:error] = "Event could not be deleted."
-			render action: 'index'
-		end
+    # @event set with 'before_action'
+    if @event.destroy
+      flash[:notice] = "Event #{@event.title}deleted successfully."
+      redirect_to events_url
+    else
+      flash[:error] = 'Event could not be deleted.'
+      render action: 'index'
+    end
+  end
+
+  def edit_locality_payments
+    @event = Event.find(params[:event_id])
+    @event_localities = EventLocality.where(event: @event)
+  end
+
+  def update_locality_payments
+    @event            = Event.find(params[:event_id])
+    localities        = Locality.find(params[:locality_paid_ids])
+    # registrations     = Registration.where(event: @event, locality: localities)
+    # event_localities  = EventLocality.where(event: @event, locality: localities)
+
+    ActiveRecord::Base.transaction do
+      localities.each do |loc|
+        registrations     = Registration.where(event: @event, locality: loc)
+        event_localities    = EventLocality.where(event: @event, locality: loc)
+
+        # Flip 'has_been_paid' value for registrations of selected locality
+        registrations.each do |reg|
+          if reg.has_been_paid == true
+            reg.update_attributes(has_been_paid: false)
+          else
+            reg.update_attributes(has_been_paid: true)
+          end
+          reg.save
+        end
+
+        # Flip 'submited_registraiton_payment_check for event localities of selected locality
+        event_localities.each do |el|
+          if el.submitted_registration_payment_check == true
+            el.update_attributes(submitted_registration_payment_check: false)
+          else
+            el.update_attributes(submitted_registration_payment_check: true)
+          end
+          el.save
+        end
+      end
+
+      redirect_to edit_locality_payments_path
+    end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-			authorize @event
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def event_params
-			params.require(:event).permit(:event_type, :title, :begin_date, :end_date, :registration_cost, :registration_open_date, :registration_close_date, :location_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+    authorize @event
+  end
+
+  # Never trust parameters from the scary internet,
+  # only allow the white list through.
+  def event_params
+    params.require(:event)
+      .permit(
+    :event_type,
+    :title,
+    :begin_date,
+    :end_date,
+    :registration_cost,
+    :registration_open_date,
+    :registration_close_date,
+    :location_id)
+  end
 end

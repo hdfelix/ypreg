@@ -1,206 +1,302 @@
 <div class="content">
-	<div class="row">
-		<div class="main-header">
-			<h2><%= @event.title %></h2>
-			<em><%= "to be held at #{ Location.find(@event.location_id).name }" %></em>
-		</div>
-	</div>
+  <div class="row">
+    <div class="main-header">
+      <h2><%= @event.title %></h2>
+      <em><%= "to be held at #{ Location.find(@event.location_id).name }" %></em>
+    </div>
+  </div>
 
-	<div class="row">
-		<!-- Event info -->
-		<div class="col-md-4">
-			<div class="widget">
-				<div class="widget-header">
-					<h3><i class="fa fa-calendar-o"></i>Event Details</h3>
-				</div>
-				<div class="widget-content">
-					<p id="notice"><%= notice %></p>
+  <div class="row">
+    <!-- Event info -->
+    <div class="col-md-4">
+      <div class="widget">
+        <div class="widget-header">
+          <h3><i class="fa fa-calendar-o"></i>Event Details</h3>
+        </div>
+        <div class="widget-content">
+          <p id="notice"><%= notice %></p>
 
-					<div class="row">
-						<div class="col-sm-6">
-							<strong><span class="pull-right">Type of event:</span></strong>
-						</div>
-						<div class="col-sm-5">
-							<%= display_event(@event) %>
-						</div>
-					</div>
+          <div class="row">
+            <div class="col-sm-5">
+              <strong><span class="pull-right">Type:</span></strong>
+            </div>
+            <div class="col-sm-6">
+              <%= display_event(@event) %>
+            </div>
+          </div>
 
-					<div class="row">
-						<div class="col-sm-6">
-							<strong><span class="pull-right">Begin Date:</span></strong>
-						</div>
-						<div class="col-sm-5">
-							<%= format_date(@event.begin_date) %>
-						</div>
-					</div>
-					
-					<div class="row">
-						<div class="col-sm-6">
-							<strong><span class="pull-right">End date: </span></strong>
-						</div>
-						<div class="col-sm-5">
-							<%= format_date(@event.end_date) %>
-						</div>
-					</div>
+          <div class="row">
+            <div class="col-sm-5">
+              <strong><span class="pull-right">Registration:</span></strong>
+            </div>
+            <div class="col-sm-6">
+              <%= format_date(@event.registration_open_date) %> - 
+              <%= format_date(@event.registration_close_date) %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-5">
+              <strong><span class="pull-right">Dates:</span></strong>
+            </div>
+            <div class="col-sm-6">
+              <%= format_date(@event.begin_date) %> -
+              <%= format_date(@event.end_date) %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-5">
+              <strong><span class="pull-right">Cost:</span></strong>
+            </div>
+            <div class="col-sm-6">
+              <%= (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA" %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <br />
+              <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Hospitality', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Registrations', event_registrations_path(@event), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Payments', edit_locality_payments_path(@event), class: 'btn btn-primary btn-sm' %>
 
-					<div class="row">
-						<div class="col-sm-6">
-							<strong><span class="pull-right">Registration opens: </span></strong>
-						</div>
-						<div class="col-sm-5">
-							<%= format_date(@event.registration_open_date) %>
-						</div>
-					</div>
+            </div>
+          </div>
 
-					<div class="row">
-						<div class="col-sm-6">
-							<strong><span class="pull-right">Registration  closes: </span></strong>
-						</div>
-						<div class="col-sm-5">
-							<%= format_date(@event.registration_close_date) %>
-						</div>
-					</div>
+          <!--div class="row"-->
+            <!--div class="col-sm-12"-->
+              <!--%= link_to 'Register', new_event_registrations_path, class: 'btn btn-default pull-right' %-->
+            <!--/div-->
+          <!--/div-->
+        </div>
 
-					<div class="row">
-						<div class="col-sm-6">
-							<strong><span class="pull-right">Registration cost:</span></strong>
-						</div>
-						<div class="col-sm-5">
-							<%= (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA" %>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<br />
-							<%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm'%>
-						</div>
-					</div>
+        <div class="widget-footer"> 
+        </div>
+      </div>
+    </div>
+  <!-- Event Registration Details -->
+  <div class="col-md-4">
+    <div class="widget">
+      <div class="widget-header">
+        <h3><i class="fa fa-bar-chart-o"></i>Statistics</h3>
+      </div>
+      <div class="widget-content">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Totals</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Total Attendance</td>
+              <td><%= @event.registrations.count %></td>
+            </tr>
+            <tr>
+              <td>Camp Max Capacity</td>
+              <td><%= display_max_cap(@event.location)%></td>
+            </tr>
+            <tr>
+              <td>Remaining Spaces</td>
+              <td><%= @event.remaining_spaces %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- end event registration details -->
 
-					<!--div class="row"-->
-						<!--div class="col-sm-12"-->
-							<!--%= link_to 'Register', new_event_registrations_path, class: 'btn btn-default pull-right' %-->
-						<!--/div-->
-					<!--/div-->
-				</div>
+  <!-- Attendance Breakdown -->
+  <div class="col-md-4">
+    <div class="widget">
+      <div class="widget-header">
+        <h3><i class="fa fa-bar-chart-o"></i>Attendance Breakdown</h3>
+      </div>
+      <div class="widget-content">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Totals</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Young People</td>
+              <td><%= @event.total_registrations(role: 'yp') %></td>
+            </tr>
+            <tr>
+              <td>Serving Ones</td>
+              <td><%= @event.total_registrations(attend_as_serving_one: true) %></td>
+            </tr>
+            <tr>
+            <tr>
+              <td>Trainees</td>
+              <td><%= @event.total_registrations(role: 'trainee') %></td>
+            </tr>
+            <tr>
+              <td>Helpers</td>
+              <td><%= @event.total_registrations(role: 'helper') %></td>
+            </tr>
+            <tr>
+              <td>Family Attending</td>
+              <td>[FA]</td>
+            </tr>
+            <tr>
+              <td>YCAT</td>
+              <td><%= @event.total_registrations(role: 'ycat') %></td>
+            </tr>
+            <tr>
+              <td>S/S Brothers</td>
+              <td><%= @event.total_registrations(role: 'speaking_brothers') %></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div><!-- end attendance breakdown -->
+  </div><!-- end event info, statistics, attendance breakdown row -->
+  
+  <div class="row">
+    <!-- locality summaries -->
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-header">
+         <div class="btn-group widget-header-toolbar">
+            <a href="#" id="tour-focus" title="focus" class="btn-borderless btn-focus"><i class="fa fa-eye"></i></a>
+            <a href="#" title="expand/collapse" class="btn-borderless btn-toggle-expand"><i class="fa fa-chevron-up"></i></a>
+            <a href="#" title="remove" class="btn-borderless btn-remove"><i class="fa fa-times"></i></a>
+          </div> 
+          <h3><i class="fa fa-bar-chart-o"></i>locality summaries</h3>
+        </div>
+          <div class="widget-content">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>locality</th>
+                  <th>grand total</th>
+                  <th>total yp</th>
+                  <th>total so</th>
+                  <th>total trainees</th>
+                  <th>total helpers</th>
+                  <th>yp/so</th>
+                  <th>amt due</th>
+                  <th>actual grand total</th>
+                  <th>actual total yp</th>
+                  <th>actual total so</th>
+                  <th>actualtotal trainees</th>
+                  <th>actual total helpers</th>
+                  <th>actual amt paid</th>
+                  <th>balance</th>
+                </tr>
+              </thead>
+              <tbody>
+              <%= render partial: 'localities/attendance_summary', locals: { localities: @event.participating_localities } %>
+              </tbody>
+            </table>
+          </div><!-- widget content -->
+        </div><!-- locality summaries widget -->
+    </div><!-- col-md 12 -->
+  </div><!-- row -->
 
-				<div class="widget-footer">	
-				</div>
-			</div>
-		</div>
-	<!-- Event Registration Details -->
-	<div class="col-md-4">
-		<div class="widget">
-			<div class="widget-header">
-				<h3><i class="fa fa-bar-chart-o"></i>Statistics</h3>
-			</div>
-			<div class="widget-content">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th></th>
-							<th>Totals</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Total Attendance</td>
-							<td><%= @event.registrations.count %></td>
-						</tr>
-						<tr>
-							<td>Camp Max Capacity</td>
-							<td><%= display_max_cap(@event.location)%></td>
-						</tr>
-						<tr>
-							<td>Remaining Spaces</td>
-							<td><%= @event.remaining_spaces %></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div><!-- end event registration details -->
+  <!-- hospitality info -->
+  <div class='row'>
+    <div class='col-md-12'>
+      <div id='hospitality_info_widget' class='widget'>
+        <div class='widget-header'>
+          <div class="btn-group widget-header-toolbar">
+            <a href="#" id="tour-focus" title="focus" class="btn-borderless btn-focus"><i class="fa fa-eye"></i></a>
+            <a href="#" title="expand/collapse" class="btn-borderless btn-toggle-expand"><i class="fa fa-chevron-up"></i></a>
+            <a href="#" title="remove" class="btn-borderless btn-remove"><i class="fa fa-times"></i></a>
+          </div>
+          <h3><i class="fa fa-bar-chart-o"></i>Hospitality Info</h3>
+        </div>
+        <div class='widget-content'>
+          <div id="visit-stat-table_wrapper" class="datatables_wrapper" role="grid">
+            <div class="row">
+              <div class="col-md-3">
+                <div id="visit-stat-table_length" class="datatables_length">
+                  <label>
+                    <select name="visit-stat-table_length" size="1" aria-controls="visit-stat-table">
+                      <option value="10" selected="selected">
 
-	<!-- Attendance Breakdown -->
-	<div class="col-md-4">
-		<div class="widget">
-			<div class="widget-header">
-				<h3><i class="fa fa-bar-chart-o"></i>Attendance Breakdown</h3>
-			</div>
-			<div class="widget-content">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th></th>
-							<th>Totals</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Young People</td>
-							<td>[yp]</td>
-						</tr>
-						<tr>
-							<td>Serving Ones</td>
-							<td>[so]</td>
-						</tr>
-						<tr>
-						<tr>
-							<td>Trainees</td>
-							<td>[Ts]</td>
-						</tr>
-						<tr>
-							<td>Helpers</td>
-							<td>[Hs]</td>
-						</tr>
-						<tr>
-							<td>Family Attending</td>
-							<td>[FA]</td>
-						</tr>
-						<tr>
-							<td>YCAT</td>
-							<td>[Ys]</td>
-						</tr>
-						<tr>
-							<td>S/S Brothers</td>
-							<td>[SBs]</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div><!-- End attendance breakdown -->
-	</div><!-- End Event info, statistics, attendance breakdown row
-	
-	<div class="row">
-		<!-- Locality Summaries -->
-		<div class="col-md-12">
-			<div class="widget">
-				<div class="widget-header">
-					<h3><i class="fa fa-bar-chart-o"></i>Locality Summaries</h3>
-				</div>
-					<div class="widget-content">
-						<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>Locality</th>
-									<th>GRAND TOTAL</th>
-									<th>Total YP</th>
-									<th>Total SO</th>
-									<th>Total Trainees</th>
-									<th>YP/SO</th>
-									<th>Amt Due</th>
-									<th>Actual Grand Total</th>
-									<th>Actual Total YP</th>
-									<th>Actual Total SO</th>
-									<th>ActualTotal Trainees</th>
-									<th>Actual Total Helpers</th>
-									<th>Actual Amt Paid</th>
-									<th>Balance</th>
-								</tr>
-							</thead>
-							<tbody>
-							<%= render partial: 'localities/attendance_summary', locals: { localities: @event.participating_localities } %>
-							</tbody>
-						</table>
-					</div><!-- widget content -->
-				</div><!-- Locality Summaries widget -->
-		</div><!-- col-md 12 -->
-	</div><!-- Row -->
+                          10
+
+                      </option>
+                      <option value="25">
+
+                          25
+
+                      </option>
+                      <option value="50">
+
+                          50
+
+                      </option>
+                      <option value="100">
+
+                          100
+
+                      </option>
+                    </select>
+
+                       records per page
+
+                  </label>
+                </div>
+              </div>
+            </div><!-- end row -->
+            <table class="table table-sorting table-striped table-hover datatable dataTable" width="100%" cellspacing="0" cellpadding="0" aria-describedby="visit-stat-table_info" style="width: 100%;">
+              <thead>
+                <tr role="row">
+                  <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 125px;" aria-sort="ascending" aria-label="Browser: activate to sort column descending">
+                          Name
+
+                  </th>
+                  <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 139px;" aria-label="Operating System: activate to sort column ascending">
+
+                     Home Phone
+
+                  </th>
+                  <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 51px;" aria-label="Visits: activate to sort column ascending">
+
+                     Cell
+
+                  </th>
+                  <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
+
+                     Address
+
+                  </th>
+                  <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
+
+                     Min / Max Guests
+
+                  </th>
+                  <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
+
+                     Assigned Localities
+
+                  </th>
+                  <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
+
+                     [Assigned Guests] 
+
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="event_hospitalities" role="alert" aria-live="polite" aria-relevant="all">
+              <%= render partial: 'lodgings/info_form', locals: {event: @event} %>
+              </tbody>
+            </table>
+            <div class='row'><!-- pagination footer -->
+              <div class='col-md-6'>
+                <%= link_to 'Manage Hospitalities', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
+                <%= link_to 'Assign to Localities', event_hospitality_locality_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
+                <%= link_to 'Assign Saints', event_hospitality_registration_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
+              </div>
+              <div class='col-md-6'></div>
+              <!-- Add code for records displayed, pagination -->
+            </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- hospitality info -->

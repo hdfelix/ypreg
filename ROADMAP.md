@@ -15,7 +15,7 @@
 * Migration, Controller, Model
 * Initial view
 
-### v0.2 
+### v0.11
 * Events
  * Integration tests
  * Migration, Controller, Model
@@ -28,23 +28,33 @@
 * Add sign-in / register behavior on home page
 * Add first 
 
-### v0.3: Registrations, Heroku setup
+### v0.13: Registrations, Heroku setup
 * Integration tests
 * Migration, Controller, Model
 * Initial view
 * Set up site on Heroku
 
-### v0.4: Kingboard theme
+### v0.14: Kingboard theme
 * Add files to asset pipeline
 * Fix anything broken with theme
 
-### v0.5: Hospitality
+### v0.15 Skinning
+* 'Next Event' widget on left-nav
+ * Localities
+ * Registrations
+* Event Localities summary 
+
+### v0.16: Lodging 
 * Integration tests
 * Migration, Controller, Model
 * Initial view
 
-### v0.6 Reports, Skinning
-* [list reports created, and theming]
-* Graphs?  
+### v0.17
+* Write missing tests for models
+* Before Hospitality Assignment refactorings
 
+### v0.18: Hospitality Assignment
+* Manage Hospitalities view
+ * Add / remove Event hospitalities
+* Assigning Lodgings to Localities
 

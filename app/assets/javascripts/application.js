@@ -1,33 +1,11 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file.
-//
-// Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
-// about supported directives.
 //= require jquery
 //= require jquery_ujs
-//= require kingadmin/jquery-2.1.0
-//= require kingadmin/bootstrap
-//= require kingadmin/king-elements
-//= require kingadmin/king-components
-//= require kingadmin/king-common
-//= require kingadmin/king-form-layouts
-//= require kingadmin/king-page
+//= require jquery.ui.all
+//= require modernizr
+//= require_directory ./kingadmin-v1.2/.
+//= require bootstrap-sprockets
+//= require bootstrap-datepicker
+//= require events
+//= jquery.dataTables.bootstrap
 //= require_tree .
-
-$(function() {
-	alert("jquery working");
-	$("#event_begin_date").datepicker(
-		{dateformat: 'yy-mm-dd'});
-	$("#event_end_date").datepicker(
-		{dateformat: 'yy-mm-dd'});
-	$("#event_registration_open_date").datepicker(
-		{dateformat: 'yy-mm-dd'});
-	$("#event_registration_close_date").datepicker(
-		{dateformat: 'yy-mm-dd'});
-});
+//= require_self

@@ -20,4 +20,15 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  faker:
+    address:
+      ypreg_city: [Anaheim,Cypress,New Jerusalem,Buena Park,Irvine,Huntington Beach,San Juan Capistrano,San Diego,Orange,Baker's Field]
+      state_abbrv: [CA]
+      zipcode: [92804,92805,92620,92612,92713,92899]
+    name:
+      event_name:     [Brothers's,Sister's,Young Working Saint's,Toddler's,Retired,Full-timer's,Part-timer's]
+      event_modifier: [6th-grade,YP,High-School,College,Yearly,Monthly,Frequent,Exciting,Blending,Winter,Summer,Fall,Spring,International]
+      event_type:     [Conference,Retreat,Getaway,Event,Get-together,Fellowship,Meeting,Training,Gathering]
+      location_name:  [Big Bear,MCC,Left Field,Eiffel Tower,Blue Playground,Yogurtland,Church in Anaheim,The District,Pizza Hut,In-n-Out,Starbucks,Peet's Coffee,Church in Cypress,Church in Irvine,The Titanic,Great Wall of China]
   hello: "Hello world"
+

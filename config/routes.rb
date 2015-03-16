@@ -1,23 +1,55 @@
 YpwReg::Application.routes.draw do
-  get "hospitality/index"
-  get "hospitality/show"
-  get "hospitality/new"
-	root 'welcome#index'
+  root 'welcome#index'
 
-  get "welcome/index"
-  get "dashboard/index"
+  get 'welcome/index'
+  get 'dashboard/index'
 
-	resources :locations
-	resources :localities
-	resources :hospitalities
-	resources :events do
-		resources :registrations, except: [:index], controller: 'events/registrations'  #, only:  [:index, :new, :create]
-		#resources :hospitalities, except: [:index, :new, :create]
-	end
+  delete 'events/:event_id/hospitalities/destroy', to: 'events/hospitalities#destroy', as: :hospitality_remove
+  get 'events/:event_id/edit_locality_payments',
+    to: 'events#edit_locality_payments',
+    controller: 'events',
+    as: :edit_locality_payments
 
-  devise_for :user, controllers: { registrations: "users/registrations" }
+  put 'event/:event_id/update_locality_payments',
+    to: 'events#update_locality_payments',
+    controller: 'events',
+    as: :update_locality_payments
 
-	#if Rails.env.development?
-	#	mount LetterOpenerWeb::Engine, at: '/letter_opener'
-	#end
+  resources :locations
+  resources :localities
+  resources :lodgings
+  resources :events do
+    resources :hospitalities, only: [:index, :new, :create], controller: 'events/hospitalities' do
+      collection do
+        post 'add'
+        put 'remove'
+      end
+    end
+    resources :hospitality_locality_assignments, only: [:index], controller: 'events/hospitality_locality_assignments' do
+      collection do
+        put 'assign'
+        post 'assign'
+        # post 'assign\*locality', action: 'assign'
+      end
+    end
+    resources :hospitality_registration_assignments, only: [:index, :show], controller: 'events/hospitality_registration_assignments' do
+      collection do
+        put 'assign'
+        post 'assign'
+      end
+    end
+    resources :hospitality_lodgings, only: [:index], controller: 'events/hospitality_lodgings'
+    resources :registrations, controller: 'events/registrations'
+  end
+
+  # http://stackoverflow.com/a/22158715
+  devise_for :users, path_names: { edit: 'user' }, except: [:destroy], controllers: { registrations: 'users/registrations', 
+                                                                                      passwords: 'users/passwords',
+                                                                                      confirmations: 'users/confirmations' } do
+  end
+
+  devise_scope :user do
+    get '/users', to: 'users/registrations#index', as: 'users'
+    get '/user/:id', to: 'users/registrations#show', as: 'user'
+  end
 end

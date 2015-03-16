@@ -1,6 +1,6 @@
 <div class="content">
 	<div class="main-header">
-		<h2>EVENTS</h2>
+		<h2>Events</h2>
 			<em>list of up-coming conferences, retreats, and one-day events</em>
 	</div>
 
@@ -45,14 +45,12 @@
 						<% end %>
 					<tbody>
 				</table>
-
-				<%= link_to new_event_path, class: 'btn btn-default' do %>
+        <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
+				<%= link_to new_event_path, class: 'btn btn-primary' do %>
 					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
 					New Event
 				<% end %>
-
 			</div>
 		</div>
 	</div>
-
 </div>

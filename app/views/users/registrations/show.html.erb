@@ -1,0 +1,114 @@
+<div class="content">
+	<div class="row">
+	<div class="main-header">
+		<h2><%= current_user.name %></h2>
+		<em></em>
+	</div>
+</div>
+<div class="row">
+	<!-- User info -->
+	<div class="col-md-6">
+		<div class="widget">
+			<div class="widget-header">
+				<h3><i class="fa fa-calendar-o"></i>User Details</h3>
+			</div>
+			<div class="widget-content">
+				<p id="notice"><%= notice %></p>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Name:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= current_user.name %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Role:</strong>
+					</div>
+					<div class="col-sm-8">
+            <%= current_user.role %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Gender:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= current_user.gender %>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Birthday:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= format_date(current_user.birthday) %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Locality:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= current_user.locality.city %>
+					</div>
+				</div>
+					
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Cell Phone:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= format_phone_number(current_user.cell_phone) %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
+            <strong>Home phone:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= format_phone_number(current_user.home_phone) %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-4">
+						<strong>Work Phone:</strong>
+					</div>
+					<div class="col-sm-8">
+						<%= format_phone_number(current_user.work_phone) %>
+					</div>
+				</div>
+			</div>
+
+			<div class="widget-footer">	
+			</div>
+		</div>
+	</div>
+	<!-- Details -->
+	<div class="col-md-6">
+		<div class="widget">
+			<div class="widget-header">
+				<h3><i class="fa fa-bar-chart-o"></i>Statistics</h3>
+			</div>
+			<div class="widget-content">
+				...
+			</div>
+		</div>
+	</div><!-- end User details -->
+
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<%= link_to 'Edit', edit_user_registration_path(current_user), class: 'btn btn-primary'%>
+		<%= link_to 'Back to Dashboard', root_path, class: 'btn btn-default' %>
+	</div>
+</div>
+</div><!-- End User info -->

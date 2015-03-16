@@ -1,0 +1,39 @@
+<% event.hospitalities.each do |hosp| lodging = hosp.lodging %>
+  <tr id="event_hospitalities_<%= hosp.id %>" class="odd">
+    <td class=" sorting_1">
+      <!-- hosp name -->
+      <%= lodging.name %>
+
+    </td>
+    <td class=" ">
+      <!-- Contact home phone -->
+      <%= format_phone_number(lodging.contact_person_home_phone) %>
+
+    </td>
+    <td class=" ">
+      <!-- Contact cell -->
+      <%= format_phone_number(lodging.contact_person_cell_phone) %>
+
+    </td>
+    <td class=" ">
+      <!-- Address -->
+      <%= full_address(lodging,{two_lines: true}) %>
+
+    </td>
+    <td class=" ">
+      <!-- Min / Max guests -->
+      <%= lodging.display_min_capacity %> / <%= lodging.display_max_capacity %>
+
+    </td>
+    <td class=" ">
+      <!-- Assigned Localities -->
+       Assigned Localities
+
+    </td> 
+    <td class=" ">
+      <!-- Assigned guests -->
+      [--]
+
+    </td> 
+  </tr>
+<% end %>

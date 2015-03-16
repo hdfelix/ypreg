@@ -1,48 +1,50 @@
 <div class="content">
-	<div class="main-header">
-		<h2>LOCATIONS</h2>
-			<em>list of locations for conferences, retreats, and one-day events</em>
-	</div>
+  <div class="main-header">
+    <h2>Locations</h2>
+    <em>list of locations for conferences, retreats, and one-day events</em>
+  </div>
 
-	<div class="col-md-10">
-		<div class="widget widget-table">
-			<div class="widget-header">
-				<h3><i class="fa fa-table"></i></h3>
-			</div>
-			<div class="widget-content">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Description</th>
-							<th>Address</th>
-							<th></th>
-						</tr>
-					</thead>
+  <div class="col-md-12">
+    <div class="widget widget-table">
+      <div class="widget-header">
+        <h3><i class="fa fa-table"></i></h3>
+      </div>
+      <div class="widget-content">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Address</th>
+              <th></th>
+            </tr>
+          </thead>
 
-					<tbody>
-						<% if @locations.all.count > 0 %>
-							<% @locations.each do |location| %>
-								<tr>
-									<td><%= location.name %></td>
-									<td><%= location.description %></td>
-									<td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
-									<td><%= link_to 'Show', location %>
-											<%= link_to 'Edit', edit_location_path(location) %>
-											<%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
-									</td>
-								</tr>
-							<% end %>
-						<% else %>
-							<tr><td colspan=7><center>No Locations in the database...</center></td></tr>
-						<% end %>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<br />
+          <tbody>
+          <% if @locations.all.count > 0 %>
+            <% @locations.each do |location| %>
+            <tr>
+            <td><%= location.name %></td>
+            <td><%= location.description %></td>
+            <td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
+            <td><%= link_to 'Show', location %>
+            <%= link_to 'Edit', edit_location_path(location) %>
+              <%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+        <% else %>
+            <tr><td colspan=7><center>No Locations in the database...</center></td></tr>
+        <% end %>
+          </tbody>
+        </table>
 
-		<%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
-		<%= link_to 'New Location', new_location_path, class: 'btn btn-primary' %>
-	</div>
+        <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
+        <%= link_to new_location_path, class: 'btn btn-primary' do %>
+					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
+					New Location
+				<% end %>
+      </div>
+    </div>
+  </div>
 </div>

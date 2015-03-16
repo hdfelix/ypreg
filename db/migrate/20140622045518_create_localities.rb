@@ -3,8 +3,8 @@ class CreateLocalities < ActiveRecord::Migration
     create_table :localities do |t|
       t.string :city
       t.string :state_abbrv
-      t.integer :contact_id
-			t.integer :hospitality_contact_id
+      t.references :contact, index: true
+			t.references :lodging_contact, index: true
 
       t.timestamps
     end
