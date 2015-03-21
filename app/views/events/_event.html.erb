@@ -40,10 +40,12 @@
 				<h4><span>Cost:  </span><span><%= number_to_currency(event.registration_cost) %></span></h4>
 				<br />
 				<% if current_user %>
-					<%= link_to 'Manage', event, class: 'btn btn-default btn-sm' %>
-					<% if current_user.registrations.where(event_id: event).empty? %>
-						<%= link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary btn-sm' %>
-					<% end %>
+				  <% if policy(event).show? %>
+            <%= link_to 'Manage', event, class: 'btn btn-default btn-sm' %>
+          <% end %>
+          <% if current_user.registrations.where(event_id: event).empty? %>
+            <%= link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary btn-sm' %>
+          <% end %>
 				<% else %>
 					<p><%= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary btn-sm' %></p>
 				<% end %>

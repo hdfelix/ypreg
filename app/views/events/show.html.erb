@@ -54,10 +54,18 @@
           <div class="row">
             <div class="col-md-12">
               <br />
-              <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
-              <%= link_to 'Hospitality', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
-              <%= link_to 'Registrations', event_registrations_path(@event), class: 'btn btn-primary btn-sm' %>
-              <%= link_to 'Payments', edit_locality_payments_path(@event), class: 'btn btn-primary btn-sm' %>
+				      <% if policy(:event).edit? %>
+                <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
+              <% end %>
+              <% if policy(:hospitality).show? %>
+                <%= link_to 'Hospitality', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
+              <% end %>
+              <% if policy(:registrations).show? %>
+                <%= link_to 'Registrations', event_registrations_path(@event), class: 'btn btn-primary btn-sm' %>
+              <% end %>
+              <% if policy(:payments).edit? %>
+                <%= link_to 'Payments', edit_locality_payments_path(@event), class: 'btn btn-primary btn-sm' %>
+              <% end %>
 
             </div>
           </div>

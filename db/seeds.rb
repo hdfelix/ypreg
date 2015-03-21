@@ -118,7 +118,22 @@ total_users += 1
 count = 50
 print "\n  YP accounts (#{count}): "
 
-for i in 1..(count + 1) do
+yp = User.new(
+  name: 'Test YP',
+  email: 'hdfnet@gmail.com',
+  cell_phone: '7777777777',
+  birthday: 14.years.ago,
+  gender: 'B',
+  password: 'chiracha',
+  password_confirmation: 'chiracha')
+
+yp.skip_confirmation!
+yp.update_attributes(role: 'yp')
+yp.update_attributes(locality_id: Locality.all.sample.id)
+yp.save
+
+print '.'
+for i in 1..(count) do
   yp = User.new(
     name: "YP User#{i}",
     birthday: (13..18).to_a.sample.years.ago,
