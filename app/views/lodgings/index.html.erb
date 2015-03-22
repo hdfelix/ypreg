@@ -33,7 +33,10 @@
 									<td><%= lodging.max_capacity %></td> 
 									<td><%= lodging.display_address_in_address_block_format %></td>
 
-										<td><%= link_to 'Edit', edit_lodging_path(lodging) %>&nbsp;
+                  <td>
+                    <% if policy(:lodging).edit? %>
+                      <%= link_to 'Edit', edit_lodging_path(lodging) %>&nbsp;
+                    <% end %>
 										<!--%= link_to 'Delete',event_lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' } %-->
 									</td>
 								</tr>
@@ -45,11 +48,12 @@
 				</table>
 
         <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
-				<%= link_to new_lodging_path, class: 'btn btn-primary' do %>
-					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
-					New Lodging
-				<% end %>
-
+        <% if policy(:lodging).new? %>
+          <%= link_to new_lodging_path, class: 'btn btn-primary' do %>
+            <%= content_tag(:i, '', class: "fa fa-plus-square") %>
+            New Lodging
+          <% end %>
+        <% end %>
 			</div>
 		</div>
 	</div>

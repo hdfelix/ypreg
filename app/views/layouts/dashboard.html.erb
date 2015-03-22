@@ -165,6 +165,7 @@
           <!-- left sidebar -->
           <div class="col-md-2 left-sidebar">
 
+            <% if current_user.role != 'yp' %>
             <!-- main-nav -->
             <nav class="main-nav">
 
@@ -190,7 +191,7 @@
                         <% if policy(Lodging.all).index? %>
                           <li><%= link_to lodgings_url do %><span class="text">Lodging</span><% end %></li>
                         <% end %>
-                        <% if policy(Registration.all).index? %>
+                        <% if policy(:registration).index? %>
                           <li><%= link_to users_url do %><span class="text">Users</span><% end %></li>
                         <% end %>
                       </ul>
@@ -305,6 +306,7 @@
                 </li>
               </ul>
             </div>
+          <% end %> <!-- end yp policy -->
             <!-- end sidebar content -->
           </div>
           <!-- end left sidebar -->
