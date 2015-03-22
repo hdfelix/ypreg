@@ -1,6 +1,26 @@
-<p> <strong>Event:</strong> <%= Event.find(@registration.first.event_id).title %></p>
-<p> <strong>User:</strong> <%= User.find(@registration.first.user_id).name %></p>
-<p> <strong>Registation Date:</strong> <%= format_date(@registration.first.created_at) %></p>
-<p> <strong>Paid?</strong> <%= @registration.first.has_been_paid %></p>
-<p> <strong>Pmt Adjustment:</strong> <%= @registration.first.payment_adjustment %></p>
-<p> <strong>Serving one?</strong> <%= @registration.first.attend_as_serving_one %></p>
+<div class="basic-info">
+  <p class="data-row"> 
+    <span class="data-name">Event:</span>
+    <span class="data-value"><%= Event.find(@registration.first.event_id).title %></span>
+  </p>
+  <p class="data-row">
+    <span class="data-name">User:</span> 
+    <span class="data-value"><%= User.find(@registration.first.user_id).name %></span> 
+  </p>
+  <p class="data-row">
+    <span class="data-name">Registered on:</span>
+    <span class="data-value"><%= format_date(@registration.first.created_at) %></span>
+  </p>
+  <p class="data-row">
+    <span class="data-name">Paid?</span> 
+    <span class="data-value"><%= @registration.first.has_been_paid %></span>
+  </p>
+  <p class="data-row">
+    <span class="data-name">Pmt Adjustment:</span>
+    <span class="data-value"><%= @registration.first.payment_adjustment %></span>
+  </p>
+  <p class="data-row">
+    <span class="data-name">Serving one?</span>
+    <span class="data-value"><%= @registration.first.attend_as_serving_one %></span>
+  </p>
+</div>
