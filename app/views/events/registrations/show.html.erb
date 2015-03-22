@@ -13,14 +13,16 @@
   </p>
   <p class="data-row">
     <span class="data-name">Paid?</span> 
-    <span class="data-value"><%= @registration.first.has_been_paid %></span>
+    <span class="data-value"><%= display_yes_no(@registration.first.has_been_paid) %><small>&nbsp;&nbsp;(Currently are handled by locality. Check with your servings ones on the actual status of your registration payment!)</small></span>
   </p>
   <p class="data-row">
     <span class="data-name">Pmt Adjustment:</span>
-    <span class="data-value"><%= @registration.first.payment_adjustment %></span>
+    <span class="data-value"><%= number_to_currency(@registration.first.payment_adjustment) %></span>
   </p>
   <p class="data-row">
     <span class="data-name">Serving one?</span>
     <span class="data-value"><%= @registration.first.attend_as_serving_one %></span>
   </p>
+  <br /><br />
+  <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
 </div>
