@@ -1,74 +1,111 @@
-<div class="wrapper full-page-wrapper page-login text-center">
-  <div class="inner page">
-		<div class="logo"><a href="index.html"><%=image_tag('kingadmin-logo.png', alt:'') %></a></div>
+<div class="content">
+  <div class="main-header">
+    <h2>Create User</h2>
+    <em></em>
+  </div>
+  <br />
 
-  <br />Update the view of this page... This style if before authentication....
-    <div class="login-box center-block">
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= devise_error_messages! %>
+  <div class="col-md-8">
+    <!-- Create user -->
+    <div class="widget">
+      <div class="widget-header"><h3><i class="fa fa-edit"></i></div>
+        <div class="widget-content">
+          <%= form_for(@user, :url => '/users/admin_create') do |f| %>
+            <%#= devise_error_messages! %>
+            <% if @user.errors.any? %>
+              <div id="error_explanation" class="alert alert-danger alert-dismissable">
+                <h4><strong><%= pluralize(@user.errors.count, "error") %></strong> prohibited this event from being saved:</h4>
+                <ul>
+                  <% @user.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
 
-        <p class="title">Sign up</p>
-        <div class="form-group">
-          <%= f.label :name, class: 'control-label sr-only' %>
-          <div class="col-sm-12">
-            <div class="input-group">
-              <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Enter name" %>
-              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+          <p class="title">Sign up</p>
+          <div class="form-group">
+            <%= f.label :gender, 'Gender', class: ' col-md-2 control-label' %>
+            <div class="col-md-10">
+              <div class="input-group">
+                <%= f.select(:gender, User::GENDER, {include_blank: true}, {class: 'form-control'}) %>
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <!--%= link_to "Add a locality", new_locality_path, class: 'pull-right' %-->
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :name, class: 'col-md-2 control-label' %>
+            <div class="col-md-10">
+              <div class="input-group">
+                <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Enter name" %>
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :role, class: ' col-md-2 control-label' %>
+            <div class="col-md-10">
+              <div class="input-group">
+                <%= f.select(:role, User::USER_ROLE, {include_blank: true}, {class: 'form-control'}) %>
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <!--%= link_to "Add a locality", new_locality_path, class: 'pull-right' %-->
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :locality_id, class: 'col-md-2 control-label' %>
+            <div class="col-md-10">
+              <div class="input-group">
+                <%= f.collection_select(:locality_id,Locality.all, :id, :city, {include_blank: true}, {class: 'form-control'}) %>
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <!--%= link_to "Add a locality", new_locality_path, class: 'pull-right' %-->
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :email, class: 'col-md-2 control-label' %>
+            <div class="col-md-10">
+              <div class="input-group">
+                <%= f.email_field :email, class: 'form-control', placeholder: 'Enter email' %>
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password, class: 'col-md-2 control-label' %>
+            <div class="col-md-10">
+              <div class="input-group">
+                <%= f.password_field :password, class: 'form-control', placeholder: "Enter password" %>
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password_confirmation, class: 'col-md-2 control-label' %>
+            <div class="col-md-10">
+              <div class="input-group">
+                <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Enter password confirmation" %>
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="form-group">
-          <%= f.label :locality_id, class: 'control-label sr-only' %>
-          <div class="col-sm-12">
-            <div class="input-group">
-              <%= f.collection_select(:locality_id,Locality.all, :id, :city, {include_blank: true}, {class: 'form-control'}) %>
-              <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <!--%= link_to "Add a locality", new_locality_path, class: 'pull-right' %-->
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :email, class: 'control-label sr-only' %>
-          <div class="col-sm-12">
-            <div class="input-group">
-              <%= f.email_field :email, class: 'form-control', placeholder: 'Enter email' %>
-              <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :password, class: 'control-label sr-only' %>
-          <div class="col-sm-12">
-            <div class="input-group">
-              <%= f.password_field :password, class: 'form-control', placeholder: "Enter password" %>
-              <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :password_confirmation, class: 'control-label sr-only' %>
-          <div class="col-sm-12">
-            <div class="input-group">
-              <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Enter password confirmation" %>
-              <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            </div>
-          </div>
-        </div>
-
-        <%= content_tag(:button, type: :submit, class: 'btn btn-custom-secondary btn-lg btn-block') do %>
-          <i class="fa fa-arrow-circle-o-right"></i>
-          Sign up
-        <% end %>
-      <% end %><!-- end form -->
-      <br />
-
-      <div class="links">
-        <%= render "devise/shared/links" %>
       </div>
-    </div><!-- end class='login-box center-block' -->
+
+      <div class="widget-footer">
+        <%= link_to 'Back', users_path, class: 'btn btn-default' %>
+        <%= f.submit "Submit", class: 'btn btn-primary' %>
+        <br />
+
+      </div>
+      <% end %><!-- end form -->
+    </div>
   </div>
 </div>

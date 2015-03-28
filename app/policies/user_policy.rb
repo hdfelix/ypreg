@@ -11,4 +11,8 @@ class UserPolicy < ApplicationPolicy
   def new?
     index?
   end
+
+  def admin_create?
+    user.present? && (user.role?(:admin) || user.role?(:scyp))
+  end
 end

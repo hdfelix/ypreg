@@ -26,13 +26,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def admin_new
-    binding.pry
     @user= User.new
+  end
+
+  def admin_create
+    binding.pry
+    @user = User.new(admin_create_params)
+    @user.skip_confirmation!
+    authorize @user
+
+    if @user.save
+      redirect_to users_path, notice: "User #{ @user.name } was successfully created."
+    else
+      flash[:error] = 'Error creating the event.'
+      render action: 'new'
+    end
   end
 
   private
 
   def admin_update_params
     params[:user].permit(:role, :email, :name, :gender, :home_phone, :work_phone, :cell_phone, :birthday)
+  end
+
+  def admin_create_params
+    params[:user].permit(:gender, :name, :email, :role, :locality_id, :password, :password_confirmation)
   end
 end
