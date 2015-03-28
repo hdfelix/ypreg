@@ -44,7 +44,11 @@
                   <td><%= display_yes_no(r.has_been_paid) %></td>
                   <td><%= display_yes_no(r.attend_as_serving_one) %></td>
                   <td><%= display_yes_no(r.has_medical_release_form) %></td>
-                  <td><%= link_to 'Edit', edit_event_registration_path(@event,r) %></td>
+                  <td>
+                    <% if policy(:user).edit? %>
+                      <%= link_to 'Edit', edit_event_registration_path(@event,r) %>
+                    <% end %>
+                  </td>
                 </tr> 
               <% end %>
             <% else %>

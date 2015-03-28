@@ -1,0 +1,74 @@
+<div class="wrapper full-page-wrapper page-login text-center">
+  <div class="inner page">
+		<div class="logo"><a href="index.html"><%=image_tag('kingadmin-logo.png', alt:'') %></a></div>
+
+  <br />Update the view of this page... This style if before authentication....
+    <div class="login-box center-block">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
+
+        <p class="title">Sign up</p>
+        <div class="form-group">
+          <%= f.label :name, class: 'control-label sr-only' %>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Enter name" %>
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :locality_id, class: 'control-label sr-only' %>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <%= f.collection_select(:locality_id,Locality.all, :id, :city, {include_blank: true}, {class: 'form-control'}) %>
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              <!--%= link_to "Add a locality", new_locality_path, class: 'pull-right' %-->
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :email, class: 'control-label sr-only' %>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <%= f.email_field :email, class: 'form-control', placeholder: 'Enter email' %>
+              <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, class: 'control-label sr-only' %>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <%= f.password_field :password, class: 'form-control', placeholder: "Enter password" %>
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation, class: 'control-label sr-only' %>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <%= f.password_field :password_confirmation, class: 'form-control', placeholder: "Enter password confirmation" %>
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <%= content_tag(:button, type: :submit, class: 'btn btn-custom-secondary btn-lg btn-block') do %>
+          <i class="fa fa-arrow-circle-o-right"></i>
+          Sign up
+        <% end %>
+      <% end %><!-- end form -->
+      <br />
+
+      <div class="links">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div><!-- end class='login-box center-block' -->
+  </div>
+</div>

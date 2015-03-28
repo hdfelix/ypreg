@@ -40,7 +40,10 @@
                       W: <%= format_phone_number(user.work_phone) %></td>
                   <td><%= format_date(user.last_background_check) %></td>
                   <td><%= format_date(user.last_sign_in_at) %></td>
-                  <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
+                  <td>
+                    <% if policy(:user).edit? %>
+                      <%= link_to 'Edit', edit_user_registration_path(user) %></td>
+                    <% end %>
                 </tr>
               <% end %>
             <% else %>
@@ -49,11 +52,12 @@
           </tbody>
         </table>
         <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
-				<%#= link_to new_session_url, class: 'btn btn-primary' do %>
-					<%#= content_tag(:i, '', class: "fa fa-plus-square") %>
-          <!-- New User -->
-				<%# end %>
-
+        <% if policy(:user).new? %>
+          <%= link_to admin_users_url, class: 'btn btn-primary' do %>
+            <%= content_tag(:i, '', class: "fa fa-plus-square") %>
+            New User
+          <% end %>
+        <% end %>
 			</div>
 		</div>
 	</div>

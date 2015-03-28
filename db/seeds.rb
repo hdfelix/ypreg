@@ -219,6 +219,27 @@ end
 
 total_users += count
 
+# Create hospitality contact accounts
+count = 1
+print "\n  Hospitality Contact accounts(#{count}): "
+
+hcontact = User.new(
+  name: "HContact User1",
+  gender: User::GENDER.sample,
+  birthday: (25..50).to_a.sample.years.ago,
+  email: "hcontact_user1@ypreg.com",
+  password: 'chiracha',
+  password_confirmation: 'chiracha',
+  role: 'hosp_contact')
+
+hcontact.skip_confirmation!
+hcontact.update_attributes(locality_id: Locality.all.sample.id)
+hcontact.save
+
+print '.'
+
+total_users += count
+
 # Create lodgings
 # lodging_type: Lodging::LODGING_TYPE.sample
 

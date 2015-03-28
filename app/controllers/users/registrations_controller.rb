@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  # prepend_before_filter :require_no_authentication, only: [:new, :create, :cancel]
   def index
     @users = User.includes(:locality).all
     authorize @users
@@ -23,6 +24,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render action: 'edit'
     end
   end
+
+  def admin_new
+    binding.pry
+    @user= User.new
+  end
+
   private
 
   def admin_update_params

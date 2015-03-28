@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # prepend_before_filter :require_no_authentication, only: [:new, :create]
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     flash[:alert] = exception.message
