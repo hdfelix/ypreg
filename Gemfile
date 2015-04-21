@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.0.0"
+ruby "2.2.0"
 gem 'rails', '4.1.8'
 
 gem 'pg'
@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'foreigner'
 gem 'immigrant'
+gem 'skylight'
 
 gem 'devise'
 gem 'pundit'
