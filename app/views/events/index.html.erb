@@ -10,41 +10,43 @@
 				<h3><i class="fa fa-table"></i></h3>
 			</div>
 			<div class="widget-content">
-				<table class="table table-striped">
-					<thead>
-						<tr style="font: bold">
-							<td>Name</td>
-							<td>Type</td>
-							<td>Event Begins</td>
-							<td>Event Ends</td>
-							<td>Registration Opens</td>
-							<td>Registration Closes</td>
-							<td>Cost</td>
-							<td></td>
-						</tr>
-					</thead>
-					<tbody>
-						<% if @events.all.count > 0 %>
-							<% @events.each do |event| %>
-								<tr>
-									<td><%= link_to event.title, event %></td>
-									<td><%= display_event(event) %></td>
-									<td><%= format_date(event.begin_date) %>
-									<td><%= format_date(event.end_date) %>
-									<td><%= format_date(event.registration_open_date) %>
-									<td><%= format_date(event.registration_close_date) %>
-									<td><%= number_to_currency(event.registration_cost) %>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Name</td>
+                <td>Type</td>
+                <td>Event Begins</td>
+                <td>Event Ends</td>
+                <td>Registration Opens</td>
+                <td>Registration Closes</td>
+                <td>Cost</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @events.all.count > 0 %>
+                <% @events.each do |event| %>
+                  <tr>
+                    <td><%= link_to event.title, event %></td>
+                    <td><%= display_event(event) %></td>
+                    <td><%= format_date(event.begin_date) %>
+                    <td><%= format_date(event.end_date) %>
+                    <td><%= format_date(event.registration_open_date) %>
+                    <td><%= format_date(event.registration_close_date) %>
+                    <td><%= number_to_currency(event.registration_cost) %>
 
-									<td><%= link_to 'Edit', edit_event_path(event) %>&nbsp;
-										<%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
-									</td>
-								</tr>
-							<% end %>
-						<% else %>
-							<tr><td colspan=7><center>No Events in the database...</center></td></tr>
-						<% end %>
-					<tbody>
-				</table>
+                    <td><%= link_to 'Edit', edit_event_path(event) %>&nbsp;
+                      <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr><td colspan=7><center>No Events in the database...</center></td></tr>
+              <% end %>
+            <tbody>
+				  </table>
+        </div>
         <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
 				<%= link_to new_event_path, class: 'btn btn-primary' do %>
 					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
