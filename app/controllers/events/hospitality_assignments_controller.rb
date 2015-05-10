@@ -17,7 +17,7 @@ class Events::HospitalityAssignmentsController < ApplicationController
     #     }
     # end
   end
-  
+
   def assign_lodging_to_locality
     # TODO: Add logic to update assignments
     @event = Event.find(params[:event_id])
@@ -27,13 +27,13 @@ class Events::HospitalityAssignmentsController < ApplicationController
     @hospitality.update_attributes(locality_id: @locality.id) unless !@hospitality.locality_id
 
     if @hospitality.save
-      p 'success!'
+      flash[:notice] = 'success!'
       respond_with(@hospitality) do |f|
         f.html { redirect_to event_hospitality_assignments_path }
         # f.js { render partial: 'units' }
       end
     else
-      p 'could not assign lodging to locality'
+      flash[:alert] = 'could not assign lodging to locality'
     end
   end
 
@@ -45,12 +45,12 @@ class Events::HospitalityAssignmentsController < ApplicationController
     @hospitality.update_attributes(locality_id: nil) unless !@hospitality.locality_id
 
     if @hospitality.save
-      p 'success!'
+      flash[:notice] = 'success!'
       respond_with(@hospitality) do |f|
         f.html { redirect_to event_hospitality_assignments_path }
       end
     else
-      p 'could not unassign lodging from locality'
+      flash[:alert] = 'could not unassign lodging from locality'
     end
   end
 
@@ -59,16 +59,17 @@ class Events::HospitalityAssignmentsController < ApplicationController
     @event = Event.find(params[:event_id])
     @registration = Registration.find(params[:event][:registration_id])
     @locality = Locality.find(params[:event][:locality_id])
-    hospitality_assignment = @event.hospitality_assignments.find_by_registration_id(@registration.id)
+    hospitality_assignment =
+      @event.hospitality_assignments.find_by_registration_id(@registration.id)
 
-      # registration_id =  @registration.id,
-      # hospitality_id = @event.hospitalities.where(
-      #   locality_id: @locality.id).first.id)
-    
-    event_registration_ids = @event.hospitality_assignments.pluck(:registration_id)  
+    # registration_id =  @registration.id,
+    # hospitality_id = @event.hospitalities.where(
+    # locality_id: @locality.id).first.id)
+
+    event_registration_ids = @event.hospitality_assignments.pluck(:registration_id)
 
     if event_registration_ids.include?(@registration.id)
-      flash[:alert] = "is already assigned; updating hospitality_assignment"
+      flash[:alert] = 'is already assigned; updating hospitality_assignment'
       # if the current registration has already been assigned hospitalty
       # update hospitality_assignment with new hospitality via locality_id
       hospitality_assignment.update_attributes(
@@ -76,23 +77,20 @@ class Events::HospitalityAssignmentsController < ApplicationController
         hospitality_id: @event.hospitalities.where(
           locality_id: @locality.id).first.id)
     else
-      # add the new hospitality_assignment to @event.hospitality_assignments 
+      # add the new hospitality_assignment to @event.hospitality_assignments
       hospitality_assignment = @event.hospitality_assignments.new(
         registration_id: @registration.id,
         hospitality_id: @event.hospitalities.where(
           locality_id: @locality.id).first.id)
 
       if hospitality_assignment.save
-        p 'success!'
+        flash[:notice] = 'success!'
       else
-        p 'could not assign'
+        flash[:alert] = 'could not assign'
       end
     end
-      respond_with(hospitality_assignment) do |f|
-       f.html { redirect_to event_hospitality_assignments_path }
-      end
+    respond_with(hospitality_assignment) do |f|
+      f.html { redirect_to event_hospitality_assignments_path }
+    end
   end
-
-  private
-
 end
