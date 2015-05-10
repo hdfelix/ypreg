@@ -108,7 +108,6 @@ namespace :ypreg do
 
     else
       new_user = User.new(name: user["name"].split.map(&:capitalize).join(' '), email: user["email"].downcase, password: user["password"], role: 'admin', locality_id: locality["locality_id"])
-      binding.pry
       if new_user.save
         notice = "\n#{new_user.name} (#{new_user.email}) created successfully."
         print_colored_text(notice, success_text_color)
