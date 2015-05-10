@@ -1,3 +1,4 @@
+<%= render 'layouts/breadcrumb_row' %>
 <div class="content">
 	<div class="main-header">
 		<h2>Localities</H2>
@@ -10,32 +11,34 @@
 				<h3><i class="fa fa-table"></i></h3>
 			</div>
 			<div class="widget-content">
-				<table class="table table-striped">
-					<thead>
-						<tr style="font: bold">
-							<td>Name</td>
-							<td>State</td>
-							<td>Contact</td>
-							<td></td>
-						</tr>
-					</thead>
-					<tbody>
-						<% if @localities.all.count > 0 %>
-							<% @localities.each do |locality| %>
-								<tr>
-									<td><%= link_to locality.city, locality %></td>
-									<td><%= locality.state_abbrv %>
-									<td><%= locality.display_contact_with_contact_info %>
-									<td><%= link_to 'Edit', edit_locality_path(locality) %>&nbsp;
-										<%= link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' } %>
-									</td>
-								</tr>
-							<% end %>
-						<% else %>
-							<tr><td colspan=4><center>No Localities have been entered yet...</center></td></tr>
-						<% end %>
-					<tbody>
-				</table>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr style="font: bold">
+                <td>Name</td>
+                <td>State</td>
+                <td>Contact</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @localities.all.count > 0 %>
+                <% @localities.each do |locality| %>
+                  <tr>
+                    <td><%= link_to locality.city, locality %></td>
+                    <td><%= locality.state_abbrv %>
+                    <td><%= locality.display_contact_with_contact_info %>
+                    <td><%= link_to 'Edit', edit_locality_path(locality) %>&nbsp;
+                      <%= link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr><td colspan=4><center>No Localities have been entered yet...</center></td></tr>
+              <% end %>
+            <tbody>
+          </table>
+        </div>
 				
 				<% if policy(Locality.new).new? %>
           <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>

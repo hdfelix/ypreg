@@ -6,6 +6,6 @@ module LodgingHelper
   def min_max_capacity(lodging)
     low = lodging.min_capacity ? lodging.min_capacity.to_s : '-'
     high = lodging.max_capacity ? lodging.max_capacity.to_s : '-'
-    [low, high].join(' \ ')
+    [low, high].join(' to ')
   end
 end

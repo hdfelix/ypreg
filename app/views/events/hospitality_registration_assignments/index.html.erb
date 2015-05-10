@@ -9,28 +9,30 @@
         <h3><i class="fa fa-table"></i>Participating Localities</h3>
       </div>
         <div class="widget-content">
-          <table class="table table-striped">
-            <thead>
-              <tr style="font-weight: bold">
-                <td>Locality</td>
-                <td>Registered Saints</td>
-                <td>Allocated Beds</td>
-                <td>Assigned Beds</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <% @event.localities.each  do |locality| %>
-                <tr id=<%= "locality_#{locality.id}" %>>
-                  <td><%= locality.city %></td>
-                  <td><%= @event.registered_saints_from_locality(locality).count %></td>
-                  <td>Test</td>
-                  <td>Test</td>
-                  <td><%= link_to 'Assignments', event_hospitality_registration_assignment_path(@event, locality), class: 'btn btn-secondary' %></td>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <td>Locality</td>
+                  <td>Registered Saints</td>
+                  <td>Allocated Beds</td>
+                  <td>Assigned Beds</td>
+                  <td></td>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <% @event.localities.each  do |locality| %>
+                  <tr id=<%= "locality_#{locality.id}" %>>
+                    <td><%= locality.city %></td>
+                    <td><%= @event.registered_saints_from_locality(locality).count %></td>
+                    <td>Test</td>
+                    <td>Test</td>
+                    <td><%= link_to 'Assignments', event_hospitality_registration_assignment_path(@event, locality), class: 'btn btn-secondary' %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="panel-footer">
           <%= link_to 'Back', event_path(@event, anchor: 'hospitality_info_widget'), class: 'btn btn-default btn-sm' %>
