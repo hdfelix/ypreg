@@ -19,6 +19,7 @@ gem 'skylight'
 gem 'devise'
 gem 'pundit'
 gem 'figaro'
+gem 'prawn'
 
 gem 'simple_form'
 
