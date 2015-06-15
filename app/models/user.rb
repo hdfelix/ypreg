@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :events, through: :registrations
   belongs_to :locality
 
-  # validations
+  # Constants
   GENDER = %w(Brother Sister)
   USER_ROLE = %w(admin scyp ycat loc_contact hosp_contact trainee speaking_brother supporting_brother helper yp user guest)
 
