@@ -16,9 +16,16 @@ gem 'foreigner'
 gem 'immigrant'
 gem 'skylight'
 
+# Authentication
 gem 'devise'
+
+# Authorization
 gem 'pundit'
+
+# manage environment variables
 gem 'figaro'
+
+# PDF generation
 gem 'prawn'
 
 gem 'simple_form'
