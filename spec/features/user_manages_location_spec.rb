@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-feature 'Admin manages a location' do
+# Admin users
+feature 'Admin user manages a location' do
   let(:authed_admin) { create_signed_in_user_by_role('admin') }
 
   scenario "can access the 'index' view" do
@@ -17,7 +18,7 @@ feature 'Admin manages a location' do
     end
   end
 
-  scenario '- creates a location successfully' do
+  scenario 'creates a location successfully' do
     location = build_stubbed(:location, name: 'new location')
 
     visit new_location_path(authed_admin)
@@ -38,7 +39,7 @@ feature 'Admin manages a location' do
     expect(page).to have_content('Location was created successfully.')
   end
 
-  scenario ' - edits a location' do
+  scenario 'edits a location' do
     location = create(:location, name: 'Original name')
 
     visit edit_location_path(location, authed_admin)
@@ -48,13 +49,66 @@ feature 'Admin manages a location' do
 
     expect(location.name).to eq('Edited name')
   end
+
+  scenario ' deletes a location successfully' do
+    visit locations_path(authed_admin)
+
+    expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)
+  end
 end
 
-feature 'User destroys location' do
-  let(:authed_user) { create_signed_in_user_by_role('scyp') }
+# SCYP user
+feature 'SCYP user manages a location' do
+  let(:authed_scyp) { create_signed_in_user_by_role('scyp') }
 
-  scenario ' - successfully' do
-    visit locations_path(authed_user)
+  scenario "can access the 'index' view" do
+    visit locations_path(authed_scyp)
+    within 'h2' do
+      expect(page).to have_content('Locations')
+    end
+  end
+
+  scenario "can access the 'new' view"  do
+    visit new_location_path(authed_scyp)
+    within 'h2' do
+      expect(page).to have_content('New Location')
+    end
+  end
+
+  scenario 'creates a location successfully' do
+    location = build_stubbed(:location, name: 'new location')
+
+    visit new_location_path(authed_scyp)
+
+    expect do
+      fill_in 'location[name]', with: location.name
+      fill_in 'location[description]', with: location.description
+      fill_in 'location[address1]', with: location.address1
+      fill_in 'location[city]', with: location.city
+      find('#location_state_abbrv')
+        .find(:xpath, "option[@value=\'#{location.state_abbrv}\']")
+        .select_option
+      fill_in 'location[zipcode]', with: location.zipcode
+      click_button 'Submit'
+    end.to change(Location, :count)
+
+    expect(current_path).to eq locations_path
+    expect(page).to have_content('Location was created successfully.')
+  end
+
+  scenario 'edits a location' do
+    location = create(:location, name: 'Original name')
+
+    visit edit_location_path(location, authed_scyp)
+    fill_in 'location[name]', with: 'Edited name'
+    click_button 'Submit'
+    location.reload
+
+    expect(location.name).to eq('Edited name')
+  end
+
+  scenario ' deletes a location successfully' do
+    visit locations_path(authed_scyp)
 
     expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)
   end
