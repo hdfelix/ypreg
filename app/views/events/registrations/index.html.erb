@@ -8,16 +8,15 @@
     <div class="widget-header">
       <h3><i class="fa fa-table"></i></h3>
     </div>
-    <!-- form? -->
     <div class="widget-content">
       <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table  table-bordered table-striped table-hover">
           <thead>
             <tr style="font: bold">
-              <th>Role</th>
-              <th>Gender</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Role</th>
+              <th>Gender</th>
               <th>Age</th>
               <th>Locality</th>
               <th style="width: 150px">Phone</th>
@@ -31,24 +30,24 @@
           <tbody>
           <% if @event.registrations.count > 0 %>
             <% @event.registrations.each do |r| %>
-              <tr id="reg-<%= r.id %>">
-              <td><%= r.user.role.capitalize %></td>
-              <td><%= r.user.gender.to_s[0] %></td>
-              <td><%= r.user.name %></td>
-              <td><%= r.user.email %></td>
-              <td><%= r.user.age %></td>
-              <td><%= r.user.locality_city %></td>
-              <td>C: <%= format_phone_number(r.user.cell_phone) %><br />
-                H: <%= format_phone_number(r.user.home_phone) %><br />
-                W: <%= format_phone_number(r.user.work_phone) %></td>
-              <td><%= number_to_currency(r.payment_adjustment) %></td>
-              <td><%= display_yes_no(r.has_been_paid) %></td>
-              <td><%= display_yes_no(r.attend_as_serving_one) %></td>
-              <td><%= display_yes_no(r.has_medical_release_form) %></td>
-              <td>
-                <%= link_to 'Show', event_registration_path(@event,r) %>
-                <%= link_to 'Edit', edit_event_registration_path(@event,r) %></td>
-            </tr> 
+            <tr id="reg-<%= r.id %>">
+            <td><%= r.user.name %></td>
+            <td><%= r.user.email %></td>
+            <td><%= r.user.role.capitalize %></td>
+            <td><%= r.user.gender.to_s[0] %></td>
+            <td><%= r.user.age %></td>
+            <td><%= r.user.locality_city %></td>
+            <td>C: <%= format_phone_number(r.user.cell_phone) %><br />
+              H: <%= format_phone_number(r.user.home_phone) %><br />
+              W: <%= format_phone_number(r.user.work_phone) %></td>
+            <td><%= number_to_currency(r.payment_adjustment) %></td>
+            <td><%= display_yes_no(r.has_been_paid) %></td>
+            <td><%= display_yes_no(r.attend_as_serving_one) %></td>
+            <td><%= display_yes_no(r.has_medical_release_form) %></td>
+            <td>
+              <%= link_to 'Show', event_registration_path(@event,r) %>
+              <%= link_to 'Edit', edit_event_registration_path(@event,r) %></td>
+          </tr> 
         <% end %>
         <% else %>
             <tr><td colspan=9><center>No one registered for this event...</center></td></tr>
