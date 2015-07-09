@@ -49,20 +49,20 @@ feature 'Signed-in user' do
       expect(page).to have_content(reg.user.name)
       expect(page).to have_content(reg.user.email)
       expect(page).to have_content(reg.user.age)
-      expect(page).to have_content(reg.user.locality)
+      expect(page).to have_content(reg.user.locality.city)
       expect(page).to have_content(format_phone_number(reg.user.cell_phone))
-      expect(page).to have_content(format_phone_number(reg.user.home.phone))
-      expect(page).to have_content(format_phone_number(reg.user.work.phone))
-      expect(page).to have_content(number_to_currency(reg.payment_adjustment))
+      expect(page).to have_content(format_phone_number(reg.user.home_phone))
+      expect(page).to have_content(format_phone_number(reg.user.work_phone))
+      expect(page).to have_content("$#{reg.payment_adjustment}.00")
       expect(page).to have_content(display_yes_no(reg.has_been_paid))
-      expect(page).to have_content(display_yes_no(attend_as_serving_one))
-      expect(page).to have_content(display_yes_no(reg.has_medical_form))
+      expect(page).to have_content(display_yes_no(reg.attend_as_serving_one))
+      expect(page).to have_content(display_yes_no(reg.has_medical_release_form))
       expect(page).to have_content("Show")
       expect(page).to have_content("Edit")
     end
   end
 
-  # ASK: link_to isnt'working
+  # TODO: (ask) link_to isnt'working
   # scenario "- can click 'show' and view single registration details" do
   #   reg = create(:registration, :yp,  event: @event)
 
