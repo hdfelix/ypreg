@@ -15,7 +15,7 @@
         <div class="widget-content">
           <p id="notice"><%= notice %></p>
           <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-sorting table-striped table-hover">
               <thead />
               <tbody>
                 <tr>
@@ -68,7 +68,7 @@
         </div>
         <div class="widget-content">
           <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-sorting table-striped table-hover">
               <thead>
                 <tr>
                   <th></th>
@@ -102,7 +102,7 @@
           </div>
           <div class="widget-content">
             <div class="table-responsive">
-              <table class="table table-bordered">
+              <table class="table table-bordered table-sorting table-striped table-hover">
                 <thead>
                   <tr>
                     <th></th>
@@ -160,7 +160,7 @@
             </div>
             <div class="widget-content">
               <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-sorting table-striped table-hover">
                   <thead>
                     <tr>
                       <th>locality</th>
@@ -238,43 +238,16 @@
                   </div>
                 </div><!-- end row -->
                 <div class="table-responsive">
-                  <table class="table table-sorting table-striped table-hover datatable dataTable" width="100%" cellspacing="0" cellpadding="0" aria-describedby="visit-stat-table_info" style="width: 100%;">
+                  <table class="table table-bordered table-sorting table-striped table-hover"> 
                     <thead>
                       <tr role="row">
-                        <th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 125px;" aria-sort="ascending" aria-label="Browser: activate to sort column descending">
-                          Name
-
-                        </th>
-                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 139px;" aria-label="Operating System: activate to sort column ascending">
-
-                          Home Phone
-
-                        </th>
-                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 51px;" aria-label="Visits: activate to sort column ascending">
-
-                          Cell
-
-                        </th>
-                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
-
-                          Address
-
-                        </th>
-                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
-
-                          Min / Max Guests
-
-                        </th>
-                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
-
-                          Assigned Localities
-
-                        </th>
-                        <th class="sorting" role="columnheader" tabindex="0" aria-controls="visit-stat-table" rowspan="1" colspan="1" style="width: 86px;" aria-label="New Visits: activate to sort column ascending">
-
-                          [Assigned Guests] 
-
-                        </th>
+                        <th>Name</th>
+                        <th>Home Phone</th>
+                        <th>Cell</th>
+                        <th>Address</th>
+                        <th>Min / Max Guests</th>
+                        <th>Assigned Localities</th>
+                        <th>[Assigned Guests] </th>
                       </tr>
                     </thead>
                     <tbody id="event_hospitalities" role="alert" aria-live="polite" aria-relevant="all">
@@ -282,12 +255,18 @@
                     </tbody>
                   </table>
                 </div>
+                <div class="btn-group">
+                  <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
+                    Manage
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><%= link_to 'Manage Hospitalities', event_hospitalities_path(@event) %></li>
+                    <li><%= link_to 'Assign to Localities', event_hospitality_locality_assignments_path(@event) %></li>
+                    <li><%= link_to 'Assign Saints', event_hospitality_registration_assignments_path(@event) %></li>
+                  </ul>
+                </div>
                 <div class='row'><!-- pagination footer -->
-                  <div class='col-md-6'>
-                    <%= link_to 'Manage Hospitalities', event_hospitalities_path(@event), class: 'btn btn-primary btn-sm' %>
-                    <%= link_to 'Assign to Localities', event_hospitality_locality_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
-                    <%= link_to 'Assign Saints', event_hospitality_registration_assignments_path(@event), class: 'btn btn-primary btn-sm' %>
-                  </div>
                   <div class='col-md-6'></div>
                   <!-- Add code for records displayed, pagination -->
                 </div>
