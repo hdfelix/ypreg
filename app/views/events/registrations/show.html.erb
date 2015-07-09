@@ -6,6 +6,7 @@
     </div>
   </div>
   <div class="row">
+    <!-- event registration info -->
     <div class="col-md-6 col-sm-12">
       <div class="widget">
         <div class="widget-header">
@@ -14,15 +15,16 @@
         <div class="widget-content">
           <p id="notice"><%= notice %></p>
           <div class="row">
-            <div clas="col-sm-4">
+            <div class="col-sm-4">
               <strong>Event:</strong>
             </div>
             <div class="col-sm-8">
               <%= @registration.event.title %>
             </div>
           </div>
+
           <div class="row">
-            <div clas="col-sm-4">
+            <div class="col-sm-4">
               <strong>Saint:</strong>
             </div>
             <div class="col-sm-8">
@@ -31,7 +33,7 @@
           </div>
 
           <div class="row">
-            <div clas="col-sm-4">
+            <div class="col-sm-4">
               <strong>Registration Date</strong>
             </div>
             <div class="col-sm-8">
@@ -40,7 +42,7 @@
           </div>
 
           <div class="row">
-            <div clas="col-sm-4">
+            <div class="col-sm-4">
               <strong>Paid?</strong>
             </div>
             <div class="col-sm-8">
@@ -49,7 +51,7 @@
           </div>
 
           <div class="row">
-            <div clas="col-sm-4">
+            <div class="col-sm-4">
               <strong>Pmt Adjustment</strong>
             </div>
             <div class="col-sm-8">
@@ -58,7 +60,7 @@
           </div>
 
           <div class="row">
-            <div clas="col-sm-4">
+            <div class="col-sm-4">
               <strong>Serving One?</strong>
             </div>
             <div class="col-sm-8">
@@ -67,12 +69,14 @@
           </div>
         </div>
         <div class="widget-footer">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
           <%= link_to 'Back', event_registrations_path(@registration.event), class: 'btn btn-default' %>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-        </div>
-      </div>
     </div>
-    <div>
+  </div>
+</div>
