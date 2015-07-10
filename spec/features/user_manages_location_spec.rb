@@ -51,7 +51,7 @@ feature 'Admin user manages a location' do
   end
 
   scenario ' deletes a location successfully' do
-    create(:location)
+    create_list(:location,2)
 
     visit locations_path(authed_admin)
 
@@ -110,7 +110,8 @@ feature 'SCYP user manages a location' do
   end
 
   scenario ' deletes a location successfully' do
-    create(:location)
+    create_list(:location,2)
+
     visit locations_path(authed_scyp)
 
     expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)
