@@ -4,7 +4,7 @@ class Location < ActiveRecord::Base
   validates :address1, presence: true
   validates :city, presence: true
   # validates :state, presence: true
-  # How do we validate for states now that they are in a hash variable?
+  # TODO: How do we validate for states now that they are in a hash variable?
   validates :zipcode, presence: true
 
   has_many :events
