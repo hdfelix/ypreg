@@ -13,8 +13,6 @@ no hospitality accomodations as well as multi-day events where hospitality accom
 * Create and manage event locations
 * Create and manage hospitality locations
 * Create and manage different types of users
-* Reports and graphs for all of the data types
-* ...
 
 ## Setup
 To get started, clone this repo and run:
@@ -31,15 +29,3 @@ Next, Run the following command to create an admin user account:
 ```
 rake ypreg:create_admin
 ```
-...
-* (instructions on using the different parts of the site)
-* (Themes)
-
-## Constants
-* US States - Location::STATE_LIST
-* Event Types - Event::EVENT_TYPE
-* User Types - User::USER_TYPE
-* Hospitality TYpes - Hospitality::HOSPITALITY_TYPE
-* Payment Types - Registration::PAYMENT_TYPE
-
-[Finish]

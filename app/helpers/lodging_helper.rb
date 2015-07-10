@@ -8,4 +8,8 @@ module LodgingHelper
     high = lodging.max_capacity ? lodging.max_capacity.to_s : '-'
     [low, high].join(' to ')
   end
+
+  def filtered_contact_person_collection(assigned_contact_person)
+    User.not_contact_persons << assigned_contact_person
+  end
 end

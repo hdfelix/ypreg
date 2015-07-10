@@ -16,9 +16,17 @@ gem 'foreigner'
 gem 'immigrant'
 gem 'skylight'
 
+# Authentication
 gem 'devise'
+
+# Authorization
 gem 'pundit'
+
+# manage environment variables
 gem 'figaro'
+
+# PDF generation
+gem 'prawn'
 
 gem 'simple_form'
 
@@ -42,15 +50,16 @@ group :development, :test do
   gem 'pry-rescue'
   gem 'pry-byebug'
   gem 'binding_of_caller'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
+  # gem 'rspec-mocks'
+  gem 'rspec_junit_formatter'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'simplecov', require: false
   gem 'simplecov-csv', require: false
   gem 'coverband'
-  gem 'rspec_junit_formatter'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
   gem 'letter_opener', group: :development

@@ -5,7 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def show
-    # using current_user from devise on this action...
+    @user = User.find(params[:id])
   end
 
   def edit

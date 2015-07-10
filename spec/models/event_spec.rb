@@ -63,7 +63,7 @@ describe Event, type: :model do
 
       participating_localities = event.participating_localities
       expect(participating_localities.count).to eq 2
-      expect(participating_localities).to contain_exactly(loc1, loc2)
+      expect(participating_localities.map(&:id)).to contain_exactly(loc1.id, loc2.id)
     end
   end
 
@@ -74,9 +74,8 @@ describe Event, type: :model do
                      ensure_unique_locality: true)
       loc  = event.participating_localities.first
       usr1 = event.registrations.first.user
-      usr2 = event.registrations.second.user
 
-      expect(event.registered_saints_from_locality(loc)).to contain_exactly(usr1, usr2)
+      expect(event.registered_saints_from_locality(loc).map(&:id)).to eq([usr1.id])
     end
   end
 

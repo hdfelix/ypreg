@@ -2,23 +2,20 @@ require 'rails_helper'
 
 describe EventsController, :type => :controller do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Event. As you add validations to Event, be sure to
-  # adjust the attributes here as well.
-  #let(:valid_attributes) { { "title" => "" } }
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # EventsController. Be sure to keep this updated too.
-  #let(:valid_session) { {} }
-
-  #describe "GET index" do
-  #  it "assigns all events as @events" do
-  #    event = Event.create! valid_attributes
-  #    get :index, {}, valid_session
-  #    assigns(:events).should eq([event])
-  #  end
-  #end
+  describe "GET index" do
+    it 'assigns all events' do
+      Event.delete_all
+      e1 = create(:event)
+      e2 = create(:event)
+      # allow(Event).to receive(:all).and_return(event)
+      # allow(Event).to receive(:count).and_return(1)
+      get 'index'
+      # assigns(:events).should eq([event])
+      expect(assigns(:events)).to match_array([e1, e2])
+      # expect(response).to have_http_status(:success)
+      # expect(response).to render_template(:index)
+    end
+  end
 
   #describe "GET show" do
   #  it "assigns the requested event as @event" do
@@ -138,5 +135,4 @@ describe EventsController, :type => :controller do
   #    response.should redirect_to(events_url)
   #  end
   #end
-
 end
