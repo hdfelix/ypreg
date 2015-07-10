@@ -1,6 +1,5 @@
 RSpec::Matchers.define :permit do |action|
   match do |policy|
-    binding.pry
     policy.public_send("#{ action }?")
   end
 
