@@ -75,12 +75,12 @@ feature 'Admin user  manages lodgings' do
     expect(lodging.name).to eq('Edited name')
   end
 
-  scenario ' deletes a location successfully' do
-    create(:lodging)
+  scenario ' deletes a lodging successfully' do
+    lodging = create(:lodging)
 
-    visit locations_path(authed_admin)
+    visit lodging_path(lodging, authed_admin)
 
-    expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)
+    expect { first(:link, 'Delete').click }.to change(Lodging, :count).by(-1)
   end
 end
 
