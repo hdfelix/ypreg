@@ -27,11 +27,14 @@ class Locality < ActiveRecord::Base
   end
 
   def hospitalities(event)
-    tmp = Hospitality.where(event: event, locality: self)
-    tmp
+    Hospitality.where(event: event, locality: self)
   end
   
   def hospitality_lodgings(event)
     Lodging.joins(:hospitalities).where(locality: self, event: event)
+  end
+
+  def registrations(event)
+    Registration.where(event: event, locality: self)    
   end
 end

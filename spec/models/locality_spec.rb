@@ -42,5 +42,19 @@ describe Locality, type: :model do
           .to eq(info)
       end
     end
+
+    describe '#display_contact_with_contact_info'
+    describe '#hospitalities'
+    describe '#hospitality_lodgings'
+    describe '#registrations' do
+      it 'returns registrations from this locality for a given event' do
+        ev   = create(:event)
+        loc  = create(:locality)
+        user = create(:user, locality: loc)
+        reg  = create(:registration, event: ev, locality: loc, user: user)
+
+        expect(loc.registrations(ev)).to eq([reg])
+      end
+    end
   end
 end
