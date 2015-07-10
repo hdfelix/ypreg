@@ -1,7 +1,5 @@
 ##Event Registration application
 
-[![Build Status](https://api.shippable.com/projects/54330a6a7a7fb11eaa6491a6/badge?branchName=master)](https://app.shippable.com/projects/54330a6a7a7fb11eaa6491a6/builds/latest)
-
 [ ![Codeship Status for
 hdfelix/ypreg](https://codeship.com/projects/c65ff3a0-7a8e-0132-7773-2e5924fc2807/status?branch=master)](https://codeship.com/projects/56162)
 
