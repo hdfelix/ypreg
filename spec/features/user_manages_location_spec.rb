@@ -51,11 +51,14 @@ feature 'Admin user manages a location' do
   end
 
   scenario ' deletes a location successfully' do
-    create_list(:location,2)
+    p "TESTING: Locations before create_list: #{ Location.all.count }"
+    create_list(:location,2, max_capacity: 50)
+    p "TESTING: Locations after create_list: #{ Location.all.count }"
 
     visit locations_path(authed_admin)
 
     expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)
+    p "TESTING: Locations after delete: #{ Location.all.count }"
   end
 end
 
@@ -110,10 +113,14 @@ feature 'SCYP user manages a location' do
   end
 
   scenario ' deletes a location successfully' do
-    create_list(:location,2)
+    p "TESTING: Locations before create_list: #{ Location.all.count }"
+    create_list(:location,2, max_capacity: 50)
+    p "TESTING: Locations after create_list: #{ Location.all.count }"
 
     visit locations_path(authed_scyp)
 
     expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)
+    p "TESTING: Locations after delete: #{ Location.all.count }"
+
   end
 end
