@@ -76,6 +76,8 @@ feature 'Admin user  manages lodgings' do
   end
 
   scenario ' deletes a location successfully' do
+    create(:lodging)
+
     visit locations_path(authed_admin)
 
     expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)

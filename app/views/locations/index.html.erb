@@ -24,7 +24,7 @@
             <tbody>
             <% if @locations.all.count > 0 %>
               <% @locations.each do |location| %>
-              <tr>
+                <tr id=loc_<%= location.id %>>
               <td><%= link_to location.name, location %></td>
               <td><%= location.description %></td>
               <td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
