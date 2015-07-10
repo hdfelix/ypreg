@@ -44,22 +44,14 @@ describe Event, type: :model do
 
   describe '#participating_localities' do
     it 'returns the localities participating in the event' do
-      # event = create(
-      #   :event_with_registrations,
-      #   registrations_count: 2,
-      #   ensure_unique_locality: false)
-      # loc1 = event.registrations.first.user.locality
-      # loc2 = event.registrations.second.user.locality
       event = create(:event)
       loc1  = create(:locality)
       loc2  = create(:locality)
       usr1  = create(:user, locality: loc1)
       usr2  = create(:user, locality: loc2)
 
-      reg1  = create(:registration, user: usr1)
-      reg2  = create(:registration, user: usr2)
-
-      event.registrations << [reg1, reg2]
+      create(:registration, event: event, user: usr1)
+      create(:registration, event: event, user: usr2)
 
       participating_localities = event.participating_localities
       expect(participating_localities.count).to eq 2
