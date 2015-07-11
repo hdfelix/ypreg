@@ -1,1 +1,17 @@
-<%= @locality.city %>
+Locality: <%= @locality.city %>
+<br /><br />
+<div id='saints'>
+  Saints:<br />
+  <% @locality_users.all.each do |user| %>
+    <%= user.name %>
+    <br />
+  <% end %>
+</div>
+
+<div id='registrations'>
+  <br /><br />
+  Registered staints:<br />
+  <% @locality_registrations.all.each do |reg| %>
+    <%= reg.user.name %>
+  <% end %>
+</div>
