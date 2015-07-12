@@ -50,10 +50,14 @@ module ApplicationHelper
   end
 
   def display_yes_no(boolean)
-    if boolean
-      "Yes"
+    boolean ? 'Yes':'No'
+  end
+
+  def display_boolean(boolean)
+    if boolean == nil
+      '--'
     else
-      "No"
+      display_yes_no(boolean)
     end
   end
 

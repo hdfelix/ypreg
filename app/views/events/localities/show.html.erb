@@ -1,17 +1,72 @@
-Locality: <%= @locality.city %>
-<br /><br />
-<div id='saints'>
-  Saints:<br />
-  <% @locality_users.all.each do |user| %>
-    <%= user.name %>
-    <br />
-  <% end %>
-</div>
-
-<div id='registrations'>
-  <br /><br />
-  Registered staints:<br />
-  <% @locality_registrations.all.each do |reg| %>
-    <%= reg.user.name %>
-  <% end %>
+<div class="content">
+  <div class="row">
+    <div class="main-header">
+      <h2><%= @locality.city %></h2>
+      <em>Participation details for <%= @event.title%></em>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <strong>Locality Contact:</strong> <%= @locality.contact_with_email_and_cell %>
+      <br /><br />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="widget">
+        <div class="widget-header">
+          <h3><i class="fa fa-calendar-o"></i>Registered Saints</h3>
+        </div>
+        <div class="widget-content">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>MF?</th>
+                <th>Notes</th>
+                <th>Hosp. Assignment</th>
+            </thead>
+            <tbody>
+              <% @locality_registrations.all.each do |reg| %>
+                <tr>
+                  <td><%= reg.user.name %></td>
+                  <td><%= reg.user.age %></td>
+                  <td><%= display_yes_no(reg.has_medical_release_form) %></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="widget">
+        <div class="widget-header">
+          <h3><i class="fa fa-calendar-o"></i>Locality Saints</h3>
+        </div>
+        <div class="widget-content">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Name></th>
+                <th>Age</th>
+            </thead>
+            <tbody>
+              <% @locality_users.all.each do |user| %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= user.age %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
