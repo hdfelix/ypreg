@@ -13,7 +13,7 @@ class Locality < ActiveRecord::Base
     if contact_id.nil?
       '--'
     else
-      User.find(contact_id).name
+      contact.name
     end
   end
 
