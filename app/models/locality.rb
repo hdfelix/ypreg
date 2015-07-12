@@ -17,7 +17,7 @@ class Locality < ActiveRecord::Base
     end
   end
 
-  def display_contact_with_contact_info
+  def display_contact_with_email
     if contact_id.nil?
       '--'
     else

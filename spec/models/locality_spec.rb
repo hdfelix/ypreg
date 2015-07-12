@@ -18,8 +18,12 @@ describe Locality, type: :model do
 
   describe 'Interface' do
     describe '#display_contact' do
-      it "returns the locality's contact name" do
-        locality = create(:locality, contact: create(:user))
+      it "returns the locality's contact name, email, cell if any" do
+        locality =
+          create(:locality, 
+                 contact: create(:user,
+                                 email: 'user@email.com',
+                                 cell_phone: '8888888888'))
         expect(locality.display_contact).to eq(locality.contact.name)
       end
 
@@ -29,21 +33,21 @@ describe Locality, type: :model do
       end
     end
 
-    describe '#display_contact_with_contact_info' do
+    describe '#display_contact_with_email' do
       it "return '--' if locality has no contact" do
         locality = create(:locality)
-        expect(locality.display_contact_with_contact_info).to eq('--')
+        expect(locality.display_contact_with_email).to eq('--')
       end
 
       it 'returns the name and e-mail of the locality contact' do
         locality = create(:locality, contact: create(:user))
         info = locality.contact.name + " (#{locality.contact.email})"
-        expect(locality.display_contact_with_contact_info)
+        expect(locality.display_contact_with_email)
           .to eq(info)
       end
     end
 
-    describe '#display_contact_with_contact_info'
+    describe '#display_contact_with_email'
     describe '#hospitalities'
     describe '#hospitality_lodgings'
     describe '#registrations' do
