@@ -10,7 +10,7 @@ class Locality < ActiveRecord::Base
   validates :state_abbrv, presence: true
 
   def display_contact
-    if contact_id.nil?
+    if contact.nil?
       '--'
     else
       contact.name
@@ -18,7 +18,7 @@ class Locality < ActiveRecord::Base
   end
 
   def display_contact_with_email
-    if contact_id.nil?
+    if contact.nil?
       '--'
     else
       contact = User.find(contact_id)
