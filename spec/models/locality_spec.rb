@@ -70,5 +70,16 @@ describe Locality, type: :model do
         expect(loc.registrations(ev)).to eq([reg])
       end
     end
+
+    describe '#hospitality_lodgings'
+    describe '#registrations'
+    describe '#registered_users'
+    describe '#registered_yp'
+    describe '#registered_serving_ones'
+    describe '#serving_ones_still_needed'
+    describe '#registered_helpers'
+    describe '#registered_trainees'
+    describe '#users_not_registered'
+
   end
 end
