@@ -63,7 +63,7 @@
                 </tr>
                 <tr>
                   <td>Serving Ones</td>
-                  <td>[Serving Ones]</td>
+                  <td><%= @locality.registered_serving_ones(@event).count %></td>
                 </tr>
                 <tr>
                   <tr>
@@ -72,15 +72,15 @@
                   </tr>
                   <tr>
                     <td>Helpers</td>
-                    <td>[Helpers]</td>
+                  <td><%= @locality.registered_helpers(@event).count %></td>
                   </tr>
                   <tr>
                     <td>Trainees</td>
-                    <td>[FA]</td>
+                  <td><%= @locality.registered_trainees(@event).count %></td>
                   </tr>
                   <tr>
                     <td>Totals</td>
-                    <td>[Totals]</td>
+                  <td><%= @locality.registered_users(@event).count %></td>
                   </tr>
                 </table>
               </div>

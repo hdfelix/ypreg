@@ -57,6 +57,18 @@ class Locality < ActiveRecord::Base
   def registered_yp(event)
     registered_users(event).reject { |u| u.role != 'yp' }
   end
+  
+  def registered_serving_ones(event)
+    registrations(event).reject { |r| !r.attend_as_serving_one }
+  end
+
+  def registered_helpers(event)
+    registered_users(event).reject { |u| u.role != 'helper' }
+  end
+
+  def registered_trainees(event)
+    registered_users(event).reject { |u| u.role != 'trainee' }
+  end
 
   def users_not_registered(event)
     users - registered_users(event)

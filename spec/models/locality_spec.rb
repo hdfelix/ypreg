@@ -74,6 +74,7 @@ describe Locality, type: :model do
     describe '#hospitality_lodgings'
     describe '#registrations'
     describe '#registered_users'
+
     describe '#registered_yp' do
       it 'returns all yp registered for this event' do
         ev   = create(:event)
@@ -84,10 +85,46 @@ describe Locality, type: :model do
         expect(loc.registered_yp(ev).map(&:name)).to eq([user.name])
       end
     end
-    describe '#registered_serving_ones'
+
+    describe '#registered_serving_ones' do
+       it 'returns all serving ones registered for this event' do
+          ev   = create(:event)
+          loc  = create(:locality)
+          user = create(:user, locality: loc, )
+          create(:registration,
+                 event: ev,
+                 locality: loc,
+                 user: user,
+                 attend_as_serving_one: true)
+
+          expect(loc.registered_serving_ones(ev).map(&:name)).to eq([user.name])
+       end
+    end
+
     describe '#serving_ones_still_needed'
-    describe '#registered_helpers'
-    describe '#registered_trainees'
+
+    describe '#registered_helpers' do
+      it 'retunrs all helpers registered for this event' do
+        ev   = create(:event)
+        loc  = create(:locality)
+        user = create(:user, locality: loc, role: 'helper')
+        create(:registration, event: ev, locality: loc, user: user)
+
+        expect(loc.registered_helpers(ev).map(&:name)).to eq([user.name])
+      end
+    end
+
+    describe '#registered_trainees' do
+      it 'retunrs all trainees registered for this event' do
+        ev   = create(:event)
+        loc  = create(:locality)
+        user = create(:user, locality: loc, role: 'trainee')
+        create(:registration, event: ev, locality: loc, user: user)
+
+        expect(loc.registered_trainees(ev).map(&:name)).to eq([user.name])
+      end
+
+    end
     describe '#users_not_registered'
 
   end
