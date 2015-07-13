@@ -49,6 +49,14 @@ class Locality < ActiveRecord::Base
     Registration.where(event: event, locality: self)    
   end
 
+  def registered_users(event)
+    User.find(registrations(event).map(&:user_id))
+  end
+
+  def users_not_registered(event)
+    users - registered_users(event)
+  end
+
   private
 
   def format_phone_number(phone)
