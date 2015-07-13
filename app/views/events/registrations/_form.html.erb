@@ -37,28 +37,29 @@
   </fieldset>
   <fieldset>
     <legend>Registrant Information</legend>
+      <%= hidden_field_tag "user_id", @user.id %> 
       <div class="form-group">
         <%= f.label "Name", class: 'col-md-2 control-label' %>
         <div class="col-md-6">
-          <span class="form-control" disabled><%= current_user.name %></span>
+          <span class="form-control" disabled><%= user.name %></span>
         </div>
       </div>
       <div class="form-group">
         <%= f.label "Role", class: 'col-md-2 control-label' %>
         <div class="col-md-6">
-          <span class="form-control" disabled><%= current_user.role.upcase %></span>
+          <span class="form-control" disabled><%= user.role.upcase %></span>
         </div>
       </div>
       <div class="form-group">
         <%= f.label "Gender", class: 'col-md-2 control-label' %>
         <div class="col-md-6">
-          <span class="form-control" disabled><%= format_titleize(current_user.gender) %></span>
+          <span class="form-control" disabled><%= format_titleize(user.gender) %></span>
         </div>
       </div>
       <div class="form-group">
         <%= f.label "Locality", class: 'col-md-2 control-label' %>
         <div class="col-md-6">
-          <span class="form-control" disabled><%= current_user.locality_city.titleize %></span>
+          <span class="form-control" disabled><%= user.locality_city.titleize %></span>
         </div>
       </div>
   </fieldset>

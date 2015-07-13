@@ -12,13 +12,14 @@ class Events::RegistrationsController < ApplicationController
 
   def new
     @event = Event.find(params[:event_id])
+    @user = User.find(params[:format])
     @registration = Registration.new
-    # @registration = Registration.new(user: current_user)
   end
 
   def create
     @event = Event.find(params[:event_id])
-    @registration = current_user.registrations.build(registration_params)
+    @user = User.find(params[:user_id])
+    @registration = @user.registrations.build(registration_params)
     if @registration.save
       flash[:notice] = 'Registration created succesfully'
       redirect_to root_path

@@ -55,12 +55,15 @@
               <tr>
                 <th>Name></th>
                 <th>Age</th>
+                <th></th>
             </thead>
             <tbody>
-              <% @locality_users.all.each do |user| %>
+            <% binding.pry %>
+              <% @locality_users.each do |user| %>
                 <tr>
                   <td><%= user.name %></td>
                   <td><%= user.age %></td>
+                  <td><%= link_to 'Register', new_event_registration_path(@event, user), class: 'btn btn-custom-secondary btn-sm' %></td>
                 </tr>
             <% end %>
             </tbody>
