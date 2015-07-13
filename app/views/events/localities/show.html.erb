@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-md-6">
       <strong>Locality Contact:</strong> <%= @locality.contact_with_email_and_cell %>
-      <br /><br />
+    <br /><br />
     </div>
   </div>
   <div class="row">
@@ -26,27 +26,27 @@
                 <th>MF?</th>
                 <th>Notes</th>
                 <th>Hosp. Assignment</th>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               <% @locality_registrations.all.each do |reg| %>
                 <tr>
-                  <td><%= reg.user.name %></td>
-                  <td><%= reg.user.age %></td>
-                  <td><%= display_yes_no(reg.has_medical_release_form) %></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                <td><%= reg.user.name %></td>
+                <td><%= reg.user.age %></td>
+                <td><%= display_yes_no(reg.has_medical_release_form) %></td>
+                <td></td>
+                <td></td>
+              </tr>
             <% end %>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="widget">
-        <div class="widget-header">
-          <h3><i class="fa fa-calendar-o"></i>Attendance Breakdown</h3>
-        </div>
+      <div class="col-md-6">
+        <div class="widget">
+          <div class="widget-header">
+            <h3><i class="fa fa-calendar-o"></i>Attendance Breakdown</h3>
+          </div>
           <div class="widget-content">
             <div class="table-responsive">
               <table class="table table-bordered  table-striped table-hover">
@@ -85,35 +85,35 @@
                 </table>
               </div>
             </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="widget">
-        <div class="widget-header">
-          <h3><i class="fa fa-calendar-o"></i>Locality Saints</h3>
-        </div>
-        <div class="widget-content">
-          <table class="table table-bordered table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Name></th>
-                <th>Age</th>
-                <th></th>
-            </thead>
-            <tbody>
-              <% @locality_users.each do |user| %>
-                <tr>
-                  <td><%= user.name %></td>
-                  <td><%= user.age %></td>
-                  <td><%= link_to 'Register', new_event_registration_path(@event, user), class: 'btn btn-custom-secondary btn-sm' %></td>
-                </tr>
-            <% end %>
-            </tbody>
-          </table>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="widget">
+            <div class="widget-header">
+              <h3><i class="fa fa-calendar-o"></i>Locality Saints</h3>
+            </div>
+            <div class="widget-content">
+              <table class="table table-bordered table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Name></th>
+                    <th>Age</th>
+                    <th></th>
+                  </thead>
+                  <tbody>
+                    <% @locality_users.each do |user| %>
+                      <tr>
+                        <td><%= user.name %></td>
+                        <td><%= user.age %></td>
+                        <td><%= link_to 'Register', new_event_registration_path(@event, user), class: 'btn btn-custom-secondary btn-sm' %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
