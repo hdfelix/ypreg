@@ -57,10 +57,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                <% binding.pry %>
                 <tr>
                   <td>Young People</td>
-                  <td>[YPs]</td>
+                  <td><%= @locality.registered_yp(@event).count %></td>
                 </tr>
                 <tr>
                   <td>Serving Ones</td>

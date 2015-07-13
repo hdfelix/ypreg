@@ -45,12 +45,17 @@ class Locality < ActiveRecord::Base
     Lodging.joins(:hospitalities).where(locality: self, event: event)
   end
 
+  # Registrations Scopes
   def registrations(event)
     Registration.where(event: event, locality: self)    
   end
 
   def registered_users(event)
     User.find(registrations(event).map(&:user_id))
+  end
+
+  def registered_yp(event)
+    registered_users(event).reject { |u| u.role != 'yp' }
   end
 
   def users_not_registered(event)

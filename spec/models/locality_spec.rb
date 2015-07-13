@@ -74,7 +74,16 @@ describe Locality, type: :model do
     describe '#hospitality_lodgings'
     describe '#registrations'
     describe '#registered_users'
-    describe '#registered_yp'
+    describe '#registered_yp' do
+      it 'returns all yp registered for this event' do
+        ev   = create(:event)
+        loc  = create(:locality)
+        user = create(:user, locality: loc, role: 'yp')
+        create(:registration, event: ev, locality: loc, user: user)
+
+        expect(loc.registered_yp(ev).map(&:name)).to eq([user.name])
+      end
+    end
     describe '#registered_serving_ones'
     describe '#serving_ones_still_needed'
     describe '#registered_helpers'
