@@ -136,8 +136,8 @@ FactoryGirl.define do
         User.where(locality_id: loc.id).each do |usr|
           FactoryGirl.create(
             :registration,
-            user_id: usr.id,
-            event_id: instance.id)
+            user: usr,
+            event: instance)
         end
       end
     end
@@ -149,15 +149,15 @@ FactoryGirl.define do
         User.where(locality_id: loc1.id).each do |usr|
           FactoryGirl.create(
             :registration,
-            user_id: usr.id,
-            event_id: instance.id)
+            user: usr,
+            event: instance)
         end
 
         User.where(locality_id: loc2.id).each do |usr|
           FactoryGirl.create(
             :registration,
-            user_id: usr.id,
-            event_id: instance.id)
+            user: usr,
+            event: instance)
         end
       end
     end
