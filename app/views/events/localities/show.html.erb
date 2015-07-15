@@ -128,7 +128,7 @@
                   <td><%= reg.user.age %></td>
                   <td><%= display_yes_no(reg.has_medical_release_form) %></td>
                   <td></td>
-                  <td></td>
+                  <td><%= display_hospitality_assignment(reg) %></td>
                 </tr>
               <% end %>
             </tbody>

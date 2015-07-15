@@ -29,6 +29,8 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
         hra = @event.hospitality_registration_assignments.find_by_registration_id(reg.id)
         if !hra.nil?
           hra.delete
+          # update locality registration as well (set hospitality_id to nil)
+          reg.update_attributes(hospitality: nil)
         end
       else
         # create or update HospitalityRegistrationAssignment
@@ -37,12 +39,15 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
           # Build a new HospitalityRegistrationAssignment record
           hra = 
             @event.hospitality_registration_assignments
-            .build(hospitality: hosp, registration: reg)
+            .build(hospitality: hosp, registration: reg, locality: @locality)
           hra.save
+          # update locality registration (set hospitality_id to 'hosp')
+          reg.update_attributes(hospitality: hosp)
+
         else
           # Update the existing HospitalityRegistrationAssignment
-          hra.update_attributes(hospitality: hosp)
-          hra.save
+          hra.update_attributes(hospitality: hosp, locality: @locality)
+          reg.update_attributes(hospitality: hosp)
         end
       end
     end

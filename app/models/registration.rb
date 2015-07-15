@@ -5,6 +5,7 @@ class Registration < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
   belongs_to :locality
+  belongs_to :hospitality
   has_many :hospitality_registration_assignments, inverse_of: :registration
   
   delegate :name, :email, :cell_phone, :home_phone, :work_phone, :birthday,
