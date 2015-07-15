@@ -58,8 +58,14 @@ describe Locality, type: :model do
       end
     end
 
-    describe '#hospitalities'
+    describe '#hospitalities' do
+      it 'returns the number of hospitalities assigned to locality'
+    end
+    describe '#hospitalities_min'
+    describe '#hospitalities_max'
     describe '#hospitality_lodgings'
+    describe '#assigned_beds_total'
+    describe '#beds_to_assign'
     describe '#registrations' do
       it 'returns registrations from this locality for a given event' do
         ev   = create(:event)

@@ -40,11 +40,37 @@ class Locality < ActiveRecord::Base
   def hospitalities(event)
     Hospitality.where(event: event, locality: self)
   end
+
+  def hospitalities_min(event)
+    hosp = hospitalities(event)
+    if hosp.empty?
+      0
+    else
+      hosp.map(&:lodging).map(&:min_capacity).sum
+    end
+  end
   
+  def hospitalities_max(event)
+    hosp = hospitalities(event)
+    if hosp.empty?
+      0
+    else
+      hosp.map(&:lodging).map(&:max_capacity).sum
+    end
+  end
+
   def hospitality_lodgings(event)
     Lodging.joins(:hospitalities).where(locality: self, event: event)
   end
 
+  def assigned_beds_total(event)
+    hosp = hospitalities(event)
+    hosp.map { |h| h.registration_id.nil? ? 0 : 1 }.sum
+  end
+
+  def beds_to_assign(event)
+    registered_users(event).count - assigned_beds_total(event)
+  end
   # Registrations Scopes
   def registrations(event)
     Registration.where(event: event, locality: self)    
