@@ -155,6 +155,7 @@ describe Event, type: :model do
       expect(ev.unassigned_lodgings_as_hospitality).not_to eq([lodge1, lodge2])
     end
   end
+
   describe '#assigned_hospitality_beds' do
     it 'return an empty hash if the event has no hospitalities' do
       ev = create(:event)
@@ -232,5 +233,15 @@ describe Event, type: :model do
       #   expect(true)
       # end
     end
+  end
+
+  describe '#registration_open?' do
+    it "returns true if today's date is inside the registration dates"
+    it "returns false if today's date is outside registraiton close date"
+  end
+
+  describe '#over?' do
+    it "return true if today's date is outside the event dates"
+    it "returns false if today's date is inside the event dates"
   end
 end
