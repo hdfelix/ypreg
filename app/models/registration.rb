@@ -12,6 +12,7 @@ class Registration < ActiveRecord::Base
     :lodging_id, # ...
            to: :user
 
+  # validates :locality, presence: true
   validates_inclusion_of :has_been_paid, in: [true, false]
   validate :has_medical_release_form, presence: true
 

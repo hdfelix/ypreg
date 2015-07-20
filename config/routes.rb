@@ -19,7 +19,7 @@ YpwReg::Application.routes.draw do
   resources :localities
   resources :lodgings
   resources :events do
-    resources :localities, only: [:show], controller: 'events/localities'
+    resources :localities, only: [:index, :show, :new, :create], controller: 'events/localities'
     resources :hospitalities, only: [:index, :new, :create], controller: 'events/hospitalities' do
       collection do
         post 'add'
@@ -30,7 +30,6 @@ YpwReg::Application.routes.draw do
       collection do
         put 'assign'
         post 'assign'
-        # post 'assign\*locality', action: 'assign'
       end
     end
     resources :hospitality_registration_assignments, only: [:index, :show], controller: 'events/hospitality_registration_assignments' do
@@ -50,15 +49,10 @@ YpwReg::Application.routes.draw do
              controllers: { registrations: 'users/registrations', 
              passwords: 'users/passwords',
              confirmations: 'users/confirmations' } do
-  # devise_for :users, path_names: { edit: ':id/edit' }, except: [:destroy], controllers: { registrations: 'users/registrations', 
-  #                                                                                   passwords: 'users/passwords',
-  #                                                                                   confirmations: 'users/confirmations' } do
-    # TODO: Add path_prefix: 'd', and handle my own paths below to differentiate with devise
   end
 
   devise_scope :user do
     get '/users', to: 'users/registrations#index', as: 'users'
     get '/user/:id', to: 'users/registrations#show', as: 'user'
-    # get '/users/:id', to: 'users/registrations#show', as: 'user'
   end
 end

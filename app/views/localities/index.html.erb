@@ -24,7 +24,7 @@
               <% if @localities.all.count > 0 %>
                 <% @localities.each do |locality| %>
                   <tr>
-                    <td><%= link_to locality.city, locality %></td>
+                    <td><%= link_to locality.city, locality_path(locality) %></td>
                     <td><%= locality.state_abbrv %>
                     <td><%= locality.contact_with_email %>
                     <td><%= link_to 'Edit', edit_locality_path(locality) %>&nbsp;

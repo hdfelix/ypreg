@@ -9,6 +9,10 @@ class Locality < ActiveRecord::Base
   validates :city, presence: true
   validates :state_abbrv, presence: true
 
+  def self.localities_not_participating_in_event(event)
+    (Locality.all - event.localities).sort { |a,b| a.city <=> b.city }
+  end
+
   def contact_name
     if contact.nil?
       '--'
