@@ -102,12 +102,12 @@ FactoryGirl.define do
           evaluator.registrations_count.times do
             locality = create(:locality)
             user = create(:user, locality: locality)
-            create(:registration, event: event, user: user)
+            create(:registration, event: event, user: user, locality: user.locality)
           end
         else
           locality = create(:locality)
           user = create(:user, locality: locality)
-          create_list(:registration, evaluator.registrations_count, event: event, user: user)
+          create_list(:registration, evaluator.registrations_count, event: event, user: user, locality: locality)
         end
       end
     end
