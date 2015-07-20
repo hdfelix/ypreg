@@ -24,8 +24,8 @@ module EventsHelper
   def event_registration_dates(event)
     content_tag(:span) do
       if event.registration_open_date && event.registration_close_date
-        "#{ event.end_date.strftime('%m/%d/%y') } - \
-         #{ event.registration_open_date.strftime('%m/%d/%y') }".html_safe
+        "#{ event.registration_open_date.strftime('%m/%d/%y') } - \
+         #{ event.registration_close_date.strftime('%m/%d/%y') }".html_safe
       else
         'TBA'
       end

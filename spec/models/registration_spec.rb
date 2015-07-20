@@ -15,6 +15,11 @@ describe Registration, type: :model do
     #     .conditions(:uniq)
     # end
 
+    describe 'Validations' do
+      # it { should validate_presence_of :locality }
+    end
+    
+    describe 'Delegations'  do
     it { should delegate_method(:name).to(:user) }
     it { should delegate_method(:email).to(:user) }
     it { should delegate_method(:cell_phone).to(:user) }
@@ -22,5 +27,6 @@ describe Registration, type: :model do
     it { should delegate_method(:work_phone).to(:user) }
     it { should delegate_method(:birthday).to(:user) }
     it { should delegate_method(:lodging_id).to(:user) }
+    end
   end
 end

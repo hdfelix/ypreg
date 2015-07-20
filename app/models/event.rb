@@ -134,6 +134,14 @@ class Event < ActiveRecord::Base
     stats
   end
 
+  def registration_open?
+    DateTime.now < registration_close_date
+  end
+
+  def over?
+    DateTime.now > end_date
+  end
+
   protected
 
   def calculate_locality_statistics(stats, locality)

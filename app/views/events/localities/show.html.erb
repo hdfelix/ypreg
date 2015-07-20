@@ -1,7 +1,7 @@
 <div class="content">
   <div class="row">
     <div class="main-header">
-      <h2><%= @locality.city %></h2>
+      <h2>The Church in <%= @locality.city %></h2>
       <em>Participation details for <%= @event.title%></em>
     </div>
   </div>
@@ -121,7 +121,7 @@
                 <th>Hosp. Assignment</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id='registrations'>
               <% @locality_registrations.all.each do |reg| %>
                 <tr>
                   <td><%= reg.user.name %></td>
