@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   def index
-    @events = Event.all
+    @events = Event.in_the_future
 
     # Values for aria chart
     # @chart_values = widget_stats_next_event

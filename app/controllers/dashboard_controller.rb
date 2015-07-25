@@ -12,7 +12,7 @@ class DashboardController < ApplicationController
   end
 
   def index
-    @events = Event.all
+    @events = Event.current + Event.in_the_future
   end
 
   protected

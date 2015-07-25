@@ -22,7 +22,10 @@ class Event < ActiveRecord::Base
   EVENT_TYPE = [['One-day', 1], ['Retreat', 2], ['Conference', 3]]
 
   default_scope { order('begin_date ASC') }
-
+  scope :current, -> { where('begin_date < ? AND end_date > ?', DateTime.now, DateTime.now) }
+  scope :in_the_future, -> { where('begin_date > ?', DateTime.now) }
+  scope :in_the_past, -> { where('end_date < ?', DateTime.now) }
+  
   def remaining_spaces
     location.max_capacity - registrations.count
   end
