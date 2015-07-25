@@ -72,6 +72,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara-webkit'
   gem 'guard-rspec'
+  gem 'timecop'
 end
 
 group :doc do
