@@ -22,10 +22,10 @@ class Event < ActiveRecord::Base
   EVENT_TYPE = [['One-day', 1], ['Retreat', 2], ['Conference', 3]]
 
   default_scope { order('begin_date ASC') }
-  scope :current, -> { where('begin_date < ? AND end_date > ?', DateTime.now, DateTime.now) }
-  scope :in_the_future, -> { where('begin_date > ?', DateTime.now) }
-  scope :in_the_past, -> { where('end_date < ?', DateTime.now) }
-  
+  scope :current, -> { where('begin_date < ? AND end_date > ?', Time.zone.now, Time.zone.now) }
+  scope :in_the_future, -> { where('begin_date > ?', Time.zone.now) }
+  scope :in_the_past, -> { where('end_date < ?', Time.zone.now) }
+
   def remaining_spaces
     location.max_capacity - registrations.count
   end
@@ -48,7 +48,7 @@ class Event < ActiveRecord::Base
     # TODO: Implement
   end
 
-  def total_registrations(options={})
+  def total_registrations(options = {})
     locality = options[:locality]
     role = options[:role]
     is_serving_one = options[:attend_as_serving_one] ||= false
@@ -56,7 +56,7 @@ class Event < ActiveRecord::Base
     if locality.nil? && role.nil?
     end
     # if locality: nil
-    if (locality.nil? && !role.nil?)
+    if locality.nil? && !role.nil?
       if is_serving_one
         users.joins(:registrations)
           .where(role: role,
@@ -65,7 +65,7 @@ class Event < ActiveRecord::Base
         users.where(role: role).count
       end
     # if role.nil
-    elsif (!locality.nil? && role.nil?) 
+    elsif !locality.nil? && role.nil?
       if is_serving_one
         users.joins(:registrations)
           .where(locality: locality,
@@ -74,11 +74,10 @@ class Event < ActiveRecord::Base
         users.where(locality: locality).count
       end
     # if neither locality, role nil
-    elsif (!locality.nil? && !role.nil?) # locality: nil, role: nil, is_serving_one
+    elsif !locality.nil? && !role.nil? # locality: nil, role: nil, is_serving_one
       if is_serving_one
-        tmp = users.joins(:registrations)
-          .where(locality: locality, role: role, 
-                 registrations: { attend_as_serving_one: true }).count
+        tmp = users.joins(:registrations).where(locality: locality, role: role, 
+                          registrations: { attend_as_serving_one: true }).count
         tmp
       else
         users.joins(:registrations).where(locality: locality, role: role).count
@@ -93,7 +92,7 @@ class Event < ActiveRecord::Base
 
   def registered_serving_ones(locality)
     users.joins(:registrations)
-      .where(locality: locality, registrations: {attend_as_serving_one: true})
+      .where(locality: locality, registrations: { attend_as_serving_one: true })
       .count
   end
 
@@ -138,11 +137,11 @@ class Event < ActiveRecord::Base
   end
 
   def registration_open?
-    DateTime.now < registration_close_date
+    Time.zone.now < registration_close_date
   end
 
   def over?
-    DateTime.now > end_date
+    Time.zone.now > end_date
   end
 
   protected
@@ -185,6 +184,6 @@ class Event < ActiveRecord::Base
   end
 
   def locality_amount_paid(locality)
-    self.registration_cost * Registration.where(event: self, locality: locality, has_been_paid: true).count
+    registration_cost * Registration.where(event: self, locality: locality, has_been_paid: true).count
   end
 end
