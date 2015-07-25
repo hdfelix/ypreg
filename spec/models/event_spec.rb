@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Event, type: :model do
-
   describe 'Associations' do
     it { should belong_to :location }
     it { should have_many :registrations }
@@ -24,6 +23,62 @@ describe Event, type: :model do
   end
 
   describe 'Scopes' do
+    describe '#current' do
+      it 'returns only events that are happening right now' do
+        Event.delete_all
+        create(:event, end_date: 1.day.ago) # past event
+        create(:event, begin_date: (Time.zone.now + 7.days)) # future event
+        create(:event,
+               begin_date: 1.day.ago,
+               end_date: (Time.zone.now + 3.days)) # current event
+
+        expect(Event.current.count).to eq (1)
+      end
+    end
+
+    describe '#in_the_future' do
+      it 'returns only events that are happening in the future' do
+        Event.delete_all
+        today = Time.zone.now
+
+        create(:event,
+               begin_date: 3.days.ago,
+               end_date: 1.day.ago) # past event
+
+        create(:event,
+               begin_date: (today + 7.days),
+               end_date: (today + 10.days)) # future event
+
+        create(:event,
+               begin_date: 1.day.ago,
+               end_date: (today + 3.days)) # current event
+
+        expect(Event.in_the_future.count).to eq (1)
+      end
+    end
+    describe '#in_the_past' do
+      it 'returns only events that already ended' do
+        Event.delete_all
+        today = Time.zone.now
+
+        create(:event,
+               begin_date: 3.days.ago,
+               end_date: 1.day.ago) # past event
+
+        create(:event,
+               begin_date: (today + 7.days),
+               end_date: (today + 10.days)) # future event
+
+        create(:event,
+               begin_date: 1.day.ago,
+               end_date: (today + 3.days)) # current event
+
+        expect(Event.in_the_past.count).to eq (1)
+      end
+    end
+  end
+
+  describe 'Methods' do
     describe '#remaining_spaces' do
       it 'returns the max capacity of spaces when there are no registrations' do
         event = build_stubbed(:event)
@@ -74,7 +129,7 @@ describe Event, type: :model do
   describe '#registered_saints_per_locality'
 
   describe '#total_registrations' do
-    # TODO test all new options {}
+    # TODO: test all new options {}
     it 'returns the number of registrations per locality for the given role' do
       reg   = create(:registration, :yp)
       event = reg.event
