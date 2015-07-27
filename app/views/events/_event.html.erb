@@ -13,10 +13,9 @@
 					<% unless current_user.registrations.where(event_id: event).empty? %>
             <% if !event.over? %>
 						  <%= link_to event_registration_path(event,current_user.registrations.where(event_id: event).first), class: 'btn btn-success pull-right' do %>
-            <% end %>
-                
-							<i class="fa fa-check-circle"></i>
-							Registered
+                <i class="fa fa-check-circle"></i>
+                Registered
+              <% end %>
 						<% end %>
 					<% end %>
 				<% end %>
