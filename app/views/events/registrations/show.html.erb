@@ -46,7 +46,7 @@
               <strong>Paid?</strong>
             </div>
             <div class="col-sm-8">
-              <%= @registration.has_been_paid %>
+              <%= display_boolean(@registration.has_been_paid) %>
             </div>
           </div>
 
@@ -55,7 +55,7 @@
               <strong>Pmt Adjustment</strong>
             </div>
             <div class="col-sm-8">
-              <%= @registration.payment_adjustment %>
+              <%= number_to_currency(@registration.payment_adjustment) %>
             </div>
           </div>
 
@@ -64,7 +64,7 @@
               <strong>Serving One?</strong>
             </div>
             <div class="col-sm-8">
-              <%= @registration.attend_as_serving_one %>
+              <%= display_boolean(@registration.attend_as_serving_one) %>
             </div>
           </div>
         </div>
