@@ -46,7 +46,7 @@ until locality_names.count == 0 do
   print '.'
 end
 
-# Create  3 Test events
+# Create  3 upcoming test events
 count = 3
 print "\nCreating #{count} Events: "
 tmp_date = Time.now + rand(1..3).months
@@ -90,6 +90,20 @@ Event.create(
   location_id: rand(1..Location.all.count)
 )
 print '.'
+
+# Create completed event in the past
+tmp_date = Time.now - rand(5..7).months
+past_event = Event.create(
+  title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
+  event_type: rand(1..3),
+  begin_date: tmp_date,
+  end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
+  registration_open_date: (tmp_date - 1.month).strftime('%Y/%m/%d'),
+  registration_close_date: (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d'),
+  registration_cost: rand(10..100).round(-1),
+  location_id: rand(1..Location.all.count)
+)
+
 
 total_users = 0
 print "\nCreating Users..."
@@ -237,45 +251,54 @@ end
 
 # Create event registrations
 count = rand(5..total_users)
-print "\nCreating #{count} event registrations: "
+print "\nCreating #{count} event registrations (per event): "
 
-ev = Event.first
-yp_count = (count * 0.60).to_i
+Event.all.each do |ev|
+  yp_count = (count * 0.60).to_i
 
-# YP registrations
-yp_ids = User.limit(yp_count).where(role: 'yp').pluck(:id)
-while !yp_ids.empty?
-  user = User.find(yp_ids.delete(yp_ids.sample))
-  reg = Registration.new(
-    payment_type: 'check',
-    has_been_paid: false,
-    payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
-    attend_as_serving_one: false,
-    user: user, 
-    event: ev,
-    locality: user.locality)
-  reg.save
-  print '.'
+  print"\n\tYP Registrations for #{ev.title}: "
+  # YP registrations
+  yp_ids = User.limit(yp_count).where(role: 'yp').pluck(:id)
+  while !yp_ids.empty?
+    user = User.find(yp_ids.delete(yp_ids.sample))
+    reg = Registration.new(
+      payment_type: 'check',
+      has_been_paid: false,
+      payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
+      attend_as_serving_one: false,
+      user: user, 
+      event: ev,
+      locality: user.locality)
+    reg.save
+    print '.'
+  end
+
+  print "\n\tNon-YP registrations for #{ev.title}: "
+  # non-YP registrations
+  non_yp_count = count - yp_count
+  non_yp_ids = User.limit(non_yp_count).where.not(role: 'yp').pluck(:id)
+  while !non_yp_ids.empty?
+    user = User.find(non_yp_ids.delete(non_yp_ids.sample))
+    reg = Registration.new(
+      payment_type: 'Check',
+      has_been_paid: false,
+      payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
+      attend_as_serving_one: [true, false].sample,
+      user: user,
+      event: ev,
+      locality: user.locality)
+    reg.save
+    print '.'
+  end
 end
 
-# non-YP registrations
-non_yp_count = count - yp_count
-non_yp_ids = User.limit(non_yp_count).where.not(role: 'yp').pluck(:id)
-while !non_yp_ids.empty?
-  user = User.find(non_yp_ids.delete(non_yp_ids.sample))
-  reg = Registration.new(
-    payment_type: 'Check',
-    has_been_paid: false,
-    payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
-    attend_as_serving_one: [true, false].sample,
-    user: user,
-    event: ev,
-    locality: user.locality)
-  reg.save
-  print '.'
+# Past event - mark registrations paid
+past_event.registrations.each do |registration|
+  registration.update_attributes(has_been_paid: true)
+  # Write code to mark all registrations as attended
 end
 
-puts 'Summary'
+puts "\nSummary"
 puts '---------------------------------'
 puts "Prior users count:      #{current_users_total}. Added #{User.all.count}."
 puts "Prior localities count: #{current_localities_total}. Added #{Locality.all.count}."
