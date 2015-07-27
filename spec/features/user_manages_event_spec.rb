@@ -4,9 +4,8 @@ feature 'User creates an event' do
   let (:authed_admin) {
     create_logged_in_admin
   }
-	before(:all) do
-		@event = create(:event)
-	end
+	before(:each) { @event = create(:event) }
+  after(:each) { @event.destroy }
 
 	scenario '- can access the Events index' do
 		visit events_path(authed_admin)
@@ -87,9 +86,8 @@ feature 'User edits an event' do
     create_logged_in_admin
   }
 	 
-	before(:all) do
-		@event = create(:event)
-	end
+	before(:each) { @event = create(:event) }
+  after(:each) { @event.destroy }
 
 	scenario ' - can access edit_event_path' do
 		visit edit_event_path(@event,authed_admin)
@@ -108,9 +106,8 @@ feature 'User destroys event' do
     create_logged_in_admin
   }
 
-	before(:all) do
-		@event = create(:event)
-	end
+	before(:each) { @event = create(:event) }
+  after(:each) { @event.destroy }
 
 	scenario 'Successfully' do
 		visit events_path(authed_admin)

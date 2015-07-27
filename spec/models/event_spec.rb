@@ -25,7 +25,6 @@ describe Event, type: :model do
   describe 'Scopes' do
     describe '#current' do
       it 'returns only events that are happening right now' do
-        Event.delete_all
         create(:event, end_date: 1.day.ago) # past event
         create(:event, begin_date: (Time.zone.now + 7.days)) # future event
         create(:event,
@@ -38,7 +37,6 @@ describe Event, type: :model do
 
     describe '#in_the_future' do
       it 'returns only events that are happening in the future' do
-        Event.delete_all
         today = Time.zone.now
 
         create(:event,
@@ -58,7 +56,6 @@ describe Event, type: :model do
     end
     describe '#in_the_past' do
       it 'returns only events that already ended' do
-        Event.delete_all
         today = Time.zone.now
 
         create(:event,
