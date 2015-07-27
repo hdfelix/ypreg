@@ -9,19 +9,21 @@
       <div class="widget-header">
         <h3><i class="fa fa-edit"></i>Local Saints</h3>
       </div>
-    <%= form_for(@event_locality) do |f| %>
-      <% if @event.errors.any? %>
-        <div id="error_explanation" class="alert alert-danger alert-dismissable">
-          <h4><strong>
-              <%= pluralize(@event.errors.count, "error") %></strong>
-          &nbsp;prohibited these registrations from being saved:</h4>
-          <ul>
-            <% @event.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+      <%= form_for(@event_locality, class: 'form-horizontal') do |f| %>
+        <% if @event.errors.any? %>
+          <div id="error_explanation" class="alert alert-danger alert-dismissable">
+            <h4>
+              <strong><%= pluralize(@event.errors.count, "error") %></strong>
+              &nbsp;prohibited these registrations from being saved:
+            </h4>
+            <ul>
+              <% @event.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
 			<div class="widget-content">
         <table class="table table-striped">
           <thead>

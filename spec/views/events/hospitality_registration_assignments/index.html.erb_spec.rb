@@ -1,41 +1,18 @@
 require 'rails_helper'
 
-# Why do all tests in here always pass even if I change the expectations to be clearly wrong?
-describe 'show.html.erb' do
+describe 'events/hospitality_registration_assignments/index' do
   before(:each) do
-    @event = FactoryGirl.create(:event)
+    saints = [double(:user)]
+    @event = double(:event)
+    @localities = [double(:locality, id: 1000, city: 'city')]
+    allow(@event).to receive(:localities).and_return(@localities)
+    allow(@event).to receive(:registered_saints_from_locality).
+      and_return(saints)
   end
 
-  it "contains a 'Hospitalty Info' table" do
-    redirect_to event_path(@event)
-    within("hospitality_info_widget") do
-      expect(rendered).to have_selector('h3', text: 'Hospitality Info')
-    end
-  end
-
-  context "Hospitality Info table" do
-    it "contains a 'Manage Hospitalities' button" do
-      redirect_to event_path(@event)
-
-      within("hospitality_info_widget") do
-        expect(rendered).to have_content('Manage Hospitalities')
-      end
-    end
-
-    it "contains an 'Assign Localities' button" do
-      redirect_to event_path(@event)
-
-      within("hospitality_info_widget") do
-        expect(rendered).to have_content('Assign Localities')
-      end
-    end
-
-    it "contains an 'Assign Saints' button" do
-      redirect_to event_path(@event)
-
-      within("hospitality_info_widget") do
-        expect(rendered).to have_content('Assign Burgers')
-      end
-    end
+  it "Contains a 'Participating Localities' table" do
+    render
+      expect(rendered).to have_selector('table tr')
+      expect(rendered).to have_content('Saint to Hospitality Assignments')
   end
 end
