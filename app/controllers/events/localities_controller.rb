@@ -25,24 +25,31 @@ class Events::LocalitiesController < ApplicationController
     @event_locality = EventLocality.new(event: @event, locality: @locality)
     @locality_user_ids = params[:locality_user_ids]
 
-    ActiveRecord::Base.transaction do
-      @locality_user_ids.each do |user_id|
-        user = User.find(user_id)
-        reg = Registration.new(
-          user: user,
-          event: @event,
-          locality: user.locality,
-          has_medical_release_form: false,
-          has_been_paid: false)
-        @event.registrations << reg
+    unless @locality_user_ids.nil?
+      ActiveRecord::Base.transaction do
+        @locality_user_ids.each do |user_id|
+          user = User.find(user_id)
+          reg = Registration.new(
+            user: user,
+            event: @event,
+            locality: user.locality,
+            has_medical_release_form: false,
+            has_been_paid: false)
+          @event.registrations << reg
+        end
       end
     end
 
-    if @event.save
-      flash[:notice] = "Registrations added successfully."
-      redirect_to Event.find_by_title("Full-timer's Winter Gathering")
+    unless @localityuser_ids.nil?
+      if @event.save
+        flash[:notice] = "Registrations added successfully."
+        redirect_to Event.find_by_title("Full-timer's Winter Gathering")
+      else
+        flash[:error] = "There was a problem saving these event registrations."
+        render action: 'new'
+      end
     else
-      flash[:error] = "There was a problem saving these event registrations."
+      flash[:notice] = "No users were selected!"
       render action: 'new'
     end
   end
