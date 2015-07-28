@@ -26,6 +26,13 @@ describe User, type: :model do
     end
   end
 
+  describe 'Search scopes' do
+    describe 'multisearchable' do
+      it 'searches against :gender'
+      it 'searches against :role'
+    end
+  end
+
   describe 'Interface' do
     describe '#registration' do
       it "returns the registration for the user to the event passed as a parameter" do

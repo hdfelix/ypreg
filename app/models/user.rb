@@ -5,6 +5,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  include PgSearch
+  multisearchable against: [:gender, :role]
+  # pg_search_scope :search_by_name, against: :name,
+  # using: { tsearch: { dictionary: 'english' } }
+
   has_many :registrations
   has_many :events, through: :registrations
   belongs_to :locality
