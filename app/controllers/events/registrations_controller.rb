@@ -4,7 +4,7 @@ class Events::RegistrationsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:event_id])
+    @event = event.find(params[:event_id])
 
     # @registration = @event.registrations.where('user_id = ?', current_user)
     @registration = @event.registrations.where(id: params[:id])[0]
