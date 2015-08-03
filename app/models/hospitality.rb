@@ -8,5 +8,9 @@ class Hospitality < ActiveRecord::Base
 
   delegate :name, :description, :address1, :address2, :city, :state_abbrv,
     :zipcode, :lodging_type, :locality_id, :max_capacity, :min_capacity,
-    to: :lodging
+    to: :lodging, prefix: :lodging
+
+  delegate :city, :state_abbrv, :contact, :lodging_contact,
+    to: :locality,
+    prefix: :locality
 end
