@@ -42,7 +42,7 @@ class Event < ActiveRecord::Base
   end
 
   def registered_saints_from_locality(locality)
-    users.joins(:registrations).where(locality_id: locality.id)
+      self.localities.find(locality).registrations(self).map(&:user)
   end
 
   def registered_saints_per_locality
