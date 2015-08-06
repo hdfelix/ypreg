@@ -1,11 +1,15 @@
 class Events::RegistrationsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
-    @registrations = @event.registrations
+    @registrations =
+      @event.registrations.
+      sort_by { |reg| reg.locality.city }.
+      sort_by { |reg| reg.user.role }.
+      sort_by { |reg| reg.user.name }
   end
 
   def show
-    @event = event.find(params[:event_id])
+    @event = Event.find(params[:event_id])
 
     # @registration = @event.registrations.where('user_id = ?', current_user)
     @registration = @event.registrations.where(id: params[:id])[0]

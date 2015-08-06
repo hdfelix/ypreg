@@ -171,6 +171,7 @@ FactoryGirl.define do
     attend_as_serving_one false
     user
     event
+    locality { user.locality }
 
     trait :serving_one do
       attend_as_serving_one true

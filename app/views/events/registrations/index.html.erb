@@ -14,7 +14,7 @@
           <thead>
             <tr style="font: bold">
               <th>Name</th>
-              <th>Email</th>
+              <!--th>Email</th-->
               <th>Role</th>
               <th>Gender</th>
               <th>Age</th>
@@ -32,7 +32,7 @@
             <% @registrations.each do |r| %>
             <tr id="reg-<%= r.id %>">
             <td><%= r.user.name %></td>
-            <td><%= r.user.email %></td>
+            <!--td><%#= r.user.email %></td-->
             <td><%= r.user.role.capitalize %></td>
             <td><%= r.user.gender.to_s[0] %></td>
             <td><%= r.user.age %></td>

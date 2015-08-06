@@ -16,19 +16,22 @@
           <p id="notice"><%= notice %></p>
           <div class="row">
             <div class="col-sm-4">
-              <strong>Event:</strong>
+              <strong>Saint:</strong>
             </div>
             <div class="col-sm-8">
-              <%= @registration.event.title %>
+              <%= @registration.user.name %><br />
+              <%= mail_to @registration.user.email %><br />
+              <%= @registration.user.cell_phone %>
+              <br />
             </div>
           </div>
 
           <div class="row">
             <div class="col-sm-4">
-              <strong>Saint:</strong>
+              <strong>Event:</strong>
             </div>
             <div class="col-sm-8">
-              <%= @registration.user.name %>
+              <%= @registration.event.title %>
             </div>
           </div>
 
