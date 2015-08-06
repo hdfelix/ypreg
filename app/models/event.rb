@@ -23,6 +23,7 @@ class Event < ActiveRecord::Base
 
   default_scope { order('begin_date ASC') }
   scope :current, -> { where('begin_date < ? AND end_date > ?', Time.zone.now, Time.zone.now) }
+  scope :not_over, -> { where('begin_date >= ? OR end_date > ?', Time.zone.now, Time.zone.now) }
   scope :in_the_future, -> { where('begin_date > ?', Time.zone.now) }
   scope :in_the_past, -> { where('end_date < ?', Time.zone.now) }
 
@@ -41,7 +42,7 @@ class Event < ActiveRecord::Base
   end
 
   def registered_saints_from_locality(locality)
-    users.joins(:registrations).where(locality_id: locality.id)
+      self.localities.find(locality).registrations(self).map(&:user)
   end
 
   def registered_saints_per_locality

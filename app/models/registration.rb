@@ -1,4 +1,3 @@
-# Model for a registration to an event
 class Registration < ActiveRecord::Base
   PAYMENT_TYPE = ['Cash', 'Check']
 

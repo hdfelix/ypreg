@@ -2,8 +2,11 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = Event.all
+    @events = Event.not_over
     authorize @events
+
+    @past_events = Event.in_the_past
+    authorize @past_events
   end
 
   # GET /event/1

@@ -42,11 +42,13 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
             .build(hospitality: hosp, registration: reg, locality: @locality)
           hra.save
           # update locality registration (set hospitality_id to 'hosp')
+          hosp.update_attributes(registration_id: reg.id)
           reg.update_attributes(hospitality: hosp)
 
         else
           # Update the existing HospitalityRegistrationAssignment
           hra.update_attributes(hospitality: hosp, locality: @locality)
+          hosp.update_attributes(registration_id: reg.id)
           reg.update_attributes(hospitality: hosp)
         end
       end

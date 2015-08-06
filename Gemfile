@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.2.2'
+
 gem 'rails', '4.1.8'
 
 gem 'pg'
@@ -26,9 +28,12 @@ gem 'pundit'
 gem 'figaro'
 
 # PDF generation
-gem 'prawn'
+# gem 'prawn'
 
 gem 'simple_form'
+
+# searching
+gem 'pg_search'
 
 group :production do
   gem 'rails_12factor'
