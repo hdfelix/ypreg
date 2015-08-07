@@ -1,0 +1,7 @@
+<b>Attendance</b>
+<br />
+
+<% @registrations.each do |reg| %>
+  <%= reg.locality.city %>: <%= reg.user.name %>:[Attended | Excused | Did not Attend]</br />
+<% end %>
+
