@@ -1,0 +1,1 @@
+define(["jquery"],function(e){var n=e('meta[name="csrf-token"]').attr("content");return e.ajaxSetup({beforeSend:function(e){e.setRequestHeader("X-CSRF-Token",n)}}),n});
