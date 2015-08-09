@@ -7,11 +7,15 @@ class EventLocality < ActiveRecord::Base
 		Registration.where(event: event, locality: locality)
 	end
 
+  def locality_city
+    locality.city
+  end
+
   def users
     User.where(locality: locality)
   end
 
 	def registrations
-		EventLocality.where(event: event, locality: locality)
+    Registration.where(event: event, locality: locality)
 	end
 end
