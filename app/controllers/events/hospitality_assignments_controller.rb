@@ -3,7 +3,7 @@ class Events::HospitalityAssignmentsController < ApplicationController
   # respond_to :html, :js
 
   def index
-    @event = Event.find(params[:event_id])
+    @event = Event.find(params[:event_id]).includes(:hospitalities)
     @stats =  @event.load_locality_summary
     @hospitalities = @event.hospitalities
     @assigned_lodgings_as_hospitality = @event.assigned_lodgings_as_hospitality

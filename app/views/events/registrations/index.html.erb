@@ -37,9 +37,9 @@
             <td><%= r.user.gender.to_s[0] %></td>
             <td><%= r.user.age %></td>
             <td><%= r.user.locality_city %></td>
-            <td>C: <%= format_phone_number(r.user.cell_phone) %><br />
+            <!--td>C: <%= format_phone_number(r.user.cell_phone) %><br />
               H: <%= format_phone_number(r.user.home_phone) %><br />
-              W: <%= format_phone_number(r.user.work_phone) %></td>
+              W: <%= format_phone_number(r.user.work_phone) %></td-->
             <td><%= number_to_currency(r.payment_adjustment) %></td>
             <td><%= display_yes_no(r.has_been_paid) %></td>
             <td><%= display_yes_no(r.attend_as_serving_one) %></td>
