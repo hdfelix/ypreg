@@ -87,6 +87,7 @@ describe Event, type: :model do
         loc = build_stubbed(:location, max_capacity: 20)
         event = create(:event_with_registrations,
                        registrations_count: 3,
+                       ensure_unique_locality: true,
                        location: loc)
 
         expect(event.remaining_spaces).to eq(17)
