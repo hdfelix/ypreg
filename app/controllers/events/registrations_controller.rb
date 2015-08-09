@@ -3,9 +3,9 @@ class Events::RegistrationsController < ApplicationController
     @event = Event.find(params[:event_id])
     @registrations =
       @event.registrations.
-      sort_by { |reg| reg.locality.city }.
-      sort_by { |reg| reg.user.role }.
-      sort_by { |reg| reg.user.name }
+      sort_by { |reg| reg.locality.city } #.
+      # sort_by { |reg| reg.user.role }.
+      # sort_by { |reg| reg.user.name }
   end
 
   def show
