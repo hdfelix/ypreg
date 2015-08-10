@@ -17,17 +17,21 @@ class Events::RegistrationsController < ApplicationController
 
   def new
     @event = Event.find(params[:event_id])
-    @user = User.find(params[:format])
-    @registration = Registration.new
+    if params[:format]
+      @user = User.find(params[:format])
+    else
+      @user = current_user
+    end
+    @registration = Registration.new(user: @user)
   end
 
   def create
     @event = Event.find(params[:event_id])
     @user = User.find(params[:user_id])
-    @registration = @user.registrations.build(registration_params)
+    @registration = @user.registrations.new(registration_params)
     if @registration.save
       flash[:notice] = 'Registration created succesfully'
-      redirect_to root_path
+      redirect_to event_path(@event)
     else
       flash[:error] = 'Error creating registration'
       render 'new'
@@ -67,6 +71,6 @@ private
 
 def registration_params
   params.require(:registration).permit(:payment_type, :payment_adjustment, :has_been_paid, :has_medical_release_form, :attend_as_serving_one)
-    .merge({event_id: params[:event_id]})
-    .merge({locality_id: current_user.id})
+    .merge({ event_id: params[:event_id] })
+    .merge({ locality_id: User.find(params[:user_id]).locality.id})
 end
