@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie ie9" lang="en" class="no-js"> <![endif]-->
+<!--[if !(IE)]><!--><html lang="en" class="no-js"> <!--<![endif]-->
 <html>
 <head>
 <title>YPReg Registration</title>
@@ -11,8 +13,8 @@
 <%= stylesheet_link_tag    "application" %>
 
 <!-- kingsboard CSS -->
-<%= stylesheet_link_tag   "main", media: "all" %>
-<%= stylesheet_link_tag   "font-awesome", media: "all" %>
+<%#= stylesheet_link_tag   "main", media: "all" %>
+<%#= stylesheet_link_tag   "font-awesome", media: "all" %>
 
 <!-- kingsboard skin -->
 <!--%= stylesheet_link_tag    "fullbright", media: "all" %-->
@@ -21,7 +23,7 @@
 <!-- TESTING -->
 <!-- for gem rails-jquery-cdn -->
 <!-- %= jquery_include_tag :google %-->
-<%= javascript_include_tag "jquery-2.1.0" %>
+<%#= javascript_include_tag "jquery-2.1.0" %>
 <%= javascript_include_tag "application" %>
 <%= csrf_meta_tags %>
 
@@ -35,6 +37,7 @@
 </head>
 <body>
   <div class="dashboard">
+    <!-- Wrapper -->
     <div class="wrapper">
       <!-- TOP GENERAL ALERT -->
       <% if flash[:notice] %>
