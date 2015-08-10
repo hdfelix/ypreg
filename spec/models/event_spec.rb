@@ -4,11 +4,11 @@ describe Event, type: :model do
   describe 'Associations' do
     it { should belong_to :location }
     it { should have_many :registrations }
-    it { should have_many :users }
-    # it { should have_many :localities }
+    it { should have_many(:users).through(:registrations) }
+    it { should have_many(:localities).conditions(:uniq).through(:users) }
     it { should have_many :event_localities }
-    # it { should have_many(:localities).through(:events_localities) }
     it { should have_many :hospitalities }
+    it { should have_many(:lodgings).conditions(:uniq).through(:hospitalities) }
     it { should have_many(:hospitality_registration_assignments).through(:hospitalities) }
   end
 
@@ -35,6 +35,24 @@ describe Event, type: :model do
       end
     end
 
+    describe '#current' do
+      it 'returns the current events (those happening at the moment)' do
+        # scope :current, -> { where('begin_date < ? AND end_date > ?', Time.zone.now, Time.zone.now) }
+          create(:event, end_date: 1.day.ago) # past event
+          create(:event, begin_date: (Time.zone.now + 7.days)) # future event
+          events = create_list(:event,2,
+                 begin_date: 1.day.ago,
+                 end_date: (Time.zone.now + 3.days)) # current event
+
+          expect(Event.current.map(&:title)).to eq events.map(&:title)
+      end
+    end
+
+    describe '#not_over' do
+      # scope :not_over, -> { where('begin_date >= ? OR end_date > ?', Time.zone.now, Time.zone.now) }
+
+    end
+
     describe '#in_the_future' do
       it 'returns only events that are happening in the future' do
         today = Time.zone.now
@@ -54,6 +72,7 @@ describe Event, type: :model do
         expect(Event.in_the_future.count).to eq (1)
       end
     end
+
     describe '#in_the_past' do
       it 'returns only events that already ended' do
         today = Time.zone.now
@@ -71,6 +90,20 @@ describe Event, type: :model do
                end_date: (today + 3.days)) # current event
 
         expect(Event.in_the_past.count).to eq (1)
+      end
+    end
+
+    describe '#next' do
+      it 'returns the next event chronologically from today' do
+        # scope :next, -> { where('begin_date > ?', Time.zone.now).first }
+        today = Time.zone.now
+        create(:event, begin_date: (today - 1.day),
+                          end_date: (today + 3.days))
+
+        next_event = create(:event, begin_date: (today + 1.day),
+                          end_date: (today + 3.days))
+
+        expect(Event.next.title).to eq next_event.title
       end
     end
   end
