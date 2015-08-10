@@ -29,7 +29,7 @@ class Events::LocalitiesController < ApplicationController
       ActiveRecord::Base.transaction do
         @locality_user_ids.each do |user_id|
           user = User.find(user_id)
-          reg = Registration.new(
+          reg = Registration.find_or_create_by!(
             user: user,
             event: @event,
             locality: user.locality,
@@ -38,18 +38,16 @@ class Events::LocalitiesController < ApplicationController
           @event.registrations << reg
         end
       end
-    end
 
-    unless @localityuser_ids.nil?
       if @event.save
         flash[:notice] = "Registrations added successfully."
-        redirect_to Event.find_by_title("Full-timer's Winter Gathering")
+        redirect_to @event 
       else
         flash[:error] = "There was a problem saving these event registrations."
         render action: 'new'
       end
     else
-      flash[:notice] = "No users were selected!"
+      flash[:error] = "No users were selected!"
       render action: 'new'
     end
   end
