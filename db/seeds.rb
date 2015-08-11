@@ -108,8 +108,8 @@ past_event = Event.create(
 total_users = 0
 print "\nCreating Users..."
 
-# Create an admin user
-print "\n  Admins (1): "
+# Create admin users
+print "\n  Admins (2): "
 admin = User.new(
   name: 'Hector D. Felix',
   email: 'hdfelix@gmail.com',
@@ -123,6 +123,23 @@ admin.skip_confirmation!
 admin.update_attributes(role: 'admin')
 admin.update_attributes(locality_id: Locality.all.sample.id)
 admin.save
+
+print '.'
+total_users += 1
+
+admin2 = User.new(
+  name: 'Developer Account',
+  email: 'aasizvaidya@gmail.com',
+  cell_phone: '8888888888',
+  birthday: 33.years.ago,
+  gender: 'B',
+  password: 'devaccount',
+  password_confirmation: 'devaccount')
+
+admin2.skip_confirmation!
+admin2.update_attributes(role: 'admin')
+admin2.update_attributes(locality_id: Locality.all.sample.id)
+admin2.save
 
 print '.'
 
