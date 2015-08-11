@@ -26,8 +26,11 @@ feature 'User manages attendance at an event' do
 
   scenario 'can view all registrations for each locality' do
     event = create(:event)
-    create(:registration, event: event, locality: event.localities.first)
     loc = create(:locality)
+    user = create(:user, locality: loc)
+    create(:registration, event: event, user: user)
+    loc = create(:locality)
+
     user = create(:user, locality: loc)
     create(:registration, event: event, user: user)
 
