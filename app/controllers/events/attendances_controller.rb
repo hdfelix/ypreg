@@ -4,4 +4,8 @@ class Events::AttendancesController < ApplicationController
     @registrations = @event.registrations.sort_by { |reg| reg.locality.city }
     @event_localities = EventLocality.includes(:locality).where(event: @event)
 	end
+
+  def show
+    @attendance = Registration.find(params[:id])
+  end
 end
