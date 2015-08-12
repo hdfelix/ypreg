@@ -26,7 +26,7 @@
                   <tr id="user_<%= reg.user.id %>">
                     <td><%= reg.user.name %></td>
                     <td><%= reg.user.role %></td>
-                    <td><%= link_to 'Edit', '#', class: 'btn btn-primary' %></td>
+                    <td><%= link_to 'Edit', event_attendance_path(@event,reg), class: 'btn btn-primary' %></td>
                   </tr>
                 <% end %>
               </tbody>
