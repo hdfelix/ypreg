@@ -24,9 +24,9 @@
               <tbody>
                 <% ev_loc.registrations.each do |reg| %>
                   <tr id="user_<%= reg.user.id %>">
-                    <td><%= reg.user.name %></td>
+                    <td><%= link_to "#{reg.user.name}", event_attendance_path(@event,reg) %></td>
                     <td><%= reg.user.role %></td>
-                    <td><%= link_to 'Edit', event_attendance_path(@event,reg), class: 'btn btn-primary' %></td>
+                    <td><%= link_to 'Edit', edit_event_attendance_path(@event,reg), class: 'btn btn-primary' %></td>
                   </tr>
                 <% end %>
               </tbody>

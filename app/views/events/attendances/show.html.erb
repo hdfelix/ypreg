@@ -1,3 +1,4 @@
+
 <%= @attendance.user.name %>
 <br />
 <%= @attendance.user.gender %>
@@ -30,5 +31,6 @@
   <br />
   <%= @attendance.hospitality.lodging.contact_person.email %>
 <% end %>
+<%= link_to 'Back', event_attendances_path(@event) %>
+<%= link_to 'Edit', edit_event_attendance_path(@event, @attendance) %>
 
-Returned

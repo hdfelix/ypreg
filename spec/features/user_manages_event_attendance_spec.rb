@@ -60,28 +60,24 @@ feature 'User manages attendance at an event' do
     end
   end
 
-  scenario 'can click edit for on a user registration to edit' do
+  scenario 'can view an user registration record' do
     event = create(:event)
     loc = create(:locality)
 
     user = create(:user, locality: loc)
-    # contact_person = create(:user, locality: loc)
     hosp = create(:hospitality,
                   event: event,
                   lodging: create(:lodging),
                   locality: loc)
     reg = create(:registration, event: event, user: user, hospitality: hosp)
-
-    
     
     visit event_attendances_path(event)
     expect(current_path).to eq(event_attendances_path(event))
    
     within("#user_#{user.id}") do
-      click_link_or_button "Edit"
+      click_link_or_button "#{user.name}"
     end
 
-    expect(page).to have_content('Returned')
     expect(page).to have_content(user.name)
     expect(page).to have_content(user.gender)
     expect(page).to have_content(user.age)
@@ -97,6 +93,43 @@ feature 'User manages attendance at an event' do
     expect(page).to have_content(format_phone_number(reg.hospitality.lodging.contact_person.cell_phone))
     expect(page).to have_content(format_phone_number(reg.hospitality.lodging.contact_person.home_phone))
     expect(page).to have_content(reg.hospitality.lodging.contact_person.email)
+    expect(page).to have_content('Back')
+    expect(page).to have_content('Edit')
+  end
 
+  scenario "can edit a single Registration Record by clicking on the user name" do
+    event = create(:event)
+    loc = create(:locality)
+
+    user = create(:user, locality: loc)
+    hosp = create(:hospitality,
+                  event: event,
+                  lodging: create(:lodging),
+                  locality: loc)
+    reg = create(:registration, event: event, user: user, hospitality: hosp)
+
+    visit event_attendances_path(event)
+    expect(current_path).to eq(event_attendances_path(event))
+
+    within("#user_#{user.id}") do
+      click_link_or_button "Edit"
+    end
+
+    expect(page).to have_content('Edit')
+    # expect(page).to have_content(user.name)
+    # expect(page).to have_content(user.gender)
+    # expect(page).to have_content(user.age)
+    # expect(page).to have_content(user.locality.city)
+    # expect(page).to have_content("$#{reg.payment_adjustment}.00")
+    # expect(page).to have_content(display_yes_no(reg.has_been_paid))
+    # expect(page).to have_content(display_yes_no(reg.has_medical_release_form))
+    # expect(page).to have_content(reg.hospitality.lodging.name)
+    # expect(page).to have_content(reg.hospitality.lodging.address1)
+    # expect(page).to have_content(reg.hospitality.lodging.address2)
+    # expect(page).to have_content(reg.hospitality.lodging.city)
+    # expect(page).to have_content(reg.hospitality.lodging.contact_person.name)
+    # expect(page).to have_content(format_phone_number(reg.hospitality.lodging.contact_person.cell_phone))
+    # expect(page).to have_content(format_phone_number(reg.hospitality.lodging.contact_person.home_phone))
+    # expect(page).to have_content(reg.hospitality.lodging.contact_person.email)
   end
 end
