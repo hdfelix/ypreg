@@ -1,1 +1,23 @@
+<%= form_for [@event, @attendance], url: event_attendance_path, html: { method: :patch }  do |f| %>
+  <% if @attendance.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger alert-dismissable">
+      <h4><strong><%= pluralize(@attendance.errors.count, "error") %></strong> prohibited this attendance record from being saved:</h4>
+      <ul>
+        <% @attendance.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="form-group">
+      <% binding.pry %>
+      <div class="simple-checkbox">
+        <%= f.check_box :has_medical_release_form %>
+        <%= f.label :has_medical_release_form, "Returned medical release form", class: 'checkbox' %>
+      </div>
+
+<% binding.pry %>
+      <%= f.submit 'Submit', class: 'btn-btn-primary' %>
+<% end %>
 Edit

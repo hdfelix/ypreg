@@ -115,6 +115,10 @@ feature 'User manages attendance at an event' do
       click_link_or_button "Edit"
     end
 
+    save_and_open_page
+    check('registration[has_medical_release_form]')
+    click_button 'Submit'
+
     expect(page).to have_content('Edit')
     # expect(page).to have_content(user.name)
     # expect(page).to have_content(user.gender)

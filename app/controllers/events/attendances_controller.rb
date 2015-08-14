@@ -7,6 +7,19 @@ class Events::AttendancesController < ApplicationController
 
   def show
     @event = Event.find(params[:event_id])
+    @attendance= Registration.find(params[:id])
+  end
+
+  def edit
+    @event = Event.find(params[:event_id])
     @attendance = Registration.find(params[:id])
+  end
+
+  def update
+    binding.pry
+  end
+
+  def create 
+    binding.pry
   end
 end
