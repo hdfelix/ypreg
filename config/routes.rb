@@ -19,7 +19,8 @@ YpwReg::Application.routes.draw do
   resources :localities
   resources :lodgings
   resources :events do
-    resources :attendances, controller: 'events/attendances'
+    # resources :attendances, controller: 'events/attendances'
+
     resources :localities, only: [:index, :show, :new, :create], controller: 'events/localities'
     resources :hospitalities, only: [:index, :new, :create], controller: 'events/hospitalities' do
       collection do

@@ -1,25 +1,3 @@
 class Events::AttendancesController < ApplicationController
-	def index
-    @event = Event.includes(:registrations).find(params[:event_id])
-    @registrations = @event.registrations.sort_by { |reg| reg.locality.city }
-    @event_localities = EventLocality.includes(:locality).where(event: @event)
-	end
 
-  def show
-    @event = Event.find(params[:event_id])
-    @attendance= Registration.find(params[:id])
-  end
-
-  def edit
-    @event = Event.find(params[:event_id])
-    @attendance = Registration.find(params[:id])
-  end
-
-  def update
-    binding.pry
-  end
-
-  def create 
-    binding.pry
-  end
 end

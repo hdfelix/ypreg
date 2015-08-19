@@ -1,0 +1,86 @@
+<div class="content">
+  <div class="row">
+    <div class="main-header">
+      <h2>Attendance - <%= @attendance.user.name %></h2>
+      <em><%= @attendance.event.title %></em>
+    </div>
+  </div>
+  <div class="row">
+    <!-- event attendance info -->
+    <div class="col-md-6 col-sm-12">
+      <div class="widget">
+        <div class="widget-header">
+          <h3><i class="fa fa-calendar-o"></i>Attendance Details</h3>
+        </div>
+        <div class="widget-content">
+          <p id="notice"><%= notice %></p>
+
+          <div class="user-info-right">
+            <div class="basic-info">
+              <h3><i class="fa fa-square"></i>Attendance info</h3>
+              <p class="data-row">
+                <span class="data-name">Name</span>
+                <span class=" data-value"><%= @attendance.user.name %></span>
+              </p>
+              <p class="data-row">
+                <span class="data-name">Gender</span>
+                <span class=" data-value"><%= @attendance.user.gender %></span>
+              </p>
+              <p class="data-row">
+                <span class="data-name">Age</span>
+                <span class=" data-value"><%= @attendance.user.age %></span>
+              </p>
+              <p class="data-row">
+                <span class="data-name">Locality</span>
+                <span class=" data-value"><%= @attendance.user.locality.city %></span>
+              </p>
+              <p class="data-row">
+                <span class="data-name">Pmt Adjustment</span>
+                <span class=" data-value"><%= number_to_currency(@attendance.payment_adjustment) %></span>
+              </p>
+              <p class="data-row">
+                <span class="data-name">Registration paid?</span>
+                <span class=" data-value"><%= display_yes_no(@attendance.has_been_paid) %></span>
+              </p>
+              <p class="data-row">
+                <span class="data-name">Med Release Form?</span>
+              </p>
+            </div>
+          </div>
+
+          <h3><i class="fa fa-square"></i>Hospitality info</h3>
+          <% unless @attendance.hospitality.nil? %>
+          <p class="data-row">
+            <span class="data-name">Hospitality</span>
+            <span class=" data-value"><%= @attendance.hospitality.lodging.name %></span>
+          </p>
+            
+            <br />
+            <%= @attendance.hospitality.lodging.address1 %>
+            <br />
+            <%= @attendance.hospitality.lodging.address2 %>
+            <br />
+            <%= @attendance.hospitality.lodging.city %>
+            <br />
+            <%= @attendance.hospitality.lodging.contact_person.name %>
+            <br />
+            <%= format_phone_number(@attendance.hospitality.lodging.contact_person.cell_phone) %>
+            <br />
+            <%= format_phone_number(@attendance.hospitality.lodging.contact_person.home_phone) %>
+            <br />
+            <%= @attendance.hospitality.lodging.contact_person.email %>
+          <% end %>
+        </div>
+        <div class="widget-footer">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <%= link_to 'Back', event_registrations_path(@event, view: 'attendance') %>
+          <%= link_to 'Edit', edit_event_registration_path(@event, @attendance, view: 'attendance') %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
