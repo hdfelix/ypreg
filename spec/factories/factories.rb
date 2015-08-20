@@ -10,6 +10,7 @@ FactoryGirl.define do
     password 'secretpassword'
     password_confirmation 'secretpassword'
     locality
+    role 'yp'
 
     trait :with_admin_role do
       role 'admin'
