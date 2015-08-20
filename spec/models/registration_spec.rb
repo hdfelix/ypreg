@@ -3,6 +3,7 @@ require 'rails_helper'
 describe Registration, type: :model do
   describe 'Constants' do
     it { should have_constant :PAYMENT_TYPE }
+    it { should have_constant :STATUS }
   end
 
   describe 'Associations' do

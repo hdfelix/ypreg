@@ -305,7 +305,7 @@ describe Event, type: :model do
         # TODO: Refactor code - each calculation should be a single method
         # Pull each expectation out into it's own test & refactor method...
         expect(stats[loc.city]['actual_grand_total']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_yp']).to eq('[--]')
+        expect(stats[loc.city]['actual_total_yp']).to eq(0)
         expect(stats[loc.city]['actual_total_serving_ones']).to eq('[--]')
         expect(stats[loc.city]['actual_total_trainees']).to eq('[--]')
         expect(stats[loc.city]['actual_total_helpers']).to eq('[--]')
