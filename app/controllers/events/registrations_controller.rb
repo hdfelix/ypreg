@@ -49,7 +49,7 @@ class Events::RegistrationsController < ApplicationController
     @event = Event.find(params[:event_id])
     if params[:view] == 'attendance'
       @attendance = Registration.find(params[:id])
-      # @user = @attendance.user
+      @user = @attendance.user
       render 'attendance_edit'
     else
       @id = params[:id]
@@ -59,11 +59,16 @@ class Events::RegistrationsController < ApplicationController
   
   def update
     @event = Event.find(params[:event_id])
-    @registration = registration.find(params[:id])
+    @registration = Registration.find(params[:id])
 
     if @registration.update_attributes(registration_params)
-      flash[:notice] = 'Registration created succesfully'
-      redirect_to event_registrations_path(@event)
+      if params[:view] == 'attendance'
+        flash[:notice] = 'Attendance created succesfully'
+        redirect_to event_registrations_url(@event,view: 'attendance')
+      else
+        flash[:notice] = 'Registration created succesfully'
+        redirect_to event_registrations_path(@event)
+      end
     else
       flash[:error] = 'error creating registration'
       render 'new'
@@ -83,7 +88,9 @@ end
 private
 
 def registration_params
-  params.require(:registration).permit(:payment_type, :payment_adjustment, :has_been_paid, :has_medical_release_form, :attend_as_serving_one)
+  parameters = params.require(:registration).permit(:payment_type, :payment_adjustment, :has_been_paid, :has_medical_release_form, :attend_as_serving_one)
     .merge({ event_id: params[:event_id] })
     .merge({ locality_id: User.find(params[:user_id]).locality.id})
+
+  parameters.merge(params.require(:registration).permit(:status)) if params[:view] == 'attendance'
 end
