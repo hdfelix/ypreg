@@ -8,13 +8,16 @@
   <div class="col-md-8">
     <!-- EDIT REGISTRATION FORM -->
     <div class="widget">
-      <div class="widget-header"><h3><i class="fa fa-edit"></i></div>
+      <div class="widget-header">
+        <h3><i class="fa fa-edit"></i>Registration Info</h3>
+        <div class=" btn-group widget-header-toolbar">
+          <span class="btn btn-danger btn-sm"><%= not_paid_in_words(@attendance.has_been_paid) %></>
+        </div>
+      </div>
       <div class="widget-content">
         <!-- Registration form partial -->
         <%#= render partial: 'form', locals: {event: @event, registration: @registration} %>
-        Registration info here
-        <br />
-        <%= link_to 'Back', event_registrations_path(@event,@attendance, view: 'attendance') %>
+        <%= render partial: 'attendance_simple', locals: { event: @event, attendance: @attendance } %>
       </div>
     </div>
   </div>
