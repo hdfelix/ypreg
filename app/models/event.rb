@@ -62,9 +62,8 @@ class Event < ActiveRecord::Base
         users.joins(:registrations)
           .where(role: role, registrations: { attend_as_serving_one: true })
           .uniq
-          .count
       else
-        users.where(role: role).uniq.count
+        users.where(role: role).uniq
       end
     # if role.nil
     elsif !locality.nil? && role.nil?
@@ -72,9 +71,8 @@ class Event < ActiveRecord::Base
         users.joins(:registrations)
           .where(locality: locality, registrations: { attend_as_serving_one: true })
           .uniq
-          .count
       else
-        users.where(locality: locality).uniq.count
+        users.where(locality: locality).uniq
       end
     # if neither locality, role nil
     elsif !locality.nil? && !role.nil? # locality not nil, role not nil, is_serving_one
@@ -82,17 +80,15 @@ class Event < ActiveRecord::Base
         tmp = users.joins(:registrations)
           .where(locality: locality, role: role, registrations: { attend_as_serving_one: true })
           .uniq
-          .count
         tmp
       else
-        users.joins(:registrations).where(locality: locality, role: role).uniq.count
+        users.joins(:registrations).where(locality: locality, role: role).uniq
       end
     else # if both nil
       if is_serving_one
         users.joins(:registrations)
           .where(registrations: { attend_as_serving_one: true })
           .uniq
-          .count
       end
     end
   end
@@ -100,7 +96,12 @@ class Event < ActiveRecord::Base
   def registered_serving_ones(locality)
     users.joins(:registrations)
       .where(locality: locality, registrations: { attend_as_serving_one: true })
-      .uniq.count
+      .uniq
+      .count
+  end
+
+  def calculate_actual_total_yp
+
   end
 
   def assigned_lodgings_as_hospitality
@@ -168,12 +169,12 @@ class Event < ActiveRecord::Base
 
   def assign_totals(stats, locality)
     loc = locality.city
-    stats[loc]['total_yp'] = total_registrations(role: 'yp', locality: locality)
+    stats[loc]['total_yp'] = total_registrations(role: 'yp', locality: locality).count
     stats[loc]['total_serving_ones'] = registered_serving_ones(locality)
     stats[loc]['total_trainees'] =
-      total_registrations(role: 'trainee', locality: locality)
+      total_registrations(role: 'trainee', locality: locality).count
     stats[loc]['total_helpers'] =
-      total_registrations(role: 'helper', locality: locality)
+      total_registrations(role: 'helper', locality: locality).count
     stats[loc]['yp_so_ratio'] = '--'
     stats[loc]['yp_so_ratio'] =
       stats[loc]['total_yp'] /
@@ -183,7 +184,7 @@ class Event < ActiveRecord::Base
   def assign_grand_totals(stats, locality)
     loc = locality.city
     stats[loc]['actual_grand_total'] = '[--]'
-    stats[loc]['actual_total_yp'] = '[--]'
+    stats[loc]['actual_total_yp'] = total_registrations(role: 'yp', locality: locality).map {|u| u if u.registration(self).status = 'attended'}.count
     stats[loc]['actual_total_serving_ones'] = '[--]'
     stats[loc]['actual_total_trainees'] = '[--]'
     stats[loc]['actual_total_helpers'] = '[--]'

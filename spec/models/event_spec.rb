@@ -161,13 +161,14 @@ describe Event, type: :model do
 
   describe '#total_registrations' do
     # TODO: test all new options {}
-    it 'returns the number of registrations per locality for the given role' do
+    # TODO: (refactored) test the actual registrations returned, not just count
+    it 'returns the registrations per locality for the given role' do
       reg   = create(:registration, :yp)
       event = reg.event
       loc   = reg.user.locality
       role  = reg.user.role
 
-      expect(event.total_registrations(role: role, locality: loc)).to eq(1)
+      expect(event.total_registrations(role: role, locality: loc).count).to eq(1)
     end
   end
 

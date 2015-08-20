@@ -113,19 +113,19 @@
               <tbody>
               <tr>
                 <td>Young People</td>
-                <td><%= @event.total_registrations(role: 'yp') %></td>
+                <td><%= @event.total_registrations(role: 'yp').count %></td>
               </tr>
               <tr>
                 <td>Serving Ones</td>
-                <td><%= @event.total_registrations(attend_as_serving_one: true) %></td>
+                <td><%= @event.total_registrations(attend_as_serving_one: true).count %></td>
               </tr>
               <tr>
                 <td>Trainees</td>
-                <td><%= @event.total_registrations(role: 'trainee') %></td>
+                <td><%= @event.total_registrations(role: 'trainee').count %></td>
               </tr>
               <tr>
                 <td>Helpers</td>
-                <td><%= @event.total_registrations(role: 'helper') %></td>
+                <td><%= @event.total_registrations(role: 'helper').count %></td>
               </tr>
               <tr>
                 <td>Family Attending</td>
@@ -133,11 +133,11 @@
               </tr>
               <tr>
                 <td>YCAT</td>
-                <td><%= @event.total_registrations(role: 'ycat') %></td>
+                <td><%= @event.total_registrations(role: 'ycat').count %></td>
               </tr>
               <tr>
                 <td>S/S Brothers</td>
-                <td><%= @event.total_registrations(role: 'speaking_brothers') %></td>
+                <td><%= @event.total_registrations(role: 'speaking_brothers').count %></td>
               </tr>
             </table>
           </div>
