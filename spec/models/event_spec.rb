@@ -175,10 +175,12 @@ describe Event, type: :model do
   describe '#registered_serving_ones' do
     it 'returns the number of serving ones from a locality attending the event' do
       reg   = create(:registration, :serving_one)
+      other_reg = create(:registration, :serving_one)
       event = reg.event
+      other_reg.event
       loc   = reg.user.locality
 
-      expect(event.registered_serving_ones(loc)).to eq(1)
+      expect(event.registered_serving_ones(loc).count).to eq(1)
     end
   end
 
@@ -268,7 +270,7 @@ describe Event, type: :model do
 
   describe '#load_locality_summary' do
     let(:loc) { create(:locality) }
-    let(:usr) { create(:user, locality: loc) }
+    let(:yp_usr) { create(:user, locality: loc) }
     let(:ev)  { create(:event) }
 
     describe 'returns a hash' do
@@ -279,7 +281,7 @@ describe Event, type: :model do
       end
 
       it 'of stats per participating locality' do
-        create(:registration, event: ev, user: usr)
+        create(:registration, event: ev, user: yp_usr)
 
         locality_city = loc.city
 
@@ -288,24 +290,25 @@ describe Event, type: :model do
       end
 
       it "that contains a locality's attandance totals" do
-        create(:registration, event: ev, user: usr)
+        create(:registration, event: ev, user: yp_usr)
 
         stats = ev.load_locality_summary
         expect(stats[loc.city]['grand_total']).to eq(1)
-        expect(stats[loc.city]['total_yp']).to eq(0)
+        expect(stats[loc.city]['total_yp']).to eq(1)
         expect(stats[loc.city]['total_serving_ones']).to eq(0)
         expect(stats[loc.city]['total_helpers']).to eq(0)
         expect(stats[loc.city]['yp_so_ratio']).to eq('--')
       end
 
       it "that contains a locality's actual totals" do
-        create(:registration, event: ev, user: usr)
+        create(:registration, event: ev, user: yp_usr)
+        num_of_yp_users = 1
 
         stats = ev.load_locality_summary
         # TODO: Refactor code - each calculation should be a single method
         # Pull each expectation out into it's own test & refactor method...
         expect(stats[loc.city]['actual_grand_total']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_yp']).to eq(0)
+        expect(stats[loc.city]['actual_total_yp']).to eq(num_of_yp_users)
         expect(stats[loc.city]['actual_total_serving_ones']).to eq('[--]')
         expect(stats[loc.city]['actual_total_trainees']).to eq('[--]')
         expect(stats[loc.city]['actual_total_helpers']).to eq('[--]')
