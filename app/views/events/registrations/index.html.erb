@@ -42,8 +42,8 @@
               W: <%= format_phone_number(r.user.work_phone) %></td-->
             <td><%= number_to_currency(r.payment_adjustment) %></td>
             <td><%= display_yes_no(r.has_been_paid) %></td>
-            <td><%= display_yes_no(r.attend_as_serving_one) %></td>
             <td><%= display_yes_no(r.has_medical_release_form) %></td>
+            <td><%= display_yes_no(r.attend_as_serving_one) %></td>
             <td>
               <%= link_to 'Show', event_registration_path(@event,r) %>
               <%= link_to 'Edit', edit_event_registration_path(@event,r) %></td>
