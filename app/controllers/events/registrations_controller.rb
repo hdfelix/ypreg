@@ -92,5 +92,6 @@ def registration_params
     .merge({ event_id: params[:event_id] })
     .merge({ locality_id: User.find(params[:user_id]).locality.id})
 
-  parameters.merge(params.require(:registration).permit(:status)) if params[:view] == 'attendance'
+  parameters = parameters.merge(params.require(:registration).permit(:status)) if params[:view] == 'attendance'
+  parameters
 end
