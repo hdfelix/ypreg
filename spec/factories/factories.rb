@@ -168,7 +168,7 @@ FactoryGirl.define do
 
   ## Registration factories
   factory :registration do
-    payment_type 'Cash'
+    payment_type 'cash'
     has_been_paid false
     payment_adjustment '5'
     attend_as_serving_one false

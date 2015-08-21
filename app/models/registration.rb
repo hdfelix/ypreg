@@ -1,6 +1,6 @@
 class Registration < ActiveRecord::Base
-  PAYMENT_TYPE = %w(Cash, Check)
-  STATUS = %w(Attended Excused Y)
+  PAYMENT_TYPE = %w(cash, check)
+  STATUS = %w(attended excused y)
 
   belongs_to :user
   belongs_to :event
