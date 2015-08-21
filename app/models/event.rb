@@ -97,11 +97,24 @@ class Event < ActiveRecord::Base
     users.joins(:registrations)
       .where(locality: locality, registrations: { attend_as_serving_one: true })
       .uniq
-      .count
+      # .count
+  end
+
+  def present_serving_ones_from(locality)
+    registrations.joins(:user).where(locality: locality, attend_as_serving_one: true, status: 'attended')
+  end
+
+  def present_trainees_from(locality)
+    users.joins(:registrations).where(locality: locality, role: 'trainee', registrations: { status: 'attended' })
+  end
+
+
+  def present_helpers_from(locality)
+    users.joins(:registrations).where(locality: locality, role: 'helper', registrations: { status: 'attended' })
   end
 
   def calculate_actual_total_yp
-
+    total_registrations(role: 'yp', locality: locality).map {|u| u if u.registration(self).status = 'attended'}.count
   end
 
   def assigned_lodgings_as_hospitality
@@ -156,6 +169,7 @@ class Event < ActiveRecord::Base
 
   def calculate_locality_statistics(stats, locality)
     loc = locality.city
+
     # TODO: ambiguous locality_id
     stats[loc]['grand_total'] =
       users.where('users.locality_id = ?', locality.id).count
@@ -170,7 +184,7 @@ class Event < ActiveRecord::Base
   def assign_totals(stats, locality)
     loc = locality.city
     stats[loc]['total_yp'] = total_registrations(role: 'yp', locality: locality).count
-    stats[loc]['total_serving_ones'] = registered_serving_ones(locality)
+    stats[loc]['total_serving_ones'] = registered_serving_ones(locality).count
     stats[loc]['total_trainees'] =
       total_registrations(role: 'trainee', locality: locality).count
     stats[loc]['total_helpers'] =
@@ -183,11 +197,16 @@ class Event < ActiveRecord::Base
 
   def assign_grand_totals(stats, locality)
     loc = locality.city
-    stats[loc]['actual_grand_total'] = '[--]'
+    actual_serving_ones_count = present_serving_ones_from(locality).count
+    actual_trainees_count = present_trainees_from(locality).count
+    actual_helpers_count = present_helpers_from(locality).count
+    actual_total = actual_serving_ones_count + actual_trainees_count + actual_helpers_count
+
+    stats[loc]['actual_grand_total'] = actual_total
     stats[loc]['actual_total_yp'] = total_registrations(role: 'yp', locality: locality).map {|u| u if u.registration(self).status = 'attended'}.count
-    stats[loc]['actual_total_serving_ones'] = '[--]'
-    stats[loc]['actual_total_trainees'] = '[--]'
-    stats[loc]['actual_total_helpers'] = '[--]'
+    stats[loc]['actual_total_serving_ones'] = actual_serving_ones_count
+    stats[loc]['actual_total_trainees'] = actual_trainees_count
+    stats[loc]['actual_total_helpers'] = actual_helpers_count
     stats[loc]['actual_amount_paid'] = locality_amount_paid(locality)
   end
 
