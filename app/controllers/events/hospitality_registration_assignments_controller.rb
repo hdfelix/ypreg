@@ -1,7 +1,7 @@
 class Events::HospitalityRegistrationAssignmentsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
-    @event_localities = EventLocality.where(event: @event)
+    @event_localities = EventLocality.where(event: @event).sort { |a,b| a.locality_city <=> b.locality_city }
   end
 
   def show
@@ -61,6 +61,6 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
       flash[:error] = "Error saving assignments."
     end
 
-    redirect_to event_hospitality_registration_assignment_path(@event, @locality)
+    redirect_to event_hospitality_registration_assignments_path(@event)
   end
 end

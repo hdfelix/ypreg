@@ -21,7 +21,7 @@
                 </tr>
               </thead>
               <tbody>
-                  <% @event_localities.each do |el| %>
+              <% @event_localities.each do |el| %>
                   <tr id=<%= "locality_#{ el.locality_id }" %>>
                     <td><%= el.locality_city %></td>
                     <td><%= el.registrations.count %></td>

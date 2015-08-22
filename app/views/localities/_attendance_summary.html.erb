@@ -1,5 +1,5 @@
-<% if @event.participating_localities.count > 0 %>
-	<% @event.participating_localities.each do |loc| %>
+<% if @participating_localities.count > 0 %>
+	<% @participating_localities.each do |loc| %>
 		<tr>
 			<td><%= link_to loc.city, event_locality_path(@event, loc) %></td>
 			<td><%= @stats["#{loc.city}"]['grand_total'] %></td>
