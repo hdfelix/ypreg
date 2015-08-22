@@ -71,7 +71,7 @@
                   <tr>
                   <td><%= loc.city %></td>
                   <td><%= @stats["#{loc.city}"]['grand_total'] %></td>
-                  <td><%= @event.assigned_hospitality_beds[loc.city] %></td>
+                  <td><%= @event.beds_assigned_to_locality[loc.city] %></td>
                 </tr>
               <% end %>
                 </tbody>

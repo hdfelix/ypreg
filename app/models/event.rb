@@ -137,7 +137,7 @@ class Event < ActiveRecord::Base
     Lodging.where.not(id: ids)
   end
 
-  def assigned_hospitality_beds
+  def beds_assigned_to_locality
     hospitalities.inject({}) do |beds_hash, h|
       unless h.locality.nil?
         city = h.locality.city

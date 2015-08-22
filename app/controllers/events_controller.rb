@@ -106,6 +106,8 @@ class EventsController < ApplicationController
   def set_event
     @event = Event.find(params[:id])
     authorize @event
+
+    @participating_localities = @event.participating_localities.sort { |a,b| a.city <=> b.city }
   end
 
   # Never trust parameters from the scary internet,

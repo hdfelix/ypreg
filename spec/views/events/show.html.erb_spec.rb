@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'events/show' do
   before(:each) do
     @event = create(:event_with_registrations)
+    @participating_localities = @event.participating_localities
     @stats =  @event.load_locality_summary
   end
 

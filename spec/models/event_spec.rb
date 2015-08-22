@@ -245,11 +245,11 @@ describe Event, type: :model do
     end
   end
 
-  describe '#assigned_hospitality_beds' do
+  describe '#beds_assigned_to_locality' do
     it 'return an empty hash if the event has no hospitalities' do
       ev = create(:event)
 
-      expect(ev.assigned_hospitality_beds).to eq({})
+      expect(ev.beds_assigned_to_locality).to eq({})
     end
 
     it 'returns a hash - # of beds (based on min_capacity of each lodging)
@@ -264,7 +264,7 @@ describe Event, type: :model do
       result = {
         "#{loc1.city}" => lodge1.min_capacity,
         "#{loc2.city}"  => lodge2.min_capacity }
-      expect(ev.assigned_hospitality_beds).to eq(result)
+      expect(ev.beds_assigned_to_locality).to eq(result)
     end
   end
 
