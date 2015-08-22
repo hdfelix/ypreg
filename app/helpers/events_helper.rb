@@ -51,4 +51,13 @@ module EventsHelper
       end
     end
   end
+
+  def style_balance(balance)
+    if balance > 0
+      t = content_tag('span',number_to_currency(balance), class: 'negative').html_safe
+    else
+      t = content_tag('span',number_to_currency(balance)).html_safe
+    end
+    return t
+  end
 end

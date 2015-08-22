@@ -15,7 +15,7 @@
 			<td><%= @stats["#{loc.city}"]['actual_total_trainees'] %></td>
 			<td><%= @stats["#{loc.city}"]['actual_total_helpers'] %></td>
 			<td><%= number_to_currency(@stats["#{loc.city}"]['actual_amount_paid']) %></td>
-			<td><%= number_to_currency(@stats["#{loc.city}"]['balance']) %></td>
+			<td><%= style_balance(@stats["#{loc.city}"]['balance']) %></td>
 		</tr>
 	<% end %>
 <% else %>
