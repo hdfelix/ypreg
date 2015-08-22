@@ -196,7 +196,7 @@ describe Event, type: :model do
       expect(ev.assigned_lodgings_as_hospitality).to include(lodge1, lodge2)
     end
 
-    it 'should not return lodgings not registered as hospitality for an event' do
+    it 'does not return lodgings not registered as hospitality for an event' do
       Lodging.delete_all
       Locality.delete_all
       Hospitality.delete_all
@@ -232,7 +232,7 @@ describe Event, type: :model do
       expect(ev.unassigned_lodgings_as_hospitality).to eq([lodge3])
     end
 
-    it 'should not return lodgings registered as hospitality for an event' do
+    it 'does not return lodgings registered as hospitality for an event' do
       ev      = create(:event)
       loc     = create(:locality)
       lodge1  = create(:lodging)

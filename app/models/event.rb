@@ -97,7 +97,10 @@ class Event < ActiveRecord::Base
     users.joins(:registrations)
       .where(locality: locality, registrations: { attend_as_serving_one: true })
       .uniq
-      # .count
+  end
+
+  def present_yp_from(locality)
+    registrations.joins(:user).where(locality: locality, status: 'attended')
   end
 
   def present_serving_ones_from(locality)
