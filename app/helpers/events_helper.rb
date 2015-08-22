@@ -51,4 +51,8 @@ module EventsHelper
       end
     end
   end
+
+  def show_attendance_menu_option?(event)
+    Event.current.map(&:id).include?(event.id)
+  end
 end

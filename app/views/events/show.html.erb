@@ -54,7 +54,9 @@
               <li><%= link_to 'Hospitality', event_hospitalities_path(@event) %></li>
               <li><%= link_to 'Registrations', event_registrations_path(@event) %><li>
               <li><%= link_to 'Payments', edit_locality_payments_path(@event) %></li>
-              <li id='attendance-option'><%= link_to 'Attendance', event_registrations_path(@event, view: 'attendance') %></li>
+              <% if show_attendance_menu_option?(@event) %>
+                <li id='attendance-option'><%= link_to 'Attendance', event_registrations_path(@event, view: 'attendance') %></li>
+              <% end %>
             </ul>
           </div>
         </div>
