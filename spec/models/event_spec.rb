@@ -301,19 +301,21 @@ describe Event, type: :model do
       end
 
       it "that contains a locality's actual totals" do
-        create(:registration, event: ev, user: yp_usr)
-        num_of_yp_users = 1
+        create(:registration, event: ev, user: yp_usr, status: 'attended')
+        actual_yp_users = 1
+        actual_serving_ones = 0
+        actual_trainees = 0
+        actual_helpers = 0
+        total = actual_yp_users + actual_serving_ones + actual_trainees + actual_helpers
 
         stats = ev.load_locality_summary
         # TODO: Refactor code - each calculation should be a single method
         # Pull each expectation out into it's own test & refactor method...
-        expect(stats[loc.city]['actual_grand_total']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_yp']).to eq(num_of_yp_users)
-        expect(stats[loc.city]['actual_total_serving_ones']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_trainees']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_helpers']).to eq('[--]')
-        # expect(stats[loc.city]['actual_amount_paid']).to eq(...)
-        # expect(stats[loc.city]['balance']).to eq('[--]')
+        expect(stats[loc.city]['actual_grand_total']).to eq(total)
+        expect(stats[loc.city]['actual_total_yp']).to eq(actual_yp_users)
+        expect(stats[loc.city]['actual_total_serving_ones']).to eq(actual_serving_ones)
+        expect(stats[loc.city]['actual_total_trainees']).to eq(actual_trainees)
+        expect(stats[loc.city]['actual_total_helpers']).to eq(actual_helpers)
       end
 
       # it "that contains a locality's actual totals" do

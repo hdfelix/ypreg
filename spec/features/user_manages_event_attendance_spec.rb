@@ -5,21 +5,37 @@ feature 'User manages attendance at an event' do
     create_logged_in_admin
   }
 
-  scenario 'can see the total number of registrations for the event' do
+  scenario 'can see the total number of registrations for the event', js: true do
     event = create(:event_with_registrations)
 
-    visit event_attendances_path(event)
+    admin = create(:user, role: 'admin')
+    sign_in(admin)
 
-    expect(current_path).to eq(event_attendances_path(event))
-    expect(page).to have_content(event.registrations.count)
+    visit event_path(event)
+
+    within('div#event-info-btn-group') do
+      click_button('manage')
+      wait_for_ajax
+      click_link('Attendance')
+    end
+
+    expect(page).to have_content("Registrations: #{event.registrations.count}")
   end
 
-  scenario 'can view all localities participating in the event' do
-    event = create(:event_with_registrations)
+  scenario 'can view all localities participating in the event', js: true do
+    event = create(:event_with_registrations, registrations_count: 5)
     create(:registration, event: event, locality: event.localities.first)
 
-    visit event_attendances_path(event)
-    expect(current_path).to eq(event_attendances_path(event))
+    admin = create(:user, role: 'admin')
+    sign_in(admin)
+
+    visit event_path(event)
+
+    within('div#event-info-btn-group') do
+      click_button('manage')
+      wait_for_ajax
+      click_link('Attendance')
+    end
 
     event.localities.each do |loc|
       expect(page).to have_content(loc.city)
@@ -40,8 +56,7 @@ feature 'User manages attendance at an event' do
     user2 = create(:user, locality: loc2)
     create(:registration, event: event, user: user2)
 
-    visit event_attendances_path(event)
-    expect(current_path).to eq(event_attendances_path(event))
+    visit "events/#{event.id}/registrations?view=attendance"
 
     event_localities = EventLocality.includes(:locality).where(event: event)
 
@@ -70,10 +85,9 @@ feature 'User manages attendance at an event' do
                   lodging: create(:lodging),
                   locality: loc)
     reg = create(:registration, event: event, user: user, hospitality: hosp)
-    
-    visit event_attendances_path(event)
-    expect(current_path).to eq(event_attendances_path(event))
-   
+
+    visit "events/#{event.id}/registrations?view=attendance"
+
     within("#user_#{user.id}") do
       click_link_or_button "#{user.name}"
     end
@@ -97,7 +111,7 @@ feature 'User manages attendance at an event' do
     expect(page).to have_content('Edit')
   end
 
-  scenario "can edit a single Registration Record by clicking on the user name" do
+  scenario "can access the edit an attendance (registration) record by clicking on the user name" do
     event = create(:event)
     loc = create(:locality)
 
@@ -108,32 +122,14 @@ feature 'User manages attendance at an event' do
                   locality: loc)
     reg = create(:registration, event: event, user: user, hospitality: hosp)
 
-    visit event_attendances_path(event)
-    expect(current_path).to eq(event_attendances_path(event))
+    visit "events/#{event.id}/registrations?view=attendance"
 
     within("#user_#{user.id}") do
       click_link_or_button "Edit"
     end
 
-    save_and_open_page
     check('registration[has_medical_release_form]')
-    click_button 'Submit'
-
-    expect(page).to have_content('Edit')
-    # expect(page).to have_content(user.name)
-    # expect(page).to have_content(user.gender)
-    # expect(page).to have_content(user.age)
-    # expect(page).to have_content(user.locality.city)
-    # expect(page).to have_content("$#{reg.payment_adjustment}.00")
-    # expect(page).to have_content(display_yes_no(reg.has_been_paid))
-    # expect(page).to have_content(display_yes_no(reg.has_medical_release_form))
-    # expect(page).to have_content(reg.hospitality.lodging.name)
-    # expect(page).to have_content(reg.hospitality.lodging.address1)
-    # expect(page).to have_content(reg.hospitality.lodging.address2)
-    # expect(page).to have_content(reg.hospitality.lodging.city)
-    # expect(page).to have_content(reg.hospitality.lodging.contact_person.name)
-    # expect(page).to have_content(format_phone_number(reg.hospitality.lodging.contact_person.cell_phone))
-    # expect(page).to have_content(format_phone_number(reg.hospitality.lodging.contact_person.home_phone))
-    # expect(page).to have_content(reg.hospitality.lodging.contact_person.email)
+    select('attended', from: 'registration[status]')
+    click_button 'Update'
   end
 end

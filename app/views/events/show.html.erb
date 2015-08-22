@@ -45,7 +45,7 @@
             </table>
           </div>
           <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
-          <div class="btn-group">
+          <div id="event-info-btn-group" class="btn-group">
             <button id='manage' class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
               Manage
               <span class="caret"></span>
@@ -54,7 +54,7 @@
               <li><%= link_to 'Hospitality', event_hospitalities_path(@event) %></li>
               <li><%= link_to 'Registrations', event_registrations_path(@event) %><li>
               <li><%= link_to 'Payments', edit_locality_payments_path(@event) %></li>
-              <li><%= link_to 'Attendance', event_registrations_path(@event, view: 'attendance') %></li>
+              <li id='attendance-option'><%= link_to 'Attendance', event_registrations_path(@event, view: 'attendance') %></li>
             </ul>
           </div>
         </div>

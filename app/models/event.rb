@@ -42,7 +42,7 @@ class Event < ActiveRecord::Base
   end
 
   def registered_saints_from_locality(locality)
-      self.localities.find(locality).registrations(self).map(&:user)
+    localities.find(locality).registrations(self).map(&:user)
   end
 
   def registered_saints_per_locality
@@ -111,13 +111,12 @@ class Event < ActiveRecord::Base
     users.joins(:registrations).where(locality: locality, role: 'trainee', registrations: { status: 'attended' })
   end
 
-
   def present_helpers_from(locality)
     users.joins(:registrations).where(locality: locality, role: 'helper', registrations: { status: 'attended' })
   end
 
   def calculate_actual_total_yp
-    total_registrations(role: 'yp', locality: locality).map {|u| u if u.registration(self).status = 'attended'}.count
+    total_registrations(role: 'yp', locality: locality).map { |u| u if u.registration(self).status = 'attended' }.count
   end
 
   def assigned_lodgings_as_hospitality
@@ -200,13 +199,18 @@ class Event < ActiveRecord::Base
 
   def assign_grand_totals(stats, locality)
     loc = locality.city
+    actual_yp_count = present_yp_from(locality).count
     actual_serving_ones_count = present_serving_ones_from(locality).count
     actual_trainees_count = present_trainees_from(locality).count
     actual_helpers_count = present_helpers_from(locality).count
-    actual_total = actual_serving_ones_count + actual_trainees_count + actual_helpers_count
+    actual_total =
+      actual_yp_count +
+      actual_serving_ones_count +
+      actual_trainees_count +
+      actual_helpers_count
 
     stats[loc]['actual_grand_total'] = actual_total
-    stats[loc]['actual_total_yp'] = total_registrations(role: 'yp', locality: locality).map {|u| u if u.registration(self).status = 'attended'}.count
+    stats[loc]['actual_total_yp'] = actual_yp_count
     stats[loc]['actual_total_serving_ones'] = actual_serving_ones_count
     stats[loc]['actual_total_trainees'] = actual_trainees_count
     stats[loc]['actual_total_helpers'] = actual_helpers_count
@@ -214,6 +218,7 @@ class Event < ActiveRecord::Base
   end
 
   def locality_amount_paid(locality)
-    registration_cost * Registration.where(event: self, locality: locality, has_been_paid: true).count
+    registration_cost *
+      Registration.where(event: self, locality: locality, has_been_paid: true).count
   end
 end
