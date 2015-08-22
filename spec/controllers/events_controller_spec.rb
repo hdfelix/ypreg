@@ -7,13 +7,10 @@ describe EventsController, :type => :controller do
       Event.delete_all
       e1 = create(:event)
       e2 = create(:event)
-      # allow(Event).to receive(:all).and_return(event)
-      # allow(Event).to receive(:count).and_return(1)
+
       get 'index'
-      # assigns(:events).should eq([event])
+
       expect(assigns(:events)).to match_array([e1, e2])
-      # expect(response).to have_http_status(:success)
-      # expect(response).to render_template(:index)
     end
   end
 

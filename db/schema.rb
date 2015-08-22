@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150727042330) do
+ActiveRecord::Schema.define(version: 20150805232941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20150727042330) do
     t.integer  "hospitality_id"
     t.integer  "locality_id"
     t.boolean  "has_medical_release_form"
+    t.string   "status"
   end
 
   add_index "registrations", ["event_id"], name: "index_registrations_on_event_id", using: :btree

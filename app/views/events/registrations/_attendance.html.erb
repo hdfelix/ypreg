@@ -1,9 +1,9 @@
-<%= form_for [@event,@registration] do |f| %>
-  <% if @registration.errors.any? %>
+<%= form_for [@event,@attendance] do |f| %>
+  <% if @attendance.errors.any? %>
     <div id="error_explanation" class="alert alert-danger alert-dismissable">
-      <h4><strong><%= pluralize(@registration.errors.count, "error") %></strong> prohibited this registration from being saved:</h4>
+      <h4><strong><%= pluralize(@attendance.errors.count, "error") %></strong> prohibited this attendance information from being saved:</h4>
       <ul>
-        <% @registration.errors.full_messages.each do |msg| %>
+        <% @attendance.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
@@ -38,34 +38,34 @@
 <fieldset>
   <legend>Registrant Information</legend>
   <%#= hidden_field_tag "user_id", @user.id %> 
-  <%= hidden_field_tag "user_id", @registration.user.id %> 
+  <%= hidden_field_tag "user_id", @attendance.user.id %> 
   <div class="form-group">
     <%= f.label "Name", class: 'col-md-2 control-label' %>
     <div class="col-md-6">
-      <span class="form-control" disabled><%= @registration.user.name %></span>
+      <span class="form-control" disabled><%= @attendance.user.name %></span>
     </div>
   </div>
   <div class="form-group">
     <%= f.label "Role", class: 'col-md-2 control-label' %>
     <div class="col-md-6">
-      <span class="form-control" disabled><%= @registration.user.role.upcase %></span>
+      <span class="form-control" disabled><%= @attendance.user.role.upcase %></span>
     </div>
   </div>
   <div class="form-group">
     <%= f.label "Gender", class: 'col-md-2 control-label' %>
     <div class="col-md-6">
-      <span class="form-control" disabled><%= format_titleize(@registration.user.gender) %></span>
+      <span class="form-control" disabled><%= format_titleize(@attendance.user.gender) %></span>
     </div>
   </div>
   <div class="form-group">
     <%= f.label "Locality", class: 'col-md-2 control-label' %>
     <div class="col-md-6">
-      <span class="form-control" disabled><%= @registration.user.locality_city.titleize %></span>
+      <span class="form-control" disabled><%= @attendance.user.locality_city.titleize %></span>
     </div>
   </div>
 </fieldset>
 <fieldset>
-  <legend>Registration Information</legend>
+  <legend>Attendance Information</legend>
   <div class="form-group">
     <%= f.label :payment_type, class: 'col-md-2 control-label' %>
     <div class="col-md-4">
@@ -116,7 +116,7 @@
       <% else %>
           <%= f.submit 'Update', class: 'btn btn-primary' %>
       <% end %>
-        <%= link_to 'Back', event_registrations_path(event), class: 'btn btn-default' %>
+        <%= link_to 'Back', event_registrations_path(event,view: 'attendance'), class: 'btn btn-default' %>
       </span>
     </div>
   </div>

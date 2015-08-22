@@ -36,18 +36,18 @@ feature 'Signed-in user' do
 
   scenario '- can see expected registered user info' do
     reg = create(:registration, :yp,  event: event)
-
+    
     visit event_registrations_path(event, authed_admin)
     within("tr#reg-#{reg.id}") do
       expect(page).to have_content(reg.user.role.capitalize)
       expect(page).to have_content(reg.user.gender)
       expect(page).to have_content(reg.user.name)
-      expect(page).to have_content(reg.user.email)
+      # expect(page).to have_content(reg.user.email)
       expect(page).to have_content(reg.user.age)
       expect(page).to have_content(reg.user.locality.city)
-      expect(page).to have_content(format_phone_number(reg.user.cell_phone))
-      expect(page).to have_content(format_phone_number(reg.user.home_phone))
-      expect(page).to have_content(format_phone_number(reg.user.work_phone))
+      # expect(page).to have_content(format_phone_number(reg.user.cell_phone))
+      # expect(page).to have_content(format_phone_number(reg.user.home_phone))
+      # expect(page).to have_content(format_phone_number(reg.user.work_phone))
       expect(page).to have_content("$#{reg.payment_adjustment}.00")
       expect(page).to have_content(display_yes_no(reg.has_been_paid))
       expect(page).to have_content(display_yes_no(reg.attend_as_serving_one))

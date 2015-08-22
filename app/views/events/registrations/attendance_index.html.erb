@@ -18,19 +18,24 @@
                 <tr style="font: bold">
                   <td>Name</td>
                   <td>Role</td>
+                  <td>Status</td>
                   <td></td>
                 </tr>
               </thead>
               <tbody>
                 <% ev_loc.registrations.each do |reg| %>
                   <tr id="user_<%= reg.user.id %>">
-                    <td><%= link_to "#{reg.user.name}", event_attendance_path(@event,reg) %></td>
+                    <td><%= link_to "#{reg.user.name}", event_registration_path(@event,reg,view: 'attendance') %></td>
                     <td><%= reg.user.role %></td>
-                    <td><%= link_to 'Edit', edit_event_attendance_path(@event,reg), class: 'btn btn-primary' %></td>
+                    <td><%= reg.status %></td>
+                    <td><%= link_to 'Edit', edit_event_registration_path(@event,reg,view: 'attendance'), class: 'btn btn-primary' %></td>
                   </tr>
                 <% end %>
               </tbody>
             </table>
+          </div>
+          <div class="widget-footer">
+            <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
           </div>
         </div>
       </div>

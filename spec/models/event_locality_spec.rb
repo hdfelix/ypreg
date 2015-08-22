@@ -21,4 +21,18 @@ describe EventLocality, type: :model do
       expect(event_locality.users.count).to eq 2
     end
   end
+	
+  describe '#registrations' do
+    it 'returns registrations from a locality for a perticular event' do
+      event	= create(:event) 
+      loc   = create(:locality)
+      usr1  = create(:user, locality: loc)
+      usr2  = create(:user, locality: loc)
+
+      create(:registration, event: event, user: usr1)
+      create(:registration, event: event, user: usr2)
+
+			expect(EventLocality.registrations(event, loc).count).to eq 2
+    end
+  end
 end

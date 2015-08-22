@@ -24,7 +24,6 @@ feature 'User adds Hospitality to event' do
 
   #   click_link 'Add Hospitalities'
 
-  #   save_and_open_page
   #   expect(page).to have_content 'Hospitality List'
   #   expect(page).to have_content 'Lodgings not providing hospitality'
   #   expect(page).to have_content lodging.name

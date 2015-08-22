@@ -2,5 +2,7 @@ AllCops:
   RunRailsCops: true
   # Include:
   #   - '**/RakeFile'
-  # Exclude:
-  #   - 'config/**/*'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'

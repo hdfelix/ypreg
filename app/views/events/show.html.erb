@@ -7,7 +7,7 @@
   <div class="row">
     <!-- Event info -->
     <div class="col-md-4 col-sm-6">
-      <div class="widget">
+      <div id="event-info" class="widget">
         <div class="widget-header">
           <h3><i class="fa fa-calendar-o"></i>Event Details</h3>
         </div>
@@ -45,8 +45,8 @@
             </table>
           </div>
           <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
-          <div class="btn-group">
-            <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
+          <div id="event-info-btn-group" class="btn-group">
+            <button id='manage' class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
               Manage
               <span class="caret"></span>
             </button>
@@ -54,6 +54,7 @@
               <li><%= link_to 'Hospitality', event_hospitalities_path(@event) %></li>
               <li><%= link_to 'Registrations', event_registrations_path(@event) %><li>
               <li><%= link_to 'Payments', edit_locality_payments_path(@event) %></li>
+              <li id='attendance-option'><%= link_to 'Attendance', event_registrations_path(@event, view: 'attendance') %></li>
             </ul>
           </div>
         </div>
@@ -112,19 +113,19 @@
               <tbody>
               <tr>
                 <td>Young People</td>
-                <td><%= @event.total_registrations(role: 'yp') %></td>
+                <td><%= @event.total_registrations(role: 'yp').count %></td>
               </tr>
               <tr>
                 <td>Serving Ones</td>
-                <td><%= @event.total_registrations(attend_as_serving_one: true) %></td>
+                <td><%= @event.total_registrations(attend_as_serving_one: true).count %></td>
               </tr>
               <tr>
                 <td>Trainees</td>
-                <td><%= @event.total_registrations(role: 'trainee') %></td>
+                <td><%= @event.total_registrations(role: 'trainee').count %></td>
               </tr>
               <tr>
                 <td>Helpers</td>
-                <td><%= @event.total_registrations(role: 'helper') %></td>
+                <td><%= @event.total_registrations(role: 'helper').count %></td>
               </tr>
               <tr>
                 <td>Family Attending</td>
@@ -132,11 +133,11 @@
               </tr>
               <tr>
                 <td>YCAT</td>
-                <td><%= @event.total_registrations(role: 'ycat') %></td>
+                <td><%= @event.total_registrations(role: 'ycat').count %></td>
               </tr>
               <tr>
                 <td>S/S Brothers</td>
-                <td><%= @event.total_registrations(role: 'speaking_brothers') %></td>
+                <td><%= @event.total_registrations(role: 'speaking_brothers').count %></td>
               </tr>
             </table>
           </div>

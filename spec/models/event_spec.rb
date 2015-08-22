@@ -4,11 +4,11 @@ describe Event, type: :model do
   describe 'Associations' do
     it { should belong_to :location }
     it { should have_many :registrations }
-    it { should have_many :users }
-    # it { should have_many :localities }
+    it { should have_many(:users).through(:registrations) }
+    it { should have_many(:localities).conditions(:uniq).through(:users) }
     it { should have_many :event_localities }
-    # it { should have_many(:localities).through(:events_localities) }
     it { should have_many :hospitalities }
+    it { should have_many(:lodgings).conditions(:uniq).through(:hospitalities) }
     it { should have_many(:hospitality_registration_assignments).through(:hospitalities) }
   end
 
@@ -35,6 +35,24 @@ describe Event, type: :model do
       end
     end
 
+    describe '#current' do
+      it 'returns the current events (those happening at the moment)' do
+        # scope :current, -> { where('begin_date < ? AND end_date > ?', Time.zone.now, Time.zone.now) }
+          create(:event, end_date: 1.day.ago) # past event
+          create(:event, begin_date: (Time.zone.now + 7.days)) # future event
+          events = create_list(:event,2,
+                 begin_date: 1.day.ago,
+                 end_date: (Time.zone.now + 3.days)) # current event
+
+          expect(Event.current.map(&:title)).to eq events.map(&:title)
+      end
+    end
+
+    describe '#not_over' do
+      # scope :not_over, -> { where('begin_date >= ? OR end_date > ?', Time.zone.now, Time.zone.now) }
+
+    end
+
     describe '#in_the_future' do
       it 'returns only events that are happening in the future' do
         today = Time.zone.now
@@ -54,6 +72,7 @@ describe Event, type: :model do
         expect(Event.in_the_future.count).to eq (1)
       end
     end
+
     describe '#in_the_past' do
       it 'returns only events that already ended' do
         today = Time.zone.now
@@ -73,6 +92,20 @@ describe Event, type: :model do
         expect(Event.in_the_past.count).to eq (1)
       end
     end
+
+    describe '#next' do
+      it 'returns the next event chronologically from today' do
+        # scope :next, -> { where('begin_date > ?', Time.zone.now).first }
+        today = Time.zone.now
+        create(:event, begin_date: (today - 1.day),
+                          end_date: (today + 3.days))
+
+        next_event = create(:event, begin_date: (today + 1.day),
+                          end_date: (today + 3.days))
+
+        expect(Event.next.title).to eq next_event.title
+      end
+    end
   end
 
   describe 'Methods' do
@@ -87,6 +120,7 @@ describe Event, type: :model do
         loc = build_stubbed(:location, max_capacity: 20)
         event = create(:event_with_registrations,
                        registrations_count: 3,
+                       ensure_unique_locality: true,
                        location: loc)
 
         expect(event.remaining_spaces).to eq(17)
@@ -127,23 +161,26 @@ describe Event, type: :model do
 
   describe '#total_registrations' do
     # TODO: test all new options {}
-    it 'returns the number of registrations per locality for the given role' do
+    # TODO: (refactored) test the actual registrations returned, not just count
+    it 'returns the registrations per locality for the given role' do
       reg   = create(:registration, :yp)
       event = reg.event
       loc   = reg.user.locality
       role  = reg.user.role
 
-      expect(event.total_registrations(role: role, locality: loc)).to eq(1)
+      expect(event.total_registrations(role: role, locality: loc).count).to eq(1)
     end
   end
 
   describe '#registered_serving_ones' do
     it 'returns the number of serving ones from a locality attending the event' do
       reg   = create(:registration, :serving_one)
+      other_reg = create(:registration, :serving_one)
       event = reg.event
+      other_reg.event
       loc   = reg.user.locality
 
-      expect(event.registered_serving_ones(loc)).to eq(1)
+      expect(event.registered_serving_ones(loc).count).to eq(1)
     end
   end
 
@@ -159,7 +196,7 @@ describe Event, type: :model do
       expect(ev.assigned_lodgings_as_hospitality).to include(lodge1, lodge2)
     end
 
-    it 'should not return lodgings not registered as hospitality for an event' do
+    it 'does not return lodgings not registered as hospitality for an event' do
       Lodging.delete_all
       Locality.delete_all
       Hospitality.delete_all
@@ -195,7 +232,7 @@ describe Event, type: :model do
       expect(ev.unassigned_lodgings_as_hospitality).to eq([lodge3])
     end
 
-    it 'should not return lodgings registered as hospitality for an event' do
+    it 'does not return lodgings registered as hospitality for an event' do
       ev      = create(:event)
       loc     = create(:locality)
       lodge1  = create(:lodging)
@@ -233,7 +270,7 @@ describe Event, type: :model do
 
   describe '#load_locality_summary' do
     let(:loc) { create(:locality) }
-    let(:usr) { create(:user, locality: loc) }
+    let(:yp_usr) { create(:user, locality: loc) }
     let(:ev)  { create(:event) }
 
     describe 'returns a hash' do
@@ -244,7 +281,7 @@ describe Event, type: :model do
       end
 
       it 'of stats per participating locality' do
-        create(:registration, event: ev, user: usr)
+        create(:registration, event: ev, user: yp_usr)
 
         locality_city = loc.city
 
@@ -253,29 +290,32 @@ describe Event, type: :model do
       end
 
       it "that contains a locality's attandance totals" do
-        create(:registration, event: ev, user: usr)
+        create(:registration, event: ev, user: yp_usr)
 
         stats = ev.load_locality_summary
         expect(stats[loc.city]['grand_total']).to eq(1)
-        expect(stats[loc.city]['total_yp']).to eq(0)
+        expect(stats[loc.city]['total_yp']).to eq(1)
         expect(stats[loc.city]['total_serving_ones']).to eq(0)
         expect(stats[loc.city]['total_helpers']).to eq(0)
         expect(stats[loc.city]['yp_so_ratio']).to eq('--')
       end
 
       it "that contains a locality's actual totals" do
-        create(:registration, event: ev, user: usr)
+        create(:registration, event: ev, user: yp_usr, status: 'attended')
+        actual_yp_users = 1
+        actual_serving_ones = 0
+        actual_trainees = 0
+        actual_helpers = 0
+        total = actual_yp_users + actual_serving_ones + actual_trainees + actual_helpers
 
         stats = ev.load_locality_summary
         # TODO: Refactor code - each calculation should be a single method
         # Pull each expectation out into it's own test & refactor method...
-        expect(stats[loc.city]['actual_grand_total']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_yp']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_serving_ones']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_trainees']).to eq('[--]')
-        expect(stats[loc.city]['actual_total_helpers']).to eq('[--]')
-        # expect(stats[loc.city]['actual_amount_paid']).to eq(...)
-        # expect(stats[loc.city]['balance']).to eq('[--]')
+        expect(stats[loc.city]['actual_grand_total']).to eq(total)
+        expect(stats[loc.city]['actual_total_yp']).to eq(actual_yp_users)
+        expect(stats[loc.city]['actual_total_serving_ones']).to eq(actual_serving_ones)
+        expect(stats[loc.city]['actual_total_trainees']).to eq(actual_trainees)
+        expect(stats[loc.city]['actual_total_helpers']).to eq(actual_helpers)
       end
 
       # it "that contains a locality's actual totals" do

@@ -46,6 +46,8 @@ snippets.html.erb
 # ctags
 tags
 
+# Rubymine
+/.idea/*
 
 # Notes
 Joe-readme.md

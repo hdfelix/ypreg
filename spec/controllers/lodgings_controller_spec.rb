@@ -4,10 +4,11 @@ describe LodgingsController, type: :controller do
 
   describe "GET 'index'" do
     it 'lists all @lodgings' do
-      Lodging.delete_all  # TODO: Why am I seeing Lodgings before this call?
       h1 = create(:lodging)
       h2 = create(:lodging)
+
       get 'index'
+
       expect(assigns(:lodgings)).to match_array([h1, h2])
     end
   end
@@ -15,7 +16,9 @@ describe LodgingsController, type: :controller do
   describe "GET 'show'" do
     it 'assignes the requested lodging to @lodging' do
       lodging = create(:lodging)
+
       get :show, id: lodging
+
       expect(assigns(:lodging)).to eq lodging
     end
 

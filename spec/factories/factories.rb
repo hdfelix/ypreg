@@ -10,6 +10,7 @@ FactoryGirl.define do
     password 'secretpassword'
     password_confirmation 'secretpassword'
     locality
+    role 'yp'
 
     trait :with_admin_role do
       role 'admin'
@@ -106,8 +107,10 @@ FactoryGirl.define do
           end
         else
           locality = create(:locality)
-          user = create(:user, locality: locality)
-          create_list(:registration, evaluator.registrations_count, event: event, user: user, locality: locality)
+          evaluator.registrations_count.times do
+            user = create(:user, locality: locality)
+            create_list(:registration, evaluator.registrations_count, event: event, user: user, locality: locality)
+          end
         end
       end
     end
@@ -165,12 +168,13 @@ FactoryGirl.define do
 
   ## Registration factories
   factory :registration do
-    payment_type 'Cash'
+    payment_type 'cash'
     has_been_paid false
     payment_adjustment '5'
     attend_as_serving_one false
     user
     event
+    locality { user.locality }
 
     trait :serving_one do
       attend_as_serving_one true

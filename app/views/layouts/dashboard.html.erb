@@ -12,9 +12,6 @@
 
   <%= stylesheet_link_tag    "application", media: "all" %>
 
-  <!-- kingAdmin CSS -->
-  
-
   <!-- kingAdmin skin -->
   <!--%= stylesheet_link_tag    "fullbright", media: "all" %-->
   <!--%= stylesheet_link_tag    "slategray", media: "all" %-->
@@ -209,20 +206,20 @@
                   <p>You can search the widgets using the search box located at top bar. This is useful when your dashboard has a lot of content.</p>
                 </div>
               </div>
-              <% if Event.all.count > 0 %>
+              <% if future_events_present? %>
                 <h5 class="label label-default">
                   <i class="fa fa-info-circle"></i>
-                  <%= shorten(Event.first.title,0,30,true) %></h5>
+                  <%= shorten(Event.next.title,0,30,true) %></h5>
               <% else %>
                 <h5 class="label label-default">
                   <i class="fa fa-info-circle"></i>
-                    No Events</h5>
+                    No Upcoming Events</h5>
               <% end %>
               <ul class="list-unstyled list-info-sidebar bottom-30px">
                 <li class="data-row">
                   <span class="data-name">Attendance</span>
                   <span class="data-value">
-                    <% if Event.all.count > 0 %>
+                    <% if future_events_present? %>
                       <%= @chart_values["att_ratio"] %>
                     <% else %>
                       0 / 0
@@ -237,7 +234,7 @@
                 <li class="data-row">
                   <span class="data-name">Localities</span>
                   <span class="data-value">
-                    <% if Event.all.count > 0 %>
+                    <% if future_events_present? %>
                       <%= @chart_values["loc_ratio"] %>
                     <% else  %>
                       0 / 0
@@ -252,7 +249,7 @@
                 <li class="data-row">
                   <span class="data-name">Hospitality</span>
                   <span class="data-value">
-                    <% if Event.all.count > 0 %>
+                    <% if future_events_present? %>
                       <%= @chart_values["hosp_ratio"] %>
                     <% else  %>
                       0 / 0
@@ -267,7 +264,7 @@
                 <li class="data-row">
                   <span class="data-name">Payments</span>
                   <span class="data-value">
-                    <% if Event.all.count > 0 %>
+                    <% if future_events_present? %>
                       <%= @chart_values["pmt_ratio"] %>
                     <% else  %>
                       0 / 0
