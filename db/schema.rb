@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805232941) do
+ActiveRecord::Schema.define(version: 20150822184023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,8 +67,10 @@ ActiveRecord::Schema.define(version: 20150805232941) do
     t.integer "hospitality_id"
     t.integer "registration_id"
     t.integer "locality_id"
+    t.integer "event_id"
   end
 
+  add_index "hospitality_registration_assignments", ["event_id"], name: "index_hospitality_registration_assignments_on_event_id", using: :btree
   add_index "hospitality_registration_assignments", ["hospitality_id", "registration_id", "locality_id"], name: "hosp_assignmts", unique: true, using: :btree
   add_index "hospitality_registration_assignments", ["hospitality_id"], name: "index_hospitality_registration_assignments_on_hospitality_id", using: :btree
   add_index "hospitality_registration_assignments", ["locality_id"], name: "index_hospitality_registration_assignments_on_locality_id", using: :btree
