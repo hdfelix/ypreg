@@ -7,6 +7,10 @@ class EventLocality < ActiveRecord::Base
 		Registration.where(event: event, locality: locality)
 	end
 
+  def locality_id
+    locality.id
+  end
+
   def locality_city
     locality.city
   end
@@ -18,4 +22,12 @@ class EventLocality < ActiveRecord::Base
 	def registrations
     Registration.where(event: event, locality: locality)
 	end
+
+  def beds_assigned_to_locality
+    event.beds_assigned_to_locality[locality.city]
+  end
+
+  def beds_assigned_to_a_saint
+    HospitalityRegistrationAssignment.where(event: event, locality: locality)
+  end
 end

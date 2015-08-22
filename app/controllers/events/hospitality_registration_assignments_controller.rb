@@ -1,6 +1,7 @@
 class Events::HospitalityRegistrationAssignmentsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
+    @event_localities = EventLocality.where(event: @event)
   end
 
   def show
@@ -39,7 +40,7 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
           # Build a new HospitalityRegistrationAssignment record
           hra = 
             @event.hospitality_registration_assignments
-            .build(hospitality: hosp, registration: reg, locality: @locality)
+            .build(event: @event, hospitality: hosp, registration: reg, locality: @locality)
           hra.save
           # update locality registration (set hospitality_id to 'hosp')
           hosp.update_attributes(registration_id: reg.id)

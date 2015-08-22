@@ -21,13 +21,13 @@
                 </tr>
               </thead>
               <tbody>
-                <% @event.localities.each  do |locality| %>
-                  <tr id=<%= "locality_#{locality.id}" %>>
-                    <td><%= locality.city %></td>
-                    <td><%= @event.registered_saints_from_locality(locality).count %></td>
-                    <td>Test</td>
-                    <td>Test</td>
-                    <td><%= link_to 'Assignments', event_hospitality_registration_assignment_path(@event, locality), class: 'btn btn-secondary' %></td>
+                  <% @event_localities.each do |el| %>
+                  <tr id=<%= "locality_#{ el.locality_id }" %>>
+                    <td><%= el.locality_city %></td>
+                    <td><%= el.registrations.count %></td>
+                    <td><%= el.beds_assigned_to_a_saint.count %></td>
+                    <td><%= el.beds_assigned_to_locality %></td>
+                    <td><%= link_to 'Assignments', event_hospitality_registration_assignment_path(@event, el.locality), class: 'btn btn-secondary' %></td>
                   </tr>
                 <% end %>
               </tbody>
