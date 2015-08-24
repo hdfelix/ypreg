@@ -17,14 +17,9 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :name << :role
+    devise_parameter_sanitizer.for(:sign_up) << [:name, :role, :locality_id, :gender]
     devise_parameter_sanitizer.for(:account_update) << 
-    [:name, :role, :cell_phone, :birthday, :gender, :home_phone ,:work_phone]
-
-    # TODO: Handle all new user params, by action
-    if params[:action] == 'update' || params[:action] == 'new'
-      devise_parameter_sanitizer.for(:sign_up) << :role
-    end
+    [:name, :role, :locality_id, :cell_phone, :birthday, :gender, :home_phone ,:work_phone]
   end
 
   def after_sign_in_path_for(resource)

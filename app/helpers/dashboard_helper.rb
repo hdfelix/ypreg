@@ -1,5 +1,5 @@
 module DashboardHelper
-  def future_events_present?
-    Event.count > 0 ? true : false
+  def current_or_future_events_present?
+    !Event.next.first.nil?
   end
 end

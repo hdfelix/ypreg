@@ -21,11 +21,11 @@ class Event < ActiveRecord::Base
   EVENT_TYPE = [['One-day', 1], ['Retreat', 2], ['Conference', 3]]
 
   default_scope { order('begin_date ASC') }
-  scope :current, -> { where('begin_date < ? AND end_date > ?', Time.zone.now.to_date, Time.zone.now.to_date) }
+  scope :current, -> { where('begin_date <= ? AND end_date >= ?', Time.zone.now.to_date, Time.zone.now.to_date) }
   scope :not_over, -> { where('begin_date >= ? OR end_date > ?', Time.zone.now.to_date, Time.zone.now.to_date) }
   scope :in_the_future, -> { where('begin_date > ?', Time.zone.now.to_date) }
   scope :in_the_past, -> { where('end_date < ?', Time.zone.now.to_date) }
-  scope :next, -> { where('begin_date > ?', Time.zone.now.to_date).limit(1)[0] }
+  scope :next, -> { [Event.current.first || Event.in_the_future.first] }
 
   def remaining_spaces
     location.max_capacity - registrations.count
@@ -43,10 +43,6 @@ class Event < ActiveRecord::Base
 
   def registered_saints_from_locality(locality)
     localities.find(locality).registrations(self).map(&:user)
-  end
-
-  def registered_saints_per_locality
-    # TODO: Implement
   end
 
   def total_registrations(options = {})

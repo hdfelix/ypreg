@@ -11,6 +11,7 @@ FactoryGirl.define do
     password_confirmation 'secretpassword'
     locality
     role 'yp'
+    gender 'Brother'
 
     trait :with_admin_role do
       role 'admin'
@@ -131,6 +132,12 @@ FactoryGirl.define do
           create(:hospitality, event: event, lodging: create(:lodging), locality: create(:locality))
         end
       end
+    end
+
+    trait :current_event do
+
+      begin_date { Time.zone.now.to_date }
+      end_date { (Time.zone.now + 2.days).to_date }
     end
 
     trait :with_1_locality_with_3_registrations do

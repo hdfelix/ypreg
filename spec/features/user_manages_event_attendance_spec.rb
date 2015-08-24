@@ -6,13 +6,12 @@ feature 'User manages attendance at an event' do
   }
 
   scenario 'can see the total number of registrations for the event', js: true do
-    event = create(:event_with_registrations)
+    event = create(:event_with_registrations, :current_event)
 
     admin = create(:user, role: 'admin')
     sign_in(admin)
 
     visit event_path(event)
-
     within('div#event-info-btn-group') do
       click_button('manage')
       wait_for_ajax
@@ -23,7 +22,7 @@ feature 'User manages attendance at an event' do
   end
 
   scenario 'can view all localities participating in the event', js: true do
-    event = create(:event_with_registrations, registrations_count: 5)
+    event = create(:event_with_registrations,:current_event, registrations_count: 5)
     create(:registration, event: event, locality: event.localities.first)
 
     admin = create(:user, role: 'admin')
