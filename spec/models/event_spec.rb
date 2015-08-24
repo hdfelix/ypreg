@@ -94,16 +94,16 @@ describe Event, type: :model do
     end
 
     describe '#next' do
-      it 'returns the next event chronologically from today' do
+      it 'returns an array with the next event chronologically from today (including an event happening at the moment)' do
         # scope :next, -> { where('begin_date > ?', Time.zone.now).first }
         today = Time.zone.now
-        create(:event, begin_date: (today - 1.day),
+        current_event = create(:event, begin_date: (today - 1.day),
                           end_date: (today + 3.days))
 
-        next_event = create(:event, begin_date: (today + 1.day),
-                          end_date: (today + 3.days))
+        following_event = create(:event, begin_date: (today + 4.day),
+                          end_date: (today + 5.days))
 
-        expect(Event.next.title).to eq next_event.title
+        expect(Event.next.first.title).to eq current_event.title
       end
     end
   end

@@ -206,10 +206,10 @@
                   <p>You can search the widgets using the search box located at top bar. This is useful when your dashboard has a lot of content.</p>
                 </div>
               </div>
-              <% if future_events_present? %>
+              <% if current_or_future_events_present? %>
                 <h5 class="label label-default">
                   <i class="fa fa-info-circle"></i>
-                  <%= shorten(Event.next.title,0,30,true) %></h5>
+                  <%= shorten(Event.next.first.title,0,30,true) %></h5>
               <% else %>
                 <h5 class="label label-default">
                   <i class="fa fa-info-circle"></i>
@@ -219,7 +219,7 @@
                 <li class="data-row">
                   <span class="data-name">Attendance</span>
                   <span class="data-value">
-                    <% if future_events_present? %>
+                    <% if current_or_future_events_present? %>
                       <%= @chart_values["att_ratio"] %>
                     <% else %>
                       0 / 0
@@ -234,7 +234,7 @@
                 <li class="data-row">
                   <span class="data-name">Localities</span>
                   <span class="data-value">
-                    <% if future_events_present? %>
+                    <% if current_or_future_events_present? %>
                       <%= @chart_values["loc_ratio"] %>
                     <% else  %>
                       0 / 0
@@ -249,7 +249,7 @@
                 <li class="data-row">
                   <span class="data-name">Hospitality</span>
                   <span class="data-value">
-                    <% if future_events_present? %>
+                    <% if current_or_future_events_present? %>
                       <%= @chart_values["hosp_ratio"] %>
                     <% else  %>
                       0 / 0
@@ -264,7 +264,7 @@
                 <li class="data-row">
                   <span class="data-name">Payments</span>
                   <span class="data-value">
-                    <% if future_events_present? %>
+                    <% if current_or_future_events_present? %>
                       <%= @chart_values["pmt_ratio"] %>
                     <% else  %>
                       0 / 0
@@ -352,7 +352,7 @@
 
 	<!-- FOOTER -->
 	<footer class="footer">
-    &copy; <%= Date.today.year %> YPReg
+    &copy; <%= Date.today.year %> SCYPReg
 	</footer>
 	<!-- END FOOTER -->
 </body>

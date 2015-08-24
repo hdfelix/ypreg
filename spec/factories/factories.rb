@@ -133,6 +133,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :current_event do
+
+      begin_date { Time.zone.now.to_date }
+      end_date { (Time.zone.now + 2.days).to_date }
+    end
+
     trait :with_1_locality_with_3_registrations do
       after(:create) do |instance|
         loc = FactoryGirl.create(:locality, :with_3_saints)
