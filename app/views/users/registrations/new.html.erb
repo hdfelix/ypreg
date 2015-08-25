@@ -21,7 +21,7 @@
           <%= f.label :gender, class: 'control-label, sr-only' %>
           <div class="col-sm-12">
             <div class="input-group">
-              <%= f.select(:gender, User::GENDER, {include_blank: 'Select Gender'}, {class: 'form-control'}) %>
+              <%= f.select(:gender, User::GENDER, { include_blank: 'Select gender' }, { class: 'form-control' }) %>
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
               <!--%= link_to "Add a locality", new_locality_path, class: 'pull-right' %-->
             </div>
@@ -29,10 +29,10 @@
         </div>
 
         <div class="form-group">
-          <%= f.label :locality_id, class: 'control-label, sr-only' %>
+          <%= f.label :locality, class: 'control-label, sr-only' %>
           <div class="col-sm-12">
             <div class="input-group">
-              <%= f.collection_select(:locality_id,Locality.all, :id, :city, {include_blank: 'Select locality'}, {class: 'form-control'}) %>
+              <%= f.collection_select(:locality_id, Locality.all, :id, :city, { include_blank: 'Select locality' }, { class: 'form-control' }) %>
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
               <!--%= link_to "Add a locality", new_locality_path, class: 'pull-right' %-->
             </div>
