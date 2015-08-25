@@ -12,6 +12,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.find(params[:format])
   end
 
+  def create
+    super
+  end
+
   def update
     @user = User.find(params[:id])
 
@@ -23,9 +27,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render action: 'edit'
     end
   end
+
   private
 
   def admin_update_params
-    params[:user].permit(:role, :email, :name, :gender, :home_phone, :work_phone, :cell_phone, :birthday)
+    params[:user].permit(:role, :email, :locality, :name, :gender, :home_phone, :work_phone, :cell_phone, :birthday)
   end
 end

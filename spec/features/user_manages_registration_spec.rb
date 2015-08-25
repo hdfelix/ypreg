@@ -40,7 +40,7 @@ feature 'Signed-in user' do
     visit event_registrations_path(event, authed_admin)
     within("tr#reg-#{reg.id}") do
       expect(page).to have_content(reg.user.role.capitalize)
-      expect(page).to have_content(reg.user.gender)
+      expect(page).to have_content(reg.user.gender.to_s[0])
       expect(page).to have_content(reg.user.name)
       # expect(page).to have_content(reg.user.email)
       expect(page).to have_content(reg.user.age)
