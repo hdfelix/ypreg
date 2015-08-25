@@ -45,18 +45,35 @@
       <span class="form-control" disabled><%= @registration.user.name %></span>
     </div>
   </div>
+
   <div class="form-group">
     <%= f.label "Role", class: 'col-md-2 control-label' %>
     <div class="col-md-6">
       <span class="form-control" disabled><%= @registration.user.role.upcase %></span>
     </div>
   </div>
+
   <div class="form-group">
     <%= f.label "Gender", class: 'col-md-2 control-label' %>
     <div class="col-md-6">
-      <span class="form-control" disabled><%= format_titleize(@registration.user.gender) %></span>
+      <span class="form-control" disabled><%= format_titleize(@registration.user.gender.titleize) %></span>
     </div>
   </div>
+
+  <div class="form-group">
+    <%= f.label "Age", class: 'col-md-2 control-label' %>
+    <div class="col-md-6">
+      <span class="form-control" disabled><%= format_titleize(@registration.user.age) %></span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label "Grade", class: 'col-md-2 control-label' %>
+    <div class="col-md-6">
+      <span class="form-control" disabled><%= format_titleize(@registration.user.grade.titleize) %></span>
+    </div>
+  </div>
+
   <div class="form-group">
     <%= f.label "Locality", class: 'col-md-2 control-label' %>
     <div class="col-md-6">

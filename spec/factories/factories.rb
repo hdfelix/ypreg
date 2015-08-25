@@ -12,6 +12,8 @@ FactoryGirl.define do
     locality
     role 'yp'
     gender 'Brother'
+    age '15'
+    grade '10th'
 
     trait :with_admin_role do
       role 'admin'

@@ -32,6 +32,8 @@ feature 'User can visit the home page' do
     expect(page).to have_content('Sign up')
     expect(find_by_id('user_name').native.attributes['placeholder'].value).to eq 'Enter name'
     expect(find_by_id('user_gender').native.children[0].children.text).to eq 'Select gender'
+    expect(find_by_id('user_age').native.children[0].children.text).to eq 'Select your age'
+    expect(find_by_id('user_grade').native.children[0].children.text).to eq 'Select your grade'
     expect(find_by_id('user_locality_id').native.children[0].children.text).to eq 'Select locality'
     expect(find_by_id('user_email').native.attributes['placeholder'].value).to eq 'Enter email'
     expect(find_by_id('user_password').native.attributes['placeholder'].value).to eq 'Enter password'

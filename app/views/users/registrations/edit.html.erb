@@ -68,7 +68,19 @@
             <div class="form-group">
               <%= f.label :gender, '', class: 'col-md-2 control-label' %>
               <div class="col-md-10">
-                <%= f.select :gender, User::GENDER, {include_blank: true }, {class: 'form-control'} %>
+                <%= f.select :gender, User::GENDER, { include_blank: 'Selet your gender' }, { class: 'form-control' } %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :age, '', class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.select :age, User::AGE, { include_blank: 'Select your age' }, { class: 'form-control' } %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :grade, '', class: 'col-md-2 control-label' %>
+              <div class="col-md-10">
+                <%= f.select :grade, User::GRADE, { include_blank: 'Select your grade' }, {class: 'form-control'} %>
               </div>
             </div>
             <div class="form-group">
