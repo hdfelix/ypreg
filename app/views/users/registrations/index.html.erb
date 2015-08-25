@@ -19,6 +19,7 @@
                 <th>Gender</th>
                 <th>Email</th>
                 <th>Age</th>
+                <th>Grade</th>
                 <th>Locality</th>
                 <th style="width: 150px">Phone</th>
                 <th>BC</th>
@@ -35,6 +36,7 @@
                     <td><%= user.gender.to_s[0] %></td>
                     <td><%= user.email %></td>
                     <td><%= user.age %></td>
+                    <td><%= user.grade %></td>
                     <td><%= user.locality_city %></td>
                     <td>C: <%= format_phone_number(user.cell_phone) %><br />
                         H: <%= format_phone_number(user.home_phone) %><br />

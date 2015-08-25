@@ -31,6 +31,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def admin_update_params
-    params[:user].permit(:role, :email, :locality, :name, :gender, :home_phone, :work_phone, :cell_phone, :birthday)
+    params[:user]
+      .permit(:role,
+              :email,
+              :locality,
+              :name,
+              :gender,
+              :age,
+              :grade,
+              :home_phone,
+              :work_phone,
+              :cell_phone,
+              :birthday)
   end
 end

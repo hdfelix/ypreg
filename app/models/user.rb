@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   # Constants
   GENDER = %w(Brother Sister)
   USER_ROLE = %w(admin scyp ycat loc_contact hosp_contact trainee speaking_brother supporting_brother helper yp user guest)
+  AGE = %w(minor 13 14 15 16 17 18 adult)
+  GRADE = %w(6th 7th 8th 9th 10th 11th 12th College other)
 
   # scopes
   def self.not_contact_persons
@@ -30,14 +32,6 @@ class User < ActiveRecord::Base
    # Interface
   def role?(base_role)
     role == base_role.to_s
-  end
-
-  def age
-    if birthday.nil?
-      nil
-    else
-      ((Date.today - birthday).to_i / 365.25).to_i
-    end
   end
 
   def locality_city
