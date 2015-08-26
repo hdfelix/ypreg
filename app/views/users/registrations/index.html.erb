@@ -33,11 +33,11 @@
                   <tr>
                     <td><%= link_to user.name, user_path(user) %></td>
                     <td><%= user.role.capitalize %></td>
-                    <td><%= user.gender.to_s[0] %></td>
+                    <td><%= user.gender.to_s[0].capitalize %></td>
                     <td><%= user.email %></td>
-                    <td><%= user.age %></td>
-                    <td><%= user.grade %></td>
-                    <td><%= user.locality_city %></td>
+                    <td><%= user.age.capitalize %></td>
+                    <td><%= user.grade.capitalize %></td>
+                    <td><%= user.locality_city.capitalize %></td>
                     <td>C: <%= format_phone_number(user.cell_phone) %><br />
                         H: <%= format_phone_number(user.home_phone) %><br />
                         W: <%= format_phone_number(user.work_phone) %></td>
