@@ -42,6 +42,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
               :home_phone,
               :work_phone,
               :cell_phone,
+              :background_check_expiration,
               :birthday)
   end
 end

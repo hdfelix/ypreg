@@ -41,7 +41,7 @@
                     <td>C: <%= format_phone_number(user.cell_phone) %><br />
                         H: <%= format_phone_number(user.home_phone) %><br />
                         W: <%= format_phone_number(user.work_phone) %></td>
-                    <td><%= format_date(user.last_background_check) %></td>
+                    <td><%= format_date(user.background_check_expiration) %></td>
                     <td><%= format_date(user.last_sign_in_at) %></td>
                     <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
                   </tr>
