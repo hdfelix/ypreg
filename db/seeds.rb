@@ -116,6 +116,9 @@ admin = User.new(
   cell_phone: '8888888888',
   birthday: 38.years.ago,
   gender: 'B',
+  age: 'adult',
+  grade: 'other',
+  role: 'admin',
   password: 'chiracha',
   password_confirmation: 'chiracha')
 
@@ -133,6 +136,9 @@ admin2 = User.new(
   cell_phone: '8888888888',
   birthday: 33.years.ago,
   gender: 'B',
+  age: 'adult',
+  grade: 'other',
+  role: 'admin',
   password: 'devaccount',
   password_confirmation: 'devaccount')
 
@@ -154,6 +160,9 @@ for i in 1..(count + 1) do
     name: "YP User#{i}",
     birthday: (13..18).to_a.sample.years.ago,
     gender: User::GENDER.sample,
+    age: User::AGE.sample,
+    grade: User::GRADE.sample,
+    role: 'yp',
     email: "yp_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha')
@@ -177,6 +186,9 @@ for i in 1..(count + 1) do
     name: "SCYP User#{i}",
     gender: User::GENDER.sample,
     birthday: (18..60).to_a.sample.years.ago,
+    age: User::AGE.sample,
+    grade: User::GRADE.sample,
+    role: 'scyp',
     email: "scyp_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha')
@@ -200,6 +212,9 @@ for i in 1..(count + 1) do
     name: "SCYP User#{i}",
     gender: User::GENDER.sample,
     birthday: (20..30).to_a.sample.years.ago,
+    age: User::AGE.sample,
+    grade: User::GRADE.sample,
+    role: 'trainee',
     email: "trainee_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha')
@@ -221,6 +236,9 @@ for i in 1..(count + 1) do
     name: "YCAT User#{i}",
     gender: User::GENDER.sample,
     birthday: (20..45).to_a.sample.years.ago,
+    age: User::AGE.sample,
+    grade: User::GRADE.sample,
+    role: 'ypcat',
     email: "ycat_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha')
