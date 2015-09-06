@@ -5,6 +5,7 @@ describe HospitalityRegistrationAssignment, type: :model do
     it { should belong_to :registration }
     it { should belong_to :hospitality }
     it { should belong_to :locality }
+    it { should belong_to :event }
   end
 
   describe 'Interface' do

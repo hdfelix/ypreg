@@ -2,6 +2,7 @@ class Hospitality < ActiveRecord::Base
   belongs_to :event, inverse_of: :hospitalities
   belongs_to :lodging
   belongs_to :locality
+  belongs_to :registration
   has_many :hospitality_registration_assignments, inverse_of: :hospitality
   has_many :registrations, -> { uniq }, through: :hospitality_registration_assignments
 
