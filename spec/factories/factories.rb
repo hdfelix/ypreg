@@ -103,14 +103,14 @@ FactoryGirl.define do
 
       after(:create) do |event, evaluator|
         if evaluator.ensure_unique_locality
+          locality = create(:locality)
           evaluator.registrations_count.times do
-            locality = create(:locality)
             user = create(:user, locality: locality)
             create(:registration, event: event, user: user, locality: user.locality)
           end
         else
-          locality = create(:locality)
           evaluator.registrations_count.times do
+            locality = create(:locality)
             user = create(:user, locality: locality)
             create_list(:registration, evaluator.registrations_count, event: event, user: user, locality: locality)
           end
