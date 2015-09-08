@@ -54,9 +54,8 @@ describe Event, type: :model do
     end
 
     describe '#not_over' do
-      # TODO
+      pending
       # scope :not_over, -> { where('begin_date >= ? OR end_date > ?', Time.zone.now, Time.zone.now) }
-
     end
 
     describe '#in_the_future' do
