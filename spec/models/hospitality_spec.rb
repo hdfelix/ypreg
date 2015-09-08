@@ -7,8 +7,8 @@ describe Hospitality, type: :model do
     it { should belong_to :lodging }
     it { should belong_to :locality }
     it { should belong_to :registration }
-    it { should have_many(:registrations) }
-    it { should have_many :hospitality_registration_assignments
+    it { should have_many(:registrations)
       .through(:hospitality_registration_assignments).conditions(:uniq) }
+    it { should have_many :hospitality_registration_assignments }
   end
 end
