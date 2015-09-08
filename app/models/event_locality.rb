@@ -24,10 +24,16 @@ class EventLocality < ActiveRecord::Base
 	end
 
   def beds_assigned_to_locality
-    event.beds_assigned_to_locality[locality.city]
+    tmp = event.beds_assigned_to_locality[locality.city]
+    if tmp.nil?
+      0
+    else
+      tmp
+    end
   end
 
-  def beds_assigned_to_a_saint
-    HospitalityRegistrationAssignment.where(event: event, locality: locality)
+  def number_of_beds_assigned_to_registrations
+    # HospitalityRegistrationAssignment.where(event: event, locality: locality).count
+    Hospitality.where(event: event, locality: locality).where.not(registration: nil).count
   end
 end
