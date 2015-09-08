@@ -12,17 +12,22 @@ describe Event, type: :model do
     it { should have_many(:hospitality_registration_assignments).through(:hospitalities) }
   end
 
-  describe 'Validations'do
+  describe 'Validations' do
     it { should validate_presence_of :event_type }
     it { should validate_presence_of :title }
     it { should validate_presence_of :begin_date }
     it { should validate_presence_of :end_date }
     it { should validate_presence_of :registration_cost }
     it { should validate_presence_of :location_id }
+  end
+
+  describe 'Constants' do
     it { should have_constant :EVENT_TYPE }
   end
 
   describe 'Scopes' do
+    describe '#default_scope'
+
     describe '#current' do
       it 'returns only events that are happening right now' do
         create(:event, end_date: 1.day.ago) # past event
@@ -49,6 +54,7 @@ describe Event, type: :model do
     end
 
     describe '#not_over' do
+      # TODO
       # scope :not_over, -> { where('begin_date >= ? OR end_date > ?', Time.zone.now, Time.zone.now) }
 
     end
@@ -152,8 +158,10 @@ describe Event, type: :model do
                      ensure_unique_locality: true)
       loc  = event.participating_localities.first
       usr1 = event.registrations.first.user
+      usr2 = event.registrations.second.user
 
-      expect(event.registered_saints_from_locality(loc).map(&:id)).to eq([usr1.id])
+      expect(event.registered_saints_from_locality(loc).map(&:id)).
+        to eq ([usr1.id, usr2.id])
     end
   end
 
@@ -183,6 +191,12 @@ describe Event, type: :model do
       expect(event.registered_serving_ones(loc).count).to eq(1)
     end
   end
+
+  describe '#present_yp_from'
+  describe '#present_serving_ones_from'
+  describe '#present_trainees_from'
+  describe '#present_helpers_from'
+  describe '#calculate_actual_total_yp'
 
   describe '#assigned_lodgings_as_hospitality' do
     it 'returns lodgings registered as hospitality for an event' do
