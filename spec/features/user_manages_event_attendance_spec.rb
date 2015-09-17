@@ -1,15 +1,12 @@
 require 'rails_helper'
 
 feature 'User manages attendance at an event' do
-  let (:authed_admin) {
-    create_logged_in_admin
-  }
+  before(:example) do
+    @authed_admin = create_signed_in_user_by_role('admin')
+  end
 
   scenario 'can see the total number of registrations for the event', js: true do
     event = create(:event_with_registrations, :current_event)
-
-    admin = create(:user, role: 'admin')
-    sign_in(admin)
 
     visit event_path(event)
     within('div#event-info-btn-group') do
@@ -24,9 +21,6 @@ feature 'User manages attendance at an event' do
   scenario 'can view all localities participating in the event', js: true do
     event = create(:event_with_registrations,:current_event, registrations_count: 5)
     create(:registration, event: event, locality: event.localities.first)
-
-    admin = create(:user, role: 'admin')
-    sign_in(admin)
 
     visit event_path(event)
 
