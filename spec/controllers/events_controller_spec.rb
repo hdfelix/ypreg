@@ -1,14 +1,17 @@
 require 'rails_helper'
 
-describe EventsController, :type => :controller do
+describe EventsController, type: :controller do
   before(:example) do
-    sign_in_user(double('user', :role? => 'admin'))
+    sign_in_user(double('user', role?: 'admin'))
   end
-describe "GET index" do
+
+  describe 'GET index' do
     it 'assigns all events and past_events' do
       now = Time.zone.now
-      event_over = create(:event, begin_date: 1.month.ago, end_date: 1.month.ago + 2.days)
-      event_not_over= create(:event, begin_date: now + 8.days, end_date: now + 10.days)
+      event_over =
+        create(:event, begin_date: 1.month.ago, end_date: 1.month.ago + 2.days)
+      event_not_over =
+        create(:event, begin_date: now + 8.days, end_date: now + 10.days)
 
       get :index
 
@@ -16,7 +19,7 @@ describe "GET index" do
       expect(assigns(:past_events)).to match_array([event_over])
     end
 
-    it "is a success" do
+    it 'is a success' do
       get :index
       expect(response).to have_http_status('200')
     end
@@ -27,14 +30,15 @@ describe "GET index" do
     end
   end
 
-  describe "GET show" do
+  describe 'GET show' do
     it "assigns the requested event to @event and \
         localities participating to @participating_localities" do
       event = create(:event_with_registrations)
-      participating_localities = event.participating_localities.sort { |a,b| a.city <=> b.city }
+      participating_localities =
+        event.participating_localities.sort { |a, b| a.city <=> b.city }
       stats = event.load_locality_summary
 
-      get :show, { id: event.to_param }
+      get :show, id: event.to_param
 
       expect(assigns(:event)).to eq(event)
       expect(assigns(:participating_localities)).to eq(participating_localities)
@@ -42,57 +46,57 @@ describe "GET index" do
     end
   end
 
-  describe "GET new" do
-    it "assigns a new event as @event" do
+  describe 'GET new' do
+    it 'assigns a new event as @event' do
       get :new, {}
       expect(assigns(:event)).to be_a_new(Event)
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested event as @event" do
+  describe 'GET edit' do
+    it 'assigns the requested event as @event' do
       event = create(:event)
 
-      get :edit, { id: event.to_param }
+      get :edit, id: event.to_param
 
       expect(assigns(:event)).to eq(event)
     end
   end
 
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Event" do
+  describe 'POST create' do
+    describe 'with valid params' do
+      it 'creates a new Event' do
         expect {
           post :create, event: attributes_for(:event).merge(location_id: 1)
         }.to change(Event, :count).by(1)
       end
 
-      it "assigns a newly created event as @event" do
+      it 'assigns a newly created event as @event' do
         post :create, event: attributes_for(:event).merge(location_id: 1)
 
         expect(assigns(:event)).to be_an(Event)
         expect(assigns(:event)).to be_persisted
       end
 
-      it "redirects to the event index" do
+      it 'redirects to the event index' do
         post :create, event: attributes_for(:event).merge(location_id: 1)
         expect(response).to redirect_to events_path
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved event as @event" do
+    describe 'with invalid params' do
+      it 'assigns a newly created but unsaved event as @event' do
         # Trigger the behavior that occurs when invalid params are submitted
         Event.any_instance.stub(:save).and_return(false)
-        post :create, { event: { title: "" }}
+        post :create, event: { title: '' }
         expect(assigns(:event)).to be_a_new(Event)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Event.any_instance.stub(:save).and_return(false)
-        post :create, { event: { title: "" }}
-        expect(response).to render_template("new")
+        post :create, event: { title: '' }
+        expect(response).to render_template('new')
       end
     end
   end
