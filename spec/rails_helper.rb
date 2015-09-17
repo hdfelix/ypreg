@@ -22,7 +22,7 @@ RSpec.configure do |config|
 	config.include FeatureLoginMacros
 	config.include ApplicationHelper
   config.include WaitForAjax
-  config.extend ControllerMacros, type: :controller
+  config.include ControllerMacros, type: :controller
   config.use_transactional_fixtures = false
 
   # If true, the base class of anonymous controllers will be inferred

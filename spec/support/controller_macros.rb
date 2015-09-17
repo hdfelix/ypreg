@@ -1,6 +1,6 @@
 module ControllerMacros
 
-  def sign_in(user = double('user'))
+  def sign_in_user(user = double('user'))
     if user.nil?
       allow(request.env['warden']).
         to receive(:authenticate!).and_throw(:warden, scope: :user)

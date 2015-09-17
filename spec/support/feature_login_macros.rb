@@ -19,7 +19,7 @@ module FeatureLoginMacros
 	end
 
 	def create_signed_in_user_by_role(role)
-		user = FactoryGirl.create(:user, role: role)
+    user = FactoryGirl.create(:user, role: role.to_s)
 		user.confirm!
     user.current_sign_in_at = Time.now
 		user.save
@@ -27,19 +27,20 @@ module FeatureLoginMacros
     login(user)
     user
 	end
+
   def login(user)
 		login_as user, scope: :user
   end
 
-  def sign_in(user)
-		user.confirm!
-    user.current_sign_in_at = Time.now
-		user.save
+  # def sign_in(user)
+	# 	user.confirm!
+  #   user.current_sign_in_at = Time.now
+	# 	user.save
 
-    visit root_path
-    click_link 'Sign in'
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Login'
-  end
+  #   visit root_path
+  #   click_link 'Sign in'
+  #   fill_in 'Email', with: user.email
+  #   fill_in 'Password', with: user.password
+  #   click_button 'Login'
+  # end
 end
