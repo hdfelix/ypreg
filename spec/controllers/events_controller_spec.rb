@@ -21,7 +21,7 @@ describe EventsController, type: :controller do
 
     it 'is a success' do
       get :index
-      expect(response).to have_http_status('200')
+      expect(response).to have_http_status(:ok)
     end
 
     it "renders 'index' template" do
@@ -101,49 +101,45 @@ describe EventsController, type: :controller do
     end
   end
 
-  #describe "PUT update" do
-  #  describe "with valid params" do
-  #    it "updates the requested event" do
-  #      event = Event.create! valid_attributes
-  #      # Assuming there are no other events in the database, this
-  #      # specifies that the Event created on the previous line
-  #      # receives the :update_attributes message with whatever params are
-  #      # submitted in the request.
-  #      Event.any_instance.should_receive(:update).with({ "title" => "" })
-  #      put :update, {:id => event.to_param, :event => { "title" => "" }}, valid_session
-  #    end
+  # describe "PUT update" do
+  #   describe "with valid params" do
+  #     it "updates the requested event" do
+  #       event = create(:event)
+  #       Event.any_instance.should_receive(:update).with({ title: "New Title" })
+  #       put :update, { id: event.to_param, event: { title: "New Title" }}
+  #     end
 
-  #    it "assigns the requested event as @event" do
-  #      event = Event.create! valid_attributes
-  #      put :update, {:id => event.to_param, :event => valid_attributes}, valid_session
-  #      assigns(:event).should eq(event)
-  #    end
+  #     it "assigns the requested event as @event" do
+  #       event = create(:event) 
+  #       put :update, { event: event }
+  #       expect(assigns(:event)).to eq(event)
+  #     end
 
-  #    it "redirects to the event" do
-  #      event = Event.create! valid_attributes
-  #      put :update, {:id => event.to_param, :event => valid_attributes}, valid_session
-  #      response.should redirect_to(event)
-  #    end
-  #  end
+  #     it "redirects to the event" do
+  #       event = Event.create! valid_attributes
+  #       put :update, {:id => event.to_param, :event => valid_attributes}, valid_session
+  #       response.should redirect_to(event)
+  #     end
+  #   end
 
-  #  describe "with invalid params" do
-  #    it "assigns the event as @event" do
-  #      event = Event.create! valid_attributes
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      Event.any_instance.stub(:save).and_return(false)
-  #      put :update, {:id => event.to_param, :event => { "title" => "invalid value" }}, valid_session
-  #      assigns(:event).should eq(event)
-  #    end
+  #   describe "with invalid params" do
+  #     it "assigns the event as @event" do
+  #       event = Event.create! valid_attributes
+  #       # Trigger the behavior that occurs when invalid params are submitted
+  #       Event.any_instance.stub(:save).and_return(false)
+  #       put :update, {:id => event.to_param, :event => { "title" => "invalid value" }}, valid_session
+  #       assigns(:event).should eq(event)
+  #     end
 
-  #    it "re-renders the 'edit' template" do
-  #      event = Event.create! valid_attributes
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      Event.any_instance.stub(:save).and_return(false)
-  #      put :update, {:id => event.to_param, :event => { "title" => "invalid value" }}, valid_session
-  #      response.should render_template("edit")
-  #    end
-  #  end
-  #end
+  #     it "re-renders the 'edit' template" do
+  #       event = Event.create! valid_attributes
+  #       # Trigger the behavior that occurs when invalid params are submitted
+  #       Event.any_instance.stub(:save).and_return(false)
+  #       put :update, {:id => event.to_param, :event => { "title" => "invalid value" }}, valid_session
+  #       response.should render_template("edit")
+  #     end
+  #   end
+  # end
 
   #describe "DELETE destroy" do
   #  it "destroys the requested event" do

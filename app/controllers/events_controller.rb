@@ -39,7 +39,6 @@ class EventsController < ApplicationController
   # POST /event/1
   def update
     # @event set & authorized with 'before_action'
-
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
