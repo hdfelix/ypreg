@@ -47,7 +47,7 @@ describe LodgingsController, type: :controller do
       expect(assigns(:lodging)).to be_a_new(Lodging)
     end
 
-    it "renders the :new template" do
+    it 'renders the :new template' do
       get :new
       expect(response).to render_template :new
     end
@@ -74,7 +74,6 @@ describe LodgingsController, type: :controller do
         expect {
           post :create, lodging: attributes_for(:lodging)
         }.to change(Lodging, :count).by(1)
-
       end
     end
     context 'with valid params' do
