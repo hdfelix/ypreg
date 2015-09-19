@@ -5,7 +5,7 @@ describe EventsController, type: :controller do
     sign_in_user(double('user', role?: 'admin'))
   end
 
-  describe 'GET index' do
+  describe 'GET :index' do
     it 'assigns all events and past_events' do
       now = Time.zone.now
       event_over =
@@ -46,14 +46,14 @@ describe EventsController, type: :controller do
     end
   end
 
-  describe 'GET new' do
+  describe 'GET :new' do
     it 'assigns a new event as @event' do
       get :new, {}
       expect(assigns(:event)).to be_a_new(Event)
     end
   end
 
-  describe 'GET edit' do
+  describe 'GET :edit' do
     it 'assigns the requested event as @event' do
       event = create(:event)
 
@@ -63,7 +63,7 @@ describe EventsController, type: :controller do
     end
   end
 
-  describe 'POST create' do
+  describe 'POST :create' do
     describe 'with valid params' do
       it 'creates a new Event' do
         expect {
@@ -85,16 +85,15 @@ describe EventsController, type: :controller do
     end
 
     describe 'with invalid params' do
+      before(:example) do
+        allow_any_instance_of(Event).to receive(:save).and_return(false)
+      end
       it 'assigns a newly created but unsaved event as @event' do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Event.any_instance.stub(:save).and_return(false)
         post :create, event: { title: '' }
         expect(assigns(:event)).to be_a_new(Event)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Event.any_instance.stub(:save).and_return(false)
         post :create, event: { title: '' }
         expect(response).to render_template(:new)
       end

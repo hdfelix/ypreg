@@ -5,7 +5,7 @@ describe LocationsController, type: :controller do
     sign_in_user(double('user', role?: 'admin'))
   end
 
-  describe 'GET index' do
+  describe 'GET :index' do
     it 'assigns all locations' do
       locations = create_list(:location, 2)
       get :index
@@ -17,13 +17,13 @@ describe LocationsController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
-    it "renders the 'index' template" do
+    it 'renders the :index template' do
       get :index
       expect(response).to render_template(:index)
     end
   end
 
-  describe 'GET show' do
+  describe 'GET :show' do
     it 'assigns the requested location to @location' do
       location = create(:location)
 
@@ -38,14 +38,14 @@ describe LocationsController, type: :controller do
     end
   end
 
-  describe 'GET new' do
-    it 'assigns a new location as @location' do
+  describe 'GET :new' do
+    it 'instantiates a new @locationn' do
       get :new, {}
       expect(assigns(:location)).to be_a_new(Location)
     end
   end
 
-  describe 'GET edit' do
+  describe 'GET :edit' do
     it 'assigns the requested location as @location' do
       location = create(:location)
 
@@ -77,14 +77,16 @@ describe LocationsController, type: :controller do
     end
 
     context 'with invalid params' do
+      before(:example) do
+        allow_any_instance_of(Location).to receive(:save).and_return(false)
+      end
+
       it 'assigns a newly created but unsaved location as @location' do
-        Location.any_instance.stub(:save).and_return(false)
         post :create, location: { name: '' }
         expect(assigns(:location)).to be_a_new(Location)
       end
 
-      it "re-renders the 'new' template" do
-        Location.any_instance.stub(:save).and_return(false)
+      it 're-renders the :new template' do
         post :create, location: { name: '' }
         expect(response).to render_template(:new)
       end
