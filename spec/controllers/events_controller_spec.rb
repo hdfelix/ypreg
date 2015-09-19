@@ -96,7 +96,7 @@ describe EventsController, type: :controller do
         # Trigger the behavior that occurs when invalid params are submitted
         Event.any_instance.stub(:save).and_return(false)
         post :create, event: { title: '' }
-        expect(response).to render_template('new')
+        expect(response).to render_template(:new)
       end
     end
   end
@@ -110,7 +110,7 @@ describe EventsController, type: :controller do
   #     end
 
   #     it "assigns the requested event as @event" do
-  #       event = create(:event) 
+  #       event = create(:event)
   #       put :update, { event: event }
   #       expect(assigns(:event)).to eq(event)
   #     end
