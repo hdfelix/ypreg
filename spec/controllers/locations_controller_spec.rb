@@ -51,8 +51,39 @@ describe LocationsController, type: :controller do
   end
 
   describe 'POST create' do
-    context 'with valid params'
-    context 'with invalid params'
+    context 'with valid params' do
+      it 'create a new location' do
+        expect {
+          post :create, location: attributes_for(:location)
+        }.to change(Location, :count).by(1)
+      end
+
+      it 'assigns a newly created location as @location' do
+        post :create, location: attributes_for(:location)
+
+        expect(assigns(:location)).to be_a(Location)
+        expect(assigns(:location)).to be_persisted
+      end
+
+      it 'redirects to the location index' do
+        post :create, location: attributes_for(:location)
+        expect(response).to redirect_to locations_path
+      end
+    end
+
+    context 'with invalid params' do
+      it 'assigns a newly created but unsaved location as @location' do
+        Location.any_instance.stub(:save).and_return(false)
+        post :create, location: { name: '' }
+        expect(assigns(:location)).to be_a_new(Location)
+      end
+
+      it "re-renders the 'new' template" do
+        Location.any_instance.stub(:save).and_return(false)
+        post :create, location: { name: '' }
+        expect(response).to render_template(:new)
+      end
+    end
   end
 
   describe 'PUT update'
