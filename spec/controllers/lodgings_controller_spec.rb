@@ -101,7 +101,6 @@ describe LodgingsController, type: :controller do
         allow_any_instance_of(Lodging).to receive(:save).and_return(false)
         @user = build_stubbed(:user)
         allow(User).to receive(:find).and_return(@user)
-        # User.stub(:find).and_return(@user)
       end
 
       it 'assigns a newly created but unsaved lodging as @lodging' do
