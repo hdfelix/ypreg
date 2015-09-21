@@ -41,4 +41,8 @@ YpwReg::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  # Simplecov (https://github.com/colszowka/simplecov#want-to-use-spring-with-simplecov)
+  config.serve_static_files = false
+  config.eager_load = false
 end

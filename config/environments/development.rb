@@ -35,4 +35,8 @@ YpwReg::Application.configure do
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
   config.action_mailer.delivery_method = :letter_opener #:smtp
   config.action_mailer.perform_deliveries = true
+  
+  # Simplecov (https://github.com/colszowka/simplecov#want-to-use-spring-with-simplecov)
+  config.serve_static_files = false
+  config.eager_load = false
 end
