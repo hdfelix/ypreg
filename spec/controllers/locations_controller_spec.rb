@@ -43,6 +43,11 @@ describe LocationsController, type: :controller do
       get :new, {}
       expect(assigns(:location)).to be_a_new(Location)
     end
+
+    it 'renders the :new template' do
+      get :new, {}
+      expect(assigns(:location)).to render_template(:new)
+    end
   end
 
   describe 'GET :edit' do
@@ -55,7 +60,7 @@ describe LocationsController, type: :controller do
     end
   end
 
-  describe 'POST create' do
+  describe 'POST :create' do
     context 'with valid params' do
       it 'create a new location' do
         expect {
