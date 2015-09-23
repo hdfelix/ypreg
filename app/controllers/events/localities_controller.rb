@@ -1,8 +1,8 @@
 class Events::LocalitiesController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
-    @localities = Locality.localities_not_participating_in_event(@event)
     @event_localities = @event.localities
+    @localities = Locality.localities_not_participating_in_event(@event)
   end
 
   def show
