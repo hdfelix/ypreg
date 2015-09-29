@@ -12,7 +12,8 @@ describe Events::HospitalitiesController, type: :controller do
       expect(assigns(:event)).to eq event
     end
 
-    it 'assigns unassigned lodgings providing hospitality for the event' do
+    it 'assigns unassigned lodgings providing hospitality for the event \
+        to @lodgings' do
       create(:hospitality, event: event)
       lodging = create(:lodging)
 
@@ -40,6 +41,46 @@ describe Events::HospitalitiesController, type: :controller do
     end
   end
 
-  describe 'POST add'
+  describe 'POST add' do
+    it 'assigns all the current event to @event' do
+      get :index, event_id: event.id
+      expect(assigns(:event)).to eq event
+    end
+
+    context 'with valid at least one lodging id' do
+      before(:example) do
+        2.times { |t| create(:lodging, id: t) }
+        post :add, event_id: event.id, lodging_ids: [0, 1]
+      end
+
+      it 'creates a hospitality for @event from each lodging id' do
+        expect(event.hospitalities.count).to eq 2
+      end
+
+      it 'redirecs to Event#show for @event' do
+        expect(response).to redirect_to event_path(event)
+      end
+
+      it 'sets a success flash notice' do
+        expect(flash[:notice]).to eq 'Hospitalities added successfully.'
+      end
+    end
+
+    context 'with no lodging ids' do
+      before(:example) do
+        2.times { |t| create(:lodging, id: t) }
+        post :add, event_id: event.id, lodging_ids: nil
+      end
+
+      it 'renders the :add template' do
+        expect(response).to redirect_to event_hospitalities_path(event)
+      end
+
+      it 'sets a flash error notice' do
+        expect(flash[:error]).to eq 'No lodgings selected.'
+      end
+    end
+  end
+
   describe 'PUT remove'
 end
