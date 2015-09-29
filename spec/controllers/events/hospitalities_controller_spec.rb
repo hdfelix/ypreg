@@ -57,7 +57,7 @@ describe Events::HospitalitiesController, type: :controller do
         expect(event.hospitalities.count).to eq 2
       end
 
-      it 'redirecs to Event#show for @event' do
+      it 'redirects to Event#show for @event' do
         expect(response).to redirect_to event_path(event)
       end
 
@@ -72,7 +72,7 @@ describe Events::HospitalitiesController, type: :controller do
         post :add, event_id: event.id, lodging_ids: nil
       end
 
-      it 'renders the :add template' do
+      it 'redirects to the event hospitalities index' do
         expect(response).to redirect_to event_hospitalities_path(event)
       end
 
@@ -82,5 +82,52 @@ describe Events::HospitalitiesController, type: :controller do
     end
   end
 
-  describe 'PUT remove'
+  describe 'PUT remove' do
+    context 'with lodging ids' do
+      it 'assigns all the current event to @event' do
+        get :index, event_id: event.id
+        expect(assigns(:event)).to eq event
+      end
+
+      it 'destroys all the selected event hospitalities' do
+        2.times do
+          hosp = create(:hospitality, event: event)
+          event.hospitalities << hosp
+        end
+        lodging_ids = event.hospitalities.map(&:lodging_id)
+        event.save
+
+        put :remove, event_id: event.id, hospitality_lodging_ids: lodging_ids
+
+        expect(event.hospitalities.count).to eq 0
+      end
+
+      it 'redirects to Event#show' do
+        2.times do
+          hosp = create(:hospitality, event: event)
+          event.hospitalities << hosp
+        end
+        lodging_ids = event.hospitalities.map(&:lodging_id)
+        event.save
+
+        put :remove, event_id: event.id, hospitality_lodging_ids: lodging_ids
+
+        expect(response).to redirect_to(event)
+      end
+    end
+
+    context 'without lodging ids' do
+      before(:example) do
+        put :remove, event_id: event.id, hospitality_lodging_ids: nil
+      end
+
+      it 'redirects to event hospitalities index' do
+        expect(response).to redirect_to event_hospitalities_path(event)
+      end
+
+      it 'sets a flash error notice' do
+        expect(flash[:error]).to eq 'No hospitalities selected.'
+      end
+    end
+  end
 end
