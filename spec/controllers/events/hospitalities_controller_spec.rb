@@ -7,7 +7,7 @@ describe Events::HospitalitiesController, type: :controller do
   end
 
   describe 'GET :index' do
-    it 'assigns all the current event to @event' do
+    it 'assigns the current event to @event' do
       get :index, event_id: event.id
       expect(assigns(:event)).to eq event
     end

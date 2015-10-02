@@ -142,9 +142,20 @@ FactoryGirl.define do
     end
 
     trait :current_event do
-
       begin_date { Time.zone.now.to_date }
       end_date { (Time.zone.now + 2.days).to_date }
+    end
+
+    trait :with_hospitalities do
+      transient do
+        count 2
+      end
+
+      after(:create) do |event, evaluator|
+        evaluator.count.times do
+          create(:hospitality, event: event, lodging: create(:lodging))
+        end
+      end
     end
 
     trait :with_1_locality_with_3_registrations do
