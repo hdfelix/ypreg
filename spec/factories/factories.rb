@@ -130,16 +130,32 @@ FactoryGirl.define do
         users = create_list(:user, 5, role: 'yp')
         users.each do |user|
           create_list(:registration, 5, event: event, user: user)
-          create(:hospitality, event: event, lodging: create(:lodging), locality: create(:locality))
-          create(:hospitality, event: event, lodging: create(:lodging), locality: create(:locality))
+          2.times do
+            create_list(:hospitality,
+                        2,
+                        event: event,
+                        lodging: create(:lodging),
+                        locality: create(:locality))
+          end
         end
       end
     end
 
     trait :current_event do
-
       begin_date { Time.zone.now.to_date }
       end_date { (Time.zone.now + 2.days).to_date }
+    end
+
+    trait :with_hospitalities do
+      transient do
+        count 2
+      end
+
+      after(:create) do |event, evaluator|
+        evaluator.count.times do
+          create(:hospitality, event: event, lodging: create(:lodging))
+        end
+      end
     end
 
     trait :with_1_locality_with_3_registrations do
