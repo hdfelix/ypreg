@@ -11,6 +11,7 @@ class Events::HospitalityLocalityAssignmentsController < ApplicationController
     hospitality_ids.each do |id|
       hosp = @event.hospitalities.find(id)
       loc = params[:hospitality_locality_ids][id.to_sym][0]
+      # TODO: factor out to service HospitalityLocalityManager
       if loc.empty?
         loc = nil
       else

@@ -36,7 +36,8 @@ describe Events::HospitalityLocalityAssignmentsController, type: :controller do
         expect(assigns(:event)).to eq event
       end
 
-      it 'updates hospitality with a locality id' do
+      it 'updates hospitality with a locality id and /
+          redirects to :index' do
         event = create(:event_with_registrations, ensure_unique_locality: true)
         hospitalities, localities = [], []
         event.registrations.each do |reg|
@@ -54,9 +55,34 @@ describe Events::HospitalityLocalityAssignmentsController, type: :controller do
         post :assign, event_id: event.id, hospitality_locality_ids: ids_hash
 
         expect(event.hospitalities.first.locality.id).to eq localities.first.id
+        expect(response).to redirect_to(event_hospitality_locality_assignments_path)
       end
     end
 
-    context ' without hospitality_locality_ids'
+    context 'without hospitality_locality_ids' do
+      context 'a previously assigned locality' do
+        it 'is unassigned from the hospitality and /
+            renders the :index template' do
+          event = create(:event)
+          localities = create_list(:locality, 2)
+          localities.each do |loc|
+            event.hospitalities <<
+              create(:hospitality, event: event, locality: loc)
+          end
+
+          ids_hash = {}
+          event.hospitalities.each do |hosp|
+            ids_hash[hosp.id.to_s] = ['']
+          end
+
+          post :assign, event_id: event.id, hospitality_locality_ids: ids_hash
+          event.reload
+
+          expect(event.hospitalities.first.locality).to be_nil
+          expect(event.hospitalities.second.locality).to be_nil
+          expect(response).to redirect_to(event_hospitality_locality_assignments_path)
+        end
+      end
+    end
   end
 end
