@@ -4,7 +4,7 @@ class Events::HospitalityAssignmentsController < ApplicationController
 
   def index
     @event = Event.find(params[:event_id]).includes(:hospitalities)
-    @stats =  @event.load_locality_summary
+    @stats = @event.load_locality_summary
     @hospitalities = @event.hospitalities
     @assigned_lodgings_as_hospitality = @event.assigned_lodgings_as_hospitality
     @unassigned_lodgings_as_hospitality = @event.unassigned_lodgings_as_hospitality
