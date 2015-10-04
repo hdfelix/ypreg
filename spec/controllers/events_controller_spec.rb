@@ -30,7 +30,7 @@ describe EventsController, type: :controller do
     end
   end
 
-  describe 'GET show' do
+  describe 'GET :show' do
     it "assigns the requested event to @event and \
         localities participating to @participating_localities" do
       event = create(:event_with_registrations)
