@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'awesome_print'
 
 describe Events::HospitalityRegistrationAssignmentsController, type: :controller do
   let (:event) { create(:event) }
