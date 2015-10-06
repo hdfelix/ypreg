@@ -2,18 +2,17 @@ class Events::RegistrationsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
     @registrations =
-      @event.registrations.sort_by { |reg| reg.locality.city } #.
+      @event.registrations.sort_by { |reg| reg.locality.city }
 
-      if params[:view] == 'attendance'
-        @event_localities = EventLocality.includes(:locality).where(event: @event)
-        render 'attendance_index'
-      end
+    if params[:view] == 'attendance'
+      @event_localities = EventLocality.includes(:locality).where(event: @event)
+      render 'attendance_index'
+    end
   end
 
   def show
     @event = Event.find(params[:event_id])
 
-    # @registration = @event.registrations.where('user_id = ?', current_user)
     if params[:view] == 'attendance'
       @attendance = Registration.find(params[:id])
       render 'attendance_show'
@@ -56,7 +55,7 @@ class Events::RegistrationsController < ApplicationController
       @registration = @event.registrations.find(params[:id])
     end
   end
-  
+
   def update
     @event = Event.find(params[:event_id])
     @registration = Registration.find(params[:id])
