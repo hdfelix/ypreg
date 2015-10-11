@@ -12,7 +12,7 @@ describe Events::RegistrationsController, type: :controller do
       expect(assigns(:event)).to eq event
     end
 
-    it 'assigns event registrations to @registrations' do
+    it 'assigns event registrations to @registrations sorted by city' do
       get :index, event_id: event.to_param
       event.registrations.sort_by { |reg| reg.locality.city }
       expect(assigns(:registrations).map(&:id))
@@ -44,20 +44,32 @@ describe Events::RegistrationsController, type: :controller do
 
   describe 'GET :show' do
     it 'assigns event to @event' do
-      post :show, event_id: event.to_param
+      event = create(:event_with_registrations, registrations_count: 1)
+      registration = event.registrations.first
+
+      post :show, event_id: event.to_param, id: registration.to_param
+
       expect(assigns(:event)).to eq event
     end
 
     context "with params[:view] == 'attendance'" do
       it 'assigns the registration to @attendance' do
+        event = create(:event_with_registrations, registrations_count: 1)
+        registration = event.registrations.first
+
+        post :show, event_id: event.to_param, id: registration.to_param, view: 'attendance'
+
+        expect(assigns(:attendance)).to eq registration
       end
     end
 
     context "without params[:view] == 'attendance'" do
       it 'assigns the registration to @registration' do
-        ev = create(:event_with_registrations, registrations_count: 1)
-        registration = ev.registrations.first
-        post :show, event_id: event.to_param, id: registration.to_param
+        event = create(:event_with_registrations, registrations_count: 1)
+        registration = event.registrations.first
+
+        post :show, event_id: event.to_param, id: registration.to_param, view: ''
+
         expect(assigns(:registration)).to eq registration
       end
     end
