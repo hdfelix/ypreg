@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-#Admin users
-feature 'Admin user  manages lodgings' do
+# Admin users
+feature 'Admin user manages lodgings' do
   let (:authed_admin) { create_signed_in_user_by_role('admin') }
 
   scenario 'Can access lodging#index' do
@@ -10,10 +10,12 @@ feature 'Admin user  manages lodgings' do
     within 'h2' do
       expect(page).to have_content('Lodgings')
     end
-    expect(page).to have_content('list of available lodging locations for conferences and retreats')
+    expect(page)
+      .to have_content('list of available lodging \
+                        locations for conferences and retreats')
   end
 
-  scenario "can access lodging#new"  do
+  scenario 'can access lodging#new' do
     visit new_lodging_path(authed_admin)
     within 'h2' do
       expect(page).to have_content('New Lodging')
@@ -47,21 +49,29 @@ feature 'Admin user  manages lodgings' do
     visit new_lodging_path(authed_admin)
 
     fill_in 'lodging[name]', with: lodging.name
-    select "#{ Lodging::LODGING_TYPE[lodging.lodging_type.to_i] }", from: 'lodging[lodging_type]'
-    select "#{ lodging.locality.city }", from: 'lodging[locality_id]'
-    select "#{ not_a_contact_person.name }", from: 'contact_person_id'
+    select "#{Lodging::LODGING_TYPE[lodging.lodging_type.to_i]}",
+           from: 'lodging[lodging_type]'
+    select "#{lodging.locality.city}", from: 'lodging[locality_id]'
+    select "#{not_a_contact_person.name}", from: 'contact_person_id'
     fill_in 'lodging[min_capacity]', with: lodging.min_capacity
     fill_in 'lodging[max_capacity]', with: lodging.max_capacity
     fill_in 'lodging[address1]', with: lodging.address1
     fill_in 'lodging[address2]', with: lodging.address2
     fill_in 'lodging[city]', with: lodging.city
-    find('#lodging_state_abbrv').find(:xpath, "option[@value=\'#{ lodging.state_abbrv }\']").select_option
+    find('#lodging_state_abbrv')
+      .find(:xpath, "option[@value=\'#{lodging.state_abbrv}\']").select_option
     fill_in 'lodging[zipcode]', with: lodging.zipcode
 
     click_button 'Submit'
 
     expect(page).to have_content('Lodging was created successfully.')
     expect(page).to have_content(lodging.name)
+    expect(page).to have_content(lodging.lodging_type)
+    expect(page).to have_content(lodging.min_capacity)
+    expect(page).to have_content(lodging.max_capacity)
+    expect(page).to have_content(lodging.contact_person.name)
+    expect(page)
+      .to have_content(lodging.display_address_in_address_block_format)
   end
 
   scenario 'edits a lodging' do
@@ -84,8 +94,7 @@ feature 'Admin user  manages lodgings' do
   end
 end
 
-
-#SCYP users
+# SCYP users
 feature 'SCYP user manages lodgings' do
   let (:authed_scyp) { create_signed_in_user_by_role('scyp') }
 
@@ -93,7 +102,8 @@ feature 'SCYP user manages lodgings' do
     visit lodgings_path(authed_scyp)
 
     expect(page).to have_content('Lodging')
-    expect(page).to have_content('list of available lodging locations for conferences and retreats')
+    expect(page).to have_content('list of available lodging locations \
+                                 for conferences and retreats')
   end
 
   scenario 'Can add a lodging successfully' do
@@ -107,15 +117,17 @@ feature 'SCYP user manages lodgings' do
     expect(page).to have_content('New Lodging')
 
     fill_in 'lodging[name]', with: lodging.name
-    select "#{ Lodging::LODGING_TYPE[lodging.lodging_type.to_i] }", from: 'lodging[lodging_type]'
-    select "#{ lodging.locality.city }", from: 'lodging[locality_id]'
-    select "#{ not_a_contact_person.name }", from: 'contact_person_id'
+    select "#{Lodging::LODGING_TYPE[lodging.lodging_type.to_i]}",
+           from: 'lodging[lodging_type]'
+    select "#{lodging.locality.city}", from: 'lodging[locality_id]'
+    select "#{not_a_contact_person.name}", from: 'contact_person_id'
     fill_in 'lodging[min_capacity]', with: lodging.min_capacity
     fill_in 'lodging[max_capacity]', with: lodging.max_capacity
     fill_in 'lodging[address1]', with: lodging.address1
     fill_in 'lodging[address2]', with: lodging.address2
     fill_in 'lodging[city]', with: lodging.city
-    find('#lodging_state_abbrv').find(:xpath, "option[@value=\'#{ lodging.state_abbrv }\']").select_option
+    find('#lodging_state_abbrv')
+      .find(:xpath, "option[@value=\'#{lodging.state_abbrv}\']").select_option
     fill_in 'lodging[zipcode]', with: lodging.zipcode
 
     click_button 'Submit'
