@@ -15,11 +15,15 @@ class Registration < ActiveRecord::Base
            :lodging_id, # ...
            to: :user
 
-  # validates :locality, presence: true
+  validates :locality, presence: true
   validates_inclusion_of :has_been_paid, in: [true, false]
-  validate :has_medical_release_form, presence: true
+  validates_inclusion_of :has_medical_release_form, in: [true, false]
 
   after_create :create_event_locality
+
+
+  # TODO: pay(amount)
+  # TODO paid?
 
   private
 

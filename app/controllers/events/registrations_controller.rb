@@ -4,10 +4,9 @@ class Events::RegistrationsController < ApplicationController
     @registrations =
       @event.registrations.sort_by { |reg| reg.locality.city }
 
-    if params[:view] == 'attendance'
-      @event_localities = EventLocality.includes(:locality).where(event: @event)
-      render 'attendance_index'
-    end
+    return unless params[:view] == 'attendance'
+    @event_localities = EventLocality.includes(:locality).where(event: @event)
+    render 'attendance_index'
   end
 
   def show
@@ -63,7 +62,7 @@ class Events::RegistrationsController < ApplicationController
     if @registration.update_attributes(registration_params)
       if params[:view] == 'attendance'
         flash[:notice] = 'Attendance created succesfully'
-        redirect_to event_registrations_url(@event,view: 'attendance')
+        redirect_to event_registrations_url(@event, view: 'attendance')
       else
         flash[:notice] = 'Registration created succesfully'
         redirect_to event_registrations_path(@event)
@@ -75,7 +74,8 @@ class Events::RegistrationsController < ApplicationController
   end
 
   def destroy
-    if @registration.destroy flash[:notice] = 'registration deleted successfully.'
+    if @registration.destroy flash[:notice] =
+        'registration deleted successfully.'
       redirect_to events_url
     else
       flash[:error] = 'registration could not be deleted.'
@@ -87,9 +87,15 @@ end
 private
 
 def registration_params
-  parameters = params.require(:registration).permit(:payment_type, :payment_adjustment, :has_been_paid, :has_medical_release_form, :attend_as_serving_one)
-    .merge({ event_id: params[:event_id] })
-    .merge({ locality_id: User.find(params[:user_id]).locality.id})
+  parameters =
+    params.require(:registration)
+    .permit(:payment_type,
+            :payment_adjustment,
+            :has_been_paid,
+            :has_medical_release_form,
+            :attend_as_serving_one)
+    .merge(event_id: params[:event_id])
+    .merge(locality_id: User.find(params[:user_id]).locality.id)
 
   parameters = parameters.merge(params.require(:registration).permit(:status)) if params[:view] == 'attendance'
   parameters

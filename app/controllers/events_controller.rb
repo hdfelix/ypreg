@@ -101,6 +101,12 @@ class EventsController < ApplicationController
     end
   end
 
+  def copy
+    event = Event.find(params[:id])
+    @event = event.copy
+    authorize @event
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

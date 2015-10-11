@@ -1,9 +1,10 @@
 require 'rails_helper'
+require 'awesome_print'
 
 describe Event, type: :model do
   describe 'Associations' do
     it { should belong_to :location }
-    it { should have_many :registrations }
+    it { should have_many(:registrations).dependent(:destroy) }
     it { should have_many(:users).through(:registrations) }
     it { should have_many(:localities).conditions(:uniq).through(:users) }
     it { should have_many :event_localities }
@@ -42,14 +43,13 @@ describe Event, type: :model do
 
     describe '#current' do
       it 'returns the current events (those happening at the moment)' do
-        # scope :current, -> { where('begin_date < ? AND end_date > ?', Time.zone.now, Time.zone.now) }
-          create(:event, end_date: 1.day.ago) # past event
-          create(:event, begin_date: (Time.zone.now + 7.days)) # future event
-          events = create_list(:event,2,
-                 begin_date: 1.day.ago,
-                 end_date: (Time.zone.now + 3.days)) # current event
+        create(:event, end_date: 1.day.ago) # past event
+        create(:event, begin_date: (Time.zone.now + 7.days)) # future event
+        events = create_list(:event, 2,
+                             begin_date: 1.day.ago,
+                             end_date: (Time.zone.now + 3.days)) # current event
 
-          expect(Event.current.map(&:title)).to eq events.map(&:title)
+        expect(Event.current.map(&:title)).to eq events.map(&:title)
       end
     end
 
@@ -99,14 +99,13 @@ describe Event, type: :model do
     end
 
     describe '#next' do
-      it 'returns an array with the next event chronologically from today (including an event happening at the moment)' do
+      it 'returns an array with the next event chronologically from today \
+         (including an event happening at the moment)' do
         # scope :next, -> { where('begin_date > ?', Time.zone.now).first }
         today = Time.zone.now
-        current_event = create(:event, begin_date: (today - 1.day),
-                          end_date: (today + 3.days))
-
-        following_event = create(:event, begin_date: (today + 4.day),
-                          end_date: (today + 5.days))
+        create(:event, begin_date: (today + 4.day), end_date: (today + 5.days))
+        current_event =
+          create(:event, begin_date: (today - 1.day), end_date: (today + 3.days))
 
         expect(Event.next.first.title).to eq current_event.title
       end
@@ -146,7 +145,8 @@ describe Event, type: :model do
 
       participating_localities = event.participating_localities
       expect(participating_localities.count).to eq 2
-      expect(participating_localities.map(&:id)).to contain_exactly(loc1.id, loc2.id)
+      expect(participating_localities.map(&:id))
+        .to contain_exactly(loc1.id, loc2.id)
     end
   end
 
@@ -159,8 +159,8 @@ describe Event, type: :model do
       usr1 = event.registrations.first.user
       usr2 = event.registrations.second.user
 
-      expect(event.registered_saints_from_locality(loc).map(&:id)).
-        to eq ([usr1.id, usr2.id])
+      expect(event.registered_saints_from_locality(loc).map(&:id))
+        .to eq ([usr1.id, usr2.id])
     end
   end
 
@@ -181,11 +181,11 @@ describe Event, type: :model do
 
   describe '#registered_serving_ones' do
     it 'returns the number of serving ones from a locality attending the event' do
-      reg   = create(:registration, :serving_one)
+      reg = create(:registration, :serving_one)
       other_reg = create(:registration, :serving_one)
       event = reg.event
       other_reg.event
-      loc   = reg.user.locality
+      loc = reg.user.locality
 
       expect(event.registered_serving_ones(loc).count).to eq(1)
     end
@@ -276,7 +276,7 @@ describe Event, type: :model do
       create(:hospitality, event: ev, lodging: lodge2, locality: loc2)
       result = {
         "#{loc1.city}" => lodge1.min_capacity,
-        "#{loc2.city}"  => lodge2.min_capacity }
+        "#{loc2.city}" => lodge2.min_capacity }
       expect(ev.beds_assigned_to_locality).to eq(result)
     end
   end
@@ -284,7 +284,7 @@ describe Event, type: :model do
   describe '#load_locality_summary' do
     let(:loc) { create(:locality) }
     let(:yp_usr) { create(:user, locality: loc) }
-    let(:ev)  { create(:event) }
+    let(:ev) { create(:event) }
 
     describe 'returns a hash' do
       it 'successfully' do
@@ -331,7 +331,7 @@ describe Event, type: :model do
         expect(stats[loc.city]['actual_total_helpers']).to eq(actual_helpers)
       end
 
-      # it "that contains a locality's actual totals" do
+      # TODO: it "that contains a locality's actual totals" do
       #   create(:registration, event: ev, user: usr)
 
       #   ev.load_locality_summary
@@ -348,5 +348,88 @@ describe Event, type: :model do
   describe '#over?' do
     it "return true if today's date is outside the event dates"
     it "returns false if today's date is inside the event dates"
+  end
+
+  describe '#payments' do
+    it 'returns the number of registration payments made for this event' do
+      ev = create(:event_with_registrations)
+      registration = ev.registrations.first
+      registration.has_been_paid = true
+      registration.save
+
+      expect(ev.payments).to eq 1
+    end
+  end
+
+  describe '#attendance' do
+    it 'returns the number of registered people that are/where present' do
+      ev = create(:event_with_registrations)
+      registration = ev.registrations.first
+      registration.status = 'attended'
+      registration.save
+
+      expect(ev.attendance).to eq 1
+    end
+  end
+
+  describe '#medical_release_forms_returned' do
+    it 'returns the number of medical release forms submitted' do
+      ev = create(:event_with_registrations)
+      registration = ev.registrations.first
+      registration.has_medical_release_form = true
+      registration.save
+
+      expect(ev.medical_release_forms_returned).to eq 1
+    end
+  end
+
+  describe '#copy'do
+    describe 'creates a copy of an event'do
+      it 'successfully' do
+        ev = create(:event)
+        expect(ev.copy).to be_an Event
+      end
+
+      it "with same event title and appended '(copy)' in title" do
+        ev = create(:event, title: 'My Event')
+        copied_event = ev.copy
+        expect(copied_event.title).to eq 'My Event (copy)'
+      end
+
+      it 'with same hospitalities' do
+        ev = create(:event_with_registrations, :with_hospitalities)
+        copied_event = ev.copy
+        expect(copied_event.hospitalities).to eq ev.hospitalities
+      end
+
+      it 'without any registrations' do
+        ev = create(:event_with_registrations)
+        registrations_count = ev.registrations.count
+
+        copied_event = ev.copy
+
+        expect(copied_event.registrations.count).not_to eq registrations_count
+        expect(copied_event.registrations.count).to eq 0
+      end
+
+      it 'without any payments' do
+        ev = create(:event_with_registrations)
+        copied_event = ev.copy
+        expect(copied_event.payments).to eq 0
+      end
+
+      it 'without any attendance information' do
+        ev = create(:event_with_registrations)
+        copied_event = ev.copy
+        expect(copied_event.attendance).to eq 0
+      end
+
+      it 'without any medical forms turned in' do
+        ev = create(:event_with_registrations)
+        ev.registrations.first.has_medical_release_form = true
+        copied_event = ev.copy
+        expect(copied_event.medical_release_forms_returned).to eq 0
+      end
+    end
   end
 end

@@ -197,9 +197,12 @@ FactoryGirl.define do
     has_been_paid false
     payment_adjustment '5'
     attend_as_serving_one false
+    hospitality nil
+    locality { user.locality }
+    has_medical_release_form false
+    status nil
     user
     event
-    locality { user.locality }
 
     trait :serving_one do
       attend_as_serving_one true

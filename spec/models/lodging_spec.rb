@@ -17,7 +17,6 @@ describe Lodging, type: :model do
   end
 
   describe 'Associations' do
-    it { should have_many(:events).through(:hospitalities) } # how to test 'uniq'
     it { should belong_to :locality }
     it { should belong_to :contact_person }
     it { should accept_nested_attributes_for :contact_person }
@@ -36,14 +35,15 @@ describe Lodging, type: :model do
           .to eq(user_list + [lodge.contact_person])
       end
     end
-
   end
 
   describe 'Interface' do
     describe '#display_address_in_address_block_format' do
       it 'displays the lodging address' do
         lodging = FactoryGirl.create(:lodging)
-        formatted_address = "#{lodging.address1} \n #{lodging.city}, #{lodging.state_abbrv}  #{lodging.zipcode}"
+        formatted_address =
+          "#{lodging.address1}\n#{lodging.city}, #{lodging.state_abbrv}  #{lodging.zipcode}"
+
         expect(lodging.display_address_in_address_block_format)
           .to eq(formatted_address)
       end
