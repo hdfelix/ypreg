@@ -22,6 +22,9 @@ YpwReg::Application.routes.draw do
   resources :localities
   resources :lodgings
   resources :events do
+    member do
+      get 'copy'
+    end
     resources :localities,
               only: [:index, :show, :new, :create],
               controller: 'events/localities'
