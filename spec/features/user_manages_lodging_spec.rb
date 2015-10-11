@@ -11,8 +11,8 @@ feature 'Admin user manages lodgings' do
       expect(page).to have_content('Lodgings')
     end
     expect(page)
-      .to have_content('list of available lodging \
-                        locations for conferences and retreats')
+      .to have_content("list of available lodging \
+                        locations for conferences and retreats")
   end
 
   scenario 'can access lodging#new' do
@@ -102,8 +102,8 @@ feature 'SCYP user manages lodgings' do
     visit lodgings_path(authed_scyp)
 
     expect(page).to have_content('Lodging')
-    expect(page).to have_content('list of available lodging locations \
-                                 for conferences and retreats')
+    expect(page).to have_content("list of available lodging locations \
+                                 for conferences and retreats")
   end
 
   scenario 'Can add a lodging successfully' do
