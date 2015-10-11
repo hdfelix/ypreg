@@ -1,10 +1,10 @@
 # Events model - one-time events, conferences, or retreats
 class Event < ActiveRecord::Base
   belongs_to :location
-  has_many :registrations
+  has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations
   has_many :localities, -> { uniq }, through: :users
-  has_many :event_localities
+  has_many :event_localities, dependent: :destroy
   has_many :hospitalities
   has_many :lodgings, -> { uniq }, through: :hospitalities
   has_many :hospitality_registration_assignments, through: :hospitalities
@@ -146,7 +146,7 @@ class Event < ActiveRecord::Base
 
   def load_locality_summary
     stats = Hash.new do
-      |hash, key| hash[key] = Hash.new { |h, k| h[k] = Array.new }
+      |hash, key| hash[key] = Hash.new { |h, k| h[k] = [] }
     end
 
     localities.uniq.each do |locality|
@@ -161,6 +161,25 @@ class Event < ActiveRecord::Base
 
   def over?
     Time.zone.now.to_date > end_date
+  end
+
+  def payments
+    registrations.where(has_been_paid: true).count
+  end
+
+  def attendance
+    registrations.where(status: 'attended').count
+  end
+
+  def medical_release_forms_returned
+    registrations.where(has_medical_release_form: true).count
+  end
+
+  def copy
+    copied_event = clone
+    copied_event.title = title + ' (copy)'
+    copied_event.registrations.each(&:destroy)
+    copied_event
   end
 
   protected
