@@ -11,8 +11,4 @@ class EventPolicy < ApplicationPolicy
   def create?
     index?
   end
-
-  def copy?
-    index?
-  end
 end

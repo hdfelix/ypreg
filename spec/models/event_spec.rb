@@ -396,10 +396,16 @@ describe Event, type: :model do
         expect(copied_event.title).to eq 'My Event (copy)'
       end
 
-      it 'with same hospitalities' do
+      it 'with same lodgings providing hospitality' do
         ev = create(:event_with_registrations, :with_hospitalities)
+
         copied_event = ev.copy
-        expect(copied_event.hospitalities).to eq ev.hospitalities
+        ev_lodgings = ev.hospitalities.map(&:lodging)
+        copy_lodgings = copied_event.hospitalities.map(&:lodging)
+
+        expect(copied_event.hospitalities.count).to eq ev.hospitalities.count
+        expect(copy_lodgings).to eq ev_lodgings
+        expect(copied_event.hospitalities).not_to eq ev.hospitalities
       end
 
       it 'without any registrations' do

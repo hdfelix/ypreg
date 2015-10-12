@@ -189,9 +189,14 @@ class Event < ActiveRecord::Base
   end
 
   def copy
-    copied_event = clone
+    copied_event = dup
     copied_event.title = title + ' (copy)'
-    copied_event.registrations.each(&:destroy)
+    copied_event.save
+    hospitalities.map(&:lodging).each do |lodging|
+      copied_event.hospitalities <<
+        Hospitality.create(event: copied_event, lodging: lodging)
+    end
+    copied_event.save
     copied_event
   end
 
