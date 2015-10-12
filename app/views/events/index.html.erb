@@ -98,8 +98,7 @@
 
                     <td>
                       <%= link_to 'Edit', edit_event_path(event) %>&nbsp;
-                      <%= link_to 'Copy',
-                        new_event_copy_path(event_id: event) %>&nbsp;
+                      <%= link_to 'Copy', event_copies_path(event_id: event), method: :post %>&nbsp;
                       <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
                     </td>
                   </tr>
