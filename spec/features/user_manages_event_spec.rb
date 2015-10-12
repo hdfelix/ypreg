@@ -59,7 +59,9 @@ feature 'User creates an event' do
     end
 
     expect(page).to have_content @event.title
-    expect(page).to have_content @event.event_type
+    expect(page)
+      .to have_content Event::EVENT_TYPE
+      .detect { |a| a.include?(@event.event_type) }[0]
     expect(page).to have_content format_date(@event.begin_date)
     expect(page).to have_content format_date(@event.end_date)
     expect(page).to have_content format_date(@event.registration_open_date)
@@ -91,7 +93,6 @@ feature 'User copies an event' do
   scenario 'successfully' do 
     visit events_path(authed_admin)
     click_link 'Copy'
-    click_button 'Submit'
     expect(page). to have_content "#{@event.title} (copy)"
   end
 end

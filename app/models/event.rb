@@ -64,8 +64,10 @@ class Event < ActiveRecord::Base
     # if role.nil
     elsif !locality.nil? && role.nil?
       if is_serving_one
-        users.joins(:registrations)
-          .where(locality: locality, registrations: { attend_as_serving_one: true })
+        users
+          .joins(:registrations)
+          .where(locality: locality,
+                registrations: { attend_as_serving_one: true })
           .uniq
       else
         users.where(locality: locality).uniq
@@ -73,8 +75,10 @@ class Event < ActiveRecord::Base
     # if neither locality, role nil
     elsif !locality.nil? && !role.nil? # locality not nil, role not nil, is_serving_one
       if is_serving_one
-        tmp = users.joins(:registrations)
-          .where(locality: locality, role: role, registrations: { attend_as_serving_one: true })
+        tmp = users
+          .joins(:registrations)
+          .where(locality: locality,
+                 role: role, registrations: { attend_as_serving_one: true })
           .uniq
         tmp
       else
@@ -100,19 +104,28 @@ class Event < ActiveRecord::Base
   end
 
   def present_serving_ones_from(locality)
-    registrations.joins(:user).where(locality: locality, attend_as_serving_one: true, status: 'attended')
+    registrations
+      .joins(:user)
+      .where(locality: locality, attend_as_serving_one: true, status: 'attended')
   end
 
   def present_trainees_from(locality)
-    users.joins(:registrations).where(locality: locality, role: 'trainee', registrations: { status: 'attended' })
+    users
+      .joins(:registrations)
+      .where(locality: locality,
+             role: 'trainee', registrations: { status: 'attended' })
   end
 
   def present_helpers_from(locality)
-    users.joins(:registrations).where(locality: locality, role: 'helper', registrations: { status: 'attended' })
+    users.
+      joins(:registrations)
+      .where(locality: locality,
+             role: 'helper', registrations: { status: 'attended' })
   end
 
   def calculate_actual_total_yp
-    total_registrations(role: 'yp', locality: locality).map { |u| u if u.registration(self).status = 'attended' }.count
+    total_registrations(role: 'yp', locality: locality)
+      .map { |u| u if u.registration(self).status = 'attended' }.count
   end
 
   def assigned_lodgings_as_hospitality
@@ -234,6 +247,7 @@ class Event < ActiveRecord::Base
 
   def locality_amount_paid(locality)
     registration_cost *
-      Registration.where(event: self, locality: locality, has_been_paid: true).count
+      Registration
+        .where(event: self, locality: locality, has_been_paid: true).count
   end
 end

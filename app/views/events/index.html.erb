@@ -74,10 +74,8 @@
               <tr style="font: bold">
                 <td>Name</td>
                 <td>Type</td>
-                <td>Event Begins</td>
-                <td>Event Ends</td>
-                <td>Registration Opens</td>
-                <td>Registration Closes</td>
+                <td>Event Dates</td>
+                <td>Registration Window</td>
                 <td>Cost</td>
                 <td></td>
               </tr>
@@ -88,13 +86,20 @@
                   <tr>
                     <td><%= link_to event.title, event %></td>
                     <td><%= display_event(event) %></td>
-                    <td><%= format_date(event.begin_date) %>
-                    <td><%= format_date(event.end_date) %>
-                    <td><%= format_date(event.registration_open_date) %>
-                    <td><%= format_date(event.registration_close_date) %>
-                    <td><%= number_to_currency(event.registration_cost) %>
+                    <td>
+                      <%= format_date(event.begin_date) %> -
+                      <%= format_date(event.end_date) %>
+                    </td>
+                    <td>
+                      <%= format_date(event.registration_open_date) %> -
+                      <%= format_date(event.registration_close_date) %>
+                    </td>
+                    <td><%= number_to_currency(event.registration_cost) %></td>
 
-                    <td><%= link_to 'Edit', edit_event_path(event) %>&nbsp;
+                    <td>
+                      <%= link_to 'Edit', edit_event_path(event) %>&nbsp;
+                      <%= link_to 'Copy',
+                        new_event_copy_path(event_id: event) %>&nbsp;
                       <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
                     </td>
                   </tr>

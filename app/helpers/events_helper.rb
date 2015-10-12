@@ -33,7 +33,7 @@ module EventsHelper
   end
 
   def display_event(event)
-    if event_type = Event::EVENT_TYPE .detect { |a| a.include?(event.event_type) }
+    if event_type = Event::EVENT_TYPE.detect { |a| a.include?(event.event_type) }
       event_type[0]
     else
       '--'

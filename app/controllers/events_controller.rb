@@ -66,10 +66,8 @@ class EventsController < ApplicationController
   end
 
   def update_locality_payments
-    @event            = Event.find(params[:event_id])
-    localities        = Locality.find(params[:locality_paid_ids])
-    # registrations     = Registration.where(event: @event, locality: localities)
-    # event_localities  = EventLocality.where(event: @event, locality: localities)
+    @event = Event.find(params[:event_id])
+    localities = Locality.find(params[:locality_paid_ids])
 
     ActiveRecord::Base.transaction do
       localities.each do |loc|
@@ -86,7 +84,8 @@ class EventsController < ApplicationController
           reg.save
         end
 
-        # Flip 'submited_registraiton_payment_check for event localities of selected locality
+        # TODO: Flip 'submited_registraiton_payment_check for
+        # event localities of selected locality
         event_localities.each do |el|
           if el.submitted_registration_payment_check == true
             el.update_attributes(submitted_registration_payment_check: false)
@@ -99,12 +98,6 @@ class EventsController < ApplicationController
 
       redirect_to edit_locality_payments_path
     end
-  end
-
-  def copy
-    event = Event.find(params[:id])
-    @event = event.copy
-    authorize @event
   end
 
   private
