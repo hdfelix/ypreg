@@ -69,21 +69,25 @@
           <tbody>
           <% @lodgings.each do |l| %>
             <tr>
-            <td><%= check_box_tag "lodging_ids[]", l.id %></td>
-            <td><%= l.name %></td>
-            <td><%= min_max_capacity(l) %></td>
-            <td><%= Lodging::LODGING_TYPE[l.lodging_type.to_i] %></td>
-            <td><%= full_address(l) %></td>
-            <td><%= l.contact_person.name %></td>
-          </tr>
-        <% end %>
+              <td><%= check_box_tag "lodging_ids[]", l.id %></td>
+              <td><%= l.name %></td>
+              <td><%= min_max_capacity(l) %></td>
+              <td><%= Lodging::LODGING_TYPE[l.lodging_type.to_i] %></td>
+              <td><%= full_address(l) %></td>
+              <td><%= l.contact_person.name %></td>
+            </tr>
+          <% end %>
           </tbody>
         </table>
       </div>
     </div>
     <div class="panel-footer">
-      <%= submit_tag 'Add Hospitalities', class: 'btn btn-primary btn-sm' %>
-      <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+      <% if @lodgings.count > 0 %>
+        <%= submit_tag 'Add Hospitalities', class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+      <% else %>
+        <%= link_to 'Add a Lodging', new_lodging_path, class: 'btn btn-primary btn-sm' %>
+      <% end %>
     <% end %>
     </div>
   </div>
