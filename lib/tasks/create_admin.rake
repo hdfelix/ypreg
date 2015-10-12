@@ -15,8 +15,9 @@ namespace :ypreg do
     end
 
     locality = {}
-    input = nil
 
+    # Locality
+    input = nil
     until !input.nil? && input.size > 0
       puts "\n\nLocality name (e.g., 'Anaheim'): "
       print '> '
@@ -29,8 +30,8 @@ namespace :ypreg do
       end 
     end
 
+    # Locality state abbreviation
     input = nil
-
     until !input.nil? && input.size > 0
       puts "State Abbreviation ( e.g., 'CA'):"
       print "> "
@@ -63,8 +64,9 @@ namespace :ypreg do
     print "\nNow, let's create your admin user account:"
 
     user = {}
-    input = nil
 
+    # Full name
+    input = nil
     until !input.nil? && input.size > 0
       puts "\nEnter your full name: "
       print "> "
@@ -76,7 +78,7 @@ namespace :ypreg do
       end
     end
 
-
+    # Gender
     input = nil
     until !input.nil? && input.size > 0 && %w(M m F f).include?(input.to_s)
       puts "\nEnter your gender ('M'or 'F'): "
@@ -87,6 +89,7 @@ namespace :ypreg do
     end
     user['gender'] = input.downcase == 'm' ? 'B': 'S'
 
+    # Email
     input = nil
     until !input.nil? && input.size > 0
       puts "\nEnter your e-mail: "
@@ -97,6 +100,22 @@ namespace :ypreg do
         print_colored_text('You did not enter an e-mail address', warning_text_color)
       else
         user['email'] = input
+      end
+    end
+
+    # Age
+    user['age'] = 'adult'
+
+    # Grade
+    input = nil
+    until !input.nil? && input.size > 0
+      puts "\nEnter your 'grade' ('College' or 'Adult'): "
+      print "> "
+      input = STDIN.gets.chomp.downcase
+      unless input.size > 0 && %w(college adult).include?(input)
+        print_colored_text("Let's try that again; enter either 'College' or 'Adult': ", warning_text_color)
+      else
+        user['grade'] = input.downcase == 'college' ? 'college' : 'adult'
       end
     end
 
@@ -122,6 +141,8 @@ namespace :ypreg do
         User.new(
           name: user['name'].split.map(&:capitalize).join(' '),
           gender: user['gender'],
+          age: user['age'],
+          grade: user['grade'],
           email: user['email'].downcase,
           password: user['password'],
           role: 'admin',
