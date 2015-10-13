@@ -1,6 +1,18 @@
-require 'spec_helper'
+require 'rails_helper'
 
-# TODO: this isn't working; throwing unauthorized user error for non-existant user and
-# "undefined method 'none?' for nil:NilClass
-# http://thunderboltlabs.com/blog/2013/03/27/testing-pundit-policies-with-rspec/
+describe LocationPolicy do
+  subject { described_class }
 
+  let (:current_user) { FactoryGirl.build_stubbed :user }
+  let (:other_user) { FactoryGirl.build_stubbed :user }
+  let (:admin) { FactoryGirl.build_stubbed :user, role: 'admin' }
+
+  permissions :index?, :show?, :new?, :create?, :update?, :destroy? do
+    it "denies access if not an admin" do
+      expect(subject).not_to permit(current_user)
+    end
+    it "allows access for an admin" do
+      expect(LocationPolicy).to permit(admin)
+    end 
+  end
+end
