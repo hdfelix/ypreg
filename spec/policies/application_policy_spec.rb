@@ -13,9 +13,4 @@ describe ApplicationPolicy do
       expect(subject).not_to permit(admin)
     end
   end
-
-  permissions :show? do
-    it 'allows access to admins' do
-    end
-  end
 end

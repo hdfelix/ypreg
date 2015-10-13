@@ -20,6 +20,10 @@ class LocalityPolicy < ApplicationPolicy
     index?
   end
 
+  def create?
+    index?
+  end
+
   def destroy?
     index?
   end
