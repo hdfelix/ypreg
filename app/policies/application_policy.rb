@@ -13,27 +13,27 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(id: record.id).exists? && user.role?(:admin)
+    index? # scope.where(id: record.id).exists? && user.role?(:admin)
   end
 
   def create?
-    user.present? && (user.role?(:admin))
+    index?
   end
 
   def new?
-    create?
+    index?
   end
 
   def update?
-    user.present? && (user.role?(:admin))
+    index?
   end
 
   def edit?
-    update?
+    index?
   end
 
   def destroy?
-    update?
+    index?
   end
 
   def scope
