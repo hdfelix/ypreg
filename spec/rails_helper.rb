@@ -23,8 +23,10 @@ ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migratio
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
+    c.include_chain_clauses_in_custom_matcher_descriptions = true
     c.syntax = :expect
   end
+
 	config.include FeatureLoginMacros
 	config.include ApplicationHelper
   config.include WaitForAjax

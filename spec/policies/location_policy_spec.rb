@@ -11,8 +11,9 @@ describe LocationPolicy do
     it "denies access if not an admin" do
       expect(subject).not_to permit(current_user)
     end
+
     it "allows access for an admin" do
-      expect(LocationPolicy).to permit(admin)
+      expect(subject).to permit(admin)
     end 
   end
 end
