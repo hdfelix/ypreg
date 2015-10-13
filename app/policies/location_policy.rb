@@ -12,11 +12,15 @@ class LocationPolicy < ApplicationPolicy
     index?
   end
 
-  def create?
+  def edit?
     index?
   end
 
   def update?
+    index?
+  end
+
+  def create?
     index?
   end
 

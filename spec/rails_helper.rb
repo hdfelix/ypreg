@@ -3,6 +3,9 @@ SimpleCov.start 'rails'
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
+# Prevent database truncation if the environment is production
+abort("The Rails environment is running in production mode!") if Rails.env.production?
+require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'capybara/rspec'
@@ -20,8 +23,10 @@ ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migratio
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
+    c.include_chain_clauses_in_custom_matcher_descriptions = true
     c.syntax = :expect
   end
+
 	config.include FeatureLoginMacros
 	config.include ApplicationHelper
   config.include WaitForAjax
