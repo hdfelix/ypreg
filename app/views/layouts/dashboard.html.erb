@@ -219,16 +219,8 @@
                 <li class="data-row">
                   <%= event_widget_data_name('Localities') %>
                   <span class="data-value">
-                    <% if current_or_future_events_present? %>
-                      <%= @chart_values["loc_ratio"] %>
-                    <% else  %>
-                      0 / 0
-                    <% end %>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria_valuenow="<%= @chart_values["loc_value_now"] %>" aria-valuemin="0" aria-valuemax="<%= @chart_values["loc_value_max"] %>" style="<%= @chart_values["loc_ratio_width_percentage"] %>">
-                      <span class="sr-only">10%</span>
-                    </div>
-                  </div>
+                    <%= data_value_ratio(@chart_values, 'Localities') %>
+                    <%= data_value_progress_div(@chart_values, 'Localities') %>
                 </span>
                 </li>
                 <li class="data-row">

@@ -41,17 +41,20 @@ module DashboardHelper
   end
 
   def bar_chart_attributes(chart_values, attribute_name)
+    prefix = get_hash_id_prefix_from(attribute_name)
     { class: 'progress-bar progress-bar-success',
       role: 'progressbar',
-      aria: { valuenow: chart_values['att_value_now'],
+      aria: { valuenow: chart_values["#{prefix}_value_now"],
               valuemin: 0,
-              valuemax: chart_values['att_value_max'] },
-      style: chart_values['att_ratio_width_percentage'] }
+              valuemax: chart_values["#{prefix}_value_max"] },
+      style: chart_values["#{prefix}_ratio_width_percentage"] }
   end
 
   def get_hash_id_prefix_from(attribute_name)
     prefix = case attribute_name
              when 'Attendance' then 'att'
+             when 'Localities' then 'loc'
+             when 'Hospitality' then 'hosp'
              end
     prefix
   end
