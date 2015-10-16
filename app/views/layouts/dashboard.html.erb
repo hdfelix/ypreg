@@ -221,37 +221,21 @@
                   <span class="data-value">
                     <%= data_value_ratio(@chart_values, 'Localities') %>
                     <%= data_value_progress_div(@chart_values, 'Localities') %>
-                </span>
+                  </span>
                 </li>
                 <li class="data-row">
                   <span class="data-name">Hospitality</span>
                   <span class="data-value">
-                    <% if current_or_future_events_present? %>
-                      <%= @chart_values["hosp_ratio"] %>
-                    <% else  %>
-                      0 / 0
-                    <% end %>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria_valuenow="<%= @chart_values["hosp_value_now"] %>" aria-valuemin="0" aria-valuemax="<%= @chart_values["hosp_value_max"] %>" style="<%= @chart_values["hosp_ratio_width_percentage"] %>">
-                      <span class="sr-only">10%</span>
-                    </div>
-                  </div>
-                </span>
+                    <%= data_value_ratio(@chart_values, 'Hospitality') %>
+                    <%= data_value_progress_div(@chart_values, 'Hospitality') %>
+                  </span>
                 </li>
                 <li class="data-row">
                   <span class="data-name">Payments</span>
                   <span class="data-value">
-                    <% if current_or_future_events_present? %>
-                      <%= @chart_values["pmt_ratio"] %>
-                    <% else  %>
-                      0 / 0
-                    <% end %>
-                  <div class="progress progress-xs">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria_valuenow="<%= @chart_values["pmt_value_now"] %>" aria-valuemin="0" aria-valuemax="<%= @chart_values["pmt_value_max"] %>" style="<%= @chart_values["pmt_ratio_width_percentage"] %>">
-                      <span class="sr-only">10%</span>
-                    </div>
-                  </div>
-                </span>
+                    <%= data_value_ratio(@chart_values, 'Payments') %>
+                    <%= data_value_progress_div(@chart_values, 'Payments') %>
+                  </span>
                 </li>
               </ul>
 
