@@ -59,12 +59,12 @@ class ApplicationController < ActionController::Base
         location_capacity = next_event.location.max_capacity
         registration_count = next_event.registrations.count
 
-        chart_values['att_ratio'] =
+        chart_values['cap_ratio'] =
           "#{ registration_count } / #{ location_capacity }"
-        chart_values['att_ratio_width_percentage'] =
+        chart_values['cap_ratio_width_percentage'] =
           "width: #{( registration_count.to_f / location_capacity.to_f) * 100 }%"
-        chart_values['att_value_now'] = registration_count
-        chart_values['att_value_max'] = location_capacity
+        chart_values['cap_value_now'] = registration_count
+        chart_values['cap_value_max'] = location_capacity
 
         # Values for Localities aria chart
         total_localities = Locality.all.count

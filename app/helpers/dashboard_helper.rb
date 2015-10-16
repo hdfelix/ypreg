@@ -52,7 +52,7 @@ module DashboardHelper
 
   def get_hash_id_prefix_from(attribute_name)
     prefix = case attribute_name
-             when 'Attendance' then 'att'
+             when 'Capacity' then 'cap'
              when 'Localities' then 'loc'
              when 'Hospitality' then 'hosp'
              when 'Payments' then 'pmt'
