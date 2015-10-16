@@ -22,8 +22,9 @@ module DashboardHelper
   end
 
   def data_value_ratio(chart_values, ratio)
+    hash_id = "#{get_hash_id_prefix_from(ratio)}_ratio"
     if current_or_future_events_present?
-      "#{chart_values[ratio]}"
+      "#{chart_values[hash_id]}"
     else
       "0 / 0"
     end
@@ -50,5 +51,12 @@ module DashboardHelper
               valuemin: 0,
               valuemax: chart_values['att_value_max'] },
       style: chart_values['att_ratio_width_percentage'] }
+  end
+
+  def get_hash_id_prefix_from(attribute_name)
+    prefix = case attribute_name
+             when 'Attendance' then 'att'
+             end
+    prefix
   end
 end
