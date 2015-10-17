@@ -7,6 +7,14 @@ module DashboardHelper
                 class: 'label label-default')
   end
 
+  def display_event_widget_based_on(role)
+    if role == 'admin'
+      render template: 'layouts/_event_widget_admin'
+    else
+      render template: 'layouts/_event_widget'
+    end
+  end
+
   def current_or_future_events_present?
     !Event.next.first.nil?
   end
