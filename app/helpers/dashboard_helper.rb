@@ -1,4 +1,8 @@
 module DashboardHelper
+  def user_can_manage_site(user)
+    %w(admin scyp ycat).include?(user.role)
+  end
+
   def event_widget_header
     content = current_or_future_events_present? ? Event.next.first.title : ''
     content_tag('h5',

@@ -168,9 +168,10 @@
               <ul class="main-menu">
                 <li><%= link_to dashboard_index_url do %><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span><% end %></li>
                 <li>
+                <% if user_can_manage_site(current_user) %>
                   <a href="#" class="js-sub-menu-toggle">
                     <i class="fa fa-clipboard fa-fw"></i>
-                    <span class="text">Admin</span>
+                    <span class="text">Manage</span>
                     <i class="toggle-icon fa fa-angle-left"></i>
                   </a>
                   <ul class="sub-menu">
@@ -190,6 +191,7 @@
                       <li><%= link_to users_url do %><span class="text">Users</span><% end %></li>
                     <% end %>
                   </ul>
+                  <% end %>
                 </li>
               </ul>
             </nav><!-- /main-nav -->
