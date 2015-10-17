@@ -1,0 +1,21 @@
+<!-- TODO: Create widget content for non-admins -->
+                <li class="data-row">
+                  <%= event_widget_data_name('Attending') %>
+                  <span class="data-value">
+                    <%= data_value_ratio(@chart_values, 'Attending') %>
+                    <%= data_value_progress_div(@chart_values, 'Attending') %>
+                  </span>
+                </li>
+                <li class="data-row">
+                  <%= event_widget_data_name('Hospitality') %>
+                  <span class="data-value">
+                    <%= data_value_ratio(@chart_values, 'Hospitality') %>
+                    <%= data_value_progress_div(@chart_values, 'Hospitality') %>
+                  </span>
+                </li>
+                <li class="data-row">
+                  <%= event_widget_data_name('Paid?') %>
+                  <span class="data-value">
+                    <%= display_yes_no(@chart_values['paid?']) %>
+                  </span>
+                </li>

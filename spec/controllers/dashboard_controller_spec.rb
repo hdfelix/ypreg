@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe DashboardController, type: :controller do
   before(:example) do
-    sign_in_user(double('user', role?: 'admin'))
+    sign_in_user
   end
 
   describe 'GET :index' do

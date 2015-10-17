@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Events::HospitalityLocalityAssignmentsController, type: :controller do
   let (:event) { create(:event) }
   before(:example) do
-    sign_in_user(double('user', role?: 'admin'))
+    sign_in_user
   end
 
   describe 'GET :index' do

@@ -1,0 +1,28 @@
+                <li class="data-row">
+                  <%= event_widget_data_name('Capacity') %>
+                  <span class="data-value">
+                    <%= data_value_ratio(@chart_values, 'Capacity') %>
+                    <%= data_value_progress_div(@chart_values, 'Capacity') %>
+                  </span>
+                </li>
+                <li class="data-row">
+                  <%= event_widget_data_name('Localities') %>
+                  <span class="data-value">
+                    <%= data_value_ratio(@chart_values, 'Localities') %>
+                    <%= data_value_progress_div(@chart_values, 'Localities') %>
+                  </span>
+                </li>
+                <li class="data-row">
+                  <%= event_widget_data_name('Hospitality') %>
+                  <span class="data-value">
+                    <%= data_value_ratio(@chart_values, 'Hospitality') %>
+                    <%= data_value_progress_div(@chart_values, 'Hospitality') %>
+                  </span>
+                </li>
+                <li class="data-row">
+                  <%= event_widget_data_name('Payments') %>
+                  <span class="data-value">
+                    <%= data_value_ratio(@chart_values, 'Payments') %>
+                    <%= data_value_progress_div(@chart_values, 'Payments') %>
+                  </span>
+                </li>
