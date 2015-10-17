@@ -5,7 +5,6 @@
                     <%= data_value_progress_div(@chart_values, 'Capacity') %>
                   </span>
                 </li>
-
                 <li class="data-row">
                   <%= event_widget_data_name('Localities') %>
                   <span class="data-value">
@@ -14,14 +13,14 @@
                   </span>
                 </li>
                 <li class="data-row">
-                  <span class="data-name">Hospitality</span>
+                  <%= event_widget_data_name('Hospitality') %>
                   <span class="data-value">
                     <%= data_value_ratio(@chart_values, 'Hospitality') %>
                     <%= data_value_progress_div(@chart_values, 'Hospitality') %>
                   </span>
                 </li>
                 <li class="data-row">
-                  <span class="data-name">Payments</span>
+                  <%= event_widget_data_name('Payments') %>
                   <span class="data-value">
                     <%= data_value_ratio(@chart_values, 'Payments') %>
                     <%= data_value_progress_div(@chart_values, 'Payments') %>

@@ -64,6 +64,7 @@ module DashboardHelper
              when 'Localities' then 'loc'
              when 'Hospitality' then 'hosp'
              when 'Payments' then 'pmt'
+             when 'Attending' then 'att'
              end
     prefix
   end

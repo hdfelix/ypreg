@@ -62,11 +62,43 @@ class ApplicationController < ActionController::Base
 
   def get_values_for_aria_chart(next_event, chart_values)
     return if next_event.nil?
+    return if current_user.nil?
+    if current_user.role == 'admin'
+      admin_chart_values(next_event, chart_values)
+    else
+      non_admin_chart_values(next_event, chart_values)
+    end
+    chart_values
+  end
+
+  def admin_chart_values(next_event, chart_values)
     location_section_values(next_event, chart_values)
     locality_section_values(next_event, chart_values)
     hospitality_section_values(next_event, chart_values)
     payments_section_values(next_event, chart_values)
-    chart_values
+  end
+
+  def non_admin_chart_values(next_event, chart_values)
+    locality = current_user.locality
+    # Attending
+    registration_count = Registration.where(event: next_event, locality: locality).count
+    total_users = Locality.find(locality).users.count
+    chart_values['att_ratio'] = "#{registration_count} / #{total_users}"
+    chart_values['att_ratio_width_percentage'] = "width: #{(registration_count.to_f / total_users.to_f) * 100}%"
+    chart_values['att_value_now'] = registration_count
+    chart_values['att_value_max'] = total_users
+
+    # Hospitality
+    hospitalities = Hospitality.where(event: next_event, locality: locality)
+    assigned_hospitalities_count =
+      hospitalities.where.not(registration: nil).count
+    chart_values['hosp_ratio'] = "#{assigned_hospitalities_count} / #{hospitalities.count}"
+    chart_values['hosp_ratio_width_percentage'] = "width: #{(assigned_hospitalities_count.to_f / hospitalities.count.to_f) * 100}%"
+    chart_values['hosp_value_now'] = assigned_hospitalities_count
+    chart_values['hosp_value_max'] = hospitalities.count
+
+    # Paid?
+    chart_values['paid?'] = false
   end
 
   def location_section_values(next_event, chart_values)
@@ -76,7 +108,7 @@ class ApplicationController < ActionController::Base
     chart_values['cap_ratio'] =
       "#{registration_count} / #{location_capacity}"
     chart_values['cap_ratio_width_percentage'] =
-      "width: #{(registration_count.to_f / location_capacity.to_f) * 100}%"
+      "width: #{((registration_count.to_f / location_capacity.to_f) * 100).to_i}%"
     chart_values['cap_value_now'] = registration_count
     chart_values['cap_value_max'] = location_capacity
   end
