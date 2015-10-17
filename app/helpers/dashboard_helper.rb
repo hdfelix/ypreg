@@ -8,6 +8,7 @@ module DashboardHelper
   end
 
   def display_event_widget_based_on(role)
+    return if role == 'yp'
     render partial: 'layouts/event_widget', locals: { role: role }
   end
 
