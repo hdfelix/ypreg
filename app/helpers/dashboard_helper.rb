@@ -1,4 +1,8 @@
 module DashboardHelper
+  def user_can_manage_site(user)
+    %w(admin scyp ycat).include?(user.role)
+  end
+
   def event_widget_header
     content = current_or_future_events_present? ? Event.next.first.title : ''
     content_tag('h5',
@@ -8,11 +12,14 @@ module DashboardHelper
   end
 
   def display_event_widget_based_on(role)
-    if role == 'admin'
-      render template: 'layouts/_event_widget_admin'
-    else
-      render template: 'layouts/_event_widget'
-    end
+    return if role == 'yp'
+    render partial: 'layouts/event_widget', locals: { role: role }
+  end
+
+  def display_global_stats_widget_based_on(role)
+    return if !role == 'admin'
+    render partial: 'layouts/global_stats_widget',
+      locals: { current_user: current_user }
   end
 
   def current_or_future_events_present?

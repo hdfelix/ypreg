@@ -168,9 +168,10 @@
               <ul class="main-menu">
                 <li><%= link_to dashboard_index_url do %><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span><% end %></li>
                 <li>
+                <% if user_can_manage_site(current_user) %>
                   <a href="#" class="js-sub-menu-toggle">
                     <i class="fa fa-clipboard fa-fw"></i>
-                    <span class="text">Admin</span>
+                    <span class="text">Manage</span>
                     <i class="toggle-icon fa fa-angle-left"></i>
                   </a>
                   <ul class="sub-menu">
@@ -190,6 +191,7 @@
                       <li><%= link_to users_url do %><span class="text">Users</span><% end %></li>
                     <% end %>
                   </ul>
+                  <% end %>
                 </li>
               </ul>
             </nav><!-- /main-nav -->
@@ -206,34 +208,8 @@
                   <p>You can search the widgets using the search box located at top bar. This is useful when your dashboard has a lot of content.</p>
                 </div>
               </div>
-              <%= event_widget_header %>
-              <ul class="list-unstyled list-info-sidebar bottom-30px">
-                <%= display_event_widget_based_on(current_user.role) %>
-              </ul>
-
-              <% if current_user.role == 'admin' %>
-                <h5 class="label label-default"><i class="fa fa-info-circle"></i> Global stats</h5>
-                <ul class="list-unstyled list-info-sidebar bottom-30px">
-                  <li class="data-row">
-                    <span class="data-name">Registered users</span>
-                    <span class="data-value"><%= User.all.count %></span>
-                  </li>
-
-                  <li class="data-row">
-                    <span class="data-name">Localities</span>
-                    <span class="data-value"><%= Locality.all.count %></span>
-                  </li>
-
-                  <li class="data-row">
-                    <span class="data-name">Event Locations</span>
-                    <span class="data-value"><%= Location.all.count %></span>
-                  </li>
-                  <li class="data-row">
-                    <span class="data-name">Lodgings</span>
-                    <span class="data-value"><%= Lodging.all.count %></span>
-                  </li>
-                </ul>
-              <% end %>
+              <%= display_event_widget_based_on(current_user.role) %>
+              <%= display_global_stats_widget_based_on(current_user.role) %>
             </div>
             <!-- end sidebar content -->
           </div>
