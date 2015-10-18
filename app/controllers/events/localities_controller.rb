@@ -7,10 +7,11 @@ class Events::LocalitiesController < ApplicationController
 
   def show
     @event = Event.find(params[:event_id])
-    # @locality = @event.localities.find(params[:id]) || Localities.find(params[:id])
     @locality = @event.localities.find(params[:id])
     @locality_users = @locality.users_not_registered(@event)
-    @locality_registrations = @event.localities.find(@locality).registrations(@event)
+    @event_locality = EventLocality.where(event: @event, locality: @locality)[0]
+    @locality_registrations = @event_locality.registrations
+    @paid_registrations =  @event_locality.paid_registrations
   end
 
   def new

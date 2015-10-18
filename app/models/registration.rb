@@ -25,6 +25,10 @@ class Registration < ActiveRecord::Base
   # TODO: pay(amount)
   # TODO paid?
 
+  def payment_adjustment
+    @payment_adjustment ||= 0
+  end
+
   private
 
   def create_event_locality
