@@ -3,9 +3,9 @@ class EventLocality < ActiveRecord::Base
   belongs_to :event
   belongs_to :locality
 
-	def self.registrations(event, locality)
-		Registration.where(event: event, locality: locality)
-	end
+  def self.registrations(event, locality)
+    Registration.where(event: event, locality: locality)
+  end
 
   def locality_id
     locality.id
@@ -19,9 +19,13 @@ class EventLocality < ActiveRecord::Base
     User.where(locality: locality)
   end
 
-	def registrations
+  def registrations
     Registration.where(event: event, locality: locality)
-	end
+  end
+
+  def paid_registrations
+    Registration.where(event: event, locality: locality, has_been_paid: true)
+  end
 
   def beds_assigned_to_locality
     tmp = event.beds_assigned_to_locality[locality.city]
@@ -33,7 +37,8 @@ class EventLocality < ActiveRecord::Base
   end
 
   def number_of_beds_assigned_to_registrations
-    # HospitalityRegistrationAssignment.where(event: event, locality: locality).count
-    Hospitality.where(event: event, locality: locality).where.not(registration: nil).count
+    Hospitality
+      .where(event: event, locality: locality)
+      .where.not(registration: nil).count
   end
 end

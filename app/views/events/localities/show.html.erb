@@ -166,6 +166,42 @@
   </div>
   <div class="row">
     <div class="col-md-12">
+      <div class="widget">
+        <div class="widget-header">
+          <h3><i class="fa fa-calendar-o"></i>Payments</h3>
+        </div>
+        <div class="widget-content">
+          <table class="table talbe-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Saint</th>
+                <th>Cost</th>
+                <th>Payment Adjustment</th>
+                <th>Paid</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% if @paid_registrations.count > 0 %>
+              <% @paid_registrations.each do |reg| %>
+                <tr>
+                  <td><%= reg.user.name %></td>
+                  <td><%= @event.registration_cost %></td>
+                  <td><%= number_to_currency(reg.payment_adjustment) %></td>
+                  <td><%= number_to_currency(@event.registration_cost - reg.payment_adjustment) %></td>
+                </tr>
+              <% end %>
+              <% else %>
+                <tr>
+                  <td colspan='4'><center>No Payments have been made</center></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
       <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
     </div>
   </div>

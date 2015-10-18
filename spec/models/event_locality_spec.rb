@@ -64,11 +64,23 @@ describe EventLocality, type: :model do
       it 'returns registrations from a locality for an event' do
         usr1  = create(:user, locality: loc)
         usr2  = create(:user, locality: loc)
-
         create(:registration, event: event, user: usr1)
         create(:registration, event: event, user: usr2)
+        event_locality = EventLocality.find_by_locality_id(loc.id)
 
-        expect(EventLocality.registrations(event, loc).count).to eq 2
+        expect(event_locality.registrations.count).to eq 2
+      end
+    end
+
+    describe '#paid_registrations' do
+      it 'returns registrations from a locality for an event' do
+        usr1  = create(:user, locality: loc)
+        usr2  = create(:user, locality: loc)
+        create(:registration, event: event, user: usr1)
+        create(:registration, event: event, user: usr2, has_been_paid: true)
+        event_locality = EventLocality.find_by_locality_id(loc.id)
+
+        expect(event_locality.paid_registrations.count).to eq 1
       end
     end
 
