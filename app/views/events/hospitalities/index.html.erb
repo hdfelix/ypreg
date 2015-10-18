@@ -10,76 +10,84 @@
     </div>
     <%= form_tag remove_event_hospitalities_path, method: :put do %>
       <div class="widget-content">
-      <table class="table table-striped">
-        <thead>
-          <tr style="font: bold">
-            <td></td>
-            <td>Hospitality</td>
-            <td>Address</td>
-            <td>Type</td>
-            <td>Min / Max Capacity</td>
-            <td>Contact Person</td>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td></td>
+              <td>Hospitality</td>
+              <td>Address</td>
+              <td>Type</td>
+              <td>Min / Max Capacity</td>
+              <td>Contact Person</td>
+            </tr>
+          </thead>
+          <tbody>
           <% @hospitalities.each do |h| %>
             <tr>
-              <td><%= check_box_tag "hospitality_lodging_ids[]", h.lodging.id %></td>
-              <td><%= h.name %></td>
-              <td><%= full_address(h.lodging) %></td>
-              <td><%= Lodging::LODGING_TYPE[h.lodging.lodging_type.to_i] %></td>
-              <td><%= min_max_capacity(h.lodging) %></td>
-              <td><%= h.lodging.contact_person.name %></td>
-            </tr>
-          <% end %>
-        </tbody>
-    </table>
-  </div>
-  <div class="panel-footer">
-    <%= submit_tag "Remove Hospitalities", class: 'btn btn-primary btn-sm' %>
-    <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
-  <% end %>
+            <td><%= check_box_tag "hospitality_lodging_ids[]", h.lodging.id %></td>
+            <td><%= h.lodging_name %></td>
+            <td><%= full_address(h.lodging) %></td>
+            <td><%= Lodging::LODGING_TYPE[h.lodging.lodging_type.to_i] %></td>
+            <td><%= min_max_capacity(h.lodging) %></td>
+            <td><%= h.lodging.contact_person.name %></td>
+          </tr>
+        <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <%= submit_tag "Remove Hospitalities", class: 'btn btn-primary btn-sm' %>
+      <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+    <% end %>
+    </div>
   </div>
 </div>
-  </div>
 
-  <br /><br />
+<br /><br />
 
 <div class="col-md-12">
-<div class="widget widge-table">
-  <div class="widget-header">
-    <h3><i class="fa fa-table"> <strong>Available Lodgings</strong></i></h3>
-  </div>
-  <%= form_tag add_event_hospitalities_path, methd: :put do %>
-    <div class="widget-content">
-    <table class="table table-striped">
-      <thead>
-        <tr stle="font: bold">
-          <td></td>
-          <td>Name</td>
-          <td>Address</td>
-          <td>Type</td>
-          <td>Min / Max Capacity</td>
-          <td>Contact Person</td>
-        </tr>
-      </thead>
-      <tbody>
-      <% @lodgings.each do |l| %>
-        <tr>
-        <td><%= check_box_tag "lodging_ids[]", l.id %></td>
-        <td><%= l.name %></td>
-        <td><%= full_address(l) %></td>
-        <td><%= Lodging::LODGING_TYPE[l.lodging_type.to_i] %></td>
-        <td><%= min_max_capacity(l) %></td>
-        <td><%= l.contact_person.name %></td>
-      </tr>
+  <div class="widget widge-table">
+    <div class="widget-header">
+      <h3><i class="fa fa-table"> <strong>Available Lodgings</strong></i></h3>
+    </div>
+    <%= form_tag add_event_hospitalities_path, methd: :put do %>
+      <div class="widget-content">
+        <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td></td>
+              <td>Name</td>
+              <td>Capacity</td>
+              <td>Type</td>
+              <td>Address</td>
+              <td>Contact Person</td>
+            </tr>
+          </thead>
+          <tbody>
+          <% @lodgings.each do |l| %>
+            <tr>
+              <td><%= check_box_tag "lodging_ids[]", l.id %></td>
+              <td><%= l.name %></td>
+              <td><%= min_max_capacity(l) %></td>
+              <td><%= Lodging::LODGING_TYPE[l.lodging_type.to_i] %></td>
+              <td><%= full_address(l) %></td>
+              <td><%= l.contact_person.name %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <% if @lodgings.count > 0 %>
+        <%= submit_tag 'Add Hospitalities', class: 'btn btn-primary btn-sm' %>
+        <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+      <% else %>
+        <%= link_to 'Add a Lodging', new_lodging_path, class: 'btn btn-primary btn-sm' %>
+      <% end %>
     <% end %>
-      </tbody>
-    </table>
+    </div>
   </div>
-  <div class="panel-footer">
-    <%= submit_tag 'Add Hospitalities', class: 'btn btn-primary btn-sm' %>
-    <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
-  <% end %>
-  </div>
-</div>

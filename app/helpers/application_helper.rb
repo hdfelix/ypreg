@@ -36,6 +36,7 @@ module ApplicationHelper
       elsif tmp.length == 10
         tmp.insert(6,'-').insert(3,') ').insert(0,'(')
       end
+      content_tag('span',link_to("#{ tmp }","tel:#{ tmp }"))
     else
       '--'
     end
@@ -50,10 +51,14 @@ module ApplicationHelper
   end
 
   def display_yes_no(boolean)
-    if boolean
-      "Yes"
+    boolean ? 'Yes':'No'
+  end
+
+  def display_boolean(boolean)
+    if boolean == nil
+      '--'
     else
-      "No"
+      display_yes_no(boolean)
     end
   end
 

@@ -24,8 +24,8 @@ module EventsHelper
   def event_registration_dates(event)
     content_tag(:span) do
       if event.registration_open_date && event.registration_close_date
-        "#{ event.end_date.strftime('%m/%d/%y') } - \
-         #{ event.registration_open_date.strftime('%m/%d/%y') }".html_safe
+        "#{ event.registration_open_date.strftime('%m/%d/%y') } - \
+         #{ event.registration_close_date.strftime('%m/%d/%y') }".html_safe
       else
         'TBA'
       end
@@ -33,7 +33,7 @@ module EventsHelper
   end
 
   def display_event(event)
-    if event_type = Event::EVENT_TYPE .detect { |a| a.include?(event.event_type) }
+    if event_type = Event::EVENT_TYPE.detect { |a| a.include?(event.event_type) }
       event_type[0]
     else
       '--'
@@ -50,5 +50,18 @@ module EventsHelper
         "#{location.max_capacity} saints"
       end
     end
+  end
+
+  def style_balance(balance)
+    if balance > 0
+      t = content_tag('span',number_to_currency(balance), class: 'negative').html_safe
+    else
+      t = content_tag('span',number_to_currency(balance)).html_safe
+    end
+    return t
+  end
+
+  def show_attendance_menu_option?(event)
+    Event.current.map(&:id).include?(event.id)
   end
 end

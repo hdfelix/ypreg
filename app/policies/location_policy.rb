@@ -1,7 +1,7 @@
 # Policies for location restful actions
 class LocationPolicy < ApplicationPolicy
   def index?
-    user.present? && (user.role?(:admin))
+    user.present? && (user.role?(:admin) || user.role?(:scyp))
   end
 
   def show?
@@ -12,11 +12,15 @@ class LocationPolicy < ApplicationPolicy
     index?
   end
 
-  def create?
+  def edit?
     index?
   end
 
   def update?
+    index?
+  end
+
+  def create?
     index?
   end
 

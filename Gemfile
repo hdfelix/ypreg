@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-ruby "2.0.0"
+ruby '2.2.2'
+
 gem 'rails', '4.1.8'
 
 gem 'pg'
@@ -15,12 +16,24 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'foreigner'
 gem 'immigrant'
+gem 'skylight'
 
+# Authentication
 gem 'devise'
+
+# Authorization
 gem 'pundit'
+
+# manage environment variables
 gem 'figaro'
 
+# PDF generation
+# gem 'prawn'
+
 gem 'simple_form'
+
+# searching
+gem 'pg_search'
 
 group :production do
   gem 'rails_12factor'
@@ -38,19 +51,20 @@ group :development do
 end
 
 group :development, :test do
-  gem 'pry'
+  gem 'pry-rails'
   gem 'pry-rescue'
   gem 'pry-byebug'
   gem 'binding_of_caller'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
+  # gem 'rspec-mocks'
+  gem 'rspec_junit_formatter'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'simplecov', require: false
   gem 'simplecov-csv', require: false
   gem 'coverband'
-  gem 'rspec_junit_formatter'
   gem 'rubocop', require: false
   gem 'rubocop-rspec', require: false
   gem 'letter_opener', group: :development
@@ -63,6 +77,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara-webkit'
   gem 'guard-rspec'
+  gem 'timecop'
 end
 
 group :doc do

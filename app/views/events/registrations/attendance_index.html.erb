@@ -1,0 +1,44 @@
+<div class="content">
+	<div class="main-header">
+		<h2>Attendance</h2>
+			<em>Manage attendance with the following list of registrations per locality</em>
+	</div>
+  <h2>Registrations: <%= @registrations.count %></h2>
+
+<% @event_localities.each do |ev_loc| %>
+    <div class="col-md-12">
+      <div id="loc_<%= ev_loc.locality.id %>" class="widget widget-table">
+        <div class="widget-header">
+        <h3><i class="fa fa-table"></i><%= ev_loc.locality_city %></h3>
+        </div>
+        <div class="widget-content">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr style="font: bold">
+                  <td>Name</td>
+                  <td>Role</td>
+                  <td>Status</td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody>
+                <% ev_loc.registrations.each do |reg| %>
+                  <tr id="user_<%= reg.user.id %>">
+                    <td><%= link_to "#{reg.user.name}", event_registration_path(@event,reg,view: 'attendance') %></td>
+                    <td><%= reg.user.role %></td>
+                    <td><%= reg.status %></td>
+                    <td><%= link_to 'Edit', edit_event_registration_path(@event,reg,view: 'attendance'), class: 'btn btn-primary' %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="widget-footer">
+            <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

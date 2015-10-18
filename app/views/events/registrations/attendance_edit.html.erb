@@ -1,0 +1,24 @@
+<div class="content">
+  <div class="main-header">
+    <h2>Edit Registration</h2>
+    <em>Registration details for <%= @attendance.user.name %></em>
+  </div>
+  <br />
+
+  <div class="col-md-8">
+    <!-- EDIT REGISTRATION FORM -->
+    <div class="widget">
+      <div class="widget-header">
+        <h3><i class="fa fa-edit"></i>Registration Info</h3>
+        <div class=" btn-group widget-header-toolbar">
+          <span class="btn btn-danger btn-sm"><%= not_paid_in_words(@attendance.has_been_paid) %></>
+        </div>
+      </div>
+      <div class="widget-content">
+        <!-- Registration form partial -->
+        <%#= render partial: 'form', locals: {event: @event, registration: @registration} %>
+        <%= render partial: 'attendance_simple', locals: { event: @event, attendance: @attendance } %>
+      </div>
+    </div>
+  </div>
+</div>

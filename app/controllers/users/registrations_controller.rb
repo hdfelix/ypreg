@@ -5,11 +5,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def show
-    # using current_user from devise on this action...
+    @user = User.find(params[:id])
   end
 
   def edit
     @user = User.find(params[:format])
+  end
+
+  def create
+    super
   end
 
   def update
@@ -23,9 +27,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render action: 'edit'
     end
   end
+
   private
 
   def admin_update_params
-    params[:user].permit(:role, :email, :name, :gender, :home_phone, :work_phone, :cell_phone, :birthday)
+    params[:user]
+      .permit(:role,
+              :email,
+              :locality,
+              :name,
+              :gender,
+              :age,
+              :grade,
+              :home_phone,
+              :work_phone,
+              :cell_phone,
+              :background_check_expiration,
+              :birthday)
   end
 end

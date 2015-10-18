@@ -10,40 +10,42 @@
         <h3><i class="fa fa-table"></i></h3>
       </div>
       <div class="widget-content">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Address</th>
-              <th></th>
-            </tr>
-          </thead>
+        <div class="table-responsive">
+          <table class="table  table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Address</th>
+                <th></th>
+              </tr>
+            </thead>
 
-          <tbody>
-          <% if @locations.all.count > 0 %>
-            <% @locations.each do |location| %>
-            <tr>
-            <td><%= location.name %></td>
-            <td><%= location.description %></td>
-            <td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
-            <td><%= link_to 'Show', location %>
-            <%= link_to 'Edit', edit_location_path(location) %>
-              <%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
-            </td>
-          </tr>
-        <% end %>
-        <% else %>
-            <tr><td colspan=7><center>No Locations in the database...</center></td></tr>
-        <% end %>
-          </tbody>
-        </table>
+            <tbody>
+            <% if @locations.all.count > 0 %>
+              <% @locations.each do |location| %>
+                <tr id=loc_<%= location.id %>>
+              <td><%= link_to location.name, location %></td>
+              <td><%= location.description %></td>
+              <td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
+              <td>
+                <%= link_to 'Edit', edit_location_path(location) %>
+                <%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </td>
+            </tr>
+          <% end %>
+          <% else %>
+              <tr><td colspan=7><center>No Locations in the database...</center></td></tr>
+          <% end %>
+            </tbody>
+          </table>
+        </div>
 
         <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
         <%= link_to new_location_path, class: 'btn btn-primary' do %>
-					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
-					New Location
-				<% end %>
+          <%= content_tag(:i, '', class: "fa fa-plus-square") %>
+        New Location
+      <% end %>
       </div>
     </div>
   </div>

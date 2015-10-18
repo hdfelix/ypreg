@@ -12,7 +12,8 @@ class DashboardController < ApplicationController
   end
 
   def index
-    @events = Event.all
+    @events = Event.current + Event.in_the_future
+    @current_or_future_events_present = @events.count > 0 ? true : false
   end
 
   protected

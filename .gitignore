@@ -38,7 +38,7 @@ snippets.html.erb
 /public/dev-assets
 
 # Simplecov
-/coverage
+coverage
 
 # Rubocop
 .rubocop_todo.yml
@@ -46,6 +46,8 @@ snippets.html.erb
 # ctags
 tags
 
+# Rubymine
+/.idea/*
 
 # Notes
 Joe-readme.md

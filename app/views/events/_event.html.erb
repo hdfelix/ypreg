@@ -11,9 +11,11 @@
 			<div class="col-md-1">
 				<% if current_user %>
 					<% unless current_user.registrations.where(event_id: event).empty? %>
-						<%= link_to event_registration_path(event,current_user.registrations.where(event_id: event).first), class: 'btn btn-success pull-right' do %>
-							<i class="fa fa-check-circle"></i>
-							Registered
+            <% if !event.over? %>
+						  <%= link_to event_registration_path(event,current_user.registrations.where(event_id: event).first), class: 'btn btn-success pull-right' do %>
+                <i class="fa fa-check-circle"></i>
+                Registered
+              <% end %>
 						<% end %>
 					<% end %>
 				<% end %>
@@ -40,9 +42,15 @@
 				<h4><span>Cost:  </span><span><%= number_to_currency(event.registration_cost) %></span></h4>
 				<br />
 				<% if current_user %>
-					<%= link_to 'Manage', event, class: 'btn btn-default btn-sm' %>
+          <% if !event.over? %>
+					  <%= link_to 'Manage', event, class: 'btn btn-default btn-sm' %>
+          <% end %>
 					<% if current_user.registrations.where(event_id: event).empty? %>
-						<%= link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary btn-sm' %>
+            <% if event.registration_open? %>
+						  <%= link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary btn-sm' %>
+            <% else %>
+              <div class="pull-right">Event Registration closed.</div>
+            <% end %>
 					<% end %>
 				<% else %>
 					<p><%= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary btn-sm' %></p>

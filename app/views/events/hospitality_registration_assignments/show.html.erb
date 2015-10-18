@@ -40,7 +40,7 @@
               options_from_collection_for_select(
                 @locality.hospitalities(@event),
                 "id",
-                "name",
+                "lodging_name",
                 selected: selected_hospitality(saint)),
               {
                   prompt: '--'
@@ -52,7 +52,7 @@
           </div>
           <div class="panel-footer">
             <%= submit_tag "Update Assignments", class: 'btn btn-primary btn-sm' %>
-            <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
+            <%= link_to 'Back', event_hospitality_registration_assignments_path(@event), class: 'btn btn-default btn-sm' %>
           </div>
         <% end %>
         </div>

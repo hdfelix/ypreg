@@ -1,62 +1,121 @@
 require 'rails_helper'
 
-feature 'User manages a location' do
+# Admin users
+feature 'Admin user manages a location' do
+  let(:authed_admin) { create_signed_in_user_by_role('admin') }
 
-	let(:authed_admin) {
-		create_logged_in_admin
-	}		
-
-  before(:all) do
-		@location = create(:location)
+  scenario "can access the 'index' view" do
+    visit locations_path(authed_admin)
+    within 'h2' do
+      expect(page).to have_content('Locations')
+    end
   end
 
-	scenario ' by acessing the index & new views' do
-    visit locations_path(authed_admin)
-    expect(page).to have_content('Location')
+  scenario "can access location#new"  do
+    visit new_location_path(authed_admin)
+    within 'h2' do
+      expect(page).to have_content('New Location')
+    end
+  end
+
+  scenario 'creates a location successfully' do
+    location = build_stubbed(:location, name: 'new location')
 
     visit new_location_path(authed_admin)
-    expect(page).to have_content('New Location')
-	end
 
-	scenario '- creates a location successfully' do
-		@location = build(:location)
-		visit new_location_path(authed_admin)
-		expect {
-			fill_in 'location_name', with: @location.name
-			fill_in 'location[description]', with: @location.description
-			fill_in 'location[address1]', with: @location.address1
-			fill_in 'location[city]', with: @location.city
-			find("#location_state_abbrv").find(:xpath, "option[@value=\'#{@location.state_abbrv}\']").select_option
-			fill_in 'location[zipcode]', with: @location.zipcode
-			click_button 'Submit'
-		}.to change(Location, :count)
-		expect(current_path).to eq locations_path
-		expect(page).to have_content('Location was created successfully.')
-	end
+    expect do
+      fill_in 'location[name]', with: location.name
+      fill_in 'location[description]', with: location.description
+      fill_in 'location[address1]', with: location.address1
+      fill_in 'location[city]', with: location.city
+      find('#location_state_abbrv')
+        .find(:xpath, "option[@value=\'#{location.state_abbrv}\']")
+        .select_option
+      fill_in 'location[zipcode]', with: location.zipcode
+      click_button 'Submit'
+    end.to change(Location, :count)
 
-	scenario ' - edits a location' do
-		@loc = create(:location)
-		visit edit_location_path(@loc, authed_admin)
-		fill_in 'location[name]', with: 'My location'
-		click_button 'Submit'
-	end
+    expect(current_path).to eq locations_path
+    expect(page).to have_content('Location was created successfully.')
+  end
+
+  scenario 'edits a location' do
+    location = create(:location, name: 'Original name')
+
+    visit edit_location_path(location, authed_admin)
+    fill_in 'location[name]', with: 'Edited name'
+    click_button 'Submit'
+    location.reload
+
+    expect(location.name).to eq('Edited name')
+  end
+
+  # TODO: Why does test pass locally but always fail on codeship?
+  # scenario ' deletes a location successfully' do
+  #   create_list(:location,2, max_capacity: 50)
+
+  #   visit locations_path(authed_admin)
+
+  #   expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)
+  # end
 end
 
-feature 'User destroys location' do
-  let (:authed_admin) {
-    create_logged_in_admin
-  }
+# SCYP user
+feature 'SCYP user manages a location' do
+  let(:authed_scyp) { create_signed_in_user_by_role('scyp') }
 
-	before(:all) do
-		@loc = create(:location)
-	end
+  scenario "can access the 'index' view" do
+    visit locations_path(authed_scyp)
+    within 'h2' do
+      expect(page).to have_content('Locations')
+    end
+  end
 
-	# scenario ' - successfully' do
-	# 	create(:location)
-	# 	visit locations_path(authed_admin)
-  #   save_and_open_page
-	# 	expect{
-	# 		first(:link, 'Delete').click
-	# }.to change(Location, :count).by(-1)
-	# end
+  scenario "can access the 'new' view"  do
+    visit new_location_path(authed_scyp)
+    within 'h2' do
+      expect(page).to have_content('New Location')
+    end
+  end
+
+  scenario 'creates a location successfully' do
+    location = build_stubbed(:location, name: 'new location')
+
+    visit new_location_path(authed_scyp)
+
+    expect do
+      fill_in 'location[name]', with: location.name
+      fill_in 'location[description]', with: location.description
+      fill_in 'location[address1]', with: location.address1
+      fill_in 'location[city]', with: location.city
+      find('#location_state_abbrv')
+        .find(:xpath, "option[@value=\'#{location.state_abbrv}\']")
+        .select_option
+      fill_in 'location[zipcode]', with: location.zipcode
+      click_button 'Submit'
+    end.to change(Location, :count)
+
+    expect(current_path).to eq locations_path
+    expect(page).to have_content('Location was created successfully.')
+  end
+
+  scenario 'edits a location' do
+    location = create(:location, name: 'Original name')
+
+    visit edit_location_path(location, authed_scyp)
+    fill_in 'location[name]', with: 'Edited name'
+    click_button 'Submit'
+    location.reload
+
+    expect(location.name).to eq('Edited name')
+  end
+
+  # TODO: why does test pass locally but fail on codeship?
+  # scenario ' deletes a location successfully' do
+  #   create_list(:location,2, max_capacity: 50)
+
+  #   visit locations_path(authed_scyp)
+
+  #   expect { first(:link, 'Delete').click }.to change(Location, :count).by(-1)
+  # end
 end

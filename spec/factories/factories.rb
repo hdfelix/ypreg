@@ -10,6 +10,10 @@ FactoryGirl.define do
     password 'secretpassword'
     password_confirmation 'secretpassword'
     locality
+    role 'yp'
+    gender 'Brother'
+    age '15'
+    grade '10th'
 
     trait :with_admin_role do
       role 'admin'
@@ -102,10 +106,14 @@ FactoryGirl.define do
           locality = create(:locality)
           evaluator.registrations_count.times do
             user = create(:user, locality: locality)
-            create(:registration, event: event, user: user)
+            create(:registration, event: event, user: user, locality: user.locality)
           end
         else
-          create_list(:registration, evaluator.registrations_count, event: event)
+          evaluator.registrations_count.times do
+            locality = create(:locality)
+            user = create(:user, locality: locality)
+            create_list(:registration, evaluator.registrations_count, event: event, user: user, locality: locality)
+          end
         end
       end
     end
@@ -122,8 +130,30 @@ FactoryGirl.define do
         users = create_list(:user, 5, role: 'yp')
         users.each do |user|
           create_list(:registration, 5, event: event, user: user)
-          create(:hospitality, event: event, lodging: create(:lodging), locality: create(:locality))
-          create(:hospitality, event: event, lodging: create(:lodging), locality: create(:locality))
+          2.times do
+            create_list(:hospitality,
+                        2,
+                        event: event,
+                        lodging: create(:lodging),
+                        locality: create(:locality))
+          end
+        end
+      end
+    end
+
+    trait :current_event do
+      begin_date { Time.zone.now.to_date }
+      end_date { (Time.zone.now + 2.days).to_date }
+    end
+
+    trait :with_hospitalities do
+      transient do
+        count 2
+      end
+
+      after(:create) do |event, evaluator|
+        evaluator.count.times do
+          create(:hospitality, event: event, lodging: create(:lodging))
         end
       end
     end
@@ -134,8 +164,8 @@ FactoryGirl.define do
         User.where(locality_id: loc.id).each do |usr|
           FactoryGirl.create(
             :registration,
-            user_id: usr.id,
-            event_id: instance.id)
+            user: usr,
+            event: instance)
         end
       end
     end
@@ -147,15 +177,15 @@ FactoryGirl.define do
         User.where(locality_id: loc1.id).each do |usr|
           FactoryGirl.create(
             :registration,
-            user_id: usr.id,
-            event_id: instance.id)
+            user: usr,
+            event: instance)
         end
 
         User.where(locality_id: loc2.id).each do |usr|
           FactoryGirl.create(
             :registration,
-            user_id: usr.id,
-            event_id: instance.id)
+            user: usr,
+            event: instance)
         end
       end
     end
@@ -163,10 +193,14 @@ FactoryGirl.define do
 
   ## Registration factories
   factory :registration do
-    payment_type 'Cash'
+    payment_type 'cash'
     has_been_paid false
     payment_adjustment '5'
     attend_as_serving_one false
+    hospitality nil
+    locality { user.locality }
+    has_medical_release_form false
+    status nil
     user
     event
 

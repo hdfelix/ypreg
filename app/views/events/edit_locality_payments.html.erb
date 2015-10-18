@@ -10,26 +10,28 @@
     </div>
     <%= form_tag update_locality_payments_path, method: :put do %>
       <div class="widget-content">
-        <table class="table table-striped">
-          <thead>
-            <tr style="font-weight: bold">
-              <td></td>
-              <td>Locality</td>
-              <td>Registrations</td>
-              <td>Paid?</td>
-            </tr>
-          </thead>
-          <tbody>
-            <% @event_localities.each do |el| %>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
               <tr>
-                <td><%= check_box_tag "locality_paid_ids[]", el.locality.id %></td>
-                <td><%= el.locality.city %></td>
-                <td><%= @event.registrations.where(locality: el.locality).all.count %></td>
-                <td><%= display_yes_no(el.submitted_registration_payment_check) %></td>
+                <td></td>
+                <td>Locality</td>
+                <td>Registrations</td>
+                <td>Paid?</td>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @event_localities.each do |el| %>
+                <tr>
+                  <td><%= check_box_tag "locality_paid_ids[]", el.locality.id %></td>
+                  <td><%= el.locality.city %></td>
+                  <td><%= @event.registrations.where(locality: el.locality).all.count %></td>
+                  <td><%= display_yes_no(el.submitted_registration_payment_check) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     <div class="panel-footer">
       <%= submit_tag "Update Payments", class: 'btn btn-primary btn-sm' %>

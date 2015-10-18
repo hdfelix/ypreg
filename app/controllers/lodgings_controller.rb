@@ -19,10 +19,15 @@ class LodgingsController < ApplicationController
   def create
     @lodging = Lodging.new(lodging_params)
 
-    if !params[:contact_person][:id].empty?
-      @lodging.contact_person = User.find(params[:contact_person][:id])
+    # TODO: refactor - pick only one approach
+    unless params[:contact_person].nil?
+      @lodging.contact_person = User.find(params[:contact_person][:id]) unless params[:contact_person].empty?
     end
-      
+
+    unless params[:lodging][:contact_person].nil?
+      @lodging.contact_person = User.find(params[:lodging][:contact_person]) unless params[:lodging][:contact_person].empty?
+    end
+
     authorize @lodging
 
     if @lodging.save
@@ -53,7 +58,7 @@ class LodgingsController < ApplicationController
   def destroy
     # @lodging set wtih 'before_action'
     if @lodging.destroy
-      flash[:notice] = "Lodging #{ @lodging.name }deleted successfully."
+      flash[:notice] = "Lodging #{@lodging.name} deleted successfully."
       redirect_to lodgings_url
     else
       flash[:error] = 'lodging could not be deleted.'

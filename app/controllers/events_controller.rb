@@ -2,14 +2,17 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = Event.all
+    @events = Event.not_over
     authorize @events
+
+    @past_events = Event.in_the_past
+    authorize @past_events
   end
 
   # GET /event/1
   def show
-    # @event set with 'before_action'
-    @stats =  @event.load_locality_summary
+    # @event set & authorized with 'before_action'
+    @stats = @event.load_locality_summary
   end
 
   def new
@@ -18,7 +21,7 @@ class EventsController < ApplicationController
   end
 
   def edit
-    # @event set with 'before_action'
+    # @event set & authorized  with 'before_action'
   end
 
   def create
@@ -35,7 +38,7 @@ class EventsController < ApplicationController
 
   # POST /event/1
   def update
-    # @event set with 'before_action'
+    # @event set & authorized with 'before_action'
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -46,7 +49,8 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
-    # @event set with 'before_action'
+    # @event set & authorized with 'before_action'
+
     if @event.destroy
       flash[:notice] = "Event #{@event.title}deleted successfully."
       redirect_to events_url
@@ -62,15 +66,13 @@ class EventsController < ApplicationController
   end
 
   def update_locality_payments
-    @event            = Event.find(params[:event_id])
-    localities        = Locality.find(params[:locality_paid_ids])
-    # registrations     = Registration.where(event: @event, locality: localities)
-    # event_localities  = EventLocality.where(event: @event, locality: localities)
+    @event = Event.find(params[:event_id])
+    localities = Locality.find(params[:locality_paid_ids])
 
     ActiveRecord::Base.transaction do
       localities.each do |loc|
-        registrations     = Registration.where(event: @event, locality: loc)
-        event_localities    = EventLocality.where(event: @event, locality: loc)
+        registrations = Registration.where(event: @event, locality: loc)
+        event_localities = EventLocality.where(event: @event, locality: loc)
 
         # Flip 'has_been_paid' value for registrations of selected locality
         registrations.each do |reg|
@@ -82,7 +84,8 @@ class EventsController < ApplicationController
           reg.save
         end
 
-        # Flip 'submited_registraiton_payment_check for event localities of selected locality
+        # TODO: Flip 'submited_registraiton_payment_check for
+        # event localities of selected locality
         event_localities.each do |el|
           if el.submitted_registration_payment_check == true
             el.update_attributes(submitted_registration_payment_check: false)
@@ -103,6 +106,8 @@ class EventsController < ApplicationController
   def set_event
     @event = Event.find(params[:id])
     authorize @event
+    @participating_localities =
+      @event.participating_localities.sort { |a, b| a.city <=> b.city }
   end
 
   # Never trust parameters from the scary internet,
@@ -110,13 +115,13 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event)
       .permit(
-    :event_type,
-    :title,
-    :begin_date,
-    :end_date,
-    :registration_cost,
-    :registration_open_date,
-    :registration_close_date,
-    :location_id)
+        :event_type,
+        :title,
+        :begin_date,
+        :end_date,
+        :registration_cost,
+        :registration_open_date,
+        :registration_close_date,
+        :location_id)
   end
 end

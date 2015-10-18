@@ -3,37 +3,39 @@
     <h2>Saint to Hospitality Assignments</h2>
     <em>Assign saints to hospitalities allocated to their locality</em>
   </div>
-  <div class="col-md-6">
-    <div class="widget widget-table">
+  <div class="col-md-8">
+    <div id="hospitality_info_widget" class="widget widget-table">
       <div class="widget-header">
         <h3><i class="fa fa-table"></i>Participating Localities</h3>
       </div>
         <div class="widget-content">
-          <table class="table table-striped">
-            <thead>
-              <tr style="font-weight: bold">
-                <td>Locality</td>
-                <td>Registered Saints</td>
-                <td>Allocated Beds</td>
-                <td>Assigned Beds</td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <% @event.localities.each  do |locality| %>
-                <tr id=<%= "locality_#{locality.id}" %>>
-                  <td><%= locality.city %></td>
-                  <td><%= @event.registered_saints_from_locality(locality).count %></td>
-                  <td>Test</td>
-                  <td>Test</td>
-                  <td><%= link_to 'Assignments', event_hospitality_registration_assignment_path(@event, locality), class: 'btn btn-secondary' %></td>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <td>Locality</td>
+                  <td>Registered Saints</td>
+                  <td>Allocated Beds</td>
+                  <td>Assigned Beds</td>
+                  <td></td>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+              <% @event_localities.each do |el| %>
+                  <tr id=<%= "locality_#{ el.locality_id }" %>>
+                    <td><%= el.locality_city %></td>
+                    <td><%= el.registrations.count %></td>
+                    <td><%= el.number_of_beds_assigned_to_registrations %></td>
+                    <td><%= el.beds_assigned_to_locality %></td>
+                    <td><%= link_to 'Assignments', event_hospitality_registration_assignment_path(@event, el.locality), class: 'btn btn-secondary' %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="panel-footer">
-          <%= link_to 'Back', event_path(@event, anchor: 'hospitality_info_widget'), class: 'btn btn-default btn-sm' %>
+          <%= link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm' %>
         </div>
     </div>
   </div>

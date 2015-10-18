@@ -12,15 +12,22 @@ class Lodging < ActiveRecord::Base
   validates :contact_person, presence: true
   validates :min_capacity, presence: true
 
-  has_many :hospitalities, inverse_of: :hospitalities
-  has_many :events, -> { uniq }, through: :hospitalities
   belongs_to :locality
   belongs_to :contact_person, class_name: 'User'
 
   accepts_nested_attributes_for :contact_person
 
+  def users_that_are_not_contact_people
+    users = User.not_contact_persons
+    unless contact_person.nil?
+      users << contact_person
+      users
+    end
+    users
+  end
+
   def display_address_in_address_block_format
-    "#{address1} \n #{city}, #{state_abbrv}  #{zipcode}"
+    "#{address1}\n#{city}, #{state_abbrv}  #{zipcode}"
   end
 
   def display_description
@@ -68,14 +75,4 @@ class Lodging < ActiveRecord::Base
       max_capacity
     end
   end
-
-  def users_that_are_not_contact_people
-    users = User.not_contact_persons
-    unless self.contact_person.nil?
-      users << self.contact_person
-      users
-    end
-    users
-  end
-
 end

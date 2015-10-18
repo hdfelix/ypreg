@@ -12,24 +12,20 @@ feature 'User adds Hospitality to event' do
 
     visit event_hospitalities_path(event, authed_admin)
 
-    expect(page).to have_content(event.hospitalities.first.name)
+    expect(page).to have_content(event.hospitalities.first.lodging_name)
   end
 
   # TODO: Update to match new 'Manage Hospitality" code...
-  # scenario 'can see unassigned lodgings that can be marked as event hospitalities' do
-  #   event = create(:event)
-  #   lodging = create(:lodging)
+  scenario 'can add a lodging if there are none in the system' do
+    event = create(:event)
 
-  #   visit event_path(event, authed_admin)
+    visit event_hospitalities_path(event, authed_admin)
 
-  #   click_link 'Add Hospitalities'
+    click_link 'Add a Lodging'
 
-  #   save_and_open_page
-  #   expect(page).to have_content 'Hospitality List'
-  #   expect(page).to have_content 'Lodgings not providing hospitality'
-  #   expect(page).to have_content lodging.name
-  #   expect(page).to have_unchecked_field("event_lodging_ids_#{lodging.id}")
-  # end
+    expect(page).to have_content 'New Lodging'
+
+  end
 
   # scenario 'can assign lodging as hospitality' do
   #   event = create(:event)

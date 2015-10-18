@@ -1,24 +1,3 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#development:
-#  adapter: sqlite3
-#  database: db/development.sqlite3
-#  pool: 5
-#  timeout: 5000
-#test:
-#  adapter: sqlite3
-#  database: db/test.sqlite3
-#  pool: 5
-#  timeout: 5000
-#
-#production:
-#  adapter: sqlite3
-#  database: db/production.sqlite3
-#  pool: 5
-#  timeout: 5000
 staging:
   adapter: postgresql
   encoding: unicode
@@ -30,16 +9,12 @@ production:
   encoding: unicode 
   database: ypreg_production
   pool: 5
-  # username: hdfelix
-  # password: 
 
 development:
   adapter: postgresql
   encoding: unicode 
   database: ypreg_development
   pool: 5
-  # username: hdfelix
-  # password: 
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -49,9 +24,3 @@ test:
   encoding: unicode
   database: ypreg_test
   pool: 5
-  # from shippable:
-  # <<: $default
-  # database: ypreg_test
-  # username: hdfelix removed username for testing
-  # password:
-

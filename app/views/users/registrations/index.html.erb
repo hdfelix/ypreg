@@ -10,44 +10,48 @@
 				<h3><i class="fa fa-table"></i></h3>
 			</div>
 			<div class="widget-content">
-				<table class="table table-striped">
-					<thead>
-						<tr style="font: bold">
-              <th>Role</th>
-              <th>Gender</th>
-							<th>Name (Gender)</th>
-							<th>Email</th>
-							<th>Age</th>
-							<th>Locality</th>
-							<th style="width: 150px">Phone</th>
-							<th>Backround Check</th>
-              <th>Last Sign in</th>
-              <th></th>
-						</tr>
-					</thead>
-          <tbody>
-            <% if @users.all.count > 0 %>
-              <% @users.each do |user| %>
-                <tr>
-                  <td><%= user.role.capitalize %></td>
-                  <td><%= user.gender.to_s[0] %></td>
-                  <td><%= user.name %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.age %></td>
-                  <td><%= user.locality_city %></td>
-                  <td>C: <%= format_phone_number(user.cell_phone) %><br />
-                      H: <%= format_phone_number(user.home_phone) %><br />
-                      W: <%= format_phone_number(user.work_phone) %></td>
-                  <td><%= format_date(user.last_background_check) %></td>
-                  <td><%= format_date(user.last_sign_in_at) %></td>
-                  <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
-                </tr>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr style="font: bold">
+                <th>Name (Gender)</th>
+                <th>Role</th>
+                <th>Gender</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Grade</th>
+                <th>Locality</th>
+                <th style="width: 150px">Phone</th>
+                <th>BC</th>
+                <th>Last Sign in</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @users.all.count > 0 %>
+                <% @users.each do |user| %>
+                  <tr>
+                    <td><%= link_to user.name, user_path(user) %></td>
+                    <td><%= user.role.capitalize %></td>
+                    <td><%= user.gender.to_s[0].capitalize %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.age.capitalize %></td>
+                    <td><%= user.grade.capitalize %></td>
+                    <td><%= user.locality_city.capitalize %></td>
+                    <td>C: <%= format_phone_number(user.cell_phone) %><br />
+                        H: <%= format_phone_number(user.home_phone) %><br />
+                        W: <%= format_phone_number(user.work_phone) %></td>
+                    <td><%= format_date(user.background_check_expiration) %></td>
+                    <td><%= format_date(user.last_sign_in_at) %></td>
+                    <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr><td colspan=9><center>No Users in the database...</center></td></tr>
               <% end %>
-            <% else %>
-              <tr><td colspan=9><center>No Users in the database...</center></td></tr>
-            <% end %>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
         <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
 				<%#= link_to new_session_url, class: 'btn btn-primary' do %>
 					<%#= content_tag(:i, '', class: "fa fa-plus-square") %>

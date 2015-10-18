@@ -7,24 +7,18 @@ def select_by_value(id, value)
 end
 
 RSpec.configure do |config|
-
-	config.before(:suite) do
-		DatabaseCleaner.clean_with(:truncation)
-	end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:deletion)
+    DatabaseCleaner.clean
   end
 
-	config.before(:each) do
-		DatabaseCleaner.start
-	end
+  config.before(:each) do |example|
+    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
+    DatabaseCleaner.start
+  end
 
-	config.before(:each, :js => true) do
-		DatabaseCleaner.strategy = :truncation
-	end
-
-	config.after(:each) do
-		DatabaseCleaner.clean
-	end
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end
+

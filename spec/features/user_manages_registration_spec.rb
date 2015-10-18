@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 feature 'Signed-out user views events' do
-	scenario ' - can see a list of up-coming events in Welcome page' do
-		@event = create(:event)
+  let!(:event) { create(:event) }
 
+	scenario ' - can see a list of up-coming events in Welcome page' do
 		visit root_path
 		expect(page).to have_content ('Upcoming events')
-		expect(page).to have_content (@event.title)
-		expect(page).to have_content(format_date(@event.begin_date))
-		expect(page).to have_content(format_date(@event.end_date))
+		expect(page).to have_content (event.title)
+		expect(page).to have_content(format_date(event.begin_date))
+		expect(page).to have_content(format_date(event.end_date))
 	end
 
 	scenario ' - before signing in sees \'sign in to register\' by events' do
@@ -19,19 +19,50 @@ feature 'Signed-out user views events' do
 end
 
 feature 'Signed-in user' do
-	let (:authed_admin) {
-		create_logged_in_admin
-	}
-
-  before(:all) do
-    @event = create(:event)
-  end
+	let (:authed_admin) { create_logged_in_admin }
+  let!(:event) { create(:event) }
 
 	scenario '- can register for an event' do
 		visit root_path(authed_admin)
 		expect(page).to have_content('Register')
 		expect(page).to_not have_content('Sign in to register')
 	end
+
+  scenario '- can view list of registered users' do
+    visit event_registrations_path(event, authed_admin)
+
+    expect(page).to have_content('list of people attending')
+  end
+
+  scenario '- can see expected registered user info' do
+    reg = create(:registration, :yp,  event: event)
+    
+    visit event_registrations_path(event, authed_admin)
+    within("tr#reg-#{reg.id}") do
+      expect(page).to have_content(reg.user.role.capitalize)
+      expect(page).to have_content(reg.user.gender.to_s[0])
+      expect(page).to have_content(reg.user.name)
+      expect(page).to have_content(reg.user.age)
+      expect(page).to have_content(reg.user.locality.city)
+      expect(page).to have_content("$#{reg.payment_adjustment}.00")
+      expect(page).to have_content(display_yes_no(reg.has_been_paid))
+      expect(page).to have_content(display_yes_no(reg.attend_as_serving_one))
+      expect(page).to have_content(display_yes_no(reg.has_medical_release_form))
+      expect(page).to have_content("Show")
+      expect(page).to have_content("Edit")
+    end
+  end
+
+  # TODO: (ask) link_to isnt'working
+  # scenario "- can click 'show' and view single registration details" do
+  #   reg = create(:registration, :yp,  event: @event)
+
+  #   visit event_registrations_path(@event, authed_admin)
+  #   within("tr#reg-#{reg.id}") do
+  #     click_link('Show')
+  #     expect(page).to have_content(reg.user.name)
+  #   end
+  # end
 
   #TODO: Fix default value of has_been_paid to FALSE
 	#For now, client wants all payments to be done through locality
@@ -57,10 +88,6 @@ feature 'User is unsuccessful in creating a registration' do
 	let (:authed_admin) {
 		create_logged_in_admin
 	}
-
-  before(:all) do
-    @event = create(:event)
-  end
 
 	#scenario ' - sees error messages'  #Currently registration doesn't require any user input; if this changes we can write this test
 end
