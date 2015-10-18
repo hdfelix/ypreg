@@ -123,6 +123,7 @@
         <%= f.radio_button(:has_been_paid, true) %><%= label_tag(:has_been_paid_yes, "Yes", value: 'true') %>
       </div>
     </div>
+  <%= hidden_field_tag 'return_to', params[:return_to] %> 
 
   </fieldset>
   <div class="form-group">
@@ -133,7 +134,11 @@
       <% else %>
           <%= f.submit 'Update', class: 'btn btn-primary' %>
       <% end %>
-        <%= link_to 'Back', event_registrations_path(event), class: 'btn btn-default' %>
+        <% if params[:return_to] %>
+          <%= link_to 'Back', params[:return_to], class: 'btn btn-default' %>
+        <% else %>
+          <%= link_to 'Back', event_registrations_path(event, return_to: params[:return_to]), class: 'btn btn-default' %>
+        <% end %>
       </span>
     </div>
   </div>

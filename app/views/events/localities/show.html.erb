@@ -122,7 +122,7 @@
               </tr>
             </thead>
             <tbody id='registrations'>
-              <% @locality_registrations.all.each do |reg| %>
+              <% @registrations.all.each do |reg| %>
                 <tr>
                   <td><%= reg.user.name %></td>
                   <td><%= reg.user.age %></td>
@@ -175,19 +175,23 @@
             <thead>
               <tr>
                 <th>Saint</th>
+                <th>MRF?</th>
                 <th>Cost</th>
-                <th>Payment Adjustment</th>
-                <th>Paid</th>
+                <th>Pmt Adjustment</th>
+                <th>Amt Paid</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-            <% if @paid_registrations.count > 0 %>
-              <% @paid_registrations.each do |reg| %>
+            <% if @registrations.count > 0 %>
+              <% @registrations.each do |reg| %>
                 <tr>
                   <td><%= reg.user.name %></td>
+                  <td><%= display_yes_no(reg.has_medical_release_form) %>
                   <td><%= @event.registration_cost %></td>
                   <td><%= number_to_currency(reg.payment_adjustment) %></td>
-                  <td><%= number_to_currency(@event.registration_cost - reg.payment_adjustment) %></td>
+                  <td><%= calculate_payment(reg) %></td>
+                  <td><%= link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default' %>
                 </tr>
               <% end %>
               <% else %>

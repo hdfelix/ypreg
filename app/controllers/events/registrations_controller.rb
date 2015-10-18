@@ -53,6 +53,7 @@ class Events::RegistrationsController < ApplicationController
       @id = params[:id]
       @registration = @event.registrations.find(params[:id])
     end
+    @return_to = params[:return_to]
   end
 
   def update
@@ -65,7 +66,11 @@ class Events::RegistrationsController < ApplicationController
         redirect_to event_registrations_url(@event, view: 'attendance')
       else
         flash[:notice] = 'Registration created succesfully'
-        redirect_to event_registrations_path(@event)
+        if params[:return_to].nil?
+          redirect_to event_registrations_path(@event)
+        else
+          redirect_to event_locality
+        end
       end
     else
       flash[:error] = 'error creating registration'
@@ -93,10 +98,15 @@ def registration_params
             :payment_adjustment,
             :has_been_paid,
             :has_medical_release_form,
-            :attend_as_serving_one)
+            :attend_as_serving_one,
+            :return_to)
     .merge(event_id: params[:event_id])
     .merge(locality_id: User.find(params[:user_id]).locality.id)
 
   parameters = parameters.merge(params.require(:registration).permit(:status)) if params[:view] == 'attendance'
   parameters
+end
+
+def event_locality
+  params.permit(:return_to)[:return_to]
 end

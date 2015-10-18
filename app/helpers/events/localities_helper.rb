@@ -6,4 +6,9 @@ module Events::LocalitiesHelper
       reg.hospitality.lodging.name
     end
   end
+
+  def calculate_payment(registration)
+    return number_to_currency(0) if !registration.has_been_paid
+    number_to_currency(@event.registration_cost - registration.payment_adjustment)
+  end
 end
