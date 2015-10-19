@@ -3,6 +3,7 @@ module DashboardHelper
     %w(admin scyp ycat).include?(user.role)
   end
 
+  # Event widget helpers
   def event_widget_header
     content = current_or_future_events_present? ? Event.next.first.title : ''
     content_tag('h5',
@@ -19,7 +20,7 @@ module DashboardHelper
   def display_global_stats_widget_based_on(role)
     return if !role == 'admin'
     render partial: 'layouts/global_stats_widget',
-      locals: { current_user: current_user }
+           locals: { current_user: current_user }
   end
 
   def current_or_future_events_present?

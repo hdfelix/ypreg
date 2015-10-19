@@ -205,7 +205,7 @@
               <div class="panel panel-default">
                 <div class="panel-heading"><h5><i class="fa fa-lightbulb-o"></i> Tips</h5></div>
                 <div class="panel-body">
-                  <p>You can search the widgets using the search box located at top bar. This is useful when your dashboard has a lot of content.</p>
+                  <%= @tips_message ||= 'Check here for useful tips based on the page you are viewing.' %>
                 </div>
               </div>
               <%= display_event_widget_based_on(current_user.role) %>
