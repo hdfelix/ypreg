@@ -22,15 +22,15 @@
                 <th>Grade</th>
                 <th>Locality</th>
                 <th style="width: 150px">Phone</th>
-                <th>BC</th>
+                <th>Last B.C.</th>
                 <th>Last Sign in</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <% if @users.all.count > 0 %>
+              <% if @users.count > 0 %>
                 <% @users.each do |user| %>
-                  <tr>
+                  <tr class=<%= user.background_check_date_row_class %>>
                     <td><%= link_to user.name, user_path(user) %></td>
                     <td><%= user.role.capitalize %></td>
                     <td><%= user.gender.to_s[0].capitalize %></td>
@@ -41,7 +41,7 @@
                     <td>C: <%= format_phone_number(user.cell_phone) %><br />
                         H: <%= format_phone_number(user.home_phone) %><br />
                         W: <%= format_phone_number(user.work_phone) %></td>
-                    <td><%= format_date(user.background_check_expiration) %></td>
+                    <td><%= format_date(user.background_check_date) %></td>
                     <td><%= format_date(user.last_sign_in_at) %></td>
                     <td><%= link_to 'Edit', edit_user_registration_path(user) %></td>
                   </tr>
