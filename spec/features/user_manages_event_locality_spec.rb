@@ -31,18 +31,18 @@ feature 'User manages event localities' do
   context 'Show view' do
     it 'Displays Locality name' do
 
-      event     = create(:event_with_registrations)
-      person    = event.registrations.sample.user
-      locality  = person.locality
+      event = create(:event_with_registrations)
+      person = event.registrations.sample.user
+      locality = person.locality
 
       visit event_locality_path(event, locality, authed_admin)
       expect(page).to have_content(locality.city)
     end
 
     it 'Displays Locality contact name' do
-      event     = create(:event_with_registrations)
-      person    = event.registrations.sample.user
-      locality  = person.locality
+      event = create(:event_with_registrations)
+      person = event.registrations.sample.user
+      locality = person.locality
 
       visit event_locality_path(event, locality, authed_admin)
 
@@ -59,7 +59,7 @@ feature 'User manages event localities' do
       expect(page).to have_content("Registration will close on: #{format_date(event.registration_close_date)}")
     end
 
-  
+
     it 'it has the following sections: Attendance Breakdown, Available Hospitalities \
         Registered Saints, Locality Saints, Payments' do
 
