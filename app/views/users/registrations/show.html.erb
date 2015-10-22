@@ -105,6 +105,17 @@
 						<%= format_phone_number(@user.work_phone) %>
 					</div>
 				</div>
+
+        <div class="row">
+					<div class="col-sm-4 ">
+						<strong>Last Background Check:</strong>
+					</div>
+					<div class="col-sm-8">
+            <span class="<%= @user.decorate.background_check_date_bg_class %>">
+              <%= format_date(@user.background_check_date) %>
+            </span>
+					</div>
+				</div>
 			</div>
 
 			<div class="widget-footer">	

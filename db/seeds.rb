@@ -105,22 +105,38 @@ past_event = Event.create(
 )
 
 
+def calculate_age(birthday)
+  days_in_a_year = 365.25
+  now = Time.now.to_date
+  birthdate = birthday.to_date
+  age = (((now - birthdate).to_i) / days_in_a_year).to_int
+
+  age = case
+        when age < 13 then 'minor'
+        when age > 18 then 'adult'
+        else age
+        end
+  age
+end
+
 total_users = 0
 print "\nCreating Users..."
 
+birthday = 38.years.ago
 # Create admin users
 print "\n  Admins (2): "
 admin = User.new(
   name: 'Hector D. Felix',
   email: 'hdfelix@gmail.com',
   cell_phone: '8888888888',
-  birthday: 38.years.ago,
   gender: 'Brother',
-  age: 'adult',
+  birthday: birthday,
+  age: calculate_age(birthday),
   grade: 'other',
   role: 'admin',
   password: 'chiracha',
-  password_confirmation: 'chiracha')
+  password_confirmation: 'chiracha',
+  background_check_date: Time.zone.now)
 
 admin.skip_confirmation!
 admin.update_attributes(role: 'admin')
@@ -129,18 +145,19 @@ admin.save
 
 print '.'
 total_users += 1
-
+birthday = 33.years.ago
 admin2 = User.new(
   name: 'Developer Account',
   email: 'test@test.com',
   cell_phone: '8888888888',
-  birthday: 33.years.ago,
   gender: User::GENDER.sample,
-  age: 'adult',
+  birthday: birthday,
+  age: calculate_age(birthday),
   grade: 'other',
   role: 'admin',
   password: 'devaccount',
-  password_confirmation: 'devaccount')
+  password_confirmation: 'devaccount',
+  background_check_date: Time.zone.now)
 
 admin2.skip_confirmation!
 admin2.update_attributes(role: 'admin')
@@ -151,17 +168,36 @@ print '.'
 
 total_users += 1
 
+
 # Create yp accounts
+
+def calculate_grade(age)
+  age = case
+        when 11 then '6th'
+        when 12 then '7th'
+        when 13 then '8th'
+        when 14 then '9th'
+        when 15 then '10th'
+        when 16 then '11th'
+        when 17 then '12th'
+        when 18 then %w(college other).sample 
+        end
+  age
+end
+
 count = 50
 print "\n  YP accounts (#{count}): "
 
 for i in 1..(count + 1) do
+  birthday = (13..18).to_a.sample.years.ago
+  age = calculate_age(birthday)
+  grade = calculate_grade(age)
   yp = User.new(
     name: "YP User#{i}",
-    birthday: (13..18).to_a.sample.years.ago,
     gender: User::GENDER.sample,
-    age: User::AGE.sample,
-    grade: User::GRADE.sample,
+    birthday: birthday, 
+    age: age,
+    grade: grade,
     role: 'yp',
     email: "yp_user#{i}@ypreg.com",
     password: 'chiracha',
@@ -182,16 +218,19 @@ count = 5
 print "\n  SCYP accounts(#{count}): "
 
 for i in 1..(count + 1) do
+  birthday = (19..60).to_a.sample.years.ago
   scyp = User.new(
     name: "SCYP User#{i}",
     gender: User::GENDER.sample,
-    birthday: (18..60).to_a.sample.years.ago,
-    age: User::AGE.sample,
-    grade: User::GRADE.sample,
+    birthday: birthday,
+    age: calculate_age(birthday),
+    grade: %w(college other).sample,
     role: 'scyp',
     email: "scyp_user#{i}@ypreg.com",
     password: 'chiracha',
-    password_confirmation: 'chiracha')
+    password_confirmation: 'chiracha',
+    background_check_date: (30..36).to_a.sample.months.ago)
+
 
   scyp.skip_confirmation!
   scyp.update_attributes(role: 'scyp')
@@ -208,16 +247,18 @@ count = 20
 print "\n  Trainee accounts(#{count}): "
 
 for i in 1..(count + 1) do
+  birthday = (20..30).to_a.sample.years.ago
   scyp = User.new(
     name: "SCYP User#{i}",
     gender: User::GENDER.sample,
-    birthday: (20..30).to_a.sample.years.ago,
-    age: User::AGE.sample,
-    grade: User::GRADE.sample,
+    birthday: birthday,
+    age: calculate_age(birthday),
+    grade: %w(college other).sample, 
     role: 'trainee',
     email: "trainee_user#{i}@ypreg.com",
     password: 'chiracha',
-    password_confirmation: 'chiracha')
+    password_confirmation: 'chiracha',
+    background_check_date: (30..36).to_a.sample.months.ago)
 
   scyp.skip_confirmation!
   scyp.update_attributes(role: 'trainee')
@@ -232,16 +273,18 @@ count = 10
 print "\n  YCAT accounts(#{count}): "
 
 for i in 1..(count + 1) do
+  birthday = (20..45).to_a.sample.years.ago
   scyp = User.new(
     name: "YCAT User#{i}",
     gender: User::GENDER.sample,
-    birthday: (20..45).to_a.sample.years.ago,
-    age: User::AGE.sample,
-    grade: User::GRADE.sample,
+    birthday: birthday,
+    age: calculate_age(birthday),
+    grade: %w(college other).sample,
     role: 'ypcat',
     email: "ycat_user#{i}@ypreg.com",
     password: 'chiracha',
-    password_confirmation: 'chiracha')
+    password_confirmation: 'chiracha',
+    background_check_date: (30..36).to_a.sample.months.ago)
 
   scyp.skip_confirmation!
   scyp.update_attributes(role: 'ycat')

@@ -35,6 +35,9 @@ gem 'simple_form'
 # searching
 gem 'pg_search'
 
+# Decorator pattern
+gem 'draper', '~> 1.3'
+
 group :production do
   gem 'rails_12factor'
 end
