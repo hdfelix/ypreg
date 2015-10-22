@@ -192,7 +192,7 @@
                   <tr>
                   <td><%= reg.user.name %></td>
                   <td><%= display_yes_no(reg.has_medical_release_form) %>
-                  <td><%= @event.registration_cost %></td>
+                  <td><%= number_to_currency(@event.registration_cost) %></td>
                     <td><%= number_to_currency(reg.payment_adjustment) %></td>
                     <td><%= calculate_payment(reg) %></td>
                     <td><%= link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default' %>
