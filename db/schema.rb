@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019051603) do
+ActiveRecord::Schema.define(version: 20151022155311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "addresses", force: true do |t|
     t.string   "addressline1"
@@ -119,6 +120,15 @@ ActiveRecord::Schema.define(version: 20151019051603) do
   add_index "lodgings", ["contact_person_id"], name: "index_lodgings_on_contact_person_id", using: :btree
   add_index "lodgings", ["locality_id"], name: "index_lodgings_on_locality_id", using: :btree
 
+  create_table "notes", force: true do |t|
+    t.string  "content"
+    t.integer "user_id"
+    t.integer "event_id"
+  end
+
+  add_index "notes", ["event_id"], name: "index_notes_on_event_id", using: :btree
+  add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
+
   create_table "pg_search_documents", force: true do |t|
     t.text     "content"
     t.integer  "searchable_id"
@@ -178,6 +188,7 @@ ActiveRecord::Schema.define(version: 20151019051603) do
     t.datetime "background_check_date"
     t.string   "grade"
     t.string   "age"
+    t.hstore   "statuses"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

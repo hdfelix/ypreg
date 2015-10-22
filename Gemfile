@@ -38,6 +38,9 @@ gem 'pg_search'
 # Decorator pattern
 gem 'draper', '~> 1.3'
 
+# Attributes for Ruby objects
+gem 'virtus'
+
 group :production do
   gem 'rails_12factor'
 end
