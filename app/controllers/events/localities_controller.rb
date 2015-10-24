@@ -11,7 +11,7 @@ class Events::LocalitiesController < ApplicationController
     @users_not_registered = decorated_users(@locality.users_not_registered(@event))
     @event_locality = EventLocality.where(event: @event, locality: @locality)[0]
     @registrations = @event_locality.registrations
-    @tips_message = Payment.tips[:check_payment_instructions]
+    @tips_message = Payment.tips[:check_payment_instructions].html_safe
   end
 
   def new
