@@ -9,7 +9,7 @@ module EventLocalitiesHelper
     end
   end
 
-  def background_check_tr(user)
-    tag(:tr, class: decorated_user(user).background_check_date_row_class)
+  def background_check_tr(user, id)
+    tag(:tr, { id: id, class: decorated_user(user).background_check_date_row_class })
   end
 end
