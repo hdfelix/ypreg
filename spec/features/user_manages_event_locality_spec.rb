@@ -29,44 +29,38 @@ feature 'User manages event localities' do
   let (:authed_admin) { create_logged_in_admin }
 
   context 'Show view' do
+    let (:event) { create(:event_with_registrations) }
+    let (:person) { event.registrations.sample.user }
+    let (:locality) { person.locality }
+
+    it 'Displays a tip with Check Payable To information' do
+      visit event_locality_path(event, locality, authed_admin)
+      within('#tip') do
+        expect(page).to have_content('Checks should be made out to')
+        expect(page).to have_content('Church in Anaheim - YP')
+        expect(page).to have_content('2528 W. La Palma Ave.')
+        expect(page).to have_content('Anaheim, CA 92801')
+      end
+    end
+
     it 'Displays Locality name' do
-
-      event = create(:event_with_registrations)
-      person = event.registrations.sample.user
-      locality = person.locality
-
       visit event_locality_path(event, locality, authed_admin)
       expect(page).to have_content(locality.city)
     end
 
     it 'Displays Locality contact name' do
-      event = create(:event_with_registrations)
-      person = event.registrations.sample.user
-      locality = person.locality
-
       visit event_locality_path(event, locality, authed_admin)
-
       expect(page).to have_content(locality.contact_name)
     end
 
     it 'Displays the registration closing date' do
-      event = create(:event_with_registrations)
-      person = event.registrations.sample.user
-      locality = person.locality
-
       visit event_locality_path(event, locality, authed_admin)
-
       expect(page).to have_content("Registration will close on: #{format_date(event.registration_close_date)}")
     end
 
 
     it 'it has the following sections: Attendance Breakdown, Available Hospitalities \
         Registered Saints, Locality Saints, Payments' do
-
-      event = create(:event_with_registrations)
-      person = event.registrations.sample.user
-      locality = person.locality
-
       visit event_locality_path(event, locality, authed_admin)
 
       expect(page).to have_content('Attendance Breakdown')
@@ -79,9 +73,6 @@ feature 'User manages event localities' do
     it 'Displays the attendance breakdown'
 
     it 'List registered users form locality' do
-      event = create(:event_with_registrations)
-      person = event.registrations.sample.user
-      locality = person.locality
       registrations = event.localities.find(locality).registrations(event)
 
       visit event_locality_path(event, locality, authed_admin)
@@ -93,12 +84,7 @@ feature 'User manages event localities' do
     end
 
     it 'List locality users' do
-      event = create(:event_with_registrations)
-      person = event.registrations.sample.user
-      locality = person.locality
-
       visit event_locality_path(event, locality, authed_admin)
-
       locality.users.all.each do |user|
         expect(page).to have_content(user.name)
       end
