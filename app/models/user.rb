@@ -60,7 +60,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  # private?
+  def background_check_valid?
+    return true if ages_that_do_not_require_background_check.include?(age)
+    background_check_date.nil? or
+    background_check_date > 3.years.ago
+  end
+
   def hospitality(event)
     reg = registration(event)
     if reg.nil?
@@ -68,5 +73,11 @@ class User < ActiveRecord::Base
     else
       Hospitality.where(event: event, locality: locality)[0]
     end
+  end
+
+  private
+
+  def ages_that_do_not_require_background_check
+    User::AGE.reverse.drop(2)
   end
 end

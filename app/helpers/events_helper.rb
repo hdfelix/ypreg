@@ -64,4 +64,8 @@ module EventsHelper
   def show_attendance_menu_option?(event)
     Event.current.map(&:id).include?(event.id)
   end
+
+  def background_check_tr(user, id)
+    tag(:tr, { id: id, class: decorated_user(user).background_check_date_row_class })
+  end
 end
