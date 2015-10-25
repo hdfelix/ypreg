@@ -10,9 +10,15 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'capybara-screenshot/rspec'
+require 'capybara/poltergeist'
 
 # Set the default driver
-Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :poltergeist # :webkit
+
+# Capybara Screenshot config
+Capybara::Screenshot.webkit_options = { width: 1024, height: 1024 }
+Capybara::Screenshot.prune_strategy = { keep: 20 }
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

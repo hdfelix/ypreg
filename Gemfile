@@ -74,10 +74,12 @@ end
 
 group :test do
   gem 'capybara', '~> 2.3.0'
+  # gem 'capybara-webkit'
+  gem 'capybara-screenshot'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
-  gem 'capybara-webkit'
   gem 'guard-rspec'
   gem 'timecop'
 end
