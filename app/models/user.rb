@@ -26,18 +26,19 @@ class User < ActiveRecord::Base
 
   # scopes
   def self.not_contact_persons
-    contact_person_ids = Lodging.where.not(contact_person: nil).pluck(:contact_person_id)
+    contact_person_ids =
+      Lodging.where.not(contact_person: nil).pluck(:contact_person_id)
     User.where.not(id: contact_person_ids)
   end
 
-   # Interface
+  # Interface
   def role?(base_role)
     role == base_role.to_s
   end
 
   def locality_city
     if locality.nil?
-      ""
+      ''
     else
       locality.city
     end
@@ -62,8 +63,8 @@ class User < ActiveRecord::Base
 
   def background_check_valid?
     return true if ages_that_do_not_require_background_check.include?(age)
-    background_check_date.nil? or
-    background_check_date > 3.years.ago
+    background_check_date.nil? ||
+      background_check_date > 3.years.ago
   end
 
   def hospitality(event)
