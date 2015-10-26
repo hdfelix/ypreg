@@ -44,6 +44,17 @@
               </p>
               <p class="data-row">
                 <span class="data-name">Med Release Form?</span>
+                <span class="data-value"><%= display_yes_no(@attendance.has_medical_release_form) %></span>
+
+              </p>
+              <p class="data-row">
+                <span class="data-name" <%= add_alert_style?(@attendance.user) %>">Last Background Check</span>
+                <span class="data-value">
+                  <span stlye="class="bg-<%= decorated_user(@attendance.user).background_check_date_row_class %>">
+                    <%= format_date(@attendance.user.background_check_date) %>
+                  </span>
+                </span>
+
               </p>
             </div>
           </div>
