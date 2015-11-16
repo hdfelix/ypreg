@@ -70,11 +70,29 @@
               <%= display_boolean(@registration.attend_as_serving_one) %>
             </div>
           </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <strong>Medical Release Form?</strong>
+            </div>
+            <div class="col-sm-8">
+              <%= display_boolean(@registration.has_medical_release_form) %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4" <%= add_alert_style?(@registration.user) %>>
+              <strong>Background Check</strong>
+            </div>
+            <div class="col-sm-8">
+              <% background_style = "#{decorated_user(@registration.user).background_check_date_row_class}"%>
+                <span class='bg-<%= background_style %>'>
+                  <%= format_date(@registration.user.background_check_date) %>
+                </span>
+            </div>
+          </div>
         </div>
         <div class="widget-footer">
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-12">
           <%= link_to 'Back', event_registrations_path(@registration.event), class: 'btn btn-default' %>

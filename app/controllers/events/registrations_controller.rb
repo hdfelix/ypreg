@@ -1,6 +1,7 @@
 class Events::RegistrationsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
+    @status_options = Registration::STATUS
     @registrations =
       @event.registrations.sort_by { |reg| reg.locality.city }
 

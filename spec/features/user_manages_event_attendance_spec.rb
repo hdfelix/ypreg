@@ -100,8 +100,8 @@ feature 'User manages attendance at an event' do
     expect(page).to have_content(format_phone_number(reg.hospitality.lodging.contact_person.cell_phone))
     expect(page).to have_content(format_phone_number(reg.hospitality.lodging.contact_person.home_phone))
     expect(page).to have_content(reg.hospitality.lodging.contact_person.email)
-    expect(page).to have_content('Back')
     expect(page).to have_content('Edit')
+    expect(page).to have_content('Back')
   end
 
   scenario "can access the edit an attendance (registration) record by clicking on the user name" do
@@ -125,4 +125,9 @@ feature 'User manages attendance at an event' do
     select('attended', from: 'registration[status]')
     click_button 'Update'
   end
+
+  scenario "Can see a warning if background check is expired"
+  scenario "Can see Hospitality information if hospitality has been assigned"
+  scenario "Can see a notice and a link to add hospitality if it has not been added"
+  scenario "Cannot update status to 'attended' if background check is expired"
 end

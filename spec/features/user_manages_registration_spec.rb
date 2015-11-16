@@ -38,7 +38,8 @@ feature 'Signed-in user' do
     reg = create(:registration, :yp,  event: event)
     
     visit event_registrations_path(event, authed_admin)
-    within("tr#reg-#{reg.id}") do
+    # within(:css, "#reg-#{reg.id}") do
+
       expect(page).to have_content(reg.user.role.capitalize)
       expect(page).to have_content(reg.user.gender.to_s[0])
       expect(page).to have_content(reg.user.name)
@@ -50,7 +51,7 @@ feature 'Signed-in user' do
       expect(page).to have_content(display_yes_no(reg.has_medical_release_form))
       expect(page).to have_content("Show")
       expect(page).to have_content("Edit")
-    end
+    # end
   end
 
   # TODO: (ask) link_to isnt'working

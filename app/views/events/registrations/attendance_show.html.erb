@@ -17,7 +17,7 @@
 
           <div class="user-info-right">
             <div class="basic-info">
-              <h3><i class="fa fa-square"></i>Attendance info</h3>
+              <h3><i class="fa fa-square"></i>&nbsp;Attendance info</h3>
               <p class="data-row">
                 <span class="data-name">Name</span>
                 <span class=" data-value"><%= @attendance.user.name %></span>
@@ -44,31 +44,48 @@
               </p>
               <p class="data-row">
                 <span class="data-name">Med Release Form?</span>
+                <span class="data-value"><%= display_yes_no(@attendance.has_medical_release_form) %></span>
+
+              </p>
+              <p class="data-row">
+                <span class="data-name" <%= add_alert_style?(@attendance.user) %>>Last Background Check</span>
+                <span class="data-value">
+                  <% background_style = "#{decorated_user(@attendance.user).background_check_date_row_class}"%>
+                  <span style='bg-<%= background_style %>'>
+                    <span class='bg-<%= background_style %>'>
+                      <%= format_date(@attendance.user.background_check_date) %>
+                    </span>
+                </span>
+              </span>
               </p>
             </div>
           </div>
 
-          <h3><i class="fa fa-square"></i>Hospitality info</h3>
-          <% unless @attendance.hospitality.nil? %>
-          <p class="data-row">
-            <span class="data-name">Hospitality</span>
-            <span class=" data-value"><%= @attendance.hospitality.lodging.name %></span>
-          </p>
-            
-            <br />
-            <%= @attendance.hospitality.lodging.address1 %>
-            <br />
-            <%= @attendance.hospitality.lodging.address2 %>
-            <br />
-            <%= @attendance.hospitality.lodging.city %>
-            <br />
-            <%= @attendance.hospitality.lodging.contact_person.name %>
-            <br />
-            <%= format_phone_number(@attendance.hospitality.lodging.contact_person.cell_phone) %>
-            <br />
-            <%= format_phone_number(@attendance.hospitality.lodging.contact_person.home_phone) %>
-            <br />
-            <%= @attendance.hospitality.lodging.contact_person.email %>
+          <h3><i class="fa fa-square"></i>&nbsp;Hospitality info</h3>
+          <% if @attendance.hospitality.nil? %>
+            <p>No hospitality has been assigned.</p>
+            <p>
+              Click <%= link_to 'here', event_hospitality_registration_assignment_path(@event, @attendance.user.locality) %> to assign hospitality.</p>
+          <% else %>
+            <p class="data-row">
+              <span class="data-name">Hospitality</span>
+              <span class=" data-value"><%= @attendance.hospitality.lodging.name %>
+                <br />
+                <%= @attendance.hospitality.lodging.address1 %>
+                <br />
+                <%= @attendance.hospitality.lodging.address2 %>
+                <br />
+                <%= @attendance.hospitality.lodging.city %>
+                <br />
+                <%= @attendance.hospitality.lodging.contact_person.name %>
+                <br />
+                <%= format_phone_number(@attendance.hospitality.lodging.contact_person.cell_phone) %>
+                <br />
+                <%= format_phone_number(@attendance.hospitality.lodging.contact_person.home_phone) %>
+                <br />
+                <%= @attendance.hospitality.lodging.contact_person.email %>
+              </span>
+            </p>
           <% end %>
         </div>
         <div class="widget-footer">
@@ -77,8 +94,8 @@
 
       <div class="row">
         <div class="col-md-12">
-          <%= link_to 'Back', event_registrations_path(@event, view: 'attendance') %>
-          <%= link_to 'Edit', edit_event_registration_path(@event, @attendance, view: 'attendance') %>
+          <%= link_to 'Edit', edit_event_registration_path(@event, @attendance, view: 'attendance'), class: 'btn btn-primary' %>
+          <%= link_to 'Back', event_registrations_path(@event, view: 'attendance'), class: 'btn btn-default' %>
         </div>
       </div>
     </div>

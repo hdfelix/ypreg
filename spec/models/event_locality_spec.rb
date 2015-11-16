@@ -8,7 +8,7 @@ describe EventLocality, type: :model do
 
   describe 'Class Methods' do
     describe '.registrations' do
-      it 'return the registrations for an event' do
+      it 'returns the registrations for an event' do
         ev = create(:event)
         loc = create(:locality)
         user = create(:user, locality: loc)
