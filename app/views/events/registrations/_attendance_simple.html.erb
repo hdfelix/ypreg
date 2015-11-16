@@ -68,15 +68,16 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <%= f.label :status, class: ' col-md-2 control-label' %>
-      <div class="col-md-4">
-        <%= f.select :status,
-          Registration::STATUS,
-          options={},
-          html_options={ class: 'form-control select' } %>
-      </div>
-    </div>
+    <p class="data-row">
+      <span class="data-name"><%= f.label :status, class: ' col-md-2' %></span>
+      <span class="data-value">
+          <%= f.select :status,
+            Registration::STATUS,
+            # @status_options,
+            options={},
+            html_options={ class: 'form-control select' } %>
+      </span>
+    </p>
 
   </fieldset>
   <div class="form-group">
