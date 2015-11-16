@@ -24,7 +24,7 @@
               <tr>
                 <td><strong>Registration:</strong></td>
                 <td>
-                  <%= format_date(@event.registration_open_date) %> - 
+                  <%= format_date(@event.registration_open_date) %> -
                   <%= format_date(@event.registration_close_date) %>
                 </td>
               </tr>
@@ -44,21 +44,23 @@
               </tbody>
             </table>
           </div>
-          <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
-          <div id="event-info-btn-group" class="btn-group">
-            <button id='manage' class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
-              Manage
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><%= link_to 'Hospitality', event_hospitalities_path(@event) %></li>
-              <li><%= link_to 'Registrations', event_registrations_path(@event) %><li>
-              <li><%= link_to 'Payments', edit_locality_payments_path(@event) %></li>
-              <% if show_attendance_menu_option?(@event) %>
-                <li id='attendance-option'><%= link_to 'Attendance', event_registrations_path(@event, view: 'attendance') %></li>
-              <% end %>
-            </ul>
-          </div>
+          <% if policy(Event.all).edit? %>
+            <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
+            <div id="event-info-btn-group" class="btn-group">
+              <button id='manage' class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
+                Manage
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><%= link_to 'Hospitality', event_hospitalities_path(@event) %></li>
+                <li><%= link_to 'Registrations', event_registrations_path(@event) %><li>
+                <li><%= link_to 'Payments', edit_locality_payments_path(@event) %></li>
+                <% if show_attendance_menu_option?(@event) %>
+                  <li id='attendance-option'><%= link_to 'Attendance', event_registrations_path(@event, view: 'attendance') %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
@@ -156,7 +158,7 @@
             <a href="#" id="tour-focus" title="focus" class="btn-borderless btn-focus"><i class="fa fa-eye"></i></a>
             <a href="#" title="expand/collapse" class="btn-borderless btn-toggle-expand"><i class="fa fa-chevron-up"></i></a>
             <a href="#" title="remove" class="btn-borderless btn-remove"><i class="fa fa-times"></i></a>
-          </div> 
+          </div>
           <h3><i class="fa fa-bar-chart-o"></i>Locality Summaries</h3>
         </div>
         <div class="widget-content">
@@ -186,7 +188,9 @@
               </tbody>
             </table>
           </div>
-          <%= link_to 'Localities List', event_localities_path(@event), class: 'btn btn-default btn-sm' %>
+          <% if policy(Locality.all).index? %>
+            <%= link_to 'Localities List', event_localities_path(@event), class: 'btn btn-default btn-sm' %>
+          <% end %>
         </div><!-- widget content -->
       </div><!-- locality summaries widget -->
     </div><!-- col-md 12 -->
@@ -240,7 +244,7 @@
               </div>
             </div><!-- end inner row -->
             <div class="table-responsive">
-              <table class="table table-bordered  table-striped table-hover"> 
+              <table class="table table-bordered  table-striped table-hover">
                 <thead>
                   <tr role="row">
                     <th>Name</th>
@@ -263,9 +267,14 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><%= link_to 'Manage Hospitalities', event_hospitalities_path(@event) %></li>
+                <% if policy(Hospitality.all).manage? %>
+                  <li><%= link_to 'Manage Hospitalities', event_hospitalities_path(@event) %></li>
+                <% end %>
                 <li><%= link_to 'Assign to Localities', event_hospitality_locality_assignments_path(@event) %></li>
-                <li><%= link_to 'Assign Saints', event_hospitality_registration_assignments_path(@event) %></li>
+
+                <% if policy(Hospitality.all).manage? %>
+                  <li><%= link_to 'Assign Saints', event_hospitality_registration_assignments_path(@event) %></li>
+                <% end %>
               </ul>
             </div>
             <div class='row'><!-- pagination footer -->

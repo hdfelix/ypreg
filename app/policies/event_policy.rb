@@ -1,7 +1,7 @@
 # Policies for event restful actions
 class EventPolicy < ApplicationPolicy
   def index?
-    user.present? && (user.role?(:admin))
+    user.present? && (user.role?(:admin) || (user.role?(:scyp)))
   end
 
   def show?
@@ -9,22 +9,26 @@ class EventPolicy < ApplicationPolicy
   end
 
   def new?
-    index?
+    user.present? && user.role?(:admin)
   end
 
   def edit?
-    index?
+    new?
   end
 
   def update?
-    index?
+    new?
   end
 
   def create?
-    index?
+    new?
   end
 
   def destroy?
-    index?
+    new?
+  end
+
+  def copy?
+    new?
   end
 end

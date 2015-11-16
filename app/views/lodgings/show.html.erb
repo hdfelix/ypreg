@@ -96,7 +96,9 @@
     <div class="col-md-12">
       <%= link_to 'Edit', edit_lodging_path(@lodging), class: 'btn btn-primary'%>
       <%= link_to 'Back', lodgings_path, class: 'btn btn-default' %>
-      <%= link_to 'Delete', @lodging, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% if policy(Lodging.all).destroy? %>
+        <%= link_to 'Delete', @lodging, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
     </div>
   </div>
 </div><!-- End lodging info -->

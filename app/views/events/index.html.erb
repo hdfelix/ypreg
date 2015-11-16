@@ -40,9 +40,15 @@
                     <td><%= number_to_currency(event.registration_cost) %></td>
 
                     <td>
-                      <%= link_to 'Edit', edit_event_path(event) %>&nbsp;
-                      <%= link_to 'Copy', event_copies_path(event_id: event), method: :post %>&nbsp;
-                      <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+                      <% if policy(Event.all).edit? %>
+                        <%= link_to 'Edit', edit_event_path(event) %>&nbsp;
+                      <% end %>
+                      <% if policy(Event.all).copy? %>
+                        <%= link_to 'Copy', event_copies_path(event_id: event), method: :post %>&nbsp;
+                      <% end %>
+                      <% if policy(Event.all).destroy? %>
+                        <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>
@@ -53,10 +59,12 @@
 				  </table>
         </div>
         <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
-				<%= link_to new_event_path, class: 'btn btn-primary' do %>
-					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
-					New Event
-				<% end %>
+        <% if policy(Event.all).new? %>
+          <%= link_to new_event_path, class: 'btn btn-primary' do %>
+            <%= content_tag(:i, '', class: "fa fa-plus-square") %>
+            New Event
+          <% end %>
+        <% end %>
 			</div>
 		</div>
 	</div>
@@ -97,9 +105,15 @@
                     <td><%= number_to_currency(event.registration_cost) %></td>
 
                     <td>
-                      <%= link_to 'Edit', edit_event_path(event) %>&nbsp;
-                      <%= link_to 'Copy', event_copies_path(event_id: event), method: :post %>&nbsp;
-                      <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+                      <% if policy(Event.all).edit? %>
+                        <%= link_to 'Edit', edit_event_path(event) %>&nbsp;
+                      <% end %>
+                      <% if policy(Event.all).copy? %>
+                        <%= link_to 'Copy', event_copies_path(event_id: event), method: :post %>&nbsp;
+                      <% end %>
+                      <% if policy(Event.all).destroy? %>
+                        <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>
@@ -110,10 +124,12 @@
 				  </table>
         </div>
         <%= link_to 'Back', dashboard_index_path, class: 'btn btn-default' %>
-				<%= link_to new_event_path, class: 'btn btn-primary' do %>
-					<%= content_tag(:i, '', class: "fa fa-plus-square") %>
-					New Event
-				<% end %>
+        <% if policy(Event.all).new? %>
+          <%= link_to new_event_path, class: 'btn btn-primary' do %>
+            <%= content_tag(:i, '', class: "fa fa-plus-square") %>
+            New Event
+          <% end %>
+        <% end %>
 			</div>
 		</div>
 	</div>

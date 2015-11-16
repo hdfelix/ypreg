@@ -63,7 +63,9 @@
         <div class="col-md-12">
           <%= link_to 'Edit', edit_location_path(@location), class: 'btn btn-primary' %>
           <%= link_to 'Back', locations_path, class: 'btn btn-default' %>
-          <%= link_to 'Delete', @location, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          <% if policy(Location.all).destroy? %>
+            <%= link_to 'Delete', @location, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          <% end %>
         </div>
       </div>
     </div>

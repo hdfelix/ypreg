@@ -25,6 +25,6 @@ class LodgingPolicy < ApplicationPolicy
   end
 
   def destroy?
-    index?
+    user.present? && user.role?(:admin)
   end
 end

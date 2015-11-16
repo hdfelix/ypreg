@@ -1,7 +1,11 @@
-# Policies for location restful actions
-class LocationPolicy < ApplicationPolicy
+# Policies for hospitality restful actions
+class HospitalityPolicy < ApplicationPolicy
   def index?
-    user.present? && (user.role?(:admin) || user.role?(:scyp))
+    user.present? && user.role?(:admin)
+  end
+
+  def manage?
+    index?
   end
 
   def show?
@@ -25,6 +29,6 @@ class LocationPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.present? && user.role?(:admin)
+    index?
   end
 end
