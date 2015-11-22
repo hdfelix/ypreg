@@ -31,7 +31,7 @@
               </thead>
               <tbody>
                 <% ev_loc.registrations.each do |reg| %>
-                  <%= background_check_tr(reg.user, "user-#{reg.id}") %>
+                  <%= background_check_tr(reg.user, "user_#{reg.user.id}") %>
                     <td><%= reg.status %></td>
                     <td><%= reg.user.locality_city %></td>
                     <td><%= link_to "#{reg.user.name}", event_registration_path(@event,reg,view: 'attendance') %></td>

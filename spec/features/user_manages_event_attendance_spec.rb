@@ -58,11 +58,9 @@ feature 'User manages attendance at an event' do
         expect(page).to have_content(ev_loc.locality_city)
 
         ev_loc.registrations.each do |reg|
-          within("#user_#{reg.user.id}") do
           expect(page).to have_content(reg.user.name)
           expect(page).to have_content(reg.user.role)
-          expect(page).to have_content('Edit')
-          end
+          expect(page).to have_content('Update')
         end
       end
     end
@@ -81,9 +79,9 @@ feature 'User manages attendance at an event' do
 
     visit "events/#{event.id}/registrations?view=attendance"
 
-    within("#user_#{user.id}") do
+    # within("#user_#{user.id}") do
       click_link_or_button "#{user.name}"
-    end
+    # end
 
     expect(page).to have_content(user.name)
     expect(page).to have_content(user.gender)
@@ -117,9 +115,10 @@ feature 'User manages attendance at an event' do
 
     visit "events/#{event.id}/registrations?view=attendance"
 
-    within("#user_#{user.id}") do
-      click_link_or_button "Edit"
-    end
+    # within("#user_#{user.id}") do
+    #  click_link_or_button "Edit"
+    # end
+    click_link_or_button "Update"
 
     check('registration[has_medical_release_form]')
     select('attended', from: 'registration[status]')
