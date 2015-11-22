@@ -6,7 +6,7 @@ describe LodgingPolicy do
   let (:scyp_user) { FactoryGirl.build_stubbed :user, role: 'scyp' }
   let (:other_user) { FactoryGirl.build_stubbed :user}
 
-  permissions :index?, :show?, :new?, :edit?, :update?, :create?, :destroy? do
+  permissions :index?, :show?, :new?, :edit?, :update?, :create? do
     context 'it denies access to' do
       it 'all but admins and scyp users' do
         expect(subject).not_to permit(other_user)
@@ -20,6 +20,14 @@ describe LodgingPolicy do
       it 'scyp users' do
         expect(subject).to permit(scyp_user)
       end
+    end
+  end
+
+  permissions :destroy? do
+    it 'denies all but admins' do
+      expect(subject).to permit(admin)
+      expect(subject).not_to permit(other_user)
+      expect(subject).not_to permit(scyp_user)
     end
   end
 end
