@@ -60,7 +60,6 @@ group :development, :test do
   gem 'shoulda-matchers', require: false
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
-  # gem 'rspec-mocks'
   gem 'rspec_junit_formatter'
   gem 'factory_girl_rails'
   gem 'faker'
@@ -74,9 +73,9 @@ end
 
 group :test do
   gem 'capybara', '~> 2.3.0'
-  # gem 'capybara-webkit'
+  gem 'capybara-webkit'
   gem 'capybara-screenshot'
-  gem 'poltergeist'
+  # gem 'poltergeist'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'

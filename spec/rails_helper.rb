@@ -11,10 +11,10 @@ require 'shoulda/matchers'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara-screenshot/rspec'
-require 'capybara/poltergeist'
+# require 'capybara/poltergeist'
 
 # Set the default driver
-Capybara.javascript_driver = :poltergeist # :webkit
+Capybara.javascript_driver = :webkit # :poltergeist
 
 # Capybara Screenshot config
 Capybara::Screenshot.webkit_options = { width: 1024, height: 1024 }
