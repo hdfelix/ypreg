@@ -100,12 +100,12 @@ class Event < ActiveRecord::Base
   end
 
   def present_yp_from(locality)
-    registrations.joins(:user).where(locality: locality, status: 'attended')
+    registrations.includes(:user).where(locality: locality, status: 'attended')
+      .count { |r| r.user.role = 'yp' }
   end
 
   def present_serving_ones_from(locality)
     registrations
-      .joins(:user)
       .where(locality: locality, attend_as_serving_one: true, status: 'attended')
   end
 
@@ -232,15 +232,11 @@ class Event < ActiveRecord::Base
 
   def assign_grand_totals(stats, locality)
     loc = locality.city
-    actual_yp_count = present_yp_from(locality).count
+    actual_yp_count = present_yp_from(locality)
     actual_serving_ones_count = present_serving_ones_from(locality).count
     actual_trainees_count = present_trainees_from(locality).count
     actual_helpers_count = present_helpers_from(locality).count
-    actual_total =
-      actual_yp_count +
-      actual_serving_ones_count +
-      actual_trainees_count +
-      actual_helpers_count
+    actual_total = Registration.where(event: self, locality: locality, status: 'attended').count
 
     stats[loc]['actual_grand_total'] = actual_total
     stats[loc]['actual_total_yp'] = actual_yp_count
