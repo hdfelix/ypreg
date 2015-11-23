@@ -1,7 +1,12 @@
 # Policies for registration restful actions
 class RegistrationPolicy < ApplicationPolicy
   def index?
-    user.present? && (user.role?(:admin))
+    user.present? && (user.role?(:admin) || user.role?(:scyp))
+  end
+
+  # TODO: testing... remove?
+  def attendance_index?
+    user.persent? && (user.role?(:admin))
   end
 
   def show?
