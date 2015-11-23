@@ -5,7 +5,9 @@ class Events::RegistrationsController < ApplicationController
     @registrations =
       @event.registrations.sort_by { |reg| reg.locality.city }
 
+    authorize Registration
     return unless params[:view] == 'attendance'
+
     @event_localities = EventLocality.includes(:locality).where(event: @event)
     render 'attendance_index'
   end

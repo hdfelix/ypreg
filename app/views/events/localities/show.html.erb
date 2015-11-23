@@ -125,7 +125,11 @@
             <tbody id='registrations'>
               <% @registrations.all.each do |reg| %>
                 <%= background_check_tr(reg.user, "reg-#{reg.id}") %>
-                  <td><%= link_to reg.user.name, edit_event_registration_path(@event, reg) %></td>
+                  <% if policy(Registration.all).edit? %>
+                    <td><%= link_to reg.user.name, edit_event_registration_path(@event, reg) %></td>
+                  <% else %>
+                    <td><%= reg.user.name %></td>
+                  <% end %>
                   <td><%= reg.user.age %></td>
                   <td><%= display_yes_no(reg.has_medical_release_form) %></td>
                   <td>
@@ -190,12 +194,14 @@
               <% if @registrations.count > 0 %>
                 <% @registrations.each do |reg| %>
                   <tr>
-                  <td><%= reg.user.name %></td>
-                  <td><%= display_yes_no(reg.has_medical_release_form) %>
-                  <td><%= number_to_currency(@event.registration_cost) %></td>
-                    <td><%= number_to_currency(reg.payment_adjustment) %></td>
-                    <td><%= calculate_payment(reg) %></td>
-                    <td><%= link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default' %>
+                    <td><%= reg.user.name %></td>
+                    <td><%= display_yes_no(reg.has_medical_release_form) %>
+                    <td><%= number_to_currency(@event.registration_cost) %></td>
+                      <td><%= number_to_currency(reg.payment_adjustment) %></td>
+                      <td><%= calculate_payment(reg) %></td>
+                      <% if policy(EventLocality.all).edit? %>
+                        <td><%= link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default' %>
+                      <% end %>
                   </tr>
                 <% end %>
               <% else %>
