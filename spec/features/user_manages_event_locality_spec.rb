@@ -38,8 +38,8 @@ feature 'User manages event localities' do
       within('#tip') do
         expect(page).to have_content('Checks should be made out to')
         expect(page).to have_content('Church in Anaheim - YP')
-        expect(page).to have_content('2528 W. La Palma Ave.')
-        expect(page).to have_content('Anaheim, CA 92801')
+        expect(page).to have_content('and presented to the registration table')
+        expect(page).to have_content('when arriving at the conference.')
       end
     end
 
