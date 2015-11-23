@@ -30,7 +30,7 @@ class Events::RegistrationsController < ApplicationController
     else
       @user = current_user
     end
-    @registration = Registration.new(user: @user)
+    @registration = Registration.new(user: @user, has_been_paid: false)
   end
 
   def create
