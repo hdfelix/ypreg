@@ -9,7 +9,6 @@
 # 
 #   it "contains a 'Hospitality Info' table" do
 #     render
-#     binding.pry
 #   permissions :destroy? do
 # 
 #   end
