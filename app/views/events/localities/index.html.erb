@@ -28,7 +28,9 @@
                     <td><%= el.state_abbrv %>
                     <td><%= el.contact_with_email %>
                     <td>
-                      <%= link_to 'Manage', event_locality_path(@event, el), class: 'btn btn-default btn-sm' %>
+                      <% if policy(Locality.all).index? %>
+                        <%= link_to 'Manage', event_locality_path(@event, el), class: 'btn btn-default btn-sm' %>
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>
@@ -65,7 +67,9 @@
                 <td><%= locality.state_abbrv %>
                 <td><%= locality.contact_with_email %>
                 <td>
-                  <%= link_to 'Manage', new_event_locality_path(@event,locality_id: locality), class: 'btn btn-default btn-sm' %>
+                  <% if policy(Locality.all).index? && @event.registration_open? %>
+                    <%= link_to 'Manage', new_event_locality_path(@event,locality_id: locality), class: 'btn btn-default btn-sm' %>
+                  <% end %>
                 </td>
               </tr>
               <% end %>

@@ -1,7 +1,7 @@
 # Policies for locality restful actions
 class LocalityPolicy < ApplicationPolicy
   def index?
-    user.present? && (user.role?(:admin))
+    user.present? && (user.role?(:admin) || user.role?(:scyp))
   end
 
   def new?
