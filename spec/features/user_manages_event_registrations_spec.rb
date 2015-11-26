@@ -36,12 +36,12 @@ feature 'Locality Contact creates an event' do
         end
       end
     end
+
     it 'The button to add their locality is not visible' do
       visit event_path(@event, authed_loc_contact)
       within('div#locality_summary') do
         expect(page).not_to have_content("Add registrations for #{authed_loc_contact.locality.city}")
       end
     end
-
   end
 end
