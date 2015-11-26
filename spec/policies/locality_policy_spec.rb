@@ -14,6 +14,44 @@ describe LocalityPolicy do
   let (:yp) { FactoryGirl.build_stubbed :user, role: 'yp' }
   let (:guest) { FactoryGirl.build_stubbed :user, role: 'guest' }
 
+  permissions :index? do
+    it 'allows admin users' do
+      expect(subject).to permit(admin)
+    end
+
+    it 'allows scyp users' do
+      expect(subject).to permit(scyp)
+    end
+
+    it 'does not allow hosp_contact users' do
+      expect(subject).not_to permit(hosp_contact)
+    end
+
+    it 'does not allow trainee users' do
+      expect(subject).not_to permit(trainee)
+    end
+
+    it 'does not allow speaking_brother users' do
+      expect(subject).not_to permit(speaking_brother)
+    end
+
+    it 'does not allow supporting_brother users' do
+      expect(subject).not_to permit(supporting_brother)
+    end
+
+    it 'does not allow helper users' do
+      expect(subject).not_to permit(helper)
+    end
+
+    it 'does not allow yp users' do
+      expect(subject).not_to permit(yp)
+    end
+
+    it 'does not allow guest users' do
+      expect(subject).not_to permit(guest)
+    end
+  end
+
   permissions :show?, :new?, :edit?, :update?, :create?, :destroy? do
     it 'denies access to loc_contact users' do
       expect(subject).not_to permit(loc_contact)
@@ -49,48 +87,6 @@ describe LocalityPolicy do
 
     it 'allows admin' do
       expect(subject).to permit(admin)
-    end
-  end
-
-  permissions :index? do
-    it 'allows admin users' do
-      expect(subject).to permit(admin)
-    end
-
-    it 'allows scyp users' do
-      expect(subject).to permit(scyp)
-    end
-
-    it 'allows loc_contact users' do
-      expect(subject).to permit(loc_contact)
-    end
-
-    it 'does not allow hosp_contact users' do
-      expect(subject).not_to permit(hosp_contact)
-    end
-
-    it 'does not allow trainee users' do
-      expect(subject).not_to permit(trainee)
-    end
-
-    it 'does not allow speaking_brother users' do
-      expect(subject).not_to permit(speaking_brother)
-    end
-
-    it 'does not allow supporting_brother users' do
-      expect(subject).not_to permit(supporting_brother)
-    end
-
-    it 'does not allow helper users' do
-      expect(subject).not_to permit(helper)
-    end
-
-    it 'does not allow yp users' do
-      expect(subject).not_to permit(yp)
-    end
-
-    it 'does not allow guest users' do
-      expect(subject).not_to permit(guest)
     end
   end
 end
