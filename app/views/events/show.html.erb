@@ -152,7 +152,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <div class="widget">
+      <div  id='locality_summary' class="widget">
         <div class="widget-header">
           <div class="btn-group widget-header-toolbar">
             <a href="#" id="tour-focus" title="focus" class="btn-borderless btn-focus"><i class="fa fa-eye"></i></a>
@@ -190,6 +190,8 @@
           </div>
           <% if policy(Locality.all).index? %>
             <%= link_to 'Localities List', event_localities_path(@event), class: 'btn btn-default btn-sm' %>
+          <% elsif current_user.role == 'loc_contact' && @participating_localities.count == 0 %>
+            <%= link_to "Add registrations for #{current_user.locality.city}", new_event_locality_path(@event, locality_id: current_user.locality), class: 'btn btn-default btn-sm' %>
           <% end %>
         </div><!-- widget content -->
       </div><!-- locality summaries widget -->
