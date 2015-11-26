@@ -1,6 +1,6 @@
 module DashboardHelper
   def user_can_manage_site(user)
-    %w(admin scyp ycat).include?(user.role)
+    %w(admin scyp ycat loc_contact).include?(user.role)
   end
 
   # Event widget helpers

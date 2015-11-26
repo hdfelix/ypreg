@@ -68,4 +68,9 @@ module EventsHelper
   def background_check_tr(user, id)
     tag(:tr, { id: id, class: decorated_user(user).background_check_date_row_class })
   end
+
+  def display_attendance_summary_for?(locality)
+    return false if current_user.role?(:loc_contact) && current_user.locality != locality
+    true
+  end
 end

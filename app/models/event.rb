@@ -169,7 +169,8 @@ class Event < ActiveRecord::Base
   end
 
   def registration_open?
-    Time.zone.now.to_date < registration_close_date
+    now = Time.zone.now.to_date
+    now > registration_open_date && now < registration_close_date
   end
 
   def over?

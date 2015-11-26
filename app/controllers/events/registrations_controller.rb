@@ -5,7 +5,9 @@ class Events::RegistrationsController < ApplicationController
     @registrations =
       @event.registrations.sort_by { |reg| reg.locality.city }
 
+    authorize Registration
     return unless params[:view] == 'attendance'
+
     @event_localities = EventLocality.includes(:locality).where(event: @event)
     render 'attendance_index'
   end
@@ -28,7 +30,7 @@ class Events::RegistrationsController < ApplicationController
     else
       @user = current_user
     end
-    @registration = Registration.new(user: @user)
+    @registration = Registration.new(user: @user, has_been_paid: false)
   end
 
   def create
