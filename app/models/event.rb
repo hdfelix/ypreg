@@ -233,7 +233,7 @@ class Event < ActiveRecord::Base
 
   def assign_grand_totals(stats, locality)
     loc = locality.city
-    actual_yp_count = present_yp_from(locality)
+    actual_yp_count = count_present_yp_from(locality)
     actual_serving_ones_count = present_serving_ones_from(locality).count
     actual_trainees_count = present_trainees_from(locality).count
     actual_helpers_count = present_helpers_from(locality).count

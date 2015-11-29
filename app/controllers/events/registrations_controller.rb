@@ -62,6 +62,7 @@ class Events::RegistrationsController < ApplicationController
   def update
     @event = Event.find(params[:event_id])
     @registration = Registration.find(params[:id])
+    locality = @registration.user.locality
 
     if @registration.update_attributes(registration_params)
       if params[:view] == 'attendance'
@@ -72,7 +73,7 @@ class Events::RegistrationsController < ApplicationController
         if params[:return_to].nil?
           redirect_to event_registrations_path(@event)
         else
-          redirect_to event_locality
+          redirect_to event_locality_path(@event, locality)
         end
       end
     else
