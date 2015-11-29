@@ -47,7 +47,6 @@
                   <td>(<%= @locality.registered_serving_ones(@event).count %>)</td>
                 </tr>
                 <tr>
-                <tr>
                   <td>Serving Ones Needed</td>
                   <td>[Serving Ones]</td>
                 </tr>
@@ -163,8 +162,8 @@
             <tbody>
             <% @users_not_registered.each do |user| %>
               <tr>
-              <td><%= user.name %></td>
-              <td><%= user.age %></td>
+              <td><%= user.name.capitalize %></td>
+              <td><%= user.age.to_s.capitalize %></td>
               <td><%= link_to 'Register', new_event_registration_path(@event, user), class: 'btn btn-custom-secondary btn-xs' %></td>
             </tr>
           <% end %>

@@ -1,7 +1,6 @@
 <div class="wrapper full-page-wrapper page-login text-center">
   <div class="inner page">
 		<div class="logo"><a href="index.html"><%=image_tag('kingadmin-logo.png', alt:'') %></a></div>
-
     <div class="login-box center-block">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= devise_error_messages! %>
