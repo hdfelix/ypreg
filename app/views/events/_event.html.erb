@@ -43,7 +43,7 @@
 				<br />
 				<% if current_user %>
           <% if !event.over? && policy(Event.all).show? %>
-					  <%= link_to 'Manage', event, class: 'btn btn-default btn-sm' %>
+            <%= link_to "#{event_button_text_based_on_user_role}", event, class: 'btn btn-default btn-sm' %>
           <% end %>
 					<% if current_user.registrations.where(event_id: event).empty? %>
             <% if event.registration_open? %>

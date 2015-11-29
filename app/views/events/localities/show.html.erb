@@ -201,7 +201,7 @@
                     <td><%= number_to_currency(@event.registration_cost) %></td>
                       <td><%= number_to_currency(reg.payment_adjustment) %></td>
                       <td><%= calculate_payment(reg) %></td>
-                      <% if policy(EventLocality.all).edit? %>
+                       <% if policy(Registration.all).edit? %>
                         <td><%= link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default' %>
                       <% end %>
                   </tr>
