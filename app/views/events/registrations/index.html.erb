@@ -20,6 +20,7 @@
               <th>Age</th>
               <th>Locality</th>
               <!--th style="width: 150px">Phone</th-->
+              <th>Guest?</th>
               <th>Payment Adjustment</th>
               <th>Paid?</th>
               <th>Medical Release Form?</th>
@@ -41,6 +42,7 @@
                 <!--td>C: <%= format_phone_number(reg.user.cell_phone) %><br />
                     H: <%= format_phone_number(reg.user.home_phone) %><br />
                     W: <%= format_phone_number(reg.user.work_phone) %></td-->
+                <td><%= reg.conference_guest.to_s.capitalize %>
                 <td><%= number_to_currency(reg.payment_adjustment) %></td>
                 <td><%= display_yes_no(reg.has_been_paid) %></td>
                 <td><%= display_yes_no(reg.has_medical_release_form) %></td>

@@ -8,7 +8,7 @@ class EventPolicy < ApplicationPolicy
   end
 
   def show?
-    index?
+    index? || (user.present? && user.role?(:speaking_brother))
   end
 
   def new?

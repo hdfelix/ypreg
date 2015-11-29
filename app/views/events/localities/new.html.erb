@@ -39,7 +39,7 @@
               <tr id= "user_#{ user.id }" %>
                 <td><%= check_box_tag "locality_user_ids[]", user.id %></td>
                 <td><%= user.name %></td>
-                <td><%= user.age %></td>
+                <td><%= user.age.to_s.capitalize %></td>
               </tr>
             <% end %>
           </tbody>

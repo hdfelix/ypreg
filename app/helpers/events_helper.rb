@@ -1,13 +1,23 @@
 module EventsHelper
+  def display_event_manage_button?
+    policy(Event.all).edit? ||
+      (policy(Hospitality.all).index? &&
+       policy(Registration.all).index?)
+  end
+
   def event_location(event)
     location = Location.find(event.location_id)
     html = ''
     content_tag(:address) do
       html <<
-        "#{location.address1} \n<br />\n #{location.city},
-        #{location.state_abbrv}  #{location.zipcode}"
+        "#{location.address1} \n<br />\n #{location.city},"\
+        "#{location.state_abbrv}&nbsp;&nbsp;#{location.zipcode}"
     end
     html.html_safe
+  end
+
+  def event_button_text_based_on_user_role
+    current_user.role == 'speaking_brother' ? 'View' : 'Manage'
   end
 
   def event_dates(event)
