@@ -132,8 +132,8 @@
                 <td><%= @event.total_registrations(role: 'helper').count %></td>
               </tr>
               <tr>
-                <td>Family Attending</td>
-                <td>[FA]</td>
+                <td>Conference Guests</td>
+                <td><%= @event.conference_guest_count %></td>
               </tr>
               <tr>
                 <td>YCAT</td>
@@ -173,6 +173,7 @@
                   <th>Total Trainees</th>
                   <th>Total Helpers</th>
                   <th>YP/SO</th>
+                  <th>Guests</th>
                   <th>Amt Due</th>
                   <th>Actual Grand Total</th>
                   <th>Actual Total YP</th>

@@ -99,9 +99,17 @@ class Event < ActiveRecord::Base
       .uniq
   end
 
-  def present_yp_from(locality)
+  def conference_guests_from(locality)
+    registrations.includes(:user).where(locality: locality, conference_guest: true) 
+  end
+
+  def conference_guest_count
+    registrations.select { |r| r.conference_guest }.count
+  end
+
+  def count_present_yp_from(locality)
     registrations.includes(:user).where(locality: locality, status: 'attended')
-      .count { |r| r.user.role = 'yp' }
+      .select { |r| r.user.role == 'yp' }.count
   end
 
   def present_serving_ones_from(locality)
@@ -177,6 +185,13 @@ class Event < ActiveRecord::Base
     Time.zone.now.to_date > end_date
   end
 
+  def payment_adjustments(locality)
+    registrations.where(locality: locality)
+      .pluck(:payment_adjustment)
+      .reject { |p| p.nil? }
+      .inject(0) { |sum, r| sum + r }
+  end
+
   def payments
     registrations.where(has_been_paid: true).count
   end
@@ -201,17 +216,19 @@ class Event < ActiveRecord::Base
     copied_event
   end
 
-  protected
+  # protected
+  private
 
   def calculate_locality_statistics(stats, locality)
     loc = locality.city
 
     # TODO: ambiguous locality_id
+    stats[loc]['guests'] = conference_guests_from(locality).count
     stats[loc]['grand_total'] =
       users.where('users.locality_id = ?', locality.id).count
     assign_totals(stats, locality)
     stats[loc]['amount_due'] =
-      stats[loc]['grand_total'] * registration_cost
+      stats[loc]['grand_total'] * registration_cost - payment_adjustments(locality)
     assign_grand_totals(stats, locality)
     stats[loc]['balance'] =
       stats[loc]['amount_due'] - stats[loc]['actual_amount_paid']
@@ -248,8 +265,11 @@ class Event < ActiveRecord::Base
   end
 
   def locality_amount_paid(locality)
-    registration_cost *
-      Registration
-        .where(event: self, locality: locality, has_been_paid: true).count
+    paid_registrations =
+      Registration.where(event: self, locality: locality, has_been_paid: true)
+
+    amount_paid = 0
+    paid_registrations.each { |pr| amount_paid += registration_cost - pr.payment_adjustment if pr.has_been_paid }
+    amount_paid
   end
 end

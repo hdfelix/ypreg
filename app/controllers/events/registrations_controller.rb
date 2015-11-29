@@ -103,6 +103,7 @@ def registration_params
             :has_been_paid,
             :has_medical_release_form,
             :attend_as_serving_one,
+            :conference_guest,
             :return_to)
     .merge(event_id: params[:event_id])
     .merge(locality_id: User.find(params[:user_id]).locality.id)

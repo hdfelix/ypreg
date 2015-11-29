@@ -191,7 +191,18 @@ describe Event, type: :model do
     end
   end
 
-  describe '#present_yp_from'
+  describe '#conference_guest_count' do
+    it 'returns the number of guests registered for the conference' do
+      user = create(:user)
+      reg = create(:registration, user: user, conference_guest: true)
+      event = reg.event
+      create(:registration, event: event)
+
+      expect(event.conference_guest_count).to eq 1
+    end
+  end
+
+  describe '#count_present_yp_from'
   describe '#present_serving_ones_from'
   describe '#present_trainees_from'
   describe '#present_helpers_from'
