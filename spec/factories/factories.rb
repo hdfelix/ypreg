@@ -200,6 +200,8 @@ FactoryGirl.define do
     hospitality nil
     locality { user.locality }
     has_medical_release_form false
+    vehicle_seating_capacity 5
+    conference_guest false
     status nil
     user
     event
