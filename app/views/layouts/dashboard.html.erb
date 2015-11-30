@@ -166,7 +166,9 @@
             <nav class="main-nav">
 
               <ul class="main-menu">
-                <li><%= link_to dashboard_index_url do %><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span><% end %></li>
+                <% if !(current_user.role == 'guest') %>
+                  <li><%= link_to dashboard_index_url do %><i class="fa fa-dashboard fa-fw"></i><span class="text">Dashboard</span><% end %></li>
+                <% end %>
                 <li>
                 <% if user_can_manage_site(current_user) %>
                   <a href="#" class="js-sub-menu-toggle">

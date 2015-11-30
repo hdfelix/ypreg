@@ -41,8 +41,9 @@ class LocalitiesController < ApplicationController
   end
 
   def destroy
+    locality_name = @locality.city
     if @locality.destroy
-      flash[:notice] = "Locality #{ @locality.name } deleted successfully."
+      flash[:notice] = "Locality #{locality_name} deleted successfully."
       redirect_to localities_url
     else
       flash[:error] = 'Locality could not be deleted.'
