@@ -32,6 +32,7 @@ FactoryGirl.define do
 
   ## Location factories
   factory :location do
+    location_type { Location::TYPE.sample }
     name { Faker::Address.street_name }
     description { Faker::Lorem.sentence }
     address1 { Faker::Address.street_address }

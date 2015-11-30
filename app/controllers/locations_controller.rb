@@ -63,6 +63,7 @@ class LocationsController < ApplicationController
   def location_params
     params.require(:location)
       .permit(
+        :location_type,
         :name,
         :description,
         :max_capacity,

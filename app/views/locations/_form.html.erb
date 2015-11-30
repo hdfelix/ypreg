@@ -13,6 +13,15 @@
   <% end %>
 
   <div class="form-group">
+    <%= f.label :type, class: 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.select :location_type,
+        Location::TYPE.collect { |t| t.capitalize },
+        options={ prompt: "Location Type" }, html_options={ class: 'form-control select' } %>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label :name, class: 'col-md-2 control-label' %>
     <div class="col-md-10">
       <%= f.text_field :name, class: 'form-control',
