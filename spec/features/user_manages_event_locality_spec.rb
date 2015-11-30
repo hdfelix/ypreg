@@ -79,6 +79,11 @@ feature 'User manages event localities' do
       registrations.all.each do |reg|
         within '#registrations' do
           expect(page).to have_content(reg.user.name)
+          expect(page).to have_content(reg.user.age.capitalize)
+          expect(page).to have_content(display_yes_no(reg.conference_guest))
+          expect(page).to have_content(display_yes_no(reg.has_medical_release_form))
+          # expect(page).to have_content(display_hosptitality_assignment(reg))
+          expect(page).to have_content(reg.vehicle_seating_capacity)
         end
       end
     end
@@ -89,5 +94,5 @@ feature 'User manages event localities' do
         expect(page).to have_content(user.name)
       end
     end
-  end 
+  end
 end

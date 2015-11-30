@@ -195,11 +195,13 @@ FactoryGirl.define do
   factory :registration do
     payment_type 'cash'
     has_been_paid false
-    payment_adjustment '5'
+    payment_adjustment '0'
     attend_as_serving_one false
     hospitality nil
     locality { user.locality }
     has_medical_release_form false
+    vehicle_seating_capacity 5
+    conference_guest false
     status nil
     user
     event

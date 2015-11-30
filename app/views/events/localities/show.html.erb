@@ -119,6 +119,7 @@
                 <th>MF?</th>
                 <th>Background Check</th>
                 <th>Hosp. Assignment</th>
+                <th>Vehicle seats</th>
                 <th>Notes</th>
               </tr>
             </thead>
@@ -137,6 +138,7 @@
                     <%= format_date(reg.user.background_check_date) %>
                   </td>
                   <td><%= display_hospitality_assignment(reg) %></td>
+                  <td><%= reg.vehicle_seating_capacity %></td>
                   <td></td>
                 </tr>
               <% end %>
@@ -146,7 +148,7 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="widget">
+      <div id="locality_saints" class="widget">
         <div class="widget-header">
           <h3><i class="fa fa-calendar-o"></i>Locality Saints</h3>
         </div>
