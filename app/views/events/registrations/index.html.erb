@@ -10,7 +10,7 @@
     </div>
     <div class="widget-content">
       <div class="table-responsive">
-        <table class="table table-bordered table-hover">
+        <table id="registrations" class="table table-bordered table-hover">
           <thead>
             <tr style="font: bold">
               <th>Name</th>
@@ -26,6 +26,7 @@
               <th>Medical Release Form?</th>
               <th>Serving?</th>
               <th>Background Check</th>
+              <th>Vehicle Seating Capacity</th>
               <th></th>
             </tr>
           </thead>
@@ -48,6 +49,7 @@
                 <td><%= display_yes_no(reg.has_medical_release_form) %></td>
                 <td><%= display_yes_no(reg.attend_as_serving_one) %></td>
                 <td><%= format_date(reg.user.background_check_date) %></td>
+                <td><%= reg.vehicle_seating_capacity %></td>
                 <td>
                   <%= link_to 'Show', event_registration_path(@event,reg) %>
                   <%= link_to 'Edit', edit_event_registration_path(@event,reg) %>

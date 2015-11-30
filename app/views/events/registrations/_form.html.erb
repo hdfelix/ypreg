@@ -98,7 +98,6 @@
         html_options={ class: 'form-control select' } %>
     </div>
     </div>
-
     <div class="form-group">
       <%= f.label :payment_adjustment, class: 'col-md-2 control-label' %>
       <div class="col-md-4">
@@ -108,6 +107,12 @@
           <%= f.text_field :payment_adjustment, autofocus: true, class: 'form-control', placeholder: "Amount" %>
           <div class="input-group-addon">.00</div>
         </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :vehicle_seating_capacity, class: 'col-md-2 control-label' %>
+      <div class="col-md-4">
+        <%= f.text_field :vehicle_seating_capacity, autofocus: true, class: 'form-control', placeholder: '(Including driver)' %>
       </div>
     </div>
     <div class="form-group">

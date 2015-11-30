@@ -100,6 +100,7 @@ def registration_params
     params.require(:registration)
     .permit(:payment_type,
             :payment_adjustment,
+            :vehicle_seating_capacity,
             :has_been_paid,
             :has_medical_release_form,
             :attend_as_serving_one,
