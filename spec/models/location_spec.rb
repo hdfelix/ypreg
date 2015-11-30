@@ -13,10 +13,12 @@ describe Location, type: :model do
     # it { should validate_presence_of :state }
     it { should validate_presence_of :zipcode }
     it { should validate_uniqueness_of :name }
+    it { should validate_presence_of :location_type }
   end
 
   describe 'Constants' do
     it { should have_constant :STATE_LIST }
+    it { should have_constant :TYPE }
   end
 
 	it "is valid with name, description, and address (has valid factory)" do

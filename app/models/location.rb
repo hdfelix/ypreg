@@ -6,9 +6,11 @@ class Location < ActiveRecord::Base
   # validates :state, presence: true
   # TODO: How do we validate for states now that they are in a hash variable?
   validates :zipcode, presence: true
+  validates :location_type, presence: true
 
   has_many :events
 
+  TYPE = %w(motel camp church_hall)
   STATE_LIST = [
     %w(Alabama AL),
     %w(Alaska AK),

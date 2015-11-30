@@ -14,9 +14,11 @@
           <table class="table  table-bordered table-striped table-hover">
             <thead>
               <tr>
+                <th>Type</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Address</th>
+                <th>Capacity</th>
                 <th></th>
               </tr>
             </thead>
@@ -25,20 +27,22 @@
             <% if @locations.all.count > 0 %>
               <% @locations.each do |location| %>
                 <tr id=loc_<%= location.id %>>
-              <td><%= link_to location.name, location %></td>
-              <td><%= location.description %></td>
-              <td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
-              <td>
-                <%= link_to 'Edit', edit_location_path(location) %>
-                <% if policy(Location.all).destroy? %>
-                  <%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-          <% else %>
+                  <td><%= location.location_type.capitalize %>
+                  <td><%= link_to location.name, location %></td>
+                  <td><%= location.description %></td>
+                  <td><%= location.address1 %> <%= location.city %>, <%= location.state_abbrv %>  <%= location.zipcode %></td>
+                  <td><%= location.max_capacity %></td>
+                  <td>
+                    <%= link_to 'Edit', edit_location_path(location) %>
+                    <% if policy(Location.all).destroy? %>
+                      <%= link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
               <tr><td colspan=7><center>No Locations in the database...</center></td></tr>
-          <% end %>
+            <% end %>
             </tbody>
           </table>
         </div>

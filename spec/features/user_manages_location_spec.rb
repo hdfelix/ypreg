@@ -24,6 +24,7 @@ feature 'Admin user manages a location' do
     visit new_location_path(authed_admin)
 
     expect do
+      select location.location_type.capitalize, from: 'location[location_type]'
       fill_in 'location[name]', with: location.name
       fill_in 'location[description]', with: location.description
       fill_in 'location[address1]', with: location.address1
@@ -84,6 +85,7 @@ feature 'SCYP user manages a location' do
     visit new_location_path(authed_scyp)
 
     expect do
+      select location.location_type.capitalize, from: 'location[location_type]'
       fill_in 'location[name]', with: location.name
       fill_in 'location[description]', with: location.description
       fill_in 'location[address1]', with: location.address1
