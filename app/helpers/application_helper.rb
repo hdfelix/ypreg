@@ -69,4 +69,17 @@ module ApplicationHelper
       string.slice(from,to)
     end
   end
+
+  def background_check_date_with_warning(user, date)
+    if user.background_check_valid?
+      html = content_tag(:span,"#{format_date(date)}")
+    else
+      html = content_tag(:i, '',class: ['fa','fa-exclamation-triangle'])
+      html += ' '
+      html += content_tag(:span,content_tag(:strong,"#{format_date(date)}"))
+      html += tag(:br)
+      html += content_tag(:span, "(New Background Check needed to attend any event.)")
+      html.html_safe
+    end
+  end
 end
