@@ -45,6 +45,7 @@ coverage
 
 # ctags
 tags
+.ctags
 
 # Rubymine
 /.idea/*
