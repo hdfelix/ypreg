@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.2.3'
+ruby '2.3.0'
 
 gem 'rails', ' ~> 4.2'
-gem 'actionpack'
 
 gem 'pg'
 gem 'bootstrap-sass', '~> 3.2.0'
