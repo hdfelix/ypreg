@@ -32,7 +32,7 @@ describe Location, type: :model do
 	it "is invalid without a name" do
     expect(build(:location, name: nil)).to_not be_valid
 	end
-	
+
 	it "is invalid without an address1 line" do
     expect(build(:location, address1: nil)).to_not be_valid
 	end
@@ -51,5 +51,5 @@ describe Location, type: :model do
   #               zipcode: '00000')
   #        ).to_not be_valid
   #end
-end	
+end
 

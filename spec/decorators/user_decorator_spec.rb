@@ -22,18 +22,18 @@ describe UserDecorator do
     end
 
     it "returns 'danger' if background check is expired"  do
-      @user.background_check_date = 40.months.ago 
+      @user.background_check_date = 40.months.ago
       expect(@user.background_check_date_row_class).to eq 'danger'
     end
 
     it "returns 'warning' if background check expires within 2 months" do
-      @user.background_check_date = 35.months.ago 
+      @user.background_check_date = 35.months.ago
       expect(@user.background_check_date_row_class).to eq 'warning'
     end
 
     it "does not return a class name if background check has not expired \
         and won't expire for more than 2 months" do
-      @user.background_check_date = 20.months.ago 
+      @user.background_check_date = 20.months.ago
       expect(@user.background_check_date_row_class).to eq ''
     end
   end
@@ -45,18 +45,18 @@ describe UserDecorator do
     end
 
     it "that returns 'danger' if background check is expired"  do
-      @user.background_check_date = 40.months.ago 
+      @user.background_check_date = 40.months.ago
       expect(@user.background_check_date_bg_class).to eq 'bg-danger'
     end
 
     it "that returns 'warning' if background check expires within 2 months" do
-      @user.background_check_date = 35.months.ago 
+      @user.background_check_date = 35.months.ago
       expect(@user.background_check_date_bg_class).to eq 'bg-warning'
     end
 
     it "that does not return a class name if background check has not expired \
           and won't expire for more than 2 months" do
-      @user.background_check_date = 20.months.ago 
+      @user.background_check_date = 20.months.ago
       expect(@user.background_check_date_bg_class).to eq ''
     end
   end

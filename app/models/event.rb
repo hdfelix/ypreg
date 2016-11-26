@@ -100,7 +100,7 @@ class Event < ActiveRecord::Base
   end
 
   def conference_guests_from(locality)
-    registrations.includes(:user).where(locality: locality, conference_guest: true) 
+    registrations.includes(:user).where(locality: locality, conference_guest: true)
   end
 
   def conference_guest_count

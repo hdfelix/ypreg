@@ -13,7 +13,7 @@ describe EventCopyPolicy do
     end
 
     it 'allows access for an admin' do
-      expect(subject).to permit(admin) 
+      expect(subject).to permit(admin)
     end
   end
 end

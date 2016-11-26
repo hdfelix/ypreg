@@ -27,7 +27,7 @@ namespace :ypreg do
         print_colored_text("\n\nYour locality name can't be blank.\n\n",warning_text_color)
       else
         locality['city'] = input
-      end 
+      end
     end
 
     # Locality state abbreviation

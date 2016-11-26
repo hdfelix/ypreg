@@ -74,7 +74,7 @@ describe LocalitiesController, type: :controller do
       end
 
       it 'assigns a newly created but unsaved locality as @locality' do
-        post :create, locality: { city: '' } 
+        post :create, locality: { city: '' }
         expect(Locality.all.count).to eq(0)
         expect(assigns(:locality)).to be_a_new(Locality)
       end

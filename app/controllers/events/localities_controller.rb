@@ -42,7 +42,7 @@ class Events::LocalitiesController < ApplicationController
 
       if @event.save
         flash[:notice] = "Registrations added successfully."
-        redirect_to @event 
+        redirect_to @event
       else
         flash[:error] = "There was a problem saving these event registrations."
         render action: 'new'

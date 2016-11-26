@@ -90,7 +90,7 @@ feature 'User copies an event' do
   let (:authed_admin) { create_logged_in_admin }
   before(:each) { @event = create(:event) }
 
-  scenario 'successfully' do 
+  scenario 'successfully' do
     visit events_path(authed_admin)
     click_link 'Copy'
     expect(page). to have_content "#{@event.title} (copy)"

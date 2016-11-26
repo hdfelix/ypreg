@@ -36,7 +36,7 @@ feature 'Signed-in user' do
 
   scenario '- can see expected registered user info' do
     reg = create(:registration, :yp,  event: event)
-    
+
     visit event_registrations_path(event, authed_admin)
     # within(:css, "#reg-#{reg.id}") do
 

@@ -65,7 +65,7 @@ describe LocalityPolicy do
       expect(subject).not_to permit(trainee)
     end
 
-    it 'denies access to speaking_brother users' do 
+    it 'denies access to speaking_brother users' do
       expect(subject).not_to permit(speaking_brother)
     end
 

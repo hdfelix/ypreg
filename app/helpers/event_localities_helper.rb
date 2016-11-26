@@ -1,4 +1,4 @@
-module EventLocalitiesHelper  
+module EventLocalitiesHelper
   def decorated_user(user)
     # authorize users
 
