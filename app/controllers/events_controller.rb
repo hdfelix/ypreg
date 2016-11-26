@@ -22,6 +22,7 @@ class EventsController < ApplicationController
 
   def edit
     # @event set & authorized  with 'before_action'
+    @return_to = params[:r]
   end
 
   def create
@@ -38,6 +39,7 @@ class EventsController < ApplicationController
 
   # POST /event/1
   def update
+    @return_to = params[:r]
     # @event set & authorized with 'before_action'
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
