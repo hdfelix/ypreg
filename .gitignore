@@ -41,7 +41,6 @@ snippets.html.erb
 coverage
 
 # Rubocop
-.rubocop_todo.yml
 
 # ctags
 tags
