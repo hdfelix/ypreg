@@ -102,7 +102,11 @@
 	<div class="form-group">
 		<div class= "col-md-12">
 			<span class="pull-right">
-				<%= link_to 'Back', events_path, class: 'btn btn-default' %>
+        <% if @return_to == 'index' %>
+          <%= link_to 'Back', event_path(@event), class: 'btn btn-default' %>
+        <% else %>
+          <%= link_to 'Back', events_path, class: 'btn btn-default' %>
+        <% end %>
 				<%= f.submit "Submit", class: 'btn btn-primary' %>
 			</span>
 		</div>

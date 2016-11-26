@@ -45,7 +45,7 @@
             </table>
           </div>
             <% if policy(Event.all).edit? %>
-              <%= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Edit', edit_event_path(@event, r: 'index'), class: 'btn btn-primary btn-sm' %>
             <% end %>
             <% if display_event_manage_button? %>
             <div id="event-info-btn-group" class="btn-group">
