@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.2.3'
 
-gem 'rails', '4.1.8'
+gem 'rails', ' ~> 4.2'
+gem 'actionpack'
 
 gem 'pg'
 gem 'bootstrap-sass', '~> 3.2.0'
@@ -66,7 +67,7 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'simplecov-csv', require: false
   gem 'coverband'
-  gem 'rubocop', require: false
+  gem 'rubocop', '~> 0.45.0', require: false
   gem 'rubocop-rspec', require: false
   gem 'letter_opener', group: :development
 end
