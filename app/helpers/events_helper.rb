@@ -64,11 +64,10 @@ module EventsHelper
 
   def style_balance(balance)
     if balance > 0
-      t = content_tag('span',number_to_currency(balance), class: 'negative').html_safe
+      content_tag('span',number_to_currency(balance), class: 'negative').html_safe
     else
-      t = content_tag('span',number_to_currency(balance)).html_safe
+      content_tag('span',number_to_currency(balance)).html_safe
     end
-    return t
   end
 
   def show_attendance_menu_option?(event)

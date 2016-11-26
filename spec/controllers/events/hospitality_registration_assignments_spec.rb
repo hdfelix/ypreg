@@ -13,10 +13,10 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
     end
 
     it 'assigns event localities to @event_localities sorted asc' do
-      locality_1 = create(:locality, city: 'Portstown')
-      locality_2 = create(:locality, city: 'Beantown')
-      EventLocality.create(event: event, locality: locality_1)
-      EventLocality.create(event: event, locality: locality_2)
+      locality1 = create(:locality, city: 'Portstown')
+      locality2 = create(:locality, city: 'Beantown')
+      EventLocality.create(event: event, locality: locality1)
+      EventLocality.create(event: event, locality: locality2)
 
       get :index, event_id: event.id
 
