@@ -2,7 +2,7 @@
 # self.hospitality is the assigned hospitality for the user.
 
 class Registration < ActiveRecord::Base
-  PAYMENT_TYPE = %w(cash, check)
+  PAYMENT_TYPE = %w(cash check)
   STATUS = %w(attended excused y)
 
   belongs_to :user

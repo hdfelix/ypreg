@@ -1,12 +1,16 @@
 inherit_from: .rubocop_todo.yml
+
+Rails:
+  Enabled: true
+
 AllCops:
-  # Include:
+  Include:
   #   - '**/RakeFile'
+    - '**/config.ru'
   Exclude:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
-Rails:
-  Enabled: true
+
 Style/VariableNumber:
   EnforcedStyle: 'normalcase'
