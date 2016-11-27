@@ -50,6 +50,6 @@ YpwReg::Application.configure do
   config.active_record.raise_in_transactional_callbacks = true
 
   # Simplecov (https://github.com/colszowka/simplecov#want-to-use-spring-with-simplecov)
-  config.serve_static_files = false
-  config.eager_load = false
+  config.serve_static_files = true
+  # config.eager_load = false
 end
