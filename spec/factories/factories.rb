@@ -26,7 +26,7 @@ FactoryGirl.define do
 
   factory :confirmed_user, parent: :user, aliases: [:contact_person] do
     after(:build) do |cu|
-      cu.confirm!
+      cu.confirm
     end
   end
 
