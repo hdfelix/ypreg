@@ -16,6 +16,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'foreigner'
 gem 'immigrant'
 gem 'skylight'
+gem 'awesome_print'
 
 # Authentication
 gem 'devise'
@@ -42,7 +43,6 @@ group :production do
 end
 
 group :development do
-  gem 'awesome_print'
   gem 'better_errors'
   gem 'quiet_assets'
   gem 'guard-livereload'

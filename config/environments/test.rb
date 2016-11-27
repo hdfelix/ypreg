@@ -42,6 +42,13 @@ YpwReg::Application.configure do
   config.active_support.deprecation = :stderr
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
+  # Currently, Active Record suppresses errors raised within
+  # `after_rollback`/`after_commit` callbacks and only print them to the logs.
+  # In the next version, these errors will no longer be suppressed. Instead,
+  # the errors will propagate normally just like in other Active Record callbacks.
+  # You can opt into the new behavior and remove this warning by setting:
+  config.active_record.raise_in_transactional_callbacks = true
+
   # Simplecov (https://github.com/colszowka/simplecov#want-to-use-spring-with-simplecov)
   config.serve_static_files = false
   config.eager_load = false
