@@ -57,14 +57,14 @@ group :development, :test do
   gem 'pry-rescue'
   gem 'pry-byebug'
   gem 'binding_of_caller'
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers', '~> 3.1.1'
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'simplecov', require: false
-  gem 'simplecov-csv', require: false
+#   gem 'simplecov', require: false
+#   gem 'simplecov-csv', require: false
   gem 'coverband'
   gem 'rubocop', '~> 0.45.0', require: false
   gem 'rubocop-rspec', require: false
