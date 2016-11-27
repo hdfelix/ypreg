@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
     locality = current_user.locality
     # Attending
     registration_count = Registration.where(event: next_event, locality: locality).count
-    total_users = Locality.find(locality).users.count
+    total_users = Locality.find(locality.id).users.count
     chart_values['att_ratio'] = "#{registration_count} / #{total_users}"
     chart_values['att_ratio_width_percentage'] = "width: #{(registration_count.to_f / total_users.to_f) * 100}%"
     chart_values['att_value_now'] = registration_count
