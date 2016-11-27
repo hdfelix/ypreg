@@ -118,8 +118,9 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
         HospitalityRegistrationAssignment
           .create(hospitality: hospitality,
                   registration: registration,
-                  locality: locality)
-        saint_hospitality_ids = { users.first.to_param => [''] }
+                  locality: locality,
+                  event: event)
+        saint_hospitality_ids = { registration.user.to_param => [''] }
 
         post :assign,
              event_id: event.id,
