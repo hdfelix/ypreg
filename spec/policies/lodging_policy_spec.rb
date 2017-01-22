@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe LodgingPolicy do
   subject { described_class }
-  let (:admin) { FactoryGirl.build_stubbed :user, role: 'admin' }
-  let (:scyp_user) { FactoryGirl.build_stubbed :user, role: 'scyp' }
-  let (:other_user) { FactoryGirl.build_stubbed :user}
+  let(:admin) { FactoryGirl.build_stubbed :user, role: 'admin' }
+  let(:scyp_user) { FactoryGirl.build_stubbed :user, role: 'scyp' }
+  let(:other_user) { FactoryGirl.build_stubbed :user}
 
   permissions :index?, :show?, :new?, :edit?, :update?, :create? do
     context 'it denies access to' do

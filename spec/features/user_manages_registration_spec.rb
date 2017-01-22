@@ -5,10 +5,10 @@ feature 'Signed-out user views events' do
 
 	scenario ' - can see a list of up-coming events in Welcome page' do
 		visit root_path
-		expect(page).to have_content ('Upcoming events')
-		expect(page).to have_content (event.title)
-		expect(page).to have_content(format_date(event.begin_date))
-		expect(page).to have_content(format_date(event.end_date))
+		expect(page).to have_content 'Upcoming events'
+		expect(page).to have_content event.title
+		expect(page).to have_content format_date(event.begin_date)
+		expect(page).to have_content format_date(event.end_date)
 	end
 
 	scenario ' - before signing in sees \'sign in to register\' by events' do
@@ -19,7 +19,7 @@ feature 'Signed-out user views events' do
 end
 
 feature 'Signed-in user' do
-	let (:authed_admin) { create_logged_in_admin }
+	let(:authed_admin) { create_logged_in_admin }
   let!(:event) { create(:event) }
 
 	scenario '- can register for an event' do
@@ -87,7 +87,7 @@ feature 'Signed-in user' do
 end
 
 feature 'User is unsuccessful in creating a registration' do
-	let (:authed_admin) {
+	let(:authed_admin) {
 		create_logged_in_admin
 	}
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # Admin users
 feature 'Admin user manages lodgings' do
-  let (:authed_admin) { create_signed_in_user_by_role('admin') }
+  let(:authed_admin) { create_signed_in_user_by_role('admin') }
 
   scenario 'Can access lodging#index' do
     visit lodgings_path(authed_admin)
@@ -96,7 +96,7 @@ end
 
 # SCYP users
 feature 'SCYP user manages lodgings' do
-  let (:authed_scyp) { create_signed_in_user_by_role('scyp') }
+  let(:authed_scyp) { create_signed_in_user_by_role('scyp') }
 
   scenario 'Can access lodging#index' do
     visit lodgings_path(authed_scyp)

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature "User visits Event#show" do
-  let (:authed_admin) {
+  let(:authed_admin) {
     create_logged_in_admin
   }
 
@@ -26,12 +26,12 @@ feature "User visits Event#show" do
 end
 
 feature 'User manages event localities' do
-  let (:authed_admin) { create_logged_in_admin }
+  let(:authed_admin) { create_logged_in_admin }
 
   context 'Show view' do
-    let (:event) { create(:event_with_registrations) }
-    let (:person) { event.registrations.sample.user }
-    let (:locality) { person.locality }
+    let(:event) { create(:event_with_registrations) }
+    let(:person) { event.registrations.sample.user }
+    let(:locality) { person.locality }
 
     it 'Displays a tip with Check Payable To information' do
       visit event_locality_path(event, locality, authed_admin)

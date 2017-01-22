@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Events::RegistrationsController, type: :controller do
-  let (:event) { create(:event_with_registrations) }
+  let(:event) { create(:event_with_registrations) }
   before(:example) do
     sign_in_user
   end

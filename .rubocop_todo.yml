@@ -19,10 +19,6 @@ Lint/LiteralInInterpolation:
   Exclude:
     - 'spec/factories/factories.rb'
 
-# Offense count: 65
-Lint/ParenthesesAsGroupedExpression:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.

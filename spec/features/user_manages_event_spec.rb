@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User creates an event' do
-  let (:authed_admin) { create_logged_in_admin }
+  let(:authed_admin) { create_logged_in_admin }
   before(:each) { @event = create(:event) }
 
   scenario '- can access the Events index' do
@@ -87,7 +87,7 @@ feature 'User creates an event' do
 end
 
 feature 'User copies an event' do
-  let (:authed_admin) { create_logged_in_admin }
+  let(:authed_admin) { create_logged_in_admin }
   before(:each) { @event = create(:event) }
 
   scenario 'successfully' do
@@ -98,7 +98,7 @@ feature 'User copies an event' do
 end
 
 feature 'User edits an event' do
-  let (:authed_admin) { create_logged_in_admin }
+  let(:authed_admin) { create_logged_in_admin }
   before(:each) { @event = create(:event) }
 
   scenario ' - can access edit_event_path' do
@@ -114,7 +114,7 @@ feature 'User edits an event' do
 end
 
 feature 'User destroys event' do
-  let (:authed_admin) { create_logged_in_admin }
+  let(:authed_admin) { create_logged_in_admin }
   before(:each) { @event = create(:event) }
 
   context 'Successfully' do

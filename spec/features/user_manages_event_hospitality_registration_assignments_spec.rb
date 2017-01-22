@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User manages hospitality registration assignments' do
-  let (:authed_admin) {
+  let(:authed_admin) {
     create_logged_in_admin
   }
 

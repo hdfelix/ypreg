@@ -29,7 +29,7 @@ describe EventsHelper do
   describe '#event_button_text_based_on_user_role' do
     context 'if the user is a speaking brother' do
       it 'changes the text of the first button on the event partial based on role' do
-        expect(event_button_text_based_on_user_role).to eq ('View')
+        expect(event_button_text_based_on_user_role).to eq 'View'
       end
     end
   end

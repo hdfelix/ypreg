@@ -53,7 +53,7 @@ describe Lodging, type: :model do
       it 'displays the lodging description' do
         lodging = FactoryGirl.create(:lodging, description: 'My lodging')
 
-        expect(lodging.display_description).to eq ('My lodging')
+        expect(lodging.display_description).to eq 'My lodging'
       end
 
       it "displays '--' if the lodging has no description" do

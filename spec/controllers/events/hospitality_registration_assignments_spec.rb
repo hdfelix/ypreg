@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Events::HospitalityRegistrationAssignmentsController, type: :controller do
-  let (:event) { create(:event) }
+  let(:event) { create(:event) }
   before(:example) do
     sign_in_user
   end
@@ -32,7 +32,7 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
   end
 
   describe 'GET :show' do
-    let (:locality) { create(:locality) }
+    let(:locality) { create(:locality) }
 
     it 'assigns the current event to @event' do
       get :show, event_id: event.id, locality_id: locality.id
@@ -56,7 +56,7 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
   end
 
   describe 'POST :assign' do
-    let (:locality) { create(:locality) }
+    let(:locality) { create(:locality) }
 
     it 'assigns the current event to @event' do
       post :show, event_id: event.id, locality_id: locality.id
@@ -68,10 +68,10 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
       expect(assigns(:locality)).to eq locality
     end
 
-    let (:event) { create(:event_with_registrations, ensure_unique_locality: true) }
-    let (:users) { event.registrations.map(&:user) }
-    let (:saint_hospitality_ids) { { users.first.to_param => [''] } }
-    let (:hospitality) do
+    let(:event) { create(:event_with_registrations, ensure_unique_locality: true) }
+    let(:users) { event.registrations.map(&:user) }
+    let(:saint_hospitality_ids) { { users.first.to_param => [''] } }
+    let(:hospitality) do
       create(:hospitality, event: event, lodging: create(:lodging))
     end
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User adds Hospitality to event' do
-  let (:authed_admin) {
+  let(:authed_admin) {
     create_logged_in_admin
   }
 

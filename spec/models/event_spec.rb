@@ -37,7 +37,7 @@ describe Event, type: :model do
                begin_date: 1.day.ago,
                end_date: (Time.zone.now + 3.days)) # current event
 
-        expect(Event.current.count).to eq (1)
+        expect(Event.current.count).to eq 1
       end
     end
 
@@ -74,7 +74,7 @@ describe Event, type: :model do
                begin_date: 1.day.ago,
                end_date: (today + 3.days)) # current event
 
-        expect(Event.in_the_future.count).to eq (1)
+        expect(Event.in_the_future.count).to eq 1
       end
     end
 
@@ -94,7 +94,7 @@ describe Event, type: :model do
                begin_date: 1.day.ago,
                end_date: (today + 3.days)) # current event
 
-        expect(Event.in_the_past.count).to eq (1)
+        expect(Event.in_the_past.count).to eq 1
       end
     end
 
@@ -160,7 +160,7 @@ describe Event, type: :model do
       usr2 = event.registrations.second.user
 
       expect(event.registered_saints_from_locality(loc).map(&:id))
-        .to eq ([usr1.id, usr2.id])
+        .to eq [usr1.id, usr2.id]
     end
   end
 

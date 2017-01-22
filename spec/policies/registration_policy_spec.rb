@@ -3,8 +3,8 @@ require 'rails_helper'
 describe RegistrationPolicy do
   subject { described_class }
 
-  let (:admin) { FactoryGirl.build_stubbed :user, role: 'admin' }
-  let (:other_user) { FactoryGirl.build_stubbed :user }
+  let(:admin) { FactoryGirl.build_stubbed :user, role: 'admin' }
+  let(:other_user) { FactoryGirl.build_stubbed :user }
 
   permissions :index?, :show?, :new?, :edit?, :update?, :create?, :destroy? do
     context 'it denies access to all except' do

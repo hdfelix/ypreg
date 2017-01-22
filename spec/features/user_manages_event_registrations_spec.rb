@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Locality Contact creates an event registration' do
-  let (:authed_admin) { create_signed_in_user_by_role('admin') }
-  let (:authed_loc_contact) { create_signed_in_user_by_role('loc_contact') }
+  let(:authed_admin) { create_signed_in_user_by_role('admin') }
+  let(:authed_loc_contact) { create_signed_in_user_by_role('loc_contact') }
   before(:each) { @event = create(:event) }
 
   context 'When there are no registrations from their locality' do
@@ -62,7 +62,7 @@ feature 'Locality Contact creates an event registration' do
       fill_in 'registration[vehicle_seating_capacity]', with: 5
       click_button 'Register'
 
-      within ('div#locality_summary') do
+      within('div#locality_summary') do
         localities = 2
         balance = localities * @event.registration_cost
         expect(page).to have_content("#{@locality.city} #{localities}")

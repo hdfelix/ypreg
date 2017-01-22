@@ -28,7 +28,7 @@ describe EventLocality, type: :model do
 
     describe '#locality_id' do
       it 'returns the locality id' do
-        expect(el.locality.id).to eq (el.locality_id)
+        expect(el.locality.id).to eq el.locality_id
       end
 
       it 'should not be nil' do
@@ -38,7 +38,7 @@ describe EventLocality, type: :model do
 
     describe '#locality_city' do
       it 'returns the locality city' do
-        expect(el.locality.city).to eq (el.locality_city)
+        expect(el.locality.city).to eq el.locality_city
       end
 
       it 'does not return nil' do

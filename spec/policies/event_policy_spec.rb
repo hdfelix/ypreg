@@ -3,8 +3,8 @@ require 'rails_helper'
 describe EventPolicy do
   subject { described_class }
 
-  let (:admin) { FactoryGirl.build_stubbed :user, role: 'admin' }
-  let (:scyp_user) { FactoryGirl.build_stubbed :user, role: 'scyp' }
+  let(:admin) { FactoryGirl.build_stubbed :user, role: 'admin' }
+  let(:scyp_user) { FactoryGirl.build_stubbed :user, role: 'scyp' }
   let(:loc_contact_user) { FactoryGirl.build_stubbed :user, role: 'loc_contact' }
 
   permissions :index?, :show?, :new?, :edit?, :update?, :create?, :destroy? do
