@@ -26,4 +26,32 @@ describe Events::LocalitiesController, type: :controller do
       expect(assigns(:event_localities)).to match_array(event.localities)
     end
   end
+
+  describe 'POST :create' do
+    context 'with valid params' do
+      let(:event) { create(:event_with_registrations, ensure_unique_locality: false, registrations_count: 1) }
+      let(:locality) { create(:locality) }
+      before(:example) do
+        post :create, event_id: event.id, locality_id: locality.id
+      end
+
+      it 'assigns event to @event' do
+        expect(assigns(:event)).to eq event
+      end
+
+      it 'assigns locality to @locality' do
+        expect(assigns(:locality)).to eq locality
+      end
+
+      it 'assings event_locality to @event_locality' do
+        expect(assigns(:event_locality).event_id).to eq event.id
+        expect(assigns(:event_locality).locality_id).to eq locality.id
+      end
+
+      it 'assings locality user ids to @locality_user_ids'
+      it 'renders the events/localities index on save'
+
+      it' displays a flash notice'
+    end
+  end
 end
