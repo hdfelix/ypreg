@@ -60,7 +60,7 @@ FactoryGirl.define do
 
   factory :lodging do
     sequence(:name) { |n| "Household #{n}" }
-    description ''
+    sequence(:description) { |n| "Description of household #{n}" }
     address1 { Faker::Address.street_address }
     address2 ''
     city { Faker::Address.city }
@@ -72,9 +72,6 @@ FactoryGirl.define do
     locality
     contact_person { create(:confirmed_user) }
 
-    after(:build) do |l|
-      l.description = "Description for #{l.name}"
-    end
     trait :with_min_cap_of_3 do
       min_capacity 3
     end
