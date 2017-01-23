@@ -33,8 +33,8 @@ spec/Guardfile
 # My code snippets file
 snippets.html.erb
 
-# Public assets
 # /public/assets
+/public/capybara.html
 /public/dev-assets
 
 # Simplecov
