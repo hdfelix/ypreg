@@ -60,7 +60,7 @@ feature 'User manages attendance at an event' do
         ev_loc.registrations.each do |reg|
           expect(page).to have_content(reg.user.name)
           expect(page).to have_content(reg.user.role)
-          expect(page).to have_content('Update')
+          expect(page).to have_content('Edit')
         end
       end
     end
@@ -107,13 +107,18 @@ feature 'User manages attendance at an event' do
     loc = create(:locality)
 
     user = create(:user, locality: loc)
+    hosp = create(:hospitality, event: event, lodging: create(:lodging), locality: loc)
+    create(:registration, event: event, user: user, hospitality: hosp)
+
     visit "events/#{event.id}/registrations?view=attendance"
 
     expect(page).to have_content "#{user.name}"
     expect(page).to have_content 'Edit'
 
     click_link_or_button user.name
+
     expect(page).to have_css('div.basic-info')
+
     within(:css, 'div.basic-info') do
       expect(page).to have_content 'Attendance Info'
       expect(page).to have_content user.name
@@ -122,7 +127,6 @@ feature 'User manages attendance at an event' do
     expect(page).to have_content 'Edit'
 
     click_link_or_button "Edit"
-
     check('registration[has_medical_release_form]')
     select('attended', from: 'registration[status]')
     click_button 'Update'

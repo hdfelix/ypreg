@@ -33,8 +33,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  # launchy
-
 	config.include FeatureLoginMacros
 	config.include ApplicationHelper
   config.include WaitForAjax
