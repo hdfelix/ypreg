@@ -15,8 +15,10 @@ require 'capybara-screenshot/rspec'
 Capybara.javascript_driver = :webkit # :poltergeist
 
 # Capybara Screenshot config
+Capybara.asset_host = 'http://localhost:3000'
+# Capybara::Screenshot.autosave_on_failure = false
 Capybara::Screenshot.webkit_options = { width: 1024, height: 1024 }
-Capybara::Screenshot.prune_strategy = { keep: 20 }
+Capybara::Screenshot.prune_strategy = :keep_last_run
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -30,6 +32,8 @@ RSpec.configure do |config|
     c.include_chain_clauses_in_custom_matcher_descriptions = true
     c.syntax = :expect
   end
+
+  # launchy
 
 	config.include FeatureLoginMacros
 	config.include ApplicationHelper

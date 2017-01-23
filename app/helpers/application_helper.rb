@@ -72,7 +72,7 @@ module ApplicationHelper
 
   def background_check_date_with_warning(user, date)
     if user.background_check_valid?
-      html = content_tag(:span,"#{format_date(date)}")
+      content_tag(:span,"#{format_date(date)}")
     else
       html = content_tag(:i, '',class: ['fa','fa-exclamation-triangle'])
       html += ' '
