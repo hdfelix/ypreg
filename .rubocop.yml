@@ -8,6 +8,7 @@ AllCops:
   #   - '**/RakeFile'
     - '**/config.ru'
   Exclude:
+    - '.rbenv/**/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'

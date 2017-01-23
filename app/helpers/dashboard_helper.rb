@@ -6,10 +6,12 @@ module DashboardHelper
   # Event widget helpers
   def event_widget_header
     content = current_or_future_events_present? ? Event.next.first.title : ''
-    content_tag('h5',
-                content_tag(:i, '', class: 'fa fa-info-circle') +
-                " #{shorten(content, 0, 30, true)}",
-                class: 'label label-default')
+    content_tag(
+      'h5',
+      content_tag(:i, '', class: 'fa fa-info-circle') +
+      " #{shorten(content, 0, 30, true)}",
+      class: 'label label-default'
+    )
   end
 
   def display_event_widget_based_on(role)
@@ -41,15 +43,19 @@ module DashboardHelper
   end
 
   def data_value_progress_div(chart_values, attribute_name)
-    content_tag(:div,
-                aria_chart_percentage(chart_values, attribute_name),
-                class: 'progress progress-xs')
+    content_tag(
+      :div,
+      aria_chart_percentage(chart_values, attribute_name),
+      class: 'progress progress-xs'
+    )
   end
 
   def aria_chart_percentage(chart_values, attribute_name)
-    content_tag(:div,
-                aria_chart_percentage_span,
-                bar_chart_attributes(chart_values, attribute_name))
+    content_tag(
+      :div,
+      aria_chart_percentage_span,
+      bar_chart_attributes(chart_values, attribute_name)
+    )
   end
 
   def aria_chart_percentage_span
@@ -67,13 +73,14 @@ module DashboardHelper
   end
 
   def get_hash_id_prefix_from(attribute_name)
-    prefix = case attribute_name
-             when 'Capacity' then 'cap'
-             when 'Localities' then 'loc'
-             when 'Hospitality' then 'hosp'
-             when 'Payments' then 'pmt'
-             when 'Attending' then 'att'
-             end
+    prefix =
+      case attribute_name
+        when 'Capacity' then 'cap'
+        when 'Localities' then 'loc'
+        when 'Hospitality' then 'hosp'
+        when 'Payments' then 'pmt'
+        when 'Attending' then 'att'
+      end
     prefix
   end
 end
