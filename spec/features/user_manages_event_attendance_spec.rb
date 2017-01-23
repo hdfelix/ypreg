@@ -102,27 +102,38 @@ feature 'User manages attendance at an event' do
     expect(page).to have_content('Back')
   end
 
-  scenario "can access the edit an attendance (registration) record by clicking on the user name" do
+  scenario "can edit an attendance (registration) record by clicking on the user name" do
     event = create(:event)
     loc = create(:locality)
 
     user = create(:user, locality: loc)
-    hosp = create(:hospitality,
-                  event: event,
-                  lodging: create(:lodging),
-                  locality: loc)
-    reg = create(:registration, event: event, user: user, hospitality: hosp)
-
     visit "events/#{event.id}/registrations?view=attendance"
 
-    # within("#user_#{user.id}") do
-    #  click_link_or_button "Edit"
-    # end
-    click_link_or_button "Update"
+    expect(page).to have_content "#{user.name}"
+    expect(page).to have_content 'Edit'
+
+    click_link_or_button user.name
+    expect(page).to have_css('div.basic-info')
+    within(:css, 'div.basic-info') do
+      expect(page).to have_content 'Attendance Info'
+      expect(page).to have_content user.name
+    end
+
+    expect(page).to have_content 'Edit'
+
+    click_link_or_button "Edit"
 
     check('registration[has_medical_release_form]')
     select('attended', from: 'registration[status]')
     click_button 'Update'
+
+    expect(page).to have_content 'successfully'
+    within(:css, 'td#status') do
+      expect(page).to have_content 'attended'
+    end
+    within(:css, 'td#medical_release_form') do
+      expect(page).to have_content 'Yes'
+    end
   end
 
   scenario "Can see a warning if background check is expired"
