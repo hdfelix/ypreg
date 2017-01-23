@@ -1,4 +1,3 @@
-
 # Read about factories at https://github.com/thoughtbot/factory_girl
 require 'faker'
 
@@ -61,7 +60,7 @@ FactoryGirl.define do
 
   factory :lodging do
     sequence(:name) { |n| "Household #{n}" }
-    description "Description for #{:name}"
+    sequence(:description) { |n| "Description of household #{n}" }
     address1 { Faker::Address.street_address }
     address2 ''
     city { Faker::Address.city }

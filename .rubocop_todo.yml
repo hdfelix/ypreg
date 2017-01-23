@@ -13,33 +13,6 @@ Lint/AssignmentInCondition:
     - 'app/helpers/events_helper.rb'
     - 'app/models/event.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Lint/LiteralInInterpolation:
-  Exclude:
-    - 'spec/factories/factories.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'app/controllers/events/copies_controller.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-
-# Offense count: 3
-Lint/UselessAssignment:
-  Exclude:
-    - 'app/controllers/events/copies_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'spec/features/user_manages_event_attendance_spec.rb'
-
 # Offense count: 25
 Metrics/AbcSize:
   Max: 50

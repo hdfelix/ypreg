@@ -38,7 +38,7 @@ class Events::RegistrationsController < ApplicationController
     @user = User.find(params[:user_id])
     @registration = @user.registrations.new(registration_params)
     if @registration.save
-      flash[:notice] = 'Registration created succesfully'
+      flash[:notice] = 'Registration created successfully'
       redirect_to event_path(@event)
     else
       flash[:error] = 'Error creating registration'
@@ -66,10 +66,10 @@ class Events::RegistrationsController < ApplicationController
 
     if @registration.update_attributes(registration_params)
       if params[:view] == 'attendance'
-        flash[:notice] = 'Attendance created succesfully'
+        flash[:notice] = 'Attendance updated successfully.'
         redirect_to event_registrations_url(@event, view: 'attendance')
       else
-        flash[:notice] = 'Registration created succesfully'
+        flash[:notice] = 'Registration updated successfully.'
         if params[:return_to].nil?
           redirect_to event_registrations_path(@event)
         else

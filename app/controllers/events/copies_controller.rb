@@ -2,17 +2,20 @@ class Events::CopiesController < ApplicationController
   def create
     event = Event.find(params[:event_id])
     @event = event.copy
-    if @event.errors.count == 0
+    if @event.errors.count.zero?
       flash[:notice] = 'Event copied successfully.'
       redirect_to event_path(@event)
     else
-      errors ""
-      @event.errors.each do |e|
-        errors += " #{msg}\n"
-      end
-
-      msg = "Event #{event.title} could not be copied: \n\ #{errors}"
+      error_message = create_errors_message
+      msg = "Event #{event.title} could not be copied: \n\ #{error_message}"
       flash[:error] = msg
+    end
+  end
+
+  def create_errors_message
+    errors = ''
+    @event.errors.each do
+      errors + " #{msg}\n"
     end
   end
 end
