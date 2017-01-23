@@ -1,4 +1,3 @@
-
 # Read about factories at https://github.com/thoughtbot/factory_girl
 require 'faker'
 
@@ -61,7 +60,7 @@ FactoryGirl.define do
 
   factory :lodging do
     sequence(:name) { |n| "Household #{n}" }
-    description "Description for #{:name}"
+    description ''
     address1 { Faker::Address.street_address }
     address2 ''
     city { Faker::Address.city }
@@ -73,6 +72,9 @@ FactoryGirl.define do
     locality
     contact_person { create(:confirmed_user) }
 
+    after(:build) do |l|
+      l.description = "Description for #{l.name}"
+    end
     trait :with_min_cap_of_3 do
       min_capacity 3
     end
