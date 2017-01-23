@@ -10,7 +10,7 @@ class Events::HospitalitiesController < ApplicationController
     ids_count = params[:lodging_ids].nil? ? 0 : params[:lodging_ids].count
     add_hospitalities_to_event(ids_count)
 
-    if ids_count > 0 && @event.save
+    if ids_count.positive? && @event.save
       flash[:notice] = 'Hospitalities added successfully.'
       redirect_to @event
     else
@@ -24,12 +24,7 @@ class Events::HospitalitiesController < ApplicationController
     ids_count =
       params[:hospitality_lodging_ids].nil? ? 0 : params[:hospitality_lodging_ids].count
     if ids_count != 0
-      hospitalities =
-        Hospitality
-        .joins(:lodging)
-        .where(lodging_id: params[:hospitality_lodging_ids])
-
-      hospitalities.each(&:destroy)
+      remove_hospitalities
       redirect_to @event
     else
       flash[:error] = 'No hospitalities selected.'
@@ -44,5 +39,14 @@ class Events::HospitalitiesController < ApplicationController
       lodging = Lodging.find(params[:lodging_ids][c])
       @event.hospitalities << Hospitality.create(lodging: lodging)
     end
+  end
+
+  def remove_hospitalities
+    hospitalities =
+      Hospitality
+      .joins(:lodging)
+      .where(lodging_id: params[:hospitality_lodging_ids])
+
+    hospitalities.each(&:destroy)
   end
 end

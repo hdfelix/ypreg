@@ -9,7 +9,6 @@ class EventsController < ApplicationController
     authorize @past_events
   end
 
-  # GET /event/1
   def show
     # @event set & authorized with 'before_action'
     @stats = @event.load_locality_summary
@@ -37,7 +36,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # POST /event/1
   def update
     @return_to = params[:r]
     # @event set & authorized with 'before_action'
@@ -49,7 +47,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # DELETE /events/1
   def destroy
     # @event set & authorized with 'before_action'
 
@@ -76,28 +73,9 @@ class EventsController < ApplicationController
         registrations = Registration.where(event: @event, locality: loc)
         event_localities = EventLocality.where(event: @event, locality: loc)
 
-        # Flip 'has_been_paid' value for registrations of selected locality
-        registrations.each do |reg|
-          if reg.has_been_paid == true
-            reg.update_attributes(has_been_paid: false)
-          else
-            reg.update_attributes(has_been_paid: true)
-          end
-          reg.save
-        end
-
-        # TODO: Flip 'submited_registraiton_payment_check for
-        # event localities of selected locality
-        event_localities.each do |el|
-          if el.submitted_registration_payment_check == true
-            el.update_attributes(submitted_registration_payment_check: false)
-          else
-            el.update_attributes(submitted_registration_payment_check: true)
-          end
-          el.save
-        end
+        flip_has_been_paid_flag_for(registrations)
+        flip_submitted_registration_payment_flag_for(event_localities)
       end
-
       redirect_to edit_locality_payments_path
     end
   end
@@ -125,5 +103,30 @@ class EventsController < ApplicationController
         :registration_open_date,
         :registration_close_date,
         :location_id)
+  end
+
+  def flip_has_been_paid_flag_for(registrations)
+    # Flip 'has_been_paid' value for registrations of selected locality
+    registrations.each do |reg|
+      if reg.has_been_paid == true
+        reg.update_attributes(has_been_paid: false)
+      else
+        reg.update_attributes(has_been_paid: true)
+      end
+      reg.save
+    end
+  end
+
+  def flip_submitted_registration_payment_flag_for(event_localities)
+    # TODO: Flip 'submited_registraiton_payment_check for
+    # event localities of selected locality
+    event_localities.each do |el|
+      if el.submitted_registration_payment_check == true
+        el.update_attributes(submitted_registration_payment_check: false)
+      else
+        el.update_attributes(submitted_registration_payment_check: true)
+      end
+      el.save
+    end
   end
 end
