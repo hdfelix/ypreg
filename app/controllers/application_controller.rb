@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
                          :locality_id,
                          :gender,
                          :age,
-                         :grade)
+                         :grade,
+                         :avatar)
     end
     devise_parameter_sanitizer.permit(:account_update) do |user_params|
       user_params.permit(:name,
@@ -39,11 +40,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_in_path_for
+  def after_sign_in_path_for(resource)
     dashboard_index_path
   end
 
-  def after_sign_out_path_for
+  def after_sign_out_path_for(resource)
     request.referer
   end
 
