@@ -26,8 +26,7 @@
             %tbody
               - if @users.count > 0
                 - @users.each do |user|
-                  %tr{:class => "<haml_loud"}
-                    user.background_check_date_row_class &gt;
+                  %tr{class: "#{user.background_check_date_row_class}"}
                     %td= link_to user.name, user_path(user)
                     %td= user.role.capitalize
                     %td= user.gender.to_s[0].capitalize
