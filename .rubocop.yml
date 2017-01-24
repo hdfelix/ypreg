@@ -9,6 +9,7 @@ AllCops:
     - '**/config.ru'
   Exclude:
     - '.rbenv/**/*'
+    - 'bin/**/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
