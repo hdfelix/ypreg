@@ -56,20 +56,17 @@
               = display_boolean(@registration.has_medical_release_form)
           .row
             .col-sm-4
-            = add_alert_style?(@registration.user)
-            \&gt;
-            %strong Background Check
-          .col-sm-8
-            - background_style = #{decorated_user(@registration.user).background_check_date_row_class}
-            %span.bg-
-            = background_style
-            '&gt;
-            \#{format_date(@registration.user.background_check_date)}
-      .row
-        .col-sm-4
-          %strong Vehicle Seating Capacity
-        .col-sm-8
-          = @registration.vehicle_seating_capacity
+              = add_alert_style?(@registration.user)
+              %strong Background Check
+            .col-sm-8
+              - background_style = "#{decorated_user(@registration.user).background_check_date_row_class}"
+              %span{class: "bg-=#{background_style}"}
+                = format_date(@registration.user.background_check_date)
+          .row
+            .col-sm-4
+              %strong Vehicle Seating Capacity
+            .col-sm-8
+              = @registration.vehicle_seating_capacity
     .widget-footer
   .row
     .col-md-12
