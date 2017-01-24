@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
                          :locality_id,
                          :gender,
                          :age,
-                         :grade)
+                         :grade,
+                         :avatar)
     end
     devise_parameter_sanitizer.permit(:account_update) do |user_params|
       user_params.permit(:name,

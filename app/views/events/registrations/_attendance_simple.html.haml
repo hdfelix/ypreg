@@ -47,11 +47,11 @@
     %p.data-row
       %span.data-name= f.label :status, class: ' col-md-2'
       %span.data-value
-        = f.select :status,                             |
-          Registration::STATUS,                         |
-          # @status_options,                            |
-          options={},                                   |
-          html_options={ class: 'form-control select' } |
+        = f.select :status,                            
+          Registration::STATUS,                        
+          # @status_options,                           
+          options={},                                  
+          html_options={ class: 'form-control select' }
   .form-group
     .col-md-12
       %span.pull-right

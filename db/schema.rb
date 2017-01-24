@@ -11,23 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130164424) do
+ActiveRecord::Schema.define(version: 20170124065958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "addresses", force: true do |t|
-    t.string   "addressline1"
-    t.string   "addressline2"
-    t.string   "city"
-    t.string   "state_abbrv"
+  create_table "addresses", force: :cascade do |t|
+    t.string   "addressline1", limit: 255
+    t.string   "addressline2", limit: 255
+    t.string   "city",         limit: 255
+    t.string   "state_abbrv",  limit: 255
     t.integer  "zipcode"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "events", force: true do |t|
-    t.string   "title"
+  create_table "events", force: :cascade do |t|
+    t.string   "title",                   limit: 255
     t.integer  "event_type"
     t.date     "begin_date"
     t.date     "end_date"
@@ -37,12 +37,12 @@ ActiveRecord::Schema.define(version: 20151130164424) do
     t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "description"
+    t.string   "description",             limit: 255
   end
 
   add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
 
-  create_table "events_localities", force: true do |t|
+  create_table "events_localities", force: :cascade do |t|
     t.integer "event_id"
     t.integer "locality_id"
     t.boolean "submitted_registration_payment_check", default: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20151130164424) do
   add_index "events_localities", ["event_id"], name: "index_events_localities_on_event_id", using: :btree
   add_index "events_localities", ["locality_id"], name: "index_events_localities_on_locality_id", using: :btree
 
-  create_table "hospitalities", force: true do |t|
+  create_table "hospitalities", force: :cascade do |t|
     t.integer "event_id"
     t.integer "lodging_id"
     t.integer "locality_id"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20151130164424) do
   add_index "hospitalities", ["lodging_id"], name: "index_hospitalities_on_lodging_id", using: :btree
   add_index "hospitalities", ["registration_id"], name: "index_hospitalities_on_registration_id", using: :btree
 
-  create_table "hospitality_registration_assignments", force: true do |t|
+  create_table "hospitality_registration_assignments", force: :cascade do |t|
     t.integer "hospitality_id"
     t.integer "registration_id"
     t.integer "locality_id"
@@ -76,9 +76,9 @@ ActiveRecord::Schema.define(version: 20151130164424) do
   add_index "hospitality_registration_assignments", ["locality_id"], name: "index_hospitality_registration_assignments_on_locality_id", using: :btree
   add_index "hospitality_registration_assignments", ["registration_id"], name: "index_hospitality_registration_assignments_on_registration_id", using: :btree
 
-  create_table "localities", force: true do |t|
-    t.string   "city"
-    t.string   "state_abbrv"
+  create_table "localities", force: :cascade do |t|
+    t.string   "city",               limit: 255
+    t.string   "state_abbrv",        limit: 255
     t.integer  "contact_id"
     t.integer  "lodging_contact_id"
     t.datetime "created_at"
@@ -88,29 +88,29 @@ ActiveRecord::Schema.define(version: 20151130164424) do
   add_index "localities", ["contact_id"], name: "index_localities_on_contact_id", using: :btree
   add_index "localities", ["lodging_contact_id"], name: "index_localities_on_lodging_contact_id", using: :btree
 
-  create_table "locations", force: true do |t|
-    t.string   "name"
+  create_table "locations", force: :cascade do |t|
+    t.string   "name",          limit: 255
     t.text     "description"
-    t.string   "address1"
-    t.string   "address2"
-    t.string   "city"
-    t.string   "state_abbrv"
+    t.string   "address1",      limit: 255
+    t.string   "address2",      limit: 255
+    t.string   "city",          limit: 255
+    t.string   "state_abbrv",   limit: 255
     t.integer  "zipcode"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "max_capacity"
-    t.string   "location_type"
+    t.string   "location_type", limit: 255
   end
 
-  create_table "lodgings", force: true do |t|
-    t.string  "name"
+  create_table "lodgings", force: :cascade do |t|
+    t.string  "name",              limit: 255
     t.text    "description"
-    t.string  "address1"
-    t.string  "address2"
-    t.string  "city"
-    t.string  "state_abbrv"
+    t.string  "address1",          limit: 255
+    t.string  "address2",          limit: 255
+    t.string  "city",              limit: 255
+    t.string  "state_abbrv",       limit: 255
     t.integer "zipcode"
-    t.string  "lodging_type"
+    t.string  "lodging_type",      limit: 255
     t.integer "locality_id"
     t.integer "min_capacity"
     t.integer "max_capacity"
@@ -120,8 +120,8 @@ ActiveRecord::Schema.define(version: 20151130164424) do
   add_index "lodgings", ["contact_person_id"], name: "index_lodgings_on_contact_person_id", using: :btree
   add_index "lodgings", ["locality_id"], name: "index_lodgings_on_locality_id", using: :btree
 
-  create_table "notes", force: true do |t|
-    t.string  "content"
+  create_table "notes", force: :cascade do |t|
+    t.string  "content",  limit: 255
     t.integer "user_id"
     t.integer "event_id"
   end
@@ -129,18 +129,18 @@ ActiveRecord::Schema.define(version: 20151130164424) do
   add_index "notes", ["event_id"], name: "index_notes_on_event_id", using: :btree
   add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
 
-  create_table "pg_search_documents", force: true do |t|
+  create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
     t.integer  "searchable_id"
-    t.string   "searchable_type"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "searchable_type", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "pg_search_documents", ["searchable_id", "searchable_type"], name: "index_pg_search_documents_on_searchable_id_and_searchable_type", using: :btree
 
-  create_table "registrations", force: true do |t|
-    t.string   "payment_type"
+  create_table "registrations", force: :cascade do |t|
+    t.string   "payment_type",             limit: 255
     t.boolean  "has_been_paid"
     t.integer  "payment_adjustment"
     t.boolean  "attend_as_serving_one"
@@ -151,8 +151,8 @@ ActiveRecord::Schema.define(version: 20151130164424) do
     t.integer  "hospitality_id"
     t.integer  "locality_id"
     t.boolean  "has_medical_release_form"
-    t.string   "status"
-    t.boolean  "conference_guest",         default: false
+    t.string   "status",                   limit: 255
+    t.boolean  "conference_guest",                     default: false
     t.integer  "vehicle_seating_capacity"
   end
 
@@ -161,35 +161,36 @@ ActiveRecord::Schema.define(version: 20151130164424) do
   add_index "registrations", ["locality_id"], name: "index_registrations_on_locality_id", using: :btree
   add_index "registrations", ["user_id"], name: "index_registrations_on_user_id", using: :btree
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "",      null: false
-    t.string   "encrypted_password",     default: "",      null: false
-    t.string   "name"
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "",      null: false
+    t.string   "encrypted_password",     limit: 255, default: "",      null: false
+    t.string   "name",                   limit: 255
     t.integer  "locality_id"
     t.integer  "lodgings_id"
-    t.string   "reset_password_token"
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,       null: false
+    t.integer  "sign_in_count",                      default: 0,       null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "confirmation_token"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "confirmation_token",     limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
+    t.string   "unconfirmed_email",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "role",                   default: "guest"
-    t.string   "home_phone"
-    t.string   "cell_phone"
-    t.string   "work_phone"
+    t.string   "role",                   limit: 255, default: "guest"
+    t.string   "home_phone",             limit: 255
+    t.string   "cell_phone",             limit: 255
+    t.string   "work_phone",             limit: 255
     t.date     "birthday"
-    t.string   "gender"
+    t.string   "gender",                 limit: 255
     t.datetime "background_check_date"
-    t.string   "grade"
-    t.string   "age"
+    t.string   "grade",                  limit: 255
+    t.string   "age",                    limit: 255
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

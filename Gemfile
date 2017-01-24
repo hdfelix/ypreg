@@ -39,6 +39,13 @@ gem 'pg_search'
 gem 'draper', '~> 1.3'
 
 gem 'haml-rails', '~>0.9'
+
+# Image processing
+gem 'mini_magick'
+
+# Avatar uploader
+gem 'carrierwave', '~>1.0'
+
 group :production do
   gem 'rails_12factor'
 end
