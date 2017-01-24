@@ -1,0 +1,31 @@
+.content
+  .main-header
+    %h2 Saint to Hospitality Assignments
+    %em Assign saints to hospitalities allocated to their locality
+  .col-md-8
+    #hospitality_info_widget.widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table>
+          Participating Localities
+      .widget-content
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr
+                %td Locality
+                %td Registered Saints
+                %td Allocated Beds
+                %td Assigned Beds
+                %td
+            %tbody
+              - @event_localities.each do |el|
+                %tr{:id => "<haml_loud"}
+                  "locality_\#{ el.locality_id }" &gt;
+                  %td= el.locality_city
+                  %td= el.registrations.count
+                  %td= el.number_of_beds_assigned_to_registrations
+                  %td= el.beds_assigned_to_locality
+                  %td= link_to 'Assignments', event_hospitality_registration_assignment_path(@event, el.locality), class: 'btn btn-secondary'
+      .panel-footer
+        = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'

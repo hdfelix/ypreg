@@ -1,0 +1,27 @@
+.content
+  .main-header
+    %h2 Attendance
+    %em Manage attendance with the following list of registrations per locality
+  %h2
+    Registrations: #{@registrations.count}
+  - @event_localities.each do |ev_loc|
+    .col-md-12
+      .widget.widget-table{:id => "loc_#{ev_loc.locality.id}"}
+        .widget-header
+          %h3
+            %i.fa.fa-table
+            = ev_loc.locality_city
+        .widget-content
+          .table-responsive
+            %table.table.table-striped
+              %thead
+                %tr{:style => "font: bold"}
+                  %td Name
+                  %td Role
+                  %td
+              %tbody
+                - ev_loc.registrations.each do |reg|
+                  %tr{:id => "user_#{reg.user.id}"}
+                    %td= link_to "#{reg.user.name}", event_attendance_path(@event,reg)
+                    %td= reg.user.role
+                    %td= link_to 'Edit', edit_event_attendance_path(@event,reg), class: 'btn btn-primary'

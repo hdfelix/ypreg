@@ -1,0 +1,76 @@
+.content
+  .row
+    .main-header
+      %h2
+        Registration - #{@registration.user.name}
+      %em= @registration.event.title
+  .row
+    / event registration info
+    .col-md-6.col-sm-12
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Registration Details
+        .widget-content
+          %p#notice= notice
+          .row
+            .col-sm-4
+              %strong Saint:
+            .col-sm-8
+              = @registration.user.name
+              %br/
+              = mail_to @registration.user.email
+              %br/
+              = @registration.user.cell_phone
+              %br/
+          .row
+            .col-sm-4
+              %strong Event:
+            .col-sm-8
+              = @registration.event.title
+          .row
+            .col-sm-4
+              %strong Registration Date
+            .col-sm-8
+              = format_date(@registration.created_at)
+          .row
+            .col-sm-4
+              %strong Paid?
+            .col-sm-8
+              = display_boolean(@registration.has_been_paid)
+          .row
+            .col-sm-4
+              %strong Pmt Adjustment
+            .col-sm-8
+              = number_to_currency(@registration.payment_adjustment)
+          .row
+            .col-sm-4
+              %strong Serving One?
+            .col-sm-8
+              = display_boolean(@registration.attend_as_serving_one)
+          .row
+            .col-sm-4
+              %strong Medical Release Form?
+            .col-sm-8
+              = display_boolean(@registration.has_medical_release_form)
+          .row
+            .col-sm-4
+            = add_alert_style?(@registration.user)
+            \&gt;
+            %strong Background Check
+          .col-sm-8
+            - background_style = #{decorated_user(@registration.user).background_check_date_row_class}
+            %span.bg-
+            = background_style
+            '&gt;
+            \#{format_date(@registration.user.background_check_date)}
+      .row
+        .col-sm-4
+          %strong Vehicle Seating Capacity
+        .col-sm-8
+          = @registration.vehicle_seating_capacity
+    .widget-footer
+  .row
+    .col-md-12
+      = link_to 'Back', event_registrations_path(@registration.event), class: 'btn btn-default'

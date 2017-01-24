@@ -1,0 +1,86 @@
+.content
+  .row
+    .main-header
+      %h2
+        Attendance - #{@attendance.user.name}
+      %em= @attendance.event.title
+  .row
+    / event attendance info
+    .col-md-6.col-sm-12
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Attendance Details
+        .widget-content
+          %p#notice= notice
+          .user-info-right
+            .basic-info
+              %h3
+                %i.fa.fa-square>
+                Attendance Info
+              %p.data-row
+                %span.data-name Name
+                %span.data-value= @attendance.user.name
+              %p.data-row
+                %span.data-name Gender
+                %span.data-value= @attendance.user.gender
+              %p.data-row
+                %span.data-name Age
+                %span.data-value= @attendance.user.age
+              %p.data-row
+                %span.data-name Locality
+                %span.data-value= @attendance.user.locality.city
+              %p.data-row
+                %span.data-name Pmt Adjustment
+                %span.data-value= number_to_currency(@attendance.payment_adjustment)
+              %p.data-row
+                %span.data-name Registration paid?
+                %span.data-value= display_yes_no(@attendance.has_been_paid)
+              %p.data-row
+                %span.data-name Med Release Form?
+                %span.data-value= display_yes_no(@attendance.has_medical_release_form)
+              %p.data-row
+                %span.data-name
+                = add_alert_style?(@attendance.user)
+                \&gt;Last Background Check
+              %span.data-value
+                - background_style = #{decorated_user(@attendance.user).background_check_date_row_class}
+                %span{:style => "bg-"}
+                = background_style
+                '&gt;
+                %span.bg-
+                = background_style
+                '&gt;
+                \#{format_date(@attendance.user.background_check_date)}
+    %h3
+      %i.fa.fa-square>
+      Hospitality Info
+    - if @attendance.hospitality.nil?
+      %p No hospitality has been assigned.
+      %p
+        Click #{link_to 'here', event_hospitality_registration_assignment_path(@event, @attendance.user.locality)} to assign hospitality.
+    - else
+      %p.data-row
+        %span.data-name Hospitality
+        %span.data-value
+          = @attendance.hospitality.lodging.name
+          %br/
+          = @attendance.hospitality.lodging.address1
+          %br/
+          = @attendance.hospitality.lodging.address2
+          %br/
+          = @attendance.hospitality.lodging.city
+          %br/
+          = @attendance.hospitality.lodging.contact_person.name
+          %br/
+          = format_phone_number(@attendance.hospitality.lodging.contact_person.cell_phone)
+          %br/
+          = format_phone_number(@attendance.hospitality.lodging.contact_person.home_phone)
+          %br/
+          = @attendance.hospitality.lodging.contact_person.email
+  .widget-footer
+.row
+  .col-md-12
+    = link_to 'Edit', edit_event_registration_path(@event, @attendance, view: 'attendance'), class: 'btn btn-primary'
+    = link_to 'Back', event_registrations_path(@event, view: 'attendance'), class: 'btn btn-default'

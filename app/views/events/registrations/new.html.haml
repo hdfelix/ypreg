@@ -1,0 +1,15 @@
+.content
+  .main-header
+    %h2 New Registration
+    %em
+      Register for #{@event.title}
+  %br/
+  .col-md-8
+    / NEW REGISTRATION FORM
+    .widget
+      .widget-header
+        %h3
+          %i.fa.fa-edit
+      .widget-content
+        / Registration form partial
+        = render partial: 'form', locals: { event: @event, registration: @registration, user: @user}

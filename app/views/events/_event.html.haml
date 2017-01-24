@@ -1,0 +1,48 @@
+/ Event Info Widget
+.widget
+  .widget-header
+    %h3
+      %i.fa.fa-calendar
+  .widget-content
+    .row
+      .col-md-11
+        %h3= event.title
+      .col-md-1
+        - if current_user
+          - unless current_user.registrations.where(event_id: event).empty?
+            - if !event.over?
+              = link_to event_registration_path(event,current_user.registrations.where(event_id: event).first), class: 'btn btn-success pull-right' do
+                %i.fa.fa-check-circle
+                Registered
+    %br/
+    .row
+      %div
+      .col-md-3{:style => "border-right: 1px solid #ccc; height: 100%"}
+        Location:
+        %h4= event.location.name
+        = event_location(event)
+      .col-md-3
+        Event Dates:
+        %br/
+        %strong= event_dates(event)
+        %br/
+        %br/
+        Registration window:
+        %br/
+        %strong= event_registration_dates(event)
+      .col-md-4
+        %h4
+          %span Cost:
+          %span= number_to_currency(event.registration_cost)
+        %br/
+        - if current_user
+          - if !event.over? && policy(Event.all).show?
+            = link_to "#{event_button_text_based_on_user_role}", event, class: 'btn btn-default btn-sm'
+          - if current_user.registrations.where(event_id: event).empty?
+            - if event.registration_open?
+              = link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary btn-sm'
+            - else
+              .pull-right Event Registration closed.
+        - else
+          %p= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary btn-sm'
+/ End Event Info Widget

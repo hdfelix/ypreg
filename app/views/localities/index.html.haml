@@ -1,0 +1,41 @@
+.content
+  .main-header
+    %h2 Localities
+    %em listing of localities registered in the system
+  .col-md-12
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table
+      .widget-content
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr{:style => "font: bold"}
+                %td Name
+                %td State
+                %td Contact
+                %td
+            %tbody
+              - if @localities.all.count > 0
+                - @localities.each do |locality|
+                  %tr
+                    %td= link_to locality.city, locality_path(locality)
+                    %td
+                      = locality.state_abbrv
+                    %td
+                      = locality.contact_with_email
+                    %td
+                      = link_to 'Edit', edit_locality_path(locality)
+                       
+                      \#{link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' }}
+              - else
+                %tr
+                  %td{:colspan => "4"}
+                    %center No Localities have been entered yet...
+            %tbody
+        - if policy(Locality.new).new?
+          = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
+          = link_to new_locality_path, class: 'btn btn-primary' do
+            = content_tag(:i, '', class: "fa fa-plus-square")
+            New Locality

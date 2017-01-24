@@ -1,0 +1,83 @@
+.content
+  .row
+    .main-header
+      %h2= @user.name
+      %em
+  .row
+    / User info
+    .col-md-6.col-sm-6
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            User Details
+        .widget-content
+          %p#notice= notice
+          .row
+            .col-sm-4
+              %strong Name:
+            .col-sm-8
+              = @user.name
+          .row
+            .col-sm-4
+              %strong Email:
+            .col-sm-8
+              = @user.email
+          .row
+            .col-sm-4
+              %strong Role:
+            .col-sm-8
+              = @user.role.titleize
+          .row
+            .col-sm-4
+              %strong Gender:
+            .col-sm-8
+              = @user.gender
+          .row
+            .col-sm-4
+              %strong Age:
+            .col-sm-8
+              = @user.age
+          .row
+            .col-sm-4
+              %strong Grade:
+            .col-sm-8
+              = @user.grade
+          .row
+            .col-sm-4
+              %strong Birthday:
+            .col-sm-8
+              = format_date(@user.birthday)
+          .row
+            .col-sm-4
+              %strong Locality:
+            .col-sm-8
+              = @user.locality.city
+          .row
+            .col-sm-4
+              %strong Cell Phone:
+            .col-sm-8
+              = format_phone_number(@user.cell_phone)
+          .row
+            .col-sm-4
+              %strong Home phone:
+            .col-sm-8
+              = format_phone_number(@user.home_phone)
+          .row
+            .col-sm-4
+              %strong Work Phone:
+            .col-sm-8
+              = format_phone_number(@user.work_phone)
+          .row
+            .col-sm-4
+              %strong Last Background Check:
+            .col-sm-8
+              %span{:class => "#{@user.decorate.background_check_date_bg_class}"}
+                = background_check_date_with_warning(@user, @user.background_check_date)
+        .widget-footer
+    / end User details
+  .row
+    .col-md-12
+      = link_to 'Edit', edit_user_registration_path(@user), class: 'btn btn-primary'
+      = link_to 'Back', users_path, class: 'btn btn-default'
+/ End User info

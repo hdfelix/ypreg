@@ -1,0 +1,38 @@
+= event_widget_header
+%ul.list-unstyled.list-info-sidebar.bottom-30px
+  - if role == 'admin'
+    %li.data-row
+      = event_widget_data_name('Capacity')
+      %span.data-value
+        = data_value_ratio(@chart_values, 'Capacity')
+        = data_value_progress_div(@chart_values, 'Capacity')
+    %li.data-row
+      = event_widget_data_name('Localities')
+      %span.data-value
+        = data_value_ratio(@chart_values, 'Localities')
+        = data_value_progress_div(@chart_values, 'Localities')
+    %li.data-row
+      = event_widget_data_name('Hospitality')
+      %span.data-value
+        = data_value_ratio(@chart_values, 'Hospitality')
+        = data_value_progress_div(@chart_values, 'Hospitality')
+    %li.data-row
+      = event_widget_data_name('Payments')
+      %span.data-value
+        = data_value_ratio(@chart_values, 'Payments')
+        = data_value_progress_div(@chart_values, 'Payments')
+  - else
+    %li.data-row
+      = event_widget_data_name('Attending')
+      %span.data-value
+        = data_value_ratio(@chart_values, 'Attending')
+        = data_value_progress_div(@chart_values, 'Attending')
+    %li.data-row
+      = event_widget_data_name('Hospitality')
+      %span.data-value
+        = data_value_ratio(@chart_values, 'Hospitality')
+        = data_value_progress_div(@chart_values, 'Hospitality')
+    %li.data-row
+      = event_widget_data_name('Paid?')
+      %span.data-value
+        = display_yes_no(@chart_values['paid?'])

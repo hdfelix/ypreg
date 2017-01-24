@@ -1,0 +1,103 @@
+.content
+  .main-header
+    %h2 Events
+    %em list of up-coming conferences, retreats, and one-day events
+  / Current & future events
+  .col-md-12
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table>
+           Current Events
+      .widget-content
+        .table-responsive
+          %table.table.table-striped
+            %thead
+              %tr{:style => "font: bold"}
+                %td Name
+                %td Type
+                %td Event Dates
+                %td Registration Window
+                %td Cost
+                %td
+            %tbody
+              - if @events.all.count > 0
+                - @events.each do |event|
+                  %tr
+                    %td= link_to event.title, event
+                    %td= display_event(event)
+                    %td
+                      = format_date(event.begin_date)
+                      \-
+                      \#{format_date(event.end_date)}
+                    %td
+                      = format_date(event.registration_open_date)
+                      \-
+                      \#{format_date(event.registration_close_date)}
+                    %td= number_to_currency(event.registration_cost)
+                    %td
+                      - if policy(Event.all).edit?
+                        = link_to 'Edit', edit_event_path(event)
+                         
+                      - if policy(Event.all).copy?
+                        = link_to 'Copy', event_copies_path(event_id: event), method: :post
+                         
+                      - if policy(Event.all).destroy?
+                        = link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }
+              - else
+                %tr
+                  %td{:colspan => "7"}
+                    %center No Events in the database...
+            %tbody
+        = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
+        - if policy(Event.all).new?
+          = link_to new_event_path, class: 'btn btn-primary' do
+            = content_tag(:i, '', class: "fa fa-plus-square")
+            New Event
+  / Events in the past
+  .col-md-12
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table>
+           Past Events
+      .widget-content
+        .table-responsive
+          %table.table.table-striped
+            %thead
+              %tr{:style => "font: bold"}
+                %td Name
+                %td Type
+                %td Event Dates
+                %td Registration Window
+                %td Cost
+                %td
+            %tbody
+              - if @past_events.all.count > 0
+                - @past_events.each do |event|
+                  %tr
+                    %td= link_to event.title, event
+                    %td= display_event(event)
+                    %td
+                      = format_date(event.begin_date)
+                      \-
+                      \#{format_date(event.end_date)}
+                    %td
+                      = format_date(event.registration_open_date)
+                      \-
+                      \#{format_date(event.registration_close_date)}
+                    %td= number_to_currency(event.registration_cost)
+                    %td
+                      - if policy(Event.all).edit?
+                        = link_to 'Edit', edit_event_path(event)
+                         
+                      - if policy(Event.all).copy?
+                        = link_to 'Copy', event_copies_path(event_id: event), method: :post
+                         
+                      - if policy(Event.all).destroy?
+                        = link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }
+              - else
+                %tr
+                  %td{:colspan => "7"}
+                    %center No Events in the database...
+            %tbody

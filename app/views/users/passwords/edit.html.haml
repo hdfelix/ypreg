@@ -1,0 +1,35 @@
+%br/
+%br/
+.wrapper.full-page-wrapper.page-login.text-center
+  .inner.page
+    .logo
+      %h3 Change your password
+    .login-box.center-block
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+        = devise_error_messages!
+        = f.hidden_field :reset_password_token
+        %p.title Change your Password
+        .form-group
+          = f.label :password, "New password", class: 'control-label sr-only'
+          .col-sm-12
+            = f.password_field :password,       |
+              autofocus: true,                  |
+              autocomplete: "off",              |
+              class: 'form-control',            |
+              placeholder: "Enter New Password" |
+          %span.input-group-addon
+            %i.fa.fa-password
+        .form-group
+          = f.label :password_confirmation, "Confirm new password"
+          %br/
+          .col-sm-12
+            = f.password_field :password_confirmation, autocomplete: "off"
+            %span.input-group-addon
+              %i.fa.fa-password
+        %br/
+        = content_tag(:button, type: :submit, class: 'btn btn-custom-secondary btn-lg btn-block') do
+          %i.fa.fa-arrow-circle-o-right
+          Change my password
+      %br/
+      .links
+        = render "devise/shared/links"

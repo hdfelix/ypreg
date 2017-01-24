@@ -1,0 +1,63 @@
+.content
+  .row
+    .main-header
+      %h2= @lodging.name
+      %em= "a #{ Lodging::LODGING_TYPE[@lodging.lodging_type.to_i] } in #{ Locality.find(@lodging.locality_id).city }"
+  .row
+    / Lodging info
+    .col-md-6
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Lodging Details
+        .widget-content
+          %p#notice= notice
+          .row
+            .col-sm-4
+              %strong Name:
+            .col-sm-8
+              = @lodging.name
+          .row
+            .col-sm-4
+              %strong Type:
+            .col-sm-8
+              = Lodging::LODGING_TYPE[@lodging.lodging_type.to_i]
+          .row
+            .col-sm-4
+              %strong Description:
+            .col-sm-8
+              = @lodging.display_description
+          .row
+            .col-sm-4
+              %strong Min Cap.:
+            .col-sm-8
+              = @lodging.min_capacity
+          .row
+            .col-sm-4
+              %strong Max Cap.:
+            .col-sm-8
+              = @lodging.max_capacity
+          .row
+            .col-sm-4
+              %strong Description:
+            .col-sm-8
+              = @lodging.display_description
+          .row
+            .col-sm-4
+              %strong Contact:
+            .col-sm-8
+              = User.find(@lodging.contact_person.id).name
+          .row
+            .col-sm-4
+              %strong Address:
+            .col-sm-8
+              = @lodging.display_address_in_address_block_format
+        .widget-footer
+  .row
+    .col-md-12
+      = link_to 'Edit', edit_lodging_path(@lodging), class: 'btn btn-primary'
+      = link_to 'Back', lodgings_path, class: 'btn btn-default'
+      - if policy(Lodging.all).destroy?
+        = link_to 'Delete', @lodging, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+/ End lodging info

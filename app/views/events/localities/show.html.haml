@@ -1,0 +1,174 @@
+.content
+  .row
+    .main-header
+      %h2
+        The Church in #{@locality.city}
+      %em
+        Participation details for #{@event.title}
+  .row
+    .col-md-6
+      %strong Locality Contact:
+      = @locality.contact_with_email_and_cell
+    .col-md-6
+      %strong
+        Registration will close on: #{format_date(@event.registration_close_date)}
+      %br/
+      %br/
+  .row
+    .col-md-8
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Attendance Breakdown
+        .widget-content
+          .table-responsive
+            %table.table.table-bordered.table-striped.table-hover
+              %thead
+                %tr
+                  %th
+                  %th Totals
+              %tbody
+                %tr
+                  %td Young People
+                  %td= @locality.registered_yp(@event).count
+                %tr
+                  %td Helpers
+                  %td= @locality.registered_helpers(@event).count
+                %tr
+                  %td Trainees
+                  %td= @locality.registered_trainees(@event).count
+                %tr
+                  %td Serving Ones
+                  %td
+                    (#{@locality.registered_serving_ones(@event).count})
+                %tr
+                  %td Serving Ones Needed
+                  %td [Serving Ones]
+                %tr
+                  %td
+                    %strong Totals
+                  %td
+                    %strong= @locality.registered_users(@event).count
+    .col-md-4
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-table>
+            Available Hospitalities
+        .widget-content
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr{:style => "font: bold"}
+                %td
+                %td Totals
+            %tbody
+              - if @locality.hospitalities(@event).count > 0
+                %tr
+                  %td Lodgings
+                  %td= @locality.hospitalities(@event).count
+                %tr
+                  %td Spaces Available
+                  %td
+                    = @locality.hospitalities_min(@event)
+                    (#{@locality.hospitalities_max(@event)})
+                %tr
+                  %td Spaces Assigned
+                  %td= @locality.assigned_beds_total(@event)
+                %tr
+                  %td Spaces to Assign
+                  %td= @locality.beds_to_assign(@event)
+              - else
+                %tr
+                  %td{:colspan => "4"}
+                    %center No Hospitalities have been assigned
+  .row
+    .col-md-8
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Registered Saints
+        .widget-content
+          %table.table.table-bordered.table-hover
+            %thead
+              %tr
+                %th Name
+                %th Age
+                %th Guest?
+                %th MF?
+                %th Background Check
+                %th Hosp. Assignment
+                %th Vehicle seats
+                %th Notes
+            %tbody#registrations
+              - @registrations.all.each do |reg|
+                = background_check_tr(reg.user, "reg-#{reg.id}")
+                - if policy(Registration.all).edit?
+                  %td= link_to reg.user.name, edit_event_registration_path(@event, reg)
+                - else
+                  %td= reg.user.name
+                %td= reg.user.age.to_s.capitalize
+                %td= display_yes_no(reg.conference_guest)
+                %td= display_yes_no(reg.has_medical_release_form)
+                %td
+                  = format_date(reg.user.background_check_date)
+                %td= display_hospitality_assignment(reg)
+                %td= reg.vehicle_seating_capacity
+                %td
+    .col-md-4
+      #locality_saints.widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Locality Saints
+        .widget-content
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr
+                %th Name
+                %th Age
+                %th
+            %tbody
+              - @users_not_registered.each do |user|
+                %tr
+                  %td= user.name.capitalize
+                  %td= user.age.to_s.capitalize
+                  %td= link_to 'Register', new_event_registration_path(@event, user), class: 'btn btn-custom-secondary btn-xs'
+  .row
+    .col-md-12
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Payments
+        .widget-content
+          %table.table.talbe-bordered.table-striped.table-hover
+            %thead
+              %tr
+                %th Saint
+                %th MRF?
+                %th Cost
+                %th Pmt Adjustment
+                %th Amt Paid
+                %th
+            %tbody
+              - if @registrations.count > 0
+                - @registrations.each do |reg|
+                  %tr
+                    %td= reg.user.name
+                    %td
+                      = display_yes_no(reg.has_medical_release_form)
+                    %td= number_to_currency(@event.registration_cost)
+                    %td= number_to_currency(reg.payment_adjustment)
+                    %td= calculate_payment(reg)
+                    - if policy(Registration.all).edit?
+                      %td
+                        = link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default'
+              - else
+                %tr
+                  %td{:colspan => "4"}
+                    %center No Payments have been made
+  .row
+    .col-md-12
+      = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
