@@ -1,0 +1,73 @@
+.content
+  .main-header
+    %h2 Event Localities
+    %em
+      manage localities registered for #{@event.title}
+  .col-md-12
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table
+            %strong Localities participating in event
+      .widget-content
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr{:style => "font: bold"}
+                %td Name
+                %td State
+                %td Contact
+                %td
+            %tbody
+              - if @event_localities.all.count > 0
+                - @event_localities.each do |el|
+                  %tr
+                    %td= link_to el.city, locality_path(el)
+                    %td
+                      = el.state_abbrv
+                    %td
+                      = el.contact_with_email
+                    %td
+                      - if policy(Locality.all).index?
+                        = link_to 'Manage', event_locality_path(@event, el), class: 'btn btn-default btn-sm'
+              - else
+                %tr
+                  %td{:colspan => "4"}
+                    %center There are no localities participating yet...
+  .col-md-12
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table
+            %strong Localities
+      .widget-content
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr{:style => "font: bold"}
+                %td Name
+                %td State
+                %td Contact
+                %td
+            %tbody
+              - if @localities.count > 0
+                - @localities.each do |locality|
+                  %tr
+                    %td= link_to locality.city, locality_path(locality)
+                    %td
+                      = locality.state_abbrv
+                    %td
+                      = locality.contact_with_email
+                    %td
+                      - if policy(Locality.all).index? && @event.registration_open?
+                        = link_to 'Manage', new_event_locality_path(@event,locality_id: locality), class: 'btn btn-default btn-sm'
+              - else
+                %tr
+                  %td{:colspan => "4"}
+                    %center No Localities have been entered yet...
+            %tbody
+        - if policy(Locality.new).new?
+          = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
+          = link_to new_locality_path, class: 'btn btn-primary' do
+            = content_tag(:i, '', class: "fa fa-plus-square")
+            New Locality

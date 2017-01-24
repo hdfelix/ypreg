@@ -121,7 +121,7 @@ describe Event, type: :model do
       end
 
       it 'returns the remaining number of available registrations' do
-        loc = build_stubbed(:location, max_capacity: 20)
+        loc = create(:location, max_capacity: 20)
         event = create(:event_with_registrations,
                        registrations_count: 3,
                        ensure_unique_locality: true,

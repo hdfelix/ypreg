@@ -1,0 +1,18 @@
+.content
+  .main-header
+    %h2 Edit Registration
+    %em
+      Registration details for #{@attendance.user.name}
+  %br/
+  .col-md-8
+    / EDIT REGISTRATION FORM
+    .widget
+      .widget-header
+        %h3
+          %i.fa.fa-edit
+          Registration Info
+        .btn-group.widget-header-toolbar
+          %span.btn.btn-danger.btn-sm
+            = not_paid_in_words(@attendance.has_been_paid)
+      .widget-content
+        = render partial: 'attendance_simple', locals: { event: @event, attendance: @attendance }

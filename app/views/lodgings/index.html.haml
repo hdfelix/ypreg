@@ -1,0 +1,44 @@
+.content
+  .main-header
+    %h2 Lodgings
+    %em list of available lodging locations for conferences and retreats
+  .col-md-12
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table
+      .widget-content
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr{:style => "font: bold"}
+                %th Name
+                %th Type
+                %th Contact Person
+                %th Locality
+                %th Max Cap.
+                %th Address
+                %th
+            %tbody
+              - if @lodgings.all.count > 0
+                - @lodgings.each do |lodging|
+                  %tr
+                    %td= link_to lodging.name, lodging
+                    %td= lodging.lodging_type
+                    %td= contact_person_name(lodging)
+                    %td= Locality.find(lodging.locality_id).city
+                    %td= lodging.max_capacity
+                    %td= lodging.display_address_in_address_block_format
+                    %td
+                      = link_to 'Edit', edit_lodging_path(lodging)
+                       
+                      / %= link_to 'Delete',event_lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' } %
+              - else
+                %tr
+                  %td{:colspan => "7"}
+                    %center No Lodgings in the database...
+            %tbody
+        = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
+        = link_to new_lodging_path, class: 'btn btn-primary' do
+          = content_tag(:i, '', class: "fa fa-plus-square")
+          New Lodging

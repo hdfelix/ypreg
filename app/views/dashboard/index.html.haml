@@ -1,0 +1,15 @@
+.main-header
+  %h2 DASHBOARD
+  %em information on up-coming events
+.main-content
+  .row
+    .col-md-9
+      #events.panel-group
+        %h3 Upcoming events
+        - if @events.any?
+          = render partial: 'events/event', collection: @events
+        - else
+          %center There aren't any up-coming events.
+      / panel group
+    / col
+  / row

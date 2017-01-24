@@ -1,0 +1,244 @@
+.content
+  .main-header
+    %h2= @event.title
+    %em= "to be held at #{ Location.find(@event.location_id).name }"
+  .row
+    / Event info
+    .col-md-4.col-sm-6
+      #event-info.widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Event Details
+        .widget-content
+          / <p id="notice"><haml_loud> notice </haml_loud></p>
+          .table-responsive
+            %table.table.table-bordered.table-striped.table-hover
+              %thead
+              %tbody
+                %tr
+                  %td
+                    %strong Type:
+                  %td= display_event(@event)
+                %tr
+                  %td
+                    %strong Registration:
+                  %td
+                    = format_date(@event.registration_open_date)
+                    \-
+                    \#{format_date(@event.registration_close_date)}
+                %tr
+                  %td
+                    %strong Dates:
+                  %td
+                    = format_date(@event.begin_date)
+                    \-
+                    \#{format_date(@event.end_date)}
+                %tr
+                  %td
+                    %strong Cost:
+                  %td
+                    = (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA"
+          - if policy(Event.all).edit?
+            = link_to 'Edit', edit_event_path(@event, r: 'index'), class: 'btn btn-primary btn-sm'
+          - if display_event_manage_button?
+            #event-info-btn-group.btn-group
+              %button#manage.btn.btn-default.btn-sm.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+                Manage
+                %span.caret
+              %ul.dropdown-menu{:role => "menu"}
+                - if policy(Hospitality.all).index?
+                  %li= link_to 'Hospitality', event_hospitalities_path(@event)
+                - if policy(Registration.all).index?
+                  %li= link_to 'Registrations', event_registrations_path(@event)
+                  %li
+                - if policy(Registration.all).index?
+                  %li= link_to 'Payments', edit_locality_payments_path(@event)
+                - if show_attendance_menu_option?(@event)
+                  %li#attendance-option= link_to 'Attendance', event_registrations_path(@event, view: 'attendance')
+    / Event Registration Details
+    .col-md-4.col-sm-6
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-bar-chart-o>
+            Statistics
+        .widget-content
+          .table-responsive
+            %table.table.table-bordered.table-striped.table-hover
+              %thead
+                %tr
+                  %th
+                  %th Totals
+              %tbody
+                %tr
+                  %td Total Attendance
+                  %td= @event.registrations.count
+                %tr
+                  %td Camp Max Capacity
+                  %td= display_max_cap(@event.location)
+                %tr
+                  %td Remaining Spaces
+                  %td= @event.remaining_spaces
+      / end event registration details
+    / Attendance Breakdown
+    .col-md-4.col-sm-6
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-bar-chart-o>
+            Attendance Breakdown
+        .widget-content
+          .table-responsive
+            %table.table.table-bordered.table-striped.table-hover
+              %thead
+                %tr
+                  %th
+                  %th Totals
+              %tbody
+                %tr
+                  %td Young People
+                  %td= @event.total_registrations(role: 'yp').count
+                %tr
+                  %td Serving Ones
+                  %td= @event.total_registrations(attend_as_serving_one: true).count
+                %tr
+                  %td Trainees
+                  %td= @event.total_registrations(role: 'trainee').count
+                %tr
+                  %td Helpers
+                  %td= @event.total_registrations(role: 'helper').count
+                %tr
+                  %td Conference Guests
+                  %td= @event.conference_guest_count
+                %tr
+                  %td YCAT
+                  %td= @event.total_registrations(role: 'ycat').count
+                %tr
+                  %td S/S Brothers
+                  %td= @event.total_registrations(role: 'speaking_brothers').count
+    / end attendance breakdown
+  / end event info, statistics, attendance breakdown row
+  .row
+    .col-md-12
+      #locality_summary.widget
+        .widget-header
+          .btn-group.widget-header-toolbar
+            %a#tour-focus.btn-borderless.btn-focus{:href => "#", :title => "focus"}
+              %i.fa.fa-eye
+            %a.btn-borderless.btn-toggle-expand{:href => "#", :title => "expand/collapse"}
+              %i.fa.fa-chevron-up
+            %a.btn-borderless.btn-remove{:href => "#", :title => "remove"}
+              %i.fa.fa-times
+          %h3
+            %i.fa.fa-bar-chart-o>
+            Locality Summaries
+        .widget-content
+          .table-responsive
+            %table.table.table-bordered.table-striped.table-hover
+              %thead
+                %tr
+                  %th Locality
+                  %th Grand Total
+                  %th Total YP
+                  %th Total SO
+                  %th Total Trainees
+                  %th Total Helpers
+                  %th YP/SO
+                  %th Guests
+                  %th Amt Due
+                  %th Actual Grand Total
+                  %th Actual Total YP
+                  %th Actual Total SO
+                  %th Actual Total Trainees
+                  %th Actual Total Helpers
+                  %th Actual Amt Paid
+                  %th Balance
+              %tbody
+                = render partial: 'localities/attendance_summary', locals: { localities: @participating_localities }
+          - if policy(Locality.all).index?
+            = link_to 'Localities List', event_localities_path(@event), class: 'btn btn-default btn-sm'
+          - elsif current_user.role == 'loc_contact' && @participating_localities.count == 0
+            = link_to "Add registrations for #{current_user.locality.city}", new_event_locality_path(@event, locality_id: current_user.locality), class: 'btn btn-default btn-sm'
+        / widget content
+      / locality summaries widget
+    / col-md 12
+  / row
+  / hospitality info
+  .row
+    .col-md-12
+      #hospitality_info_widget.widget
+        .widget-header
+          .btn-group.widget-header-toolbar
+            %a#tour-focus.btn-borderless.btn-focus{:href => "#", :title => "focus"}
+              %i.fa.fa-eye
+            %a.btn-borderless.btn-toggle-expand{:href => "#", :title => "expand/collapse"}
+              %i.fa.fa-chevron-up
+            %a.btn-borderless.btn-remove{:href => "#", :title => "remove"}
+              %i.fa.fa-times
+          %h3
+            %i.fa.fa-bar-chart-o>
+            Hospitality Info
+        .widget-content
+          #visit-stat-table_wrapper.datatables_wrapper{:role => "grid"}
+            .row
+              .col-md-3
+                #visit-stat-table_length.datatables_length
+                  / <label>
+                  / <select name="visit&#45;stat&#45;table_length" size="1" aria&#45;controls="visit&#45;stat&#45;table">
+                  / <option value="10" selected="selected">
+                  / 
+                  / 10
+                  / 
+                  / </option>
+                  / <option value="25">
+                  / 
+                  / 25
+                  / 
+                  / </option>
+                  / <option value="50">
+                  / 
+                  / 50
+                  / 
+                  / </option>
+                  / <option value="100">
+                  / 
+                  / 100
+                  / 
+                  / </option>
+                  / </select>
+                  / 
+                  / records per page
+                  / 
+                  / </label>
+                / table div
+            / end inner row
+            .table-responsive
+              %table.table.table-bordered.table-striped.table-hover
+                %thead
+                  %tr{:role => "row"}
+                    %th Name
+                    %th Home Phone
+                    %th Cell
+                    %th Address
+                    %th Min / Max Guests
+                    %th Assigned Localities
+                    %th Assigned Guests
+                %tbody#event_hospitalities{"aria-live" => "polite", "aria-relevant" => "all", :role => "alert"}
+                  = render partial: 'lodgings/info_form', locals: {event: @event}
+            - if policy(Hospitality.all).manage?
+              .btn-group
+                %button.btn.btn-default.btn-sm.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
+                  Manage
+                  %span.caret
+                %ul.dropdown-menu{:role => "menu"}
+                  - if policy(Hospitality.all).manage?
+                    %li= link_to 'Manage Hospitalities', event_hospitalities_path(@event)
+                  %li= link_to 'Assign to Localities', event_hospitality_locality_assignments_path(@event)
+                  - if policy(Hospitality.all).manage?
+                    %li= link_to 'Assign Saints', event_hospitality_registration_assignments_path(@event)
+            .row
+              / pagination footer
+              .col-md-6
+              / Add code for records displayed, pagination
+  / hospitality info

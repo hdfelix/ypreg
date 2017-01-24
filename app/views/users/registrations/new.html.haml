@@ -1,0 +1,76 @@
+.wrapper.full-page-wrapper.page-login.text-center
+  .inner.page
+    .logo
+      %a{:href => "index.html"}= image_tag('kingadmin-logo.png', alt:'')
+    .login-box.center-block
+      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+        = devise_error_messages!
+        %p.title Sign up
+        .form-group
+          = f.label :name, class: 'control-label sr-only'
+          .col-sm-12
+            .input-group
+              = f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Enter name"
+              %span.input-group-addon
+                %i.fa.fa-user
+        .form-group
+          = f.label :gender, class: 'control-label, sr-only'
+          .col-sm-12
+            .input-group
+              = f.select(:gender, User::GENDER, { include_blank: 'Select gender' }, { class: 'form-control' })
+              %span.input-group-addon
+                %i.fa.fa-user
+              / %= link_to "Add a locality", new_locality_path, class: 'pull-right' %
+        .form-group
+          = f.label :age, class: 'control-label, sr-only'
+          .col-sm-12
+            .input-group
+              = f.select(:age, User::AGE, { include_blank: 'Select your age' }, { class: 'form-control' })
+              %span.input-group-addon
+                %i.fa.fa-user
+              / %= link_to "Add a locality", new_locality_path, class: 'pull-right' %
+        .form-group
+          = f.label :grade, class: 'control-label, sr-only'
+          .col-sm-12
+            .input-group
+              = f.select(:grade, User::GRADE, { include_blank: 'Select your grade' }, { class: 'form-control' })
+              %span.input-group-addon
+                %i.fa.fa-user
+              / %= link_to "Add a locality", new_locality_path, class: 'pull-right' %
+        .form-group
+          = f.label :locality_id, class: 'control-label, sr-only'
+          .col-sm-12
+            .input-group
+              = f.collection_select(:locality_id, Locality.all, :id, :city, { include_blank: 'Select locality' }, { class: 'form-control' })
+              %span.input-group-addon
+                %i.fa.fa-user
+              / %= link_to "Add a locality", new_locality_path, class: 'pull-right' %
+        .form-group
+          = f.label :email, class: 'control-label sr-only'
+          .col-sm-12
+            .input-group
+              = f.email_field :email, class: 'form-control', placeholder: 'Enter email'
+              %span.input-group-addon
+                %i.fa.fa-envelope
+        .form-group
+          = f.label :password, class: 'control-label sr-only'
+          .col-sm-12
+            .input-group
+              = f.password_field :password, class: 'form-control', placeholder: "Enter password"
+              %span.input-group-addon
+                %i.fa.fa-user
+        .form-group
+          = f.label :password_confirmation, class: 'control-label sr-only'
+          .col-sm-12
+            .input-group
+              = f.password_field :password_confirmation, class: 'form-control', placeholder: "Enter password confirmation"
+              %span.input-group-addon
+                %i.fa.fa-user
+        = content_tag(:button, type: :submit, class: 'btn btn-custom-secondary btn-lg btn-block') do
+          %i.fa.fa-arrow-circle-o-right
+          Sign up
+      / end form
+      %br/
+      .links
+        = render "devise/shared/links"
+    / end class='login-box center-block'

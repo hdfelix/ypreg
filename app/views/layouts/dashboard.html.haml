@@ -1,0 +1,225 @@
+!!!
+/[if IE 9 ] <html class="ie ie9" lang="en" class="no-js">
+/ [if !(IE)]><!
+%html.no-js{:lang => "en"}
+  / <![endif]
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title
+      = "#{params[:controller].capitalize}"
+      | YP Registration
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1", :name => "viewport"}/
+    %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "YPReg - Event Registration", :name => "description"}/
+    %meta{:content => "Hector D. Felix (hdfnet@gmail.com)", :name => "author"}/
+    = stylesheet_link_tag    "application", media: "all"
+    / kingAdmin skin
+    / %= stylesheet_link_tag    "fullbright", media: "all" %
+    / %= stylesheet_link_tag    "slategray", media: "all" %
+    / for gem rails-jquery-cdn
+    / %= jquery_include_tag :google %
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    / Fav and touch icons
+    %link{:href => "assets/ico/kingadmin-favicon144x144.png", :rel => "apple-touch-icon-precomposed", :sizes => "144x144"}/
+    %link{:href => "assets/ico/kingadmin-favicon114x114.png", :rel => "apple-touch-icon-precomposed", :sizes => "114x114"}/
+    %link{:href => "assets/ico/kingadmin-favicon72x72.png", :rel => "apple-touch-icon-precomposed", :sizes => "72x72"}/
+    %link{:href => "assets/ico/kingadmin-favicon57x57.png", :rel => "apple-touch-icon-precomposed", :sizes => "57x57"}/
+    %link{:href => "assets/ico/favicon.png", :rel => "shortcut icon"}/
+  %body.dashboard
+    / Wrapper
+    .wrapper
+      / TOP GENERAL ALERT
+      - if flash[:notice]
+        .alert.alert-success.top-general-alert
+          %a.close{:type => "button"} ×
+          = flash[:notice]
+      - elsif flash[:error]
+        .alert.alert-danger.top-general-alert
+          %a.close{:type => "button"} ×
+          = flash[:error]
+      - elsif flash[:alert]
+        .alert.alert-danger.top-general-alert
+          %a.close{:type => "button"} ×
+          = flash[:alert]
+      / END TOP GENERAL ALERT
+      / TOP BAR
+      .top-bar
+        .container
+          .row
+            / logo
+            .col-md-2.logo
+              = link_to image_tag('kingadmin-logo-white.png', alt: 'Admin Dashboard'), dashboard_index_path
+              %h1.sr-only YPReg Dashboard
+            / end logo
+            .col-md-10
+              .row
+                .col-md-3
+                  / search box
+                  #tour-searchbox.input-group.searchbox
+                    %input.form-control{:disabled => "disabled", :placeholder => "", :type => "search"}/
+                    %span.input-group-btn
+                      %button.btn.btn-default{:type => "button"}
+                        %i.fa.fa-search
+                  / end search box
+                .col-md-9
+                  .top-bar-right
+                    / responsive menu bar icon
+                    %a.hidden-md.hidden-lg.main-nav-toggle{:href => "#"}
+                      %i.fa.fa-bars
+                    / end responsive menu bar icon
+                    / button type="button" id="start-tour" class="btn btn-link"><i class="fa fa-refresh"></i> Start Tour</button
+                    / button type="button" id="global-volume" class="btn btn-link btn-global-volume"><i class="fa"></i> <span class="badge element-bg-color-blue">New</span></button
+                    .notifications
+                      %ul
+                        / notification: inbox
+                        / li class="notification-item inbox"
+                        / div class="btn-group"
+                        / a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                        / i class="fa fa-envelope"></i><span class="count">2</span
+                        / span class="circle"></span
+                        / /a
+                        / ul class="dropdown-menu" role="menu"
+                        / li class="notification-header"
+                        / em>You have X unread messages</em
+                        / /li
+                        / li class="inbox-item clearfix"
+                        / a href="#"
+                        / div class="media"
+                        / div class="pull-left" href="#"
+                        / img class="media-object" src="assets/img/user1.png" alt="Antonio"
+                        / /div
+                        / div class="media-body"
+                        / h5 class="media-heading name">Antonius</h5
+                        / p class="text">The problem just happened this morning. I can't see ...</
+                        / span class="timestamp">4 minutes ago</span
+                        / /div
+                        / /div
+                        / /a
+                        / /li
+                        / end notification: inbox
+                        / notification: general
+                        / end notification: general
+                    / logged user and the menu
+                    - if current_user
+                      .logged-user
+                        .btn-group
+                          %a#loggedUserDropdown.btn.btn-link.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                            / %= image_tag('user-avatar.png') %
+                            = succeed "\u{a0}\u{a0}" do
+                              %span.name= current_user.name
+                            %span.caret
+                          %ul.dropdown-menu{"aria-labelledby" => "loggedUserDropdown", :role => "menu"}
+                            %li
+                              = link_to user_path(current_user) do
+                                %i.fa.fa-user
+                                %span.text Profile
+                            %li
+                              %a{:href => "#"}
+                                %i.fa.fa-cog
+                                %span.text Settings
+                            %li
+                              = link_to  destroy_user_session_path, method: :delete do
+                                %i.fa.fa-power-off
+                                %span.text Logout
+                    / end logged user and the menu
+                  / /top-bar-right
+              / /row
+          / /row
+        / /container
+      / /top
+      / BOTTOM: LEFT NAV AND RIGHT MAIN CONTENT
+      .bottom
+        .container
+          .row
+            / left sidebar
+            .col-md-2.left-sidebar
+              / main-nav
+              %nav.main-nav
+                %ul.main-menu
+                  - if !(current_user.role == 'guest')
+                    %li
+                      = link_to dashboard_index_url do
+                        %i.fa.fa-dashboard.fa-fw
+                        %span.text Dashboard
+                  %li
+                    - if user_can_manage_site(current_user)
+                      %a.js-sub-menu-toggle{:href => "#"}
+                        %i.fa.fa-clipboard.fa-fw
+                        %span.text Manage
+                        %i.toggle-icon.fa.fa-angle-left
+                      %ul.sub-menu
+                        - if policy(Event.all).index?
+                          %li
+                            = link_to events_url do
+                              %span.text Events
+                        - if policy(Location.all).index?
+                          %li
+                            = link_to locations_url do
+                              %span.text Locations
+                        - if policy(Locality.all).index?
+                          %li
+                            = link_to localities_url do
+                              %span.text Localities
+                        - if policy(Lodging.all).index?
+                          %li
+                            = link_to lodgings_url do
+                              %span.text Lodging
+                        - if policy(Registration.all).index?
+                          %li
+                            = link_to users_url do
+                              %span.text Users
+              / /main-nav
+              .sidebar-minified.js-toggle-minified
+                %i.fa.fa-angle-left
+              / sidebar content
+              .sidebar-content
+                .panel.panel-default
+                  .panel-heading
+                    %h5
+                      %i.fa.fa-lightbulb-o
+                      Tips
+                  #tip.panel-body
+                    = @tips_message ||= 'Check here for useful tips based on the page you are viewing.'
+                = display_event_widget_based_on(current_user.role)
+                = display_global_stats_widget_based_on(current_user.role)
+              / end sidebar content
+            / end left sidebar
+            / content-wrapper
+            .col-md-10.content-wrapper
+              .row
+                .col-lg-4
+                  %ul.breadcrumb
+                    %li
+                      %i.fa.fa-home
+                      %a{:href => dashboard_index_path} Home
+                    %li.active= params[:controller].capitalize
+                .col-lg-8
+                  .top-content
+                    %ul.list-inline.mini-stat
+                      %li
+                        / h5>LIKES <span class="stat-value stat-color-orange"><i class="fa fa-plus-circle"></i> 81,450</span></h5
+                        / span id="mini-bar-chart1" class="mini-bar-chart"></span
+                      %li
+                        / h5>SUBSCRIBERS <span class="stat-value stat-color-blue"><i class="fa fa-plus-circle"></i> 150,743</span></h5
+                        / span id="mini-bar-chart2" class="mini-bar-chart"></span
+                      %li
+                        / h5>CUSTOMERS <span class="stat-value stat-color-seagreen"><i class="fa fa-plus-circle"></i> 43,748</span></h5
+                        / span id="mini-bar-chart3" class="mini-bar-chart"></span
+              /
+                each page handles what to use the remaining 8 columns for
+                (to the right of the breadcrumbs)
+              / page main content
+              = yield
+              / end main
+            / /content-wrapper
+          / /row
+        / /container
+      / END BOTTOM: LEFT NAV AND RIGHT MAIN CONTENT
+      .push-sticky-footer
+    / /wrapper
+    / FOOTER
+    %footer.footer
+      © #{Date.today.year} SCYPReg
+    / END FOOTER

@@ -1,0 +1,17 @@
+- if current_user.role == 'admin'
+  %h5.label.label-default
+    %i.fa.fa-info-circle
+    Global stats
+  %ul.list-unstyled.list-info-sidebar.bottom-30px
+    %li.data-row
+      %span.data-name Registered users
+      %span.data-value= User.all.count
+    %li.data-row
+      %span.data-name Localities
+      %span.data-value= Locality.all.count
+    %li.data-row
+      %span.data-name Event Locations
+      %span.data-value= Location.all.count
+    %li.data-row
+      %span.data-name Lodgings
+      %span.data-value= Lodging.all.count

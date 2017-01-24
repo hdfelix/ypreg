@@ -1,0 +1,62 @@
+= form_for [@event,@attendance] do |f|
+  - if @attendance.errors.any?
+    #error_explanation.alert.alert-danger.alert-dismissable
+      %h4
+        %strong= pluralize(@attendance.errors.count, "error")
+        prohibited this attendance information from being saved:
+      %ul
+        - @attendance.errors.full_messages.each do |msg|
+          %li= msg
+  / Event info
+  %fieldset
+    %legend Registrant Information
+    = hidden_field_tag "user_id", @attendance.user.id
+    %div
+      %p.data-row
+        %span.data-name Name
+        %span.data-value= @attendance.user.name
+      %p.data-row
+        %span.data-name Role
+        %span.data-value= @attendance.user.role.upcase
+      %p.data-row
+        %span.data-name Gender
+        %span.data-value= format_titleize(@attendance.user.gender)
+      %p.data-row
+        %span.data-name City
+        %span.data-value= @attendance.user.locality_city.titleize
+  %fieldset
+    %legend Attendance Information
+    %div
+      %p.data-row
+        %span.data-name Pmt Type
+        %span.data-value= @attendance.payment_type
+      %p.data-row
+        %span.data-name Pmt Adjustment
+        %span.data-value= number_to_currency(@attendance.payment_adjustment)
+      %p.data-row
+        %span.data-name Serving One
+        %span.data-value= display_yes_no(@attendance.attend_as_serving_one)
+      %p.data-row
+        %span.data-name Registration Paid
+        %span.data-value
+          %strong= display_yes_no(@attendance.has_been_paid)
+    .form-group
+      .simple-checkbox
+        = f.check_box :has_medical_release_form
+        = f.label :has_medical_release_form, "Returned medical release form", class: 'checkbox'
+    %p.data-row
+      %span.data-name= f.label :status, class: ' col-md-2'
+      %span.data-value
+        = f.select :status,                            
+          Registration::STATUS,                        
+          options={},                                  
+          html_options={ class: 'form-control select' }
+  .form-group
+    .col-md-12
+      %span.pull-right
+        - if params[:action] == 'new'
+          = f.submit 'Register', class: 'btn btn-primary'
+        - else
+          = f.submit 'Update', options: { view: 'attendance' }, class: 'btn btn-primary'
+        = hidden_field_tag :view, 'attendance'
+        = link_to 'Back', event_registrations_path(event,view: 'attendance'), class: 'btn btn-default'

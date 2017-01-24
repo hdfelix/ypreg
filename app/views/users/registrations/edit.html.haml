@@ -1,0 +1,110 @@
+.content
+  .main-header
+    %h2= @user.name
+    %em Update the user profile
+  %br/
+  .col-md-8
+    / EDIT USER FORM
+    .widget
+      .widget-header
+        %h3
+          %i.fa.fa-edit
+      .widget-content
+        = form_for(resource, as: resource_name, url: registration_path(resource_name, id: @user.id), html: { method: :put }) do |f|
+          = devise_error_messages!
+          %fieldset
+            %legend Credentials
+            .form-group
+              = f.label :role, 'User Role', class: 'col-md-2 control-label'
+              .col-md-10
+                - if policy(User.all).edit?
+                  = f.select :role, User::USER_ROLE, {include_blank: true }, {class: 'form-control'}
+                - else
+                  = @user.role.capitalize
+            .form-group
+              = f.label :email, class: 'col-md-2 control-label'
+              .col-md-10
+                = f.email_field :email, autofocus: true, class: 'form-control'
+            .form-group
+              - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+                %div
+                  Currently waiting confirmation for: #{resource.unconfirmed_email}
+            /
+              div class="form-group">
+              <haml_loud> f.label :password, class: &#39;col-md-2 control-label&#39; </haml_loud> <i>(leave blank if you don't want to change it)</i>
+              <div class="col-md-10">
+              <haml_loud> f.password_field :password, autocomplete: &quot;off&quot;, class: &#39;form-control&#39; </haml_loud>
+              </div>
+              </div>
+              
+              <div class="form-group">
+              <haml_loud> f.label :password_confirmation, class: &#39;col-md-2 control-label&#39; </haml_loud>
+              <div class="col-md-10">
+              <haml_loud> f.password_field :password_confirmation, autocomplete: &quot;off&quot;, class: &#39;form-control&#39; </haml_loud>
+              </div>
+              </div>
+              
+              <div class="form-group">
+              <haml_loud> f.label :current_password, class: &#39;col-md-2 control-label&#39; </haml_loud>
+              <div class="col-md-10">
+              <i>(we need your current password to confirm your changes)</i>
+              <haml_loud> f.password_field :current_password, autocomplete: &quot;off&quot;, class: &#39;form-control&#39; </haml_loud>
+              </div>
+              </div
+          %fieldset
+            %legend General Information
+            .form-group
+              = f.label :name, 'Name', class: 'col-md-2 control-label'
+              .col-md-10
+                = f.text_field :name, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :gender, '', class: 'col-md-2 control-label'
+              .col-md-10
+                = f.select :gender, User::GENDER, { include_blank: 'Selet your gender' }, { class: 'form-control' }
+            .form-group
+              = f.label :age, '', class: 'col-md-2 control-label'
+              .col-md-10
+                = f.select :age, User::AGE, { include_blank: 'Select your age' }, { class: 'form-control' }
+            .form-group
+              = f.label :grade, '', class: 'col-md-2 control-label'
+              .col-md-10
+                = f.select :grade, User::GRADE, { include_blank: 'Select your grade' }, {class: 'form-control'}
+            .form-group
+              = f.label :home_phone, class: 'col-md-2 control-label'
+              .col-md-10
+                = f.text_field :home_phone, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :cell_phone, class: 'col-md-2 control-label'
+              .col-md-10
+                = f.phone_field :cell_phone, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :work_phone, class: 'col-md-2 control-label'
+              .col-md-10
+                = f.text_field :work_phone, autofocus: true, class: 'form-control'
+            .form-group
+              = f.label :background_check_date, class: 'col-md-2 control-label'
+              .col-md-10
+                - if policy(User.all).edit?
+                  .input-group.input-append.date
+                    %span.input-group-addon
+                      %i.fa.fa-calendar
+                    = f.text_field :background_check_date, class: 'form-control', placeholder: "Last background check"
+                - else
+                  = format_date(@user.background_check_date)
+              %br/
+            .form-group
+              = f.label :birthday, class: 'col-md-2 control-label'
+              .col-md-10
+                .input-group.input-append.date
+                  %span.input-group-addon
+                    %i.fa.fa-calendar
+                  = f.text_field :birthday, class: 'form-control'
+          .widget-footer
+            = f.submit "Update", class: 'btn btn-success'
+            = link_to "Back", :back, class: 'btn btn-default'
+        %fieldset
+          %legend Cancel my account
+          .col-md-12
+            %br/
+            %span
+              = button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger'

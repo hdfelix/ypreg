@@ -1,0 +1,61 @@
+= form_for(@location, class: 'form-horizontal') do |f|
+  - if @location.errors.any?
+    #error_explanation.alert.alert-danger.alert-dismissable
+      %h4
+        %strong
+          = pluralize(@location.errors.count, "error")
+         prohibited this location from being saved:
+      %ul
+        - @location.errors.full_messages.each do |msg|
+          %li= msg
+  .form-group
+    = f.label :type, class: 'col-md-2 control-label'
+    .col-md-10
+      = f.select :location_type,                                                           |
+        Location::TYPE.collect { |t| t.capitalize },                                       |
+        options={ prompt: "Location Type" }, html_options={ class: 'form-control select' } |
+  .form-group
+    = f.label :name, class: 'col-md-2 control-label'
+    .col-md-10
+      = f.text_field :name, class: 'form-control', |
+        placeholder: "Enter the location name"     |
+  .form-group
+    = f.label :description, class: 'col-md-2 control-label'
+    .col-md-10
+      = f.text_field :description, class: 'form-control', |
+        placeholder: "Enter a description"                |
+  .form-group
+    = f.label :max_capacity, class: 'col-md-2 control-label'
+    .col-md-10
+      = f.text_field :max_capacity, class: 'form-control', |
+        placeholder: "Max capacity at location (persons)"  |
+  .form-group
+    = f.label :address1, class: 'col-md-2 control-label'
+    .col-md-10
+      = f.text_field :address1, class: 'form-control', |
+        placeholder: "Enter an address"                |
+  .form-group
+    = f.label :address2, class: 'col-md-2 control-label'
+    .col-md-10
+      = f.text_field :address2, class: 'form-control' ""
+  .form-group
+    = f.label :city, class: 'col-md-2 control-label'
+    .col-md-10
+      = f.text_field :city, class: 'form-control', |
+        placeholder: "Enter a city"                |
+  .form-group
+    = f.label :state_abbrv, 'State', class: 'col-md-2 control-label'
+    .col-md-10
+      = f.select :state_abbrv, Location::STATE_LIST,                   |
+        {include_blank: true, selected: 'CA'}, {class: 'form-control'} |
+  .form-group
+    = f.label :zipcode, class: 'col-md-2 control-label'
+    .col-md-10
+      = f.text_field :zipcode, class: 'form-control', maxlength: 5, |
+        placeholder: "Enter a zipcode"                              |
+  .form-group
+    .col-md-12
+      %span.pull-right
+        = link_to 'Back', locations_path, class: 'btn btn-default'
+        = f.submit "Submit", class: 'btn btn-primary'
+    %br/

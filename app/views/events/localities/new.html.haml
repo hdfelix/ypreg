@@ -1,0 +1,39 @@
+.content
+  .main-header
+    %h2
+      The Church in #{@locality.city}
+    %em
+      Registrations for #{@event.title}
+  %br/
+  .col-md-8
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-edit>
+          Local Saints
+      = form_for(@event_locality, class: 'form-horizontal') do |f|
+        - if @event.errors.any?
+          #error_explanation.alert.alert-danger.alert-dismissable
+            %h4
+              %strong= pluralize(@event.errors.count, "error")
+              prohibited these registrations from being saved:
+            %ul
+              - @event.errors.full_messages.each do |msg|
+                %li= msg
+        .widget-content
+          %table.table.table-striped
+            %thead
+              %tr{style: 'font: bold'}
+                %td
+                %td Name
+                %td Age
+            %tbody
+              = hidden_field_tag 'locality_id', @locality.id
+              - @locality.users.each do |user|
+                %tr{id: "user_#{user.id}"}
+                  %td= check_box_tag locality_user_ids[], user.id
+                  %td= user.name
+                  %td= user.age.to_s.capitalize
+        .panel-footer
+          = f.submit 'Register Saints', class: 'btn btn-primary btn-sm'
+          = link_to 'Back', event_localities_path(@event), class: 'btn btn-default btn-sm'

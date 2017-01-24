@@ -1,0 +1,112 @@
+.content
+  .row
+    .main-header
+      %h2
+        = @locality.city
+        , #{@locality.state_abbrv}
+      %em
+  .row
+    / locality info
+    .col-md-8
+      %p#notice= notice
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Locality Details
+        .widget-content
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr
+                %th.text-right Contact
+                %th
+                  %center Name
+                %th
+                  %center Email
+                %th
+                  %center Cellphone
+                %th
+            %tbody
+              %tr
+                %td.text-right
+                  %strong Locality:
+                - unless @locality.contact_id == nil
+                  %td= User.find(@locality.contact_id).name
+                  %td= mail_to User.find(@locality.contact_id).email
+                  %td [cell]
+                  %td
+                    = link_to 'Edit', edit_locality_path(@locality)
+                - else
+                  %td
+                    %center
+                      \--
+                      %center
+                  %td
+                    %center
+                      \--
+                      %center
+                  %td
+                    %center
+                      \--
+                      %center
+                  %td
+                    = link_to 'Add', edit_locality_path(@locality)
+              %tr
+                %td.text-right
+                  %strong Lodging:
+                - unless @locality.contact_id == nil
+                  %td= User.find(@locality.contact_id).name
+                  %td= mail_to User.find(@locality.contact_id).email
+                  %td [cell]
+                  %td
+                    - if policy(@locality).edit?
+                      = link_to 'Edit', edit_locality_path(@locality.contact_id)
+                - else
+                  %td
+                    %center
+                      \--
+                      %center
+                  %td
+                    %center
+                      \--
+                      %center
+                  %td
+                    %center
+                      \--
+                      %center
+                  %td
+                    = link_to 'Add', edit_locality_path(@locality)
+          = link_to "Back", localities_path, class: 'btn btn-default'
+           
+        .widget-footer
+    / Local Saints
+    .col-md-8
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Local Saints
+        .widget-content
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr
+                %th
+                  %center Name
+                %th
+                  %center Email
+                %th
+                  %center Cellphone
+                %th
+            %tbody
+              - @locality.users.each do |user|
+                %tr
+                  %td= user.name
+                  %td= user.email
+                  %td= format_phone_number(user.cell_phone)
+                  %td
+                    = link_to 'Edit', edit_user_registration_path(user)
+          = link_to "Back", localities_path, class: 'btn btn-default'
+           
+          %p#notice= notice
+        .widget-footer
+/ End locality info

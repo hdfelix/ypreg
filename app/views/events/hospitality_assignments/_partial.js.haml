@@ -1,0 +1,16 @@
+- @event.hospitalities.each  do |hosp|
+  %tr{:id => "<haml_loud"}
+    "\#{hosp.id}" &gt;
+    %td= hosp.name
+    %td= hosp.min_capacity
+    %td= hosp.max_capacity
+    %td
+      = collection_select(                                           |
+        :event,                                                      |
+        :localities,                                                 |
+        @event.localities,                                           |
+        :id,                                                         |
+        :city,                                                       |
+        { include_blank: 'select',                                   |
+        selected: hosp.locality_id_before_type_cast }, remote: true) |
+      / TODO: why like this?

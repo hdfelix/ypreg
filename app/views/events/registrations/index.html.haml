@@ -1,0 +1,59 @@
+.main-header
+  %h2 Registrations
+  %em list of people attending this event
+.col-md-12
+  .widget.widget-table
+    .widget-header
+      %h3
+        %i.fa.fa-table
+        = @event.title
+    .widget-content
+      .table-responsive
+        %table#registrations.table.table-bordered.table-hover
+          %thead
+            %tr{:style => "font: bold"}
+              %th Name
+              / th>Email</th
+              %th Role
+              %th Gender
+              %th Age
+              %th Locality
+              / th style="width: 150px">Phone</th
+              %th Guest?
+              %th Payment Adjustment
+              %th Paid?
+              %th Medical Release Form?
+              %th Serving?
+              %th Background Check
+              %th Vehicle Seating Capacity
+              %th
+          %tbody
+            - if @registrations.count > 0
+              - @registrations.each do |reg|
+                = background_check_tr(reg.user, "reg-#{reg.id}")
+                %td= reg.user.name
+                / td><haml_silent></haml_silent></td
+                %td= reg.user.role.capitalize
+                %td= reg.user.gender.to_s[0]
+                %td= reg.user.age
+                %td= reg.user.locality_city
+                /
+                  td>C: <haml_loud> format_phone_number(reg.user.cell_phone) </haml_loud><br />
+                  H: <haml_loud> format_phone_number(reg.user.home_phone) </haml_loud><br />
+                  W: <haml_loud> format_phone_number(reg.user.work_phone) </haml_loud></td
+                %td
+                  = reg.conference_guest.to_s.capitalize
+                %td= number_to_currency(reg.payment_adjustment)
+                %td= display_yes_no(reg.has_been_paid)
+                %td= display_yes_no(reg.has_medical_release_form)
+                %td= display_yes_no(reg.attend_as_serving_one)
+                %td= format_date(reg.user.background_check_date)
+                %td= reg.vehicle_seating_capacity
+                %td
+                  = link_to 'Show', event_registration_path(@event,reg)
+                  = link_to 'Edit', edit_event_registration_path(@event,reg)
+            - else
+              %tr
+                %td{:colspan => "9"}
+                  %center No one registered for this event...
+      = link_to 'Back', event_path(@event), class: 'btn btn-default'

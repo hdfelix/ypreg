@@ -1,0 +1,46 @@
+.content
+  .main-header
+    %h2 Locations
+    %em list of locations for conferences, retreats, and one-day events
+  .col-md-12
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table
+      .widget-content
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr
+                %th Type
+                %th Name
+                %th Description
+                %th Address
+                %th Capacity
+                %th
+            %tbody
+              - if @locations.all.count > 0
+                - @locations.each do |location|
+                  %tr{:id => "loc_<haml_loud"}
+                    location.id &gt;
+                    %td
+                      = location.location_type.capitalize
+                    %td= link_to location.name, location
+                    %td= location.description
+                    %td
+                      = location.address1
+                      = location.city
+                      , #{location.state_abbrv}  #{location.zipcode}
+                    %td= location.max_capacity
+                    %td
+                      = link_to 'Edit', edit_location_path(location)
+                      - if policy(Location.all).destroy?
+                        = link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' }
+              - else
+                %tr
+                  %td{:colspan => "7"}
+                    %center No Locations in the database...
+        = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
+        = link_to new_location_path, class: 'btn btn-primary' do
+          = content_tag(:i, '', class: "fa fa-plus-square")
+          New Location

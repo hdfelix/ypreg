@@ -1,0 +1,68 @@
+.main-header
+  %h2 Manage Hospitalities
+  %em Add or remove Lodgings that are available as hospitality for "\#{ @event.title }"
+.col-md-12
+  .widget.widget-table
+    .widget-header
+      %h3
+        %i.fa.fa-table
+          %strong Hospitality List
+    = form_tag remove_event_hospitalities_path, method: :put do
+      .widget-content
+        .table-responsive
+          %table.table.table-striped
+            %thead
+              %tr
+                %td
+                %td Hospitality
+                %td Address
+                %td Type
+                %td Min / Max Capacity
+                %td Contact Person
+            %tbody
+              - @hospitalities.each do |h|
+                %tr
+                  %td= check_box_tag "hospitality_lodging_ids[]", h.lodging.id
+                  %td= h.lodging_name
+                  %td= full_address(h.lodging)
+                  %td= Lodging::LODGING_TYPE[h.lodging.lodging_type.to_i]
+                  %td= min_max_capacity(h.lodging)
+                  %td= h.lodging.contact_person.name
+      .panel-footer
+        = submit_tag "Remove Hospitalities", class: 'btn btn-primary btn-sm'
+        = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
+%br/
+%br/
+.col-md-12
+  .widget.widge-table
+    .widget-header
+      %h3
+        %i.fa.fa-table
+          %strong Available Lodgings
+    = form_tag add_event_hospitalities_path, methd: :put do
+      .widget-content
+        .table-responsive
+          %table.table.table-striped
+            %thead
+              %tr
+                %td
+                %td Name
+                %td Capacity
+                %td Type
+                %td Address
+                %td Contact Person
+            %tbody
+              - @lodgings.each do |l|
+                %tr
+                  %td= check_box_tag "lodging_ids[]", l.id
+                  %td= l.name
+                  %td= min_max_capacity(l)
+                  %td= Lodging::LODGING_TYPE[l.lodging_type.to_i]
+                  %td= full_address(l)
+                  %td= l.contact_person.name
+      .panel-footer
+        - if @lodgings.count > 0
+          = submit_tag 'Add Hospitalities', class: 'btn btn-primary btn-sm'
+          = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
+        - else
+          = link_to 'Add a Lodging', new_lodging_path, class: 'btn btn-primary btn-sm'

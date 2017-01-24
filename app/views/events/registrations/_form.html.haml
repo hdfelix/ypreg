@@ -1,0 +1,109 @@
+= form_for [@event,@registration] do |f|
+  - if @registration.errors.any?
+    #error_explanation.alert.alert-danger.alert-dismissable
+      %h4
+        %strong= pluralize(@registration.errors.count, "error")
+        prohibited this registration from being saved:
+      %ul
+        - @registration.errors.full_messages.each do |msg|
+          %li= msg
+  / Event info
+  %fieldset
+    %legend= @event.title
+    .form-group
+      = f.label "Location", class: 'col-md-2 control-label'
+      .col-md-10
+        %h4= @event.location.name
+        %h5= event_location(@event)
+    .form-group
+      = f.label "Event Dates", class: 'col-md-2 control-label'
+      .col-md-10
+        %h5
+          = @event.begin_date.to_formatted_s(:long_ordinal)
+          \- #{@event.end_date.to_formatted_s(:long_ordinal)}
+    .form-group
+      = f.label "Registration cost", class: 'col-md-2 control-label'
+      .col-md-10
+        %h5= number_to_currency(@event.registration_cost)
+  %fieldset
+    %legend Registrant Information
+    = hidden_field_tag "user_id", @registration.user.id
+    .form-group
+      = f.label "Name", class: 'col-md-2 control-label'
+      .col-md-6
+        %span.form-control{:disabled => "disabled"}= @registration.user.name
+    .form-group
+      = f.label "Role", class: 'col-md-2 control-label'
+      .col-md-6
+        %span.form-control{:disabled => "disabled"}= @registration.user.role.upcase
+    .form-group
+      = f.label "Gender", class: 'col-md-2 control-label'
+      .col-md-6
+        %span.form-control{:disabled => "disabled"}= format_titleize(@registration.user.gender.titleize)
+    .form-group
+      = f.label "Age", class: 'col-md-2 control-label'
+      .col-md-6
+        %span.form-control{:disabled => "disabled"}= format_titleize(@registration.user.age)
+    .form-group
+      = f.label "Grade", class: 'col-md-2 control-label'
+      .col-md-6
+        %span.form-control{:disabled => "disabled"}= format_titleize(@registration.user.grade.titleize)
+    .form-group
+      = f.label "Locality", class: 'col-md-2 control-label'
+      .col-md-6
+        %span.form-control{:disabled => "disabled"}= @registration.user.locality_city.titleize
+    .form-group
+      = f.label "Background Check", class: 'col-md-2 control-label'
+      .col-md-6
+        %span.form-control{:disabled => "disabled"}= format_date(@registration.user.background_check_date)
+  %fieldset
+    %legend Registration Information
+    .form-group
+      = f.label :payment_type, class: 'col-md-2 control-label'
+      .col-md-4
+        = f.select :payment_type,                       |
+          Registration::PAYMENT_TYPE,                   |
+          options={ placeholder: "Payment Type" },      |
+          html_options={ class: 'form-control select' } |
+    .form-group
+      = f.label :payment_adjustment, class: 'col-md-2 control-label'
+      .col-md-4
+        .input-group
+          %label.sr-only{:for => "exampleInputAmount"} Amount (in dollars)
+          .input-group-addon $
+          = f.text_field :payment_adjustment, autofocus: true, class: 'form-control', placeholder: "Amount"
+          .input-group-addon .00
+    .form-group
+      = f.label :vehicle_seating_capacity, class: 'col-md-2 control-label'
+      .col-md-4
+        = f.text_field :vehicle_seating_capacity, autofocus: true, class: 'form-control', placeholder: '(Including driver)'
+    .form-group
+      .simple-checkbox
+        = f.check_box :has_medical_release_form
+        = f.label :has_medical_release_form, "Returned medical release form", class: 'checkbox'
+      .simple-checkbox
+        = f.check_box :attend_as_serving_one
+        = f.label :attend_as_serving_one,"Attending as a serving one", class: 'checkbox'
+      .simple-checkbox
+        = f.check_box :conference_guest
+        = f.label :conference_guest,"Conference Guest", class: 'checkbox'
+    .col-md-12.control-label Has registration been paid?
+    .form-group
+      .radio-inline{:style => "padding-left: 40px;"}
+        = f.radio_button(:has_been_paid, false)
+        = label_tag(:has_been_paid_no, "No", value: 'false')
+      .radio-inline
+        = f.radio_button(:has_been_paid, true)
+        = label_tag(:has_been_paid_yes, "Yes", value: 'true')
+    = hidden_field_tag 'return_to', params[:return_to]
+  .form-group
+    .col-md-12
+      %span.pull-right
+        - if params[:action] == 'new'
+          = f.submit 'Register', class: 'btn btn-primary'
+        - else
+          = f.submit 'Update', class: 'btn btn-primary'
+        - if params[:return_to]
+          = link_to 'Back', params[:return_to], class: 'btn btn-default'
+        - else
+          = link_to 'Back', event_registrations_path(event, return_to: params[:return_to]), class: 'btn btn-default'

@@ -1,0 +1,48 @@
+.content
+  .main-header
+    %h2= "Hospitality Assignments - #{ @locality.city.capitalize }"
+    %em Hospitality arrangement details
+  .col-md-6
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table>
+          Registered Saints
+      = form_tag assign_event_hospitality_registration_assignments_path(@event, locality_id: @locality) do |f|
+        - if @event.errors.any?
+          #error_explanation.alert.alert-danger.alert-dismissable
+            %h4
+              %strong= pluralize(@event.errors.count, "error")
+              prohibited this event from being saved:
+            %ul
+              - @event.errors.full_messages.each do |msg|
+                %li= msg
+        .widget-content
+          %table.table.table-striped
+            %thead
+              %tr{:style => "font: bold"}
+                %td Saint
+                %td Age
+                %td Gender
+                %td Assigned to
+            %tbody
+              - @event.registered_saints_from_locality(@locality).each  do |saint|
+                %tr{:id => "<haml_loud"}
+                  "saint_\#{saint.id}" &gt;
+                  %td= saint.name
+                  %td= saint.age
+                  %td= saint.gender
+                  %td
+                    = select_tag "saint_hospitality_ids[#{ saint.id }][]", |
+                      options_from_collection_for_select(                  |
+                      @locality.hospitalities(@event),                     |
+                      "id",                                                |
+                      "lodging_name",                                      |
+                      selected: selected_hospitality(saint)),              |
+                      {                                                    |
+                        prompt: '--'                                       |
+                      }                                                    |
+                    / TODO: why like this?
+        .panel-footer
+          = submit_tag "Update Assignments", class: 'btn btn-primary btn-sm'
+          = link_to 'Back', event_hospitality_registration_assignments_path(@event), class: 'btn btn-default btn-sm'

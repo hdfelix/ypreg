@@ -1,0 +1,15 @@
+= form_for [@event, @attendance], url: event_attendance_path, html: { method: :patch }  do |f|
+  - if @attendance.errors.any?
+    #error_explanation.alert.alert-danger.alert-dismissable
+      %h4
+        %strong= pluralize(@attendance.errors.count, "error")
+        prohibited this attendance record from being saved:
+      %ul
+        - @attendance.errors.full_messages.each do |msg|
+          %li= msg
+  .form-group
+    .simple-checkbox
+      = f.check_box :has_medical_release_form
+      = f.label :has_medical_release_form, "Returned medical release form", class: 'checkbox'
+    = f.submit 'Submit', class: 'btn-btn-primary'
+    Edit

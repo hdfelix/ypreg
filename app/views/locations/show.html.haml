@@ -1,0 +1,54 @@
+.content
+  .row
+    .main-header
+      %h2= @location.name
+      %em Possible location for an event.
+  .row
+    / location info
+    .col-md-6.col-sm-12
+      .widget
+        .widget-header
+          %h3
+            %i.fa.fa-calendar-o>
+            Location Details
+        .widget-content
+          %p#notice= notice
+          .row
+            .col-sm-4
+              %strong Type:
+            .col-sm-8
+              = @location.location_type
+          .row
+            .col-sm-4
+              %strong Name:
+            .col-sm-8
+              = @location.name
+          .row
+            .col-sm-4
+              %strong Description:
+            .col-sm-8
+              = @location.description
+          .row
+            .col-sm-4
+              %strong Address:
+            .col-sm-8
+              = @location.address1
+              = @location.address2
+          .row
+            .col-sm-4
+              %strong City, State Zip:
+            .col-sm-8
+              = @location.city
+              , #{@location.state_abbrv}  #{@location.zipcode}
+          .row
+            .col-sm-4
+              %strong Max capacity:
+            .col-sm-8
+              = @location.max_capacity
+        .widget-footer
+      .row
+        .col-md-12
+          = link_to 'Edit', edit_location_path(@location), class: 'btn btn-primary'
+          = link_to 'Back', locations_path, class: 'btn btn-default'
+          - if policy(Location.all).destroy?
+            = link_to 'Delete', @location, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
