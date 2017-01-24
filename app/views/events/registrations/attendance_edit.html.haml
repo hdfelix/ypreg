@@ -9,11 +9,10 @@
     .widget
       .widget-header
         %h3
-          %i.fa.fa-edit>
+          %i.fa.fa-edit
           Registration Info
         .btn-group.widget-header-toolbar
           %span.btn.btn-danger.btn-sm
             = not_paid_in_words(@attendance.has_been_paid)
-            \&gt;
       .widget-content
         = render partial: 'attendance_simple', locals: { event: @event, attendance: @attendance }

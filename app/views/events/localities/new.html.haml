@@ -23,18 +23,17 @@
         .widget-content
           %table.table.table-striped
             %thead
-              %tr{:style => "font: bold"}
+              %tr{style: 'font: bold'}
                 %td
                 %td Name
                 %td Age
             %tbody
               = hidden_field_tag 'locality_id', @locality.id
               - @locality.users.each do |user|
-                %tr{:id => "user_\#{ user.id }"}>
-                \%&gt;
-                %td= check_box_tag locality_user_ids[], user.id
-                %td= user.name
-                %td= user.age.to_s.capitalize
-      .panel-footer
-        = f.submit Register Saints, class: 'btn btn-primary btn-sm'
-        = link_to 'Back', event_localities_path(@event), class: 'btn btn-default btn-sm'
+                %tr{id: "user_#{user.id}"}
+                  %td= check_box_tag locality_user_ids[], user.id
+                  %td= user.name
+                  %td= user.age.to_s.capitalize
+        .panel-footer
+          = f.submit 'Register Saints', class: 'btn btn-primary btn-sm'
+          = link_to 'Back', event_localities_path(@event), class: 'btn btn-default btn-sm'
