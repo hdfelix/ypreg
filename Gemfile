@@ -38,6 +38,7 @@ gem 'pg_search'
 # Decorator pattern
 gem 'draper', '~> 1.3'
 
+gem 'haml-rails', '~>0.9'
 group :production do
   gem 'rails_12factor'
 end
