@@ -1,12 +1,10 @@
 class LocalitiesController < ApplicationController
   before_action :set_locality, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
 
   def index
-    @localities = Locality.all
-    authorize @localities
-  end
-
-  def show
+    @localities = policy_scope(Locality)
   end
 
   def new
@@ -25,9 +23,6 @@ class LocalitiesController < ApplicationController
       flash[:error] = 'Error saving the locality.'
       render action: 'new'
     end
-  end
-
-  def edit
   end
 
   def update

@@ -48,4 +48,6 @@
                   %td{:colspan => "9"}
                     %center No Users in the database...
         = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
-        / New User
+        = link_to new_admin_user_path, class: 'btn btn-primary' do
+          = content_tag(:i, '', class: "fa fa-plus-square")
+          New User

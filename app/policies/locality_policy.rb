@@ -1,30 +1,26 @@
 # Policies for locality restful actions
 class LocalityPolicy < ApplicationPolicy
-  def index?
-    user.present? && (user.role?(:admin) || user.role?(:scyp))
+
+  class Scope < Scope
+    def resolve
+      if user.admin?
+        scope.all
+      elsif user.locality_contact?
+        scope.where(id: user.locality_id)
+      end
+    end
   end
 
-  def new?
-    index?
+  def index?
+    user.admin? or user.locality_contact?
   end
 
   def show?
-    index?
-  end
-
-  def edit?
-    index?
+    user.admin? or (user.locality_contact? and user.locality == record)
   end
 
   def update?
-    index?
+    show?
   end
 
-  def create?
-    index?
-  end
-
-  def destroy?
-    index?
-  end
 end

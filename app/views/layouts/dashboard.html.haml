@@ -150,23 +150,23 @@
                         %span.text Manage
                         %i.toggle-icon.fa.fa-angle-left
                       %ul.sub-menu
-                        - if policy(Event.all).index?
+                        - if policy(Event).index?
                           %li
                             = link_to events_url do
                               %span.text Events
-                        - if policy(Location.all).index?
+                        - if policy(Location).index?
                           %li
                             = link_to locations_url do
                               %span.text Locations
-                        - if policy(Locality.all).index?
+                        - if policy(Locality).index?
                           %li
                             = link_to localities_url do
                               %span.text Localities
-                        - if policy(Lodging.all).index?
+                        - if policy(Lodging).index?
                           %li
                             = link_to lodgings_url do
                               %span.text Lodging
-                        - if policy(Registration.all).index?
+                        - if policy(User).index?
                           %li
                             = link_to users_url do
                               %span.text Users
