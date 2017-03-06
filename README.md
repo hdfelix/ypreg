@@ -17,14 +17,13 @@ no hospitality accomodations as well as multi-day events where hospitality accom
 ## Setup
 To get started, clone this repo and run:
 ```
-$ bundle
+$ bundle install --without test
 ```
 The site is configured to use PostgreSQL for all environments (Development|Test|Production). Make sure you install and configure PostgreSQL before running the following commands from your terminal:
 ```
 $ rake db:create
 $ rake db:migrate
 ```
-
 Next, Run the following command to create an admin user account:  
 ```
 rake ypreg:create_admin
