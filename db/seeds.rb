@@ -30,6 +30,7 @@ count.times do
     city: Faker::Address.ypreg_city,
     state_abbrv: Faker::Address.state_abbr,
     zipcode: Faker::Address.zip_code,
+    location_type: 'camp',
     max_capacity: rand(50..200).round(-1)
   )
   print '.'
