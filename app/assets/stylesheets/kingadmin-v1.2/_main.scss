@@ -14529,10 +14529,10 @@ fieldset[disabled] .btn-default.active {
   position: relative;
 }
 .onoffswitch .onoffswitch-inner {
-  -webkit-transition-property: margin;
-  -moz-transition-property: margin;
-  -o-transition-property: margin;
-  transition-property: margin;
+  -webkit-transition: margin;
+  -moz-transition: margin;
+  -o-transition: margin;
+  transition: margin;
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
@@ -14584,10 +14584,10 @@ fieldset[disabled] .btn-default.active {
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
   border-radius: 15px;
-  -webkit-transition-property: all;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  transition-property: all;
+  -webkit-transition: all;
+  -moz-transition: all;
+  -o-transition: all;
+  transition: all;
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
@@ -15281,10 +15281,10 @@ input[type="text"].spinedit {
   width: 60px;
 }
 .progress .progress-bar {
-  -webkit-transition-property: width;
-  -moz-transition-property: width;
-  -o-transition-property: width;
-  transition-property: width;
+  -webkit-transition: width;
+  -moz-transition: width;
+  -o-transition: width;
+  transition: width;
   -webkit-transition-duration: 3s;
   -moz-transition-duration: 3s;
   -o-transition-duration: 3s;
@@ -16965,10 +16965,10 @@ div[class*="col-"] > .form-group {
   border: none;
 }
 .king-gallery .item .thumbnail img {
-  -webkit-transition-property: -webkit-transform;
-  -moz-transition-property: -moz-transform;
-  -o-transition-property: -o-transform;
-  transition-property: transform;
+  -webkit-transition: -webkit-transform;
+  -moz-transition: -moz-transform;
+  -o-transition: -o-transform;
+  transition: transform;
   -webkit-transition-duration: 0.4s;
   -moz-transition-duration: 0.4s;
   -o-transition-duration: 0.4s;
@@ -16982,10 +16982,10 @@ div[class*="col-"] > .form-group {
 .king-gallery .item .thumbnail .caption {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
-  -webkit-transition-property: -webkit-transform, opacity;
-  -moz-transition-property: -moz-transform, opacity;
-  -o-transition-property: -o-transform, opacity;
-  transition-property: transform, opacity;
+  -webkit-transition: -webkit-transform, opacity;
+  -moz-transition: -moz-transform, opacity;
+  -o-transition: -o-transform, opacity;
+  transition: transform, opacity;
   -webkit-transition-duration: 0.4s, 0.1s;
   -moz-transition-duration: 0.4s, 0.1s;
   -o-transition-duration: 0.4s, 0.1s;
@@ -17026,10 +17026,10 @@ div[class*="col-"] > .form-group {
 .king-gallery .item .thumbnail:hover .caption {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
-  -webkit-transition-property: -webkit-transform, opacity;
-  -moz-transition-property: -moz-transform, opacity;
-  -o-transition-property: -o-transform, opacity;
-  transition-property: transform, opacity;
+  -webkit-transition: -webkit-transform, opacity;
+  -moz-transition: -moz-transform, opacity;
+  -o-transition: -o-transform, opacity;
+  transition: transform, opacity;
   -webkit-transition-duration: 0.4s, 0.1s;
   -moz-transition-duration: 0.4s, 0.1s;
   -o-transition-duration: 0.4s, 0.1s;

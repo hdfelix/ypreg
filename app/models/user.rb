@@ -38,6 +38,14 @@ class User < ActiveRecord::Base
     role == base_role.to_s
   end
 
+  def admin?
+    role?(:admin) or role?(:scyp)
+  end
+ 
+  def locality_contact?
+    role?(:loc_contact)
+  end
+
   def locality_city
     if locality.nil?
       ''

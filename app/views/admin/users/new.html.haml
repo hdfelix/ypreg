@@ -1,0 +1,33 @@
+.content
+  .main-header
+    %h2 New User
+    %em create a new user
+  %br/
+  .col-md-8
+    / New User form
+    .widget
+      .widget-header
+        %h3
+          %i.fa.fa-edit
+      .widget-content
+        = form_for [:admin, @user], class: 'form-horizontal' do |f|
+          - if @user.errors.any?
+            #error_explanation.alert.alert-danger.alert-dismissable
+              %h4
+                %strong= pluralize(@user.errors.count, "error")
+                prohibited this user from being saved:
+              %ul
+                - @user.errors.full_messages.each do |msg|
+                  %li= msg
+          / User form partial
+          = render "form", f: f
+          .form-group
+            .col-md-12
+              %span.pull-right
+                - if @user.locality_id.present?
+                  = link_to 'Back', locality_path(@user.locality_id), class: 'btn btn-default'
+                - else
+                  = link_to 'Back', users_path, class: 'btn btn-default'
+                - if policy(@user).new?
+                  = f.submit "Submit", class: 'btn btn-primary'
+            %br/

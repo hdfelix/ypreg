@@ -1,24 +1,20 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include Admin::UsersHelper
+  before_action :set_user, only: [:show, :update, :destroy]
+  after_action :verify_authorized, only: [:show, :edit, :update, :destroy]
+  after_action :verify_policy_scoped, only: :index
+
   def index
     @users = decorated_users
   end
 
-  def show
-    @user = User.find(params[:id])
-  end
-
   def edit
     @user = User.find(params[:format])
-  end
-
-  def create
-    super
+    authorize @user
   end
 
   def update
-    @user = User.find(params[:id])
-
-    if @user.update(admin_update_params)
+    if @user.update(user_params)
       flash[:notice] = "#{@user.name}'s profile was updated successfully."
       redirect_to users_path
     else
@@ -29,23 +25,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   private
 
-  def decorated_users
-    users = User.includes(:locality).all
-    authorize users
+  def set_user
+    @user = User.find(params[:id])
+    authorize @user
+  end
 
+  def decorated_users
+    users = policy_scope(User)
     decorated_users = users.collect do |user|
-      if user.role == 'yp'
+      if user.role?(:yp)
         YpUserDecorator.decorate(user)
       else
         UserDecorator.decorate(user)
       end
     end
-    decorated_users
   end
 
-  def admin_update_params
-    params[:user]
-      .permit(:role, :email, :locality, :name, :gender, :age, :grade, :home_phone,
-              :work_phone, :cell_phone, :background_check_date, :birthday)
-  end
 end

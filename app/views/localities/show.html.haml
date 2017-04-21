@@ -106,7 +106,9 @@
                   %td
                     = link_to 'Edit', edit_user_registration_path(user)
           = link_to "Back", localities_path, class: 'btn btn-default'
-           
+          = link_to new_admin_user_path, class: 'btn btn-primary' do
+            = content_tag(:i, '', class: "fa fa-plus-square")
+            New User 
           %p#notice= notice
         .widget-footer
 / End locality info

@@ -17,7 +17,7 @@
             .form-group
               = f.label :role, 'User Role', class: 'col-md-2 control-label'
               .col-md-10
-                - if policy(User.all).edit?
+                - if policy(User).scyp_edit?
                   = f.select :role, User::USER_ROLE, {include_blank: true }, {class: 'form-control'}
                 - else
                   = @user.role.capitalize
@@ -84,7 +84,7 @@
             .form-group
               = f.label :background_check_date, class: 'col-md-2 control-label'
               .col-md-10
-                - if policy(User.all).edit?
+                - if policy(User).scyp_edit?
                   .input-group.input-append.date
                     %span.input-group-addon
                       %i.fa.fa-calendar

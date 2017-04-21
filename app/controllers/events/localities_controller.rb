@@ -1,4 +1,5 @@
 class Events::LocalitiesController < ApplicationController
+
   def index
     @event = Event.find(params[:event_id])
     @event_localities = @event.localities

@@ -1,4 +1,5 @@
 YpwReg::Application.routes.draw do
+
   root 'welcome#index'
 
   get 'welcome/index'
@@ -60,7 +61,7 @@ YpwReg::Application.routes.draw do
 
   # http://stackoverflow.com/a/22158715
   devise_for :users,
-             path_names: { edit: 'edit' },
+             #path_names: { edit: 'edit' },
              except: [:destroy],
              controllers: { registrations: 'users/registrations',
                             passwords: 'users/passwords',
@@ -71,4 +72,9 @@ YpwReg::Application.routes.draw do
     get '/users', to: 'users/registrations#index', as: 'users'
     get '/user/:id', to: 'users/registrations#show', as: 'user'
   end
+
+  namespace :admin do
+    resources :users, only: [:new, :create]
+  end
+
 end

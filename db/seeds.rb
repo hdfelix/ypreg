@@ -38,7 +38,7 @@ end
 
 # Create 10 localities
 print "\nCreating #{count} Localities: "
-locality_names = ['Anaheim', 'Cypress', 'New Jerusalem', 'Buena Park', 'Huntington Beach', 'Irvine', 'San Juan Capistrano', 'San Diego', 'Orange', 'Bakers Field']
+locality_names = ['Anaheim', 'Cypress', 'New Jerusalem', 'Buena Park', 'Huntington Beach', 'Irvine', 'San Juan Capistrano', 'San Diego', 'Orange', 'Bakersfield']
 until locality_names.count == 0 do
   Locality.create(
     city: locality_names.pop,
