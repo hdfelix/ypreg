@@ -11,31 +11,37 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def role_edit?
+    user.admin? or user.locality_contact?
+  end
+
   def index?
     user.admin? or user.locality_contact?
   end
 
   def show?
-    if user.admin?
-      return true
-    end
-    user.locality_contact? and user.locality == record.locality
+    create? or user == record
   end
 
   def create?
-    show?
+    if user.admin?
+      return true
+    elsif user.locality_contact?
+      user.locality == record.locality and not record.admin?
+    else
+      false
+    end
   end
 
   def new?
-    index?
+    user.admin? or user.locality_contact?
   end
 
   def update?
     show?
   end
 
-  def scyp_edit?
-    user.admin?
+  def destroy?
+    show?
   end
-
 end

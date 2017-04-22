@@ -46,6 +46,16 @@ class User < ActiveRecord::Base
     role?(:loc_contact)
   end
 
+  def user_roles
+    if admin?
+      USER_ROLE
+    elsif locality_contact?
+      USER_ROLE - %w(admin scyp)
+    else
+      [role]
+    end
+  end
+
   def locality_city
     if locality.nil?
       ''

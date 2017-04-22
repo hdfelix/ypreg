@@ -4,6 +4,9 @@ class Admin::UsersController < ApplicationController
 
   def new
     @user = User.new()
+    if current_user.locality_contact?
+      @user.locality = current_user.locality
+    end
     authorize @user
   end
 

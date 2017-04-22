@@ -8,6 +8,10 @@ class ApplicationPolicy
     @record = record
   end
 
+  def scyp_edit?
+    user.admin?
+  end
+
   def index?
     user.admin?
   end
@@ -40,6 +44,7 @@ class ApplicationPolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
+      raise Pundit::NotAuthorizedError, "must be logged in" unless user
       @user = user
       @scope = scope
     end

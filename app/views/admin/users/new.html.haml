@@ -20,7 +20,7 @@
                 - @user.errors.full_messages.each do |msg|
                   %li= msg
           / User form partial
-          = render "form", f: f
+          = render "/users/registrations/form", f: f
           .form-group
             .col-md-12
               %span.pull-right
