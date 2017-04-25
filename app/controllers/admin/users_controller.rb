@@ -24,4 +24,13 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    authorize @user
+    if current_user != @user
+      @user.destroy
+      redirect_to users_path
+    end
+  end
+
 end

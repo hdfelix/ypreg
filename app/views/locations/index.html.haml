@@ -33,8 +33,9 @@
                       , #{location.state_abbrv}  #{location.zipcode}
                     %td= location.max_capacity
                     %td
-                      = link_to 'Edit', edit_location_path(location)
-                      - if policy(Location.all).destroy?
+                      - if policy(location).edit?
+                        = link_to 'Edit', edit_location_path(location)
+                      - if policy(location).destroy?
                         = link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' }
               - else
                 %tr

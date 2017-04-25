@@ -42,7 +42,11 @@
                       W: #{format_phone_number(user.work_phone)}
                     %td= format_date(user.background_check_date)
                     %td= format_date(user.last_sign_in_at)
-                    %td= link_to 'Edit', edit_user_registration_path(user)
+                    %td
+                      - if policy(user).edit?
+                        = link_to 'Edit', edit_user_registration_path(user)
+                      - if policy(user).destroy? and user != current_user
+                        = link_to 'Delete', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'}
               - else
                 %tr
                   %td{:colspan => "9"}

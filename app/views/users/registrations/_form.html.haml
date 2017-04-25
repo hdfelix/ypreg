@@ -4,7 +4,7 @@
     = f.label :role, 'User Role', class: 'col-md-2 control-label'
     .col-md-10
       - if policy(User).role_edit?
-        = f.select :role, current_user.user_roles, {include_blank: true }, {class: 'form-control'}
+        = f.select :role, policy(@user).authorized_roles, {include_blank: true }, {class: 'form-control'}
       - else
         = @user.role
   .form-group

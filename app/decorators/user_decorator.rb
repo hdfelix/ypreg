@@ -2,26 +2,31 @@ class UserDecorator < Draper::Decorator
   delegate_all
 
   def background_check_date_row_class
+    if object.background_check_valid?
+      return ''
+    end
     date = object.background_check_date
-    css =
-      case
+    case
       when date.nil? then 'danger'
       when date < 3.years.ago then 'danger'
       when date < 34.months.ago then 'warning'
       else ''
-      end
-    css
+    end
   end
 
   def background_check_date_bg_class
-    date = object.background_check_date
-    css =
-      case
-      when date.nil? then 'bg-danger'
-      when date < 3.years.ago then 'bg-danger'
-      when date < 34.months.ago then 'bg-warning'
-      else ''
-      end
+    css = background_check_date_row_class
+    if not css.empty?
+      css = 'bg-' + css
+    end
     css
+  end
+
+  def locality_city
+    if locality.nil?
+      ''
+    else
+      locality.city
+    end
   end
 end

@@ -46,24 +46,6 @@ class User < ActiveRecord::Base
     role?(:loc_contact)
   end
 
-  def user_roles
-    if admin?
-      USER_ROLE
-    elsif locality_contact?
-      USER_ROLE - %w(admin scyp)
-    else
-      [role]
-    end
-  end
-
-  def locality_city
-    if locality.nil?
-      ''
-    else
-      locality.city
-    end
-  end
-
   def registration(event)
     Registration.where(user: self, event: event)[0]
   end
@@ -83,8 +65,7 @@ class User < ActiveRecord::Base
 
   def background_check_valid?
     return true if ages_that_do_not_require_background_check.include?(age)
-    background_check_date.nil? ||
-      background_check_date > 3.years.ago
+    background_check_date.nil? or background_check_date > 3.years.ago
   end
 
   def hospitality(event)
@@ -99,6 +80,6 @@ class User < ActiveRecord::Base
   private
 
   def ages_that_do_not_require_background_check
-    User::AGE.reverse.drop(2)
+    User::AGE - %w(18 adult)
   end
 end

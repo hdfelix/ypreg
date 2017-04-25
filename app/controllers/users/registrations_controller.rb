@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @users = UserDecorator.decorate_collection(policy_scope(User))
+    @users = policy_scope(User).decorate
   end
 
   def show
@@ -27,17 +27,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     else
       flash[:error] = "There was an error updating the profile for #{@user.name}."
       render action: 'edit'
-    end
-  end
-
-  def destroy
-    @user = User.find(params[:id])
-    authorize @user
-    if current_user != @user
-      @user.destroy
-      redirect_to users_path
-    else
-      super
     end
   end
 

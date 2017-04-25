@@ -17,7 +17,7 @@
                 %td Contact
                 %td
             %tbody
-              - if @localities.all.count > 0
+              - if @localities.count > 0
                 - @localities.each do |locality|
                   %tr
                     %td= link_to locality.city, locality_path(locality)
@@ -26,9 +26,10 @@
                     %td
                       = locality.contact_with_email
                     %td
-                      = link_to 'Edit', edit_locality_path(locality)
-                       
-                      \#{link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' }}
+                      - if policy(locality).edit?
+                        = link_to 'Edit', edit_locality_path(locality)
+                      - if policy(locality).destroy?
+                        \#{link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' }}
               - else
                 %tr
                   %td{:colspan => "4"}

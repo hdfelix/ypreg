@@ -20,7 +20,7 @@
     .form-group
       = f.label :user, 'Contact', class: 'col-md-2 control-label'
       .col-md-10
-        = f.collection_select(:contact_id, User.all, :id, :name, {include_blank: true}, {class: 'form-control'})
+        = f.collection_select(:contact_id, User.where(locality: @locality), :id, :name, {include_blank: true}, {class: 'form-control'})
   .form-group
     .col-md-12
       %span.pull-right

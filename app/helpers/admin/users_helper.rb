@@ -1,11 +1,12 @@
 module Admin::UsersHelper
   def user_params
+    policy = policy(User)
     common_params = [:email, :name, :gender, :age, :grade, :home_phone,
                      :work_phone, :cell_phone, :birthday]
-    if current_user.admin?
+    if policy.scyp_edit?
       params.require(:user).permit(:role, :locality, :background_check_date,
                                    *common_params)
-    elsif current_user.locality_contact?
+    elsif policy.role_edit?
       params.require(:user).permit(:role, *common_params)
     else
       params.require(:user).permit(*common_params)

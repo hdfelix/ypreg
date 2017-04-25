@@ -8,7 +8,7 @@ class Events::LocalitiesController < ApplicationController
 
   def show
     @event = Event.find(params[:event_id])
-    @locality = @event.localities.find(params[:id])
+    @locality = @event.localities.find(params[:id]).decorate
     @users_not_registered = decorated_users(@locality.users_not_registered(@event))
     @event_locality = EventLocality.where(event: @event, locality: @locality)[0]
     @registrations = @event_locality.registrations

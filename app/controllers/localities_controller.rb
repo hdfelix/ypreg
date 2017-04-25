@@ -4,7 +4,8 @@ class LocalitiesController < ApplicationController
   after_action :verify_policy_scoped, only: :index
 
   def index
-    @localities = policy_scope(Locality)
+    scope = policy_scope(Locality.order(:city))
+    @localities = LocalityDecorator.decorate_collection(scope)
   end
 
   def new

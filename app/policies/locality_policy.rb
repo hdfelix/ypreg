@@ -19,8 +19,4 @@ class LocalityPolicy < ApplicationPolicy
     user.admin? or (user.locality_contact? and user.locality == record)
   end
 
-  def update?
-    show?
-  end
-
 end

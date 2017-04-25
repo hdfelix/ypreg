@@ -78,6 +78,6 @@
     / end User details
   .row
     .col-md-12
-      = link_to 'Edit', edit_user_registration_path(@user), class: 'btn btn-primary'
       = link_to 'Back', users_path, class: 'btn btn-default'
-/ End User info
+      = link_to 'Edit', edit_user_registration_path(@user), class: 'btn btn-primary'
+      = render "delete"
