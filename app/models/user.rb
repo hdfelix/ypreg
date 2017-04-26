@@ -23,7 +23,9 @@ class User < ActiveRecord::Base
   # Constants
   GENDER = %w(Brother Sister)
   USER_ROLE = %w(admin scyp ycat loc_contact hosp_contact trainee speaking_brother supporting_brother helper yp guest)
-  AGE = %w(minor 13 14 15 16 17 18 adult)
+  AGE_MINOR = %w(minor 13 14 15 16 17)
+  AGE_ADULT = %w(18 adult)
+  AGE = AGE_MINOR + AGE_ADULT
   GRADE = %w(6th 7th 8th 9th 10th 11th 12th college other)
 
   # scopes
@@ -31,6 +33,18 @@ class User < ActiveRecord::Base
     contact_person_ids =
       Lodging.where.not(contact_person: nil).pluck(:contact_person_id)
     User.where.not(id: contact_person_ids)
+  end
+  
+  def self.minor
+    where(age: AGE_MINOR)
+  end     
+
+  def self.adult
+    where(age: AGE_ADULT)
+  end
+
+  def self.background_check_valid
+    where("background_check_date >= ?", 36.months.ago.midnight)
   end
 
   # Interface
@@ -63,9 +77,24 @@ class User < ActiveRecord::Base
     end
   end
 
+  def requires_background_check?
+    return AGE_ADULT.include?(age)
+  end
+
   def background_check_valid?
-    return true if ages_that_do_not_require_background_check.include?(age)
-    background_check_date.nil? or background_check_date > 3.years.ago
+    if background_check_date.present?
+      background_check_date >= 36.months.ago.midnight
+    else
+      false
+    end
+  end
+
+  def background_check_warning?
+    if background_check_date.present?
+      background_check_date >= 36.months.ago.midnight and background_check_date < 34.months.ago.midnight
+    else
+      false
+    end
   end
 
   def hospitality(event)
@@ -77,9 +106,4 @@ class User < ActiveRecord::Base
     end
   end
 
-  private
-
-  def ages_that_do_not_require_background_check
-    User::AGE - %w(18 adult)
-  end
 end

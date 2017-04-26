@@ -44,13 +44,14 @@ class Locality < ActiveRecord::Base
   def beds_to_assign(event)
     registered_users(event).count - assigned_beds_total(event)
   end
-  # Registrations Scopes
+
   def registrations(event)
     Registration.where(event: event, locality: self)
   end
 
   def registered_users(event)
-    User.find(registrations(event).map(&:user_id))
+    reg_filter = {registrations: {event: event, locality: self}}
+    User.joins(:registrations).where(reg_filter)
   end
 
   def registered_yp(event)

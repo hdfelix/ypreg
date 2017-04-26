@@ -37,6 +37,7 @@ YpwReg::Application.configure do
   config.action_mailer.perform_deliveries = true
   
   # Simplecov (https://github.com/colszowka/simplecov#want-to-use-spring-with-simplecov)
+  config.public_file_server.enabled = false
   config.serve_static_files = false
   config.eager_load = false
 end

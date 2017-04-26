@@ -9,7 +9,7 @@ class Events::LocalitiesController < ApplicationController
   def show
     @event = Event.find(params[:event_id])
     @locality = @event.localities.find(params[:id]).decorate
-    @users_not_registered = decorated_users(@locality.users_not_registered(@event))
+    @users_not_registered = @locality.users_not_registered(@event)
     @event_locality = EventLocality.where(event: @event, locality: @locality)[0]
     @registrations = @event_locality.registrations
     @tips_message = Payment.tips[:check_payment_instructions].html_safe
@@ -52,21 +52,5 @@ class Events::LocalitiesController < ApplicationController
       flash[:error] = "No users were selected!"
       render action: 'new'
     end
-  end
-
-  private
-
-  def decorated_users(users)
-    users_to_decorate = User.where(id: users.map(&:id))
-    # authorize users_to_decorate
-
-    decorated_users = users_to_decorate.collect do |user|
-      if user.role == 'yp'
-        YpUserDecorator.decorate(user)
-      else
-        UserDecorator.decorate(user)
-      end
-    end
-    decorated_users
   end
 end

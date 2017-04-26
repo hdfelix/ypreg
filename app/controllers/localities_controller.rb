@@ -1,11 +1,16 @@
 class LocalitiesController < ApplicationController
-  before_action :set_locality, only: [:show, :edit, :update, :destroy]
+  before_action :set_locality, only: [:edit, :update, :destroy]
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
 
   def index
-    scope = policy_scope(Locality.order(:city))
-    @localities = LocalityDecorator.decorate_collection(scope)
+    @localities = policy_scope(Locality).order(:city).decorate
+  end
+
+  def show
+    @locality = Locality.find(params[:id])
+    authorize @locality
+    @users = policy_scope(@locality.users).decorate
   end
 
   def new

@@ -1,18 +1,18 @@
 source 'https://rubygems.org'
-ruby '2.3.0'
+ruby '2.4.1'
 
-gem 'rails', ' ~> 4.2'
+gem 'rails', '~> 5.0', '>= 5.0.2'
 
 gem 'pg'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'jbuilder', '~> 1.2'
-
+gem 'activemodel-serializers-xml'
 gem 'foreigner'
 gem 'immigrant'
 gem 'skylight'
@@ -38,6 +38,7 @@ gem 'pg_search'
 # Decorator pattern
 gem 'draper', '~> 1.3'
 
+# HTML template
 gem 'haml-rails', '~>0.9'
 
 # Image processing
@@ -51,10 +52,14 @@ group :production do
 end
 
 group :development do
+# Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '~> 3.0.5'
   gem 'better_errors'
-  gem 'quiet_assets'
+  #gem 'quiet_assets'
   gem 'guard-livereload'
   gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
   gem 'railroady'
   gem 'bullet'

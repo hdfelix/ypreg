@@ -58,7 +58,7 @@
             %i.fa.fa-calendar-o>
             Local Saints
         .widget-content
-          %table.table.table-bordered.table-striped.table-hover
+          %table.table.table-bordered.table-hover
             %thead
               %tr
                 %th
@@ -69,8 +69,8 @@
                   %center Cellphone
                 %th
             %tbody
-              - @locality.users.each do |user|
-                %tr
+              - @users.each do |user|
+                %tr{class: "#{user.background_check_date_row_class}"}
                   %td= link_to user.name, user_path(user)
                   %td= user.email
                   %td= format_phone_number(user.cell_phone)

@@ -6,7 +6,8 @@ class UserPolicy < ApplicationPolicy
       if user.admin?
         scope.includes(:locality)
       elsif user.locality_contact?
-        scope.includes(:locality).where(locality: user.locality)
+        locality = scope.includes(:locality).where(locality: user.locality)
+        locality.minor.or(locality.adult.background_check_valid)
       end
     end
   end
@@ -35,9 +36,9 @@ class UserPolicy < ApplicationPolicy
 
   def show?
     if user.admin?
-      return true
+      true
     elsif user == record
-      return true
+      true
     elsif user.locality_contact?
       user.locality == record.locality
     else
@@ -47,7 +48,7 @@ class UserPolicy < ApplicationPolicy
 
   def create?
     if user.admin?
-      return true
+      true
     elsif user.locality_contact?
       user.locality == record.locality and authorized_role?
     else

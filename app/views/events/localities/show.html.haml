@@ -104,7 +104,7 @@
             %tbody#registrations
               - @registrations.all.each do |reg|
                 = background_check_tr(reg.user, "reg-#{reg.id}")
-                - if policy(Registration.all).edit?
+                - if policy(Registration).edit?
                   %td= link_to reg.user.name, edit_event_registration_path(@event, reg)
                 - else
                   %td= reg.user.name
