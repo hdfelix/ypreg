@@ -1,7 +1,7 @@
 %fieldset
   %legend Administrative Info
   .form-group
-    = f.label :role, 'User Role', class: 'col-md-2 control-label'
+    = f.label :role, "User Role", class: 'col-md-2 control-label'
     .col-md-10
       - if policy(User).role_edit?
         = f.select :role, policy(@user).authorized_roles, {include_blank: true }, {class: 'form-control'}
@@ -28,28 +28,13 @@
         = f.password_field :password, class: 'form-control', placeholder: "Enter password"
         %span.input-group-addon
           %i.fa.fa-user
-  /
-    div class="form-group">
-    <haml_loud> f.label :password, class: &#39;col-md-2 control-label&#39; </haml_loud> <i>(leave blank if you don't want to change it)</i>
-    <div class="col-md-10">
-    <haml_loud> f.password_field :password, autocomplete: &quot;off&quot;, class: &#39;form-control&#39; </haml_loud>
-    </div>
-    </div>
-    
-    <div class="form-group">
-    <haml_loud> f.label :password_confirmation, class: &#39;col-md-2 control-label&#39; </haml_loud>
-    <div class="col-md-10">
-    <haml_loud> f.password_field :password_confirmation, autocomplete: &quot;off&quot;, class: &#39;form-control&#39; </haml_loud>
-    </div>
-    </div>
-    
-    <div class="form-group">
-    <haml_loud> f.label :current_password, class: &#39;col-md-2 control-label&#39; </haml_loud>
-    <div class="col-md-10">
-    <i>(we need your current password to confirm your changes)</i>
-    <haml_loud> f.password_field :current_password, autocomplete: &quot;off&quot;, class: &#39;form-control&#39; </haml_loud>
-    </div>
-    </div
+  .form-group
+    = f.label :password_confirmation, class: 'col-md-2 control-label'
+    .col-md-10
+      .input-group
+        = f.password_field :password_confirmation, class: 'form-control', placeholder: "Enter password confirmation"
+        %span.input-group-addon
+          %i.fa.fa-user
 %fieldset
   %legend General Information
   .form-group

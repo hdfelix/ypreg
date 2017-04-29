@@ -4,7 +4,7 @@ class LocalityPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.admin?
-        scope.all
+        scope
       elsif user.locality_contact?
         scope.where(id: user.locality_id)
       end
@@ -18,5 +18,4 @@ class LocalityPolicy < ApplicationPolicy
   def show?
     user.admin? or (user.locality_contact? and user.locality == record)
   end
-
 end

@@ -14,9 +14,9 @@ class UserPolicy < ApplicationPolicy
 
   def authorized_roles
     if user.admin?
-      User::USER_ROLE
+      User::ROLE
     elsif user.locality_contact?
-      User::USER_ROLE - %w(admin scyp ycat loc_contact hosp_contact)
+      User::ROLE - %w(admin scyp ycat loc_contact hosp_contact)
     else
       [user.role]
     end

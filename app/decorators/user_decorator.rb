@@ -2,7 +2,7 @@ class UserDecorator < Draper::Decorator
   delegate_all
 
   def background_check_date_row_class
-    return '' if !object.requires_background_check?
+    return '' if !object.adult?
     return 'warning' if object.background_check_warning?
     return 'danger' if !object.background_check_valid?
     ''
@@ -14,13 +14,5 @@ class UserDecorator < Draper::Decorator
       css = 'bg-' + css
     end
     css
-  end
-
-  def locality_city
-    if locality.blank?
-      ''
-    else
-      locality.city
-    end
   end
 end

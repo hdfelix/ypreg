@@ -1,10 +1,6 @@
 # This class represents an user who has registered for an event.
 # self.hospitality is the assigned hospitality for the user.
-
 class Registration < ActiveRecord::Base
-  PAYMENT_TYPE = %w(cash check)
-  STATUS = %w(attended excused y)
-
   belongs_to :user
   belongs_to :event
   belongs_to :locality # TODO: should this be removed and a wrapper method registration_locality added?
@@ -21,6 +17,21 @@ class Registration < ActiveRecord::Base
 
   after_create :create_event_locality
 
+  PAYMENT_TYPE = %w(cash check)
+  STATUS = %w(attended excused y)
+
+  # scopes
+  def self.locality_roster(locality, event)
+    where(locality: locality, event: event)
+  end
+  
+  def self.for_event(event)
+    where(event: event)
+  end
+
+  def self.paid
+    where(has_been_paid: true)
+  end
 
   # TODO: pay(amount)
   # TODO paid?
@@ -29,7 +40,7 @@ class Registration < ActiveRecord::Base
     @payment_adjustment ||= 0
   end
 
-  private
+  protected
 
   def create_event_locality
     EventLocality.find_or_create_by(event: event, locality: user.locality)

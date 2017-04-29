@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
 
-gem 'rails', '~> 5.0', '>= 5.0.2'
+gem 'rails', '~> 5.0.0', '>= 5.0.2'
 
 gem 'pg'
 gem 'bootstrap-sass', '~> 3.2.0'
@@ -11,7 +11,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder'
 gem 'activemodel-serializers-xml'
 gem 'foreigner'
 gem 'immigrant'
@@ -36,10 +36,10 @@ gem 'simple_form'
 gem 'pg_search'
 
 # Decorator pattern
-gem 'draper', '~> 1.3'
+gem 'draper', '~> 3.0.0.pre1'
 
 # HTML template
-gem 'haml-rails', '~>0.9'
+gem 'haml-rails'
 
 # Image processing
 gem 'mini_magick'

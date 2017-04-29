@@ -3,16 +3,8 @@ class EventLocality < ActiveRecord::Base
   belongs_to :event
   belongs_to :locality
 
-  def self.registrations(event, locality)
-    Registration.where(event: event, locality: locality)
-  end
-
-  def locality_id
-    locality.id
-  end
-
-  def locality_city
-    locality.city
+  def self.for_event(event)
+    where(event: event)
   end
 
   def users

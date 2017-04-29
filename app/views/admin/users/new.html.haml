@@ -10,7 +10,7 @@
         %h3
           %i.fa.fa-edit
       .widget-content
-        = form_for [:admin, @user], class: 'form-horizontal' do |f|
+        = form_for [:admin, @user], method: :create, html: {class: 'form-horizontal'} do |f|
           - if @user.errors.any?
             #error_explanation.alert.alert-danger.alert-dismissable
               %h4

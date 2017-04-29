@@ -14,17 +14,14 @@
               %tr{:style => "font: bold"}
                 %td Name
                 %td State
-                %td Contact
                 %td
             %tbody
-              - if @localities.count > 0
+              - if !@localities.empty?
                 - @localities.each do |locality|
                   %tr
                     %td= link_to locality.city, locality_path(locality)
                     %td
                       = locality.state_abbrv
-                    %td
-                      = locality.contact_with_email
                     %td
                       - if policy(locality).edit?
                         = link_to 'Edit', edit_locality_path(locality)

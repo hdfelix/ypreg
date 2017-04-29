@@ -20,7 +20,6 @@
               = f.select(:gender, User::GENDER, { include_blank: 'Select gender' }, { class: 'form-control' })
               %span.input-group-addon
                 %i.fa.fa-user
-              / %= link_to "Add a locality", new_locality_path, class: 'pull-right' %
         .form-group
           = f.label :age, class: 'control-label, sr-only'
           .col-sm-12
@@ -28,7 +27,6 @@
               = f.select(:age, User::AGE, { include_blank: 'Select your age' }, { class: 'form-control' })
               %span.input-group-addon
                 %i.fa.fa-user
-              / %= link_to "Add a locality", new_locality_path, class: 'pull-right' %
         .form-group
           = f.label :grade, class: 'control-label, sr-only'
           .col-sm-12
@@ -36,7 +34,6 @@
               = f.select(:grade, User::GRADE, { include_blank: 'Select your grade' }, { class: 'form-control' })
               %span.input-group-addon
                 %i.fa.fa-user
-              / %= link_to "Add a locality", new_locality_path, class: 'pull-right' %
         .form-group
           = f.label :locality_id, class: 'control-label, sr-only'
           .col-sm-12
@@ -44,7 +41,6 @@
               = f.collection_select(:locality_id, Locality.all, :id, :city, { include_blank: 'Select locality' }, { class: 'form-control' })
               %span.input-group-addon
                 %i.fa.fa-user
-              / %= link_to "Add a locality", new_locality_path, class: 'pull-right' %
         .form-group
           = f.label :email, class: 'control-label sr-only'
           .col-sm-12

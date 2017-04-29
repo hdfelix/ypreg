@@ -8,7 +8,6 @@ class CreateLocations < ActiveRecord::Migration
       t.string :city
       t.string :state_abbrv
       t.integer :zipcode
-      
       t.timestamps
     end
   end

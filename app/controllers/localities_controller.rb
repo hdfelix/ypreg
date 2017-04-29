@@ -1,5 +1,5 @@
 class LocalitiesController < ApplicationController
-  before_action :set_locality, only: [:edit, :update, :destroy]
+  before_action :set_locality, only: [:edit]
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
 
@@ -10,7 +10,9 @@ class LocalitiesController < ApplicationController
   def show
     @locality = Locality.find(params[:id])
     authorize @locality
-    @users = policy_scope(@locality.users).decorate
+    users = policy_scope(@locality.users)
+    @contacts = users.locality_contacts
+    @users = users.decorate
   end
 
   def new
@@ -32,6 +34,9 @@ class LocalitiesController < ApplicationController
   end
 
   def update
+    @locality = Locality.find(params[:id])
+    authorize @locality
+
     if @locality.update(locality_params)
       flash[:notice] = 'Locality was updated successfully.'
       redirect_to @locality
@@ -42,6 +47,9 @@ class LocalitiesController < ApplicationController
   end
 
   def destroy
+    @locality = Locality.find(params[:id])
+    authorize @locality
+
     locality_name = @locality.city
     if @locality.destroy
       flash[:notice] = "Locality #{locality_name} deleted successfully."
@@ -54,7 +62,6 @@ class LocalitiesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_locality
     @locality = Locality.find(params[:id])
     authorize @locality

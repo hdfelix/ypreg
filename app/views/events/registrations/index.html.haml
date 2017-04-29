@@ -28,10 +28,10 @@
               %th Vehicle Seating Capacity
               %th
           %tbody
-            - if @registrations.count > 0
+            - if !@registrations.empty?
               - @registrations.each do |reg|
                 = background_check_tr(reg.user, "reg-#{reg.id}")
-                %td= reg.user.name
+                %td= link_to reg.user.name, event_registration_path(@event, reg)
                 / td><haml_silent></haml_silent></td
                 %td= reg.user.role.capitalize
                 %td= reg.user.gender.to_s[0]
@@ -50,7 +50,6 @@
                 %td= format_date(reg.user.background_check_date)
                 %td= reg.vehicle_seating_capacity
                 %td
-                  = link_to 'Show', event_registration_path(@event,reg)
                   = link_to 'Edit', edit_event_registration_path(@event,reg)
             - else
               %tr

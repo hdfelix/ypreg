@@ -1,42 +1,26 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   layout :layout_by_resource
-
-  include Pundit
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_chart_values
 
+  include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
     flash[:alert] = exception.message
     redirect_to root_url, alert: exception.message
   end
 
-  before_action :set_chart_values
-
   protected
 
   def configure_permitted_parameters
+    common_params = [:name, :gender, :age, :grade, :locality_id, :email,
+                     :password, :password_confirmation]
     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-      user_params.permit(:name,
-                         :role,
-                         :locality_id,
-                         :gender,
-                         :age,
-                         :grade,
-                         :avatar)
+      user_params.permit(*common_params)
     end
     devise_parameter_sanitizer.permit(:account_update) do |user_params|
-      user_params.permit(:name,
-                         :role,
-                         :locality_id,
-                         :birthday,
-                         :gender,
-                         :age,
-                         :grade,
-                         :cell_phone,
-                         :home_phone,
-                         :work_phone)
+      user_params.permit(*common_params, :role, :home_phone, :cell_phone,
+                         :work_phone, :birthday)
     end
   end
 
@@ -131,7 +115,7 @@ class ApplicationController < ActionController::Base
 
   def locality_section_values(next_event, chart_values)
     total_localities = Locality.all.count
-    next_event_localities = next_event.participating_localities.count
+    next_event_localities = next_event.localities.count
     chart_values['loc_ratio'] = "#{next_event_localities} / #{total_localities}"
     if total_localities != 0
       chart_values['loc_ratio_width_percentage'] =

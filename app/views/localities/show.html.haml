@@ -14,7 +14,7 @@
         .widget-header
           %h3
             %i.fa.fa-calendar-o>
-            Locality Contact
+            Locality Contacts
         .widget-content
           %table.table.table-bordered.table-striped.table-hover
             %thead
@@ -25,32 +25,12 @@
                   %center Email
                 %th
                   %center Cellphone
-                %th
             %tbody
-              %tr
-                - unless @locality.contact_id == nil
-                  %td= User.find(@locality.contact_id).name
-                  %td= mail_to User.find(@locality.contact_id).email
-                  %td [cell]
-                  %td
-                    - if policy(@locality).update?
-                      = link_to 'Edit', edit_locality_path(@locality)
-                - else
-                  %td
-                    %center
-                      \--
-                      %center
-                  %td
-                    %center
-                      \--
-                      %center
-                  %td
-                    %center
-                      \--
-                      %center
-                  %td
-                    - if policy(@locality).update?
-                      = link_to 'Add', edit_locality_path(@locality)
+              - @contacts.each do |contact|
+                %tr
+                  %td= contact.name
+                  %td= mail_to contact.email
+                  %td= contact.cell_phone
     .col-md-8
       .widget
         .widget-header
@@ -79,7 +59,7 @@
                       = link_to 'Edit', edit_user_registration_path(user)
                     - if policy(user).destroy?
                       = link_to 'Delete', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'}
-          = link_to new_admin_user_path, class: 'btn btn-primary' do
+          = link_to new_admin_user_path(locality_id: @locality.id), class: 'btn btn-primary' do
             = content_tag(:i, '', class: "fa fa-plus-square")
             New User 
           %p#notice= notice

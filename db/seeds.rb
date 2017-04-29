@@ -60,7 +60,7 @@ Event.create(
   registration_open_date: (tmp_date - 1.month).strftime('%Y/%m/%d'),
   registration_close_date: (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d'),
   registration_cost: rand(10..100).round(-1),
-  location_id: rand(1..Location.all.count)
+  location: Location.all.sample
 )
 print '.'
 
@@ -74,7 +74,7 @@ Event.create(
   registration_open_date: (tmp_date - 1.month).strftime('%Y/%m/%d'),
   registration_close_date: (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d'),
   registration_cost: rand(10..100).round(-1),
-  location_id: rand(1..Location.all.count)
+  location: Location.all.sample
 )
 print '.'
 
@@ -88,7 +88,7 @@ Event.create(
   registration_open_date: (tmp_date - 1.month).strftime('%Y/%m/%d'),
   registration_close_date: (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d'),
   registration_cost: rand(10..100).round(-1),
-  location_id: rand(1..Location.all.count)
+  location: Location.all.sample
 )
 print '.'
 
@@ -102,7 +102,7 @@ past_event = Event.create(
   registration_open_date: (tmp_date - 1.month).strftime('%Y/%m/%d'),
   registration_close_date: (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d'),
   registration_cost: rand(10..100).round(-1),
-  location_id: rand(1..Location.all.count)
+  location: Location.all.sample
 )
 
 

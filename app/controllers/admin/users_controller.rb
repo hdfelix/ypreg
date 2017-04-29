@@ -4,8 +4,8 @@ class Admin::UsersController < ApplicationController
 
   def new
     @user = User.new()
-    if current_user.locality_contact?
-      @user.locality = current_user.locality
+    if params[:locality_id].present?
+      @user.locality_id = params[:locality_id]
     end
     authorize @user
   end
@@ -22,6 +22,10 @@ class Admin::UsersController < ApplicationController
       flash[:error] = 'Error saving the user.'
       render action: 'new'
     end
+  end
+
+  def update
+    admin_user_update
   end
 
   def destroy

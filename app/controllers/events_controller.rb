@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :update, :destroy]
 
   def index
     @events = Event.not_over
@@ -10,8 +10,10 @@ class EventsController < ApplicationController
   end
 
   def show
-    # @event set & authorized with 'before_action'
+    @event = Event.find(params[:id])
+    authorize @event
     @stats = @event.load_locality_summary
+    @participating_localities = @event.localities.order(:city)
   end
 
   def new
@@ -20,7 +22,9 @@ class EventsController < ApplicationController
   end
 
   def edit
-    # @event set & authorized  with 'before_action'
+    @event = Event.find(params[:id])
+    authorize @event
+    @participating_localities = @event.localities
     @return_to = params[:r]
   end
 
@@ -37,8 +41,8 @@ class EventsController < ApplicationController
   end
 
   def update
-    @return_to = params[:r]
     # @event set & authorized with 'before_action'
+    @return_to = params[:r]
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -49,7 +53,6 @@ class EventsController < ApplicationController
 
   def destroy
     # @event set & authorized with 'before_action'
-
     if @event.destroy
       flash[:notice] = "Event #{@event.title}deleted successfully."
       redirect_to events_url
@@ -86,8 +89,7 @@ class EventsController < ApplicationController
   def set_event
     @event = Event.find(params[:id])
     authorize @event
-    @participating_localities =
-      @event.participating_localities.sort { |a, b| a.city <=> b.city }
+    @participating_localities = @event.localities
   end
 
   # Never trust parameters from the scary internet,
@@ -95,14 +97,9 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event)
       .permit(
-        :event_type,
-        :title,
-        :begin_date,
-        :end_date,
-        :registration_cost,
-        :registration_open_date,
-        :registration_close_date,
-        :location_id)
+        :event_type, :title, :begin_date, :end_date,
+        :registration_cost, :registration_open_date,
+        :registration_close_date, :location_id)
   end
 
   def flip_has_been_paid_flag_for(registrations)

@@ -68,16 +68,22 @@
               %strong Work Phone:
             .col-sm-8
               = format_phone_number(@user.work_phone)
+          - if @user.adult?
+            .row
+              .col-sm-4
+                %strong Last Background Check:
+              .col-sm-8
+                %span{:class => "#{@user.background_check_date_bg_class}"}
+                  = background_check_date_with_warning(@user, @user.background_check_date)
           .row
             .col-sm-4
-              %strong Last Background Check:
+              %strong Last Sign In:
             .col-sm-8
-              %span{:class => "#{@user.decorate.background_check_date_bg_class}"}
-                = background_check_date_with_warning(@user, @user.background_check_date)
+              = @user.last_sign_in_at
         .widget-footer
     / end User details
   .row
     .col-md-12
-      = link_to 'Back', users_path, class: 'btn btn-default'
+      = link_to 'Back', locality_path(@user.locality), class: 'btn btn-default'
       = link_to 'Edit', edit_user_registration_path(@user), class: 'btn btn-primary'
-      = render "delete"
+      = render partial: 'delete'

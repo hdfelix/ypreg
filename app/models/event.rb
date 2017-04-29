@@ -1,26 +1,30 @@
 # Events model - one-time events, conferences, or retreats
 class Event < ActiveRecord::Base
   belongs_to :location
+
   has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations
-  has_many :localities, -> { uniq }, through: :users
+
   has_many :event_localities, dependent: :destroy
+  has_many :localities, through: :event_localities
+
   has_many :hospitalities
-  has_many :lodgings, -> { uniq }, through: :hospitalities
+  has_many :lodgings, -> { distinct }, through: :hospitalities
   has_many :hospitality_registration_assignments, through: :hospitalities
 
+  # considering deleting
   # skip_before_filter :verify_authenticity_token
 
-  validates :event_type, presence: true
   validates :title, presence: true
+  validates :event_type, presence: true
+  validates :location, presence: true
   validates :begin_date, presence: true
   validates :end_date, presence: true
   validates :registration_cost, presence: true
-  validates :location_id, presence: true
 
   EVENT_TYPE = [['One-day', 1], ['Retreat', 2], ['Conference', 3]]
 
-  default_scope { order('begin_date ASC') }
+  default_scope { order(:begin_date) }
   scope :current, -> { where('begin_date <= ? AND end_date >= ?', Time.zone.now.to_date, Time.zone.now.to_date) }
   scope :not_over, -> { where('begin_date >= ? OR end_date > ?', Time.zone.now.to_date, Time.zone.now.to_date) }
   scope :in_the_future, -> { where('begin_date > ?', Time.zone.now.to_date) }
@@ -29,16 +33,6 @@ class Event < ActiveRecord::Base
 
   def remaining_spaces
     location.max_capacity - registrations.count
-  end
-
-  def participating_localities
-    loc_array = []
-    if registrations.count > 0
-      registrations.each do |registration|
-        loc_array << Locality.find(registration.user.locality_id)
-      end
-    end
-    loc_array.uniq
   end
 
   def registered_saints_from_locality(locality)

@@ -71,3 +71,4 @@
   .row
     .col-md-12
       = link_to 'Back', event_registrations_path(@registration.event), class: 'btn btn-default'
+      = link_to 'Edit', edit_event_registration_path(@registration.event, @registration), class: 'btn btn-primary'

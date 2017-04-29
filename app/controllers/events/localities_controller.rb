@@ -2,22 +2,24 @@ class Events::LocalitiesController < ApplicationController
 
   def index
     @event = Event.find(params[:event_id])
-    @event_localities = @event.localities
-    @localities = Locality.localities_not_participating_in_event(@event)
+    event_localities = policy_scope(@event.localities).order(:city)
+    @event_localities = event_localities.decorate
+    other_localities = policy_scope(Locality.not_in(@event.localities)).order(:city)
+    @other_localities = other_localities.decorate
   end
 
   def show
     @event = Event.find(params[:event_id])
     @locality = @event.localities.find(params[:id]).decorate
-    @users_not_registered = @locality.users_not_registered(@event)
-    @event_locality = EventLocality.where(event: @event, locality: @locality)[0]
-    @registrations = @event_locality.registrations
+    @event_locality = EventLocality.where(event: @event, locality: @locality).first
+    @users_not_registered = policy_scope(@locality.users.not_registered_for(@event))
+    @registrations = Registration.locality_roster(@locality, @event)
     @tips_message = Payment.tips[:check_payment_instructions].html_safe
   end
 
   def new
     @event = Event.find(params[:event_id])
-    @locality = Locality.find(params[:locality_id])
+    @locality = Locality.find(params[:format])
     @event_locality = EventLocality.new
   end
 

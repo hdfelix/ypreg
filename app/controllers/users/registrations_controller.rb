@@ -8,26 +8,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]).decorate
     authorize @user
   end
 
   def edit
-    @user = User.find(params[:format])
+    @user = User.find(params[:format]).decorate
     authorize @user
-    @user.decorate
+
+    if @user == current_user
+      @form_params = [resource, as: resource_name, url: registration_path(resource_name, id: @user.id), method: :put]
+    else
+      @form_params = [[:admin, @user], method: :patch]
+    end
   end
 
   def update
-    @user = User.find(params[:id])
-    authorize @user
-    if @user.update(user_params)
-      flash[:notice] = "#{@user.name}'s profile was updated successfully."
-      redirect_to users_path
-    else
-      flash[:error] = "There was an error updating the profile for #{@user.name}."
-      render action: 'edit'
-    end
+    admin_user_update
   end
 
 end

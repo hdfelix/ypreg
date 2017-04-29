@@ -2,16 +2,20 @@
 class Locality < ActiveRecord::Base
   has_many :users
   has_many :lodgings
+
+  has_many :event_localities, dependent: :destroy
+  has_many :events, through: :event_localities
+
   belongs_to :contact, class_name: 'User'
   belongs_to :lodging_contact, class_name: 'User'
 
   validates :city, presence: true
   validates :state_abbrv, presence: true
 
-  after_save :update_contact, if: "contact.present?"
+  before_save :update_contact_role, if: "contact_id_changed?"
 
-  def self.localities_not_participating_in_event(event)
-    (Locality.all - event.localities).sort { |a, b| a.city <=> b.city }
+  def self.not_in(localities)
+    where.not(id: localities)
   end
 
   def hospitalities(event)
@@ -46,12 +50,11 @@ class Locality < ActiveRecord::Base
   end
 
   def registrations(event)
-    Registration.where(event: event, locality: self)
+    Registration.locality_roster(self, event)
   end
 
   def registered_users(event)
-    reg_filter = {registrations: {event: event, locality: self}}
-    User.joins(:registrations).where(reg_filter)
+    User.joins(:registrations).merge(Registration.locality_roster(self, event))
   end
 
   def registered_yp(event)
@@ -72,11 +75,14 @@ class Locality < ActiveRecord::Base
 
   def users_not_registered(event)
     users - registered_users(event)
+    Registration.locality_roster(self, event)
   end
 
   protected
-    def update_contact
-      contact.role = 'loc_contact'
-      contact.save
+    def update_contact_role
+      if contact_id?
+        contact.role = 'loc_contact'
+        contact.save
+      end
     end
 end

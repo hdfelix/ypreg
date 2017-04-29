@@ -74,7 +74,7 @@ YpwReg::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :users, only: [:new, :create, :destroy]
+    resources :users, only: [:new, :create, :update, :destroy]
   end
 
 end

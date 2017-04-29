@@ -2,13 +2,11 @@ class Events::RegistrationsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
     @status_options = Registration::STATUS
-    @registrations =
-      @event.registrations.sort_by { |reg| reg.locality.city }
+    @registrations = @event.registrations
 
-    authorize Registration
     return unless params[:view] == 'attendance'
 
-    @event_localities = EventLocality.includes(:locality).where(event: @event)
+    @event_localities = EventLocality.includes(:locality).for_event(@event)
     render 'attendance_index'
   end
 
@@ -19,7 +17,7 @@ class Events::RegistrationsController < ApplicationController
       @attendance = Registration.find(params[:id])
       render 'attendance_show'
     else
-      @registration = @event.registrations.where(id: params[:id])[0]
+      @registration = Registration.find(params[:id])
     end
   end
 
