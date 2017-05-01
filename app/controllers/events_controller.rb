@@ -10,7 +10,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = Event.includes(:registrations, :location).find(params[:id])
     authorize @event
     @stats = @event.load_locality_summary
     @participating_localities = @event.localities.order(:city)

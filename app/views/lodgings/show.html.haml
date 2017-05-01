@@ -22,7 +22,7 @@
             .col-sm-4
               %strong Type:
             .col-sm-8
-              = Lodging::LODGING_TYPE[@lodging.lodging_type.to_i]
+              = @lodging.lodging_type_name
           .row
             .col-sm-4
               %strong Description:
@@ -30,24 +30,14 @@
               = @lodging.display_description
           .row
             .col-sm-4
-              %strong Min Cap.:
+              %strong Min Capacity:
             .col-sm-8
               = @lodging.min_capacity
           .row
             .col-sm-4
-              %strong Max Cap.:
+              %strong Max Capacity:
             .col-sm-8
               = @lodging.max_capacity
-          .row
-            .col-sm-4
-              %strong Description:
-            .col-sm-8
-              = @lodging.display_description
-          .row
-            .col-sm-4
-              %strong Contact:
-            .col-sm-8
-              = User.find(@lodging.contact_person.id).name
           .row
             .col-sm-4
               %strong Address:
@@ -56,8 +46,7 @@
         .widget-footer
   .row
     .col-md-12
-      = link_to 'Edit', edit_lodging_path(@lodging), class: 'btn btn-primary'
       = link_to 'Back', lodgings_path, class: 'btn btn-default'
-      - if policy(Lodging.all).destroy?
+      = link_to 'Edit', edit_lodging_path(@lodging), class: 'btn btn-primary'
+      - if policy(@lodging).destroy?
         = link_to 'Delete', @lodging, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
-/ End lodging info

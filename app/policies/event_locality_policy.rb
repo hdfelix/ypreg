@@ -5,7 +5,7 @@ class EventLocalityPolicy < ApplicationPolicy
       if user.admin?
         scope
       elsif user.locality_contact?
-        scope.where(id: user.locality_id)
+        scope.where(locality: user.locality)
       end
     end
   end

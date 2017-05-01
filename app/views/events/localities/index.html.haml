@@ -4,8 +4,45 @@
     %em
       manage localities registered for #{@event.title}
   .col-md-12
-    = render partial: "table", locals: {title: "Localities pariticipating in event", event: @event, localities: @localities, button_action: 'show'}
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table
+            %strong Localities participating in event
+      .widget-content
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr{:style => "font: bold"}
+                %td Name
+                %td State
+                %td
+            %tbody
+              - @localities.each do |locality|
+                %tr
+                  %td= link_to locality.city, event_locality_path(@event, locality)
+                  %td= locality.state_abbrv
   .col-md-12
-    = render partial: "table", locals: {title: "Localities not pariticipating in event", event: @event, localities: @other_localities, button_action: 'new'}
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table
+            %strong Localities not participating in event
+      .widget-content
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-hover
+            %thead
+              %tr{:style => "font: bold"}
+                %td Name
+                %td State
+                %td
+            %tbody
+              - @other_localities.each do |locality|
+                %tr
+                  %td= locality.city
+                  %td= locality.state_abbrv
+                  %td
+                    - if @event.registration_open?
+                      = link_to 'Add', new_event_locality_path(@event, locality), class: 'btn btn-default btn-sm'
   .col-md-12
     = link_to 'Back', event_path(@event), class: 'btn btn-default'

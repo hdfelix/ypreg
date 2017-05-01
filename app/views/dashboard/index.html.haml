@@ -6,7 +6,7 @@
     .col-md-9
       #events.panel-group
         %h3 Upcoming events
-        - if @events.any?
+        - if @events.present?
           = render partial: 'events/event', collection: @events
         - else
           %center There aren't any up-coming events.

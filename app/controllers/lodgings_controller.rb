@@ -1,18 +1,19 @@
 class LodgingsController < ApplicationController
-  before_action :set_lodging, only: [:show, :edit, :update, :destroy]
+  before_action :set_lodging, only: [:edit, :update, :destroy]
 
   def index
-    @lodgings = Lodging.all
-    authorize @lodgings
+    lodgings = policy_scope(Lodging)
+    @lodgings = lodgings.decorate
   end
 
   def show
-    # @lodging set with 'before_action'
+    lodging = Lodging.find(params[:id])
+    authorize lodging
+    @lodging = lodging.decorate
   end
 
   def new
     @lodging = Lodging.new
-    @lodging.build_contact_person
     authorize @lodging
   end
 

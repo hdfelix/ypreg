@@ -6,9 +6,10 @@
       %em
         Participation details for #{@event.title}
   .row
+    .col-md-12
+      = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
+  .row
     .col-md-6
-      %strong Locality Contact:
-      = @locality.contact_with_email_and_cell
     .col-md-6
       %strong
         Registration will close on: #{format_date(@event.registration_close_date)}
@@ -123,7 +124,7 @@
             %i.fa.fa-calendar-o>
             Locality Saints
         .widget-content
-          %table.table.table-bordered.table-striped.table-hover
+          %table.table.table-bordered.table-hover
             %thead
               %tr
                 %th Name
@@ -131,7 +132,7 @@
                 %th
             %tbody
               - @users_not_registered.each do |user|
-                %tr
+                %tr{class: "#{user.background_check_date_row_class}"}
                   %td= user.name.capitalize
                   %td= user.age.to_s.capitalize
                   %td= link_to 'Register', new_event_registration_path(@event, user), class: 'btn btn-custom-secondary btn-xs'
@@ -162,7 +163,7 @@
                     %td= number_to_currency(@event.registration_cost)
                     %td= number_to_currency(reg.payment_adjustment)
                     %td= calculate_payment(reg)
-                    - if policy(Registration.all).edit?
+                    - if policy(Registration).edit?
                       %td
                         = link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default'
               - else

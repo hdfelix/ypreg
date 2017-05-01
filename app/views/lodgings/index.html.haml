@@ -14,26 +14,21 @@
               %tr{:style => "font: bold"}
                 %th Name
                 %th Type
-                %th Contact Person
-                %th Locality
                 %th Max Cap.
                 %th Address
                 %th
             %tbody
-              - if @lodgings.all.count > 0
-                - @lodgings.each do |lodging|
-                  %tr
-                    %td= link_to lodging.name, lodging
-                    %td= lodging.lodging_type
-                    %td= contact_person_name(lodging)
-                    %td= Locality.find(lodging.locality_id).city
-                    %td= lodging.max_capacity
-                    %td= lodging.display_address_in_address_block_format
-                    %td
-                      = link_to 'Edit', edit_lodging_path(lodging)
-                       
-                      / %= link_to 'Delete',event_lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' } %
-              - else
+              - @lodgings.each do |lodging|
+                %tr
+                  %td= link_to lodging.name, lodging
+                  %td= lodging.lodging_type_name
+                  %td= lodging.max_capacity
+                  %td= lodging.display_address_in_address_block_format
+                  %td
+                    = link_to 'Edit', edit_lodging_path(lodging)
+                     
+                    / %= link_to 'Delete',event_lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' } %
+              - if @lodgings.empty?
                 %tr
                   %td{:colspan => "7"}
                     %center No Lodgings in the database...

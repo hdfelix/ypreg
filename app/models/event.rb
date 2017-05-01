@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
   scope :next, -> { [Event.current.first || Event.in_the_future.first] }
 
   def remaining_spaces
-    location.max_capacity - registrations.count
+    location.max_capacity - registrations.size
   end
 
   def registered_saints_from_locality(locality)

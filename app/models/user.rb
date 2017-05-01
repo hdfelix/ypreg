@@ -55,18 +55,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.registered_for(event)
-    joins(:registrations).merge(Registration.for_event(event))
-  end
-  
-  def self.not_registered_for(event)
-    where.not(id: User.select(:id).registered_for(event))
-  end
-
-  def self.in_locality(locality)
-    where(locality: locality)
-  end
-
   def self.locality_contacts
     where(role: 'loc_contact')
   end
@@ -81,6 +69,14 @@ class User < ActiveRecord::Base
     where.not(id: contact_person_ids)
   end
 
+  def self.trainee
+    where(role: 'trainee')
+  end
+    
+  def self.registered_for(event, locality)
+    joins(:registrations).where(registrations: {event: event, locality: locality})
+  end
+
   def role?(base_role)
     role == base_role.to_s
   end
@@ -88,7 +84,6 @@ class User < ActiveRecord::Base
   def admin?
     role?(:admin) or role?(:scyp)
   end
- 
 
   def registration(event)
     Registration.where(user: self, event: event)[0]

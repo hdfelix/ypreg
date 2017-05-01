@@ -21,7 +21,7 @@
               - @event.errors.full_messages.each do |msg|
                 %li= msg
         .widget-content
-          %table.table.table-striped
+          %table.table
             %thead
               %tr{style: 'font: bold'}
                 %td
@@ -29,8 +29,8 @@
                 %td Age
             %tbody
               = hidden_field_tag 'locality_id', @locality.id
-              - @locality.users.each do |user|
-                %tr{id: "user_#{user.id}"}
+              - @users.each do |user|
+                %tr{id: "user_#{user.id}", class: "#{user.background_check_date_row_class}"}
                   %td= check_box_tag 'locality_user_ids[]', user.id
                   %td= user.name
                   %td= user.age.to_s.capitalize

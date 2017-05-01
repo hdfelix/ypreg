@@ -14,10 +14,6 @@ class Locality < ActiveRecord::Base
 
   before_save :update_contact_role, if: "contact_id_changed?"
 
-  def self.not_in(localities)
-    where.not(id: localities)
-  end
-
   def hospitalities(event)
     Hospitality.where(event: event, locality: self)
   end
@@ -50,11 +46,11 @@ class Locality < ActiveRecord::Base
   end
 
   def registrations(event)
-    Registration.locality_roster(self, event)
+    Registration.where(event: event, locality: self)
   end
 
   def registered_users(event)
-    User.joins(:registrations).merge(Registration.locality_roster(self, event))
+    User.registered_for(event, self)
   end
 
   def registered_yp(event)

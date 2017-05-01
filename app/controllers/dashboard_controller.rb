@@ -6,14 +6,13 @@ class DashboardController < ApplicationController
   include Pundit
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-
   rescue_from Pundit::NotAuthorizedError do |exception|
     redirect_to root_url, alert: exception.message
   end
 
   def index
-    @events = Event.current + Event.in_the_future
-    @current_or_future_events_present = @events.count > 0 ? true : false
+    scope = Event.includes(:location)
+    @events = scope.current + scope.in_the_future
   end
 
   protected

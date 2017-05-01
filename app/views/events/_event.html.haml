@@ -19,7 +19,7 @@
       %div
       .col-md-3{:style => "border-right: 1px solid #ccc; height: 100%"}
         Location:
-        %h4= event.location.name
+        %h4= event.location.name #location_name
         = event_location(event)
       .col-md-3
         Event Dates:
@@ -36,7 +36,7 @@
           %span= number_to_currency(event.registration_cost)
         %br/
         - if current_user
-          - if !event.over? && policy(Event.all).show?
+          - if !event.over? && policy(Event).show?
             = link_to "#{event_button_text_based_on_user_role}", event, class: 'btn btn-default btn-sm'
           - if current_user.registrations.where(event_id: event).empty?
             - if event.registration_open?
@@ -45,4 +45,3 @@
               .pull-right Event Registration closed.
         - else
           %p= link_to 'Sign in to register', user_session_path, class: 'btn btn-custom-secondary btn-sm'
-/ End Event Info Widget

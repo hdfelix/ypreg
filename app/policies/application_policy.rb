@@ -50,7 +50,9 @@ class ApplicationPolicy
     end
 
     def resolve
-      scope
+      if user.admin?
+        scope
+      end
     end
   end
 end

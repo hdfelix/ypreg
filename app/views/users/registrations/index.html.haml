@@ -24,30 +24,29 @@
                 %th Last Sign in
                 %th
             %tbody
-              - if @users.count > 0
-                - @users.each do |user|
-                  %tr{class: "#{user.background_check_date_row_class}"}
-                    %td= link_to user.name, user_path(user)
-                    %td= user.role.capitalize
-                    %td= user.gender.to_s[0].capitalize
-                    %td= user.email
-                    %td= user.age.capitalize
-                    %td= user.grade.capitalize
-                    %td= user.locality_city.capitalize
-                    %td
-                      C: #{format_phone_number(user.cell_phone)}
-                      %br/
-                      H: #{format_phone_number(user.home_phone)}
-                      %br/
-                      W: #{format_phone_number(user.work_phone)}
-                    %td= format_date(user.background_check_date)
-                    %td= format_date(user.last_sign_in_at)
-                    %td
-                      - if policy(user).edit?
-                        = link_to 'Edit', edit_user_registration_path(user)
-                      - if policy(user).destroy? and user != current_user
-                        = link_to 'Delete', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'}
-              - else
+              - @users.each do |user|
+                %tr{class: "#{user.background_check_date_row_class}"}
+                  %td= link_to user.name, user_path(user)
+                  %td= user.role.capitalize
+                  %td= user.gender.to_s[0].capitalize
+                  %td= user.email
+                  %td= user.age.capitalize
+                  %td= user.grade.capitalize
+                  %td= user.locality_city.capitalize
+                  %td
+                    C: #{format_phone_number(user.cell_phone)}
+                    %br/
+                    H: #{format_phone_number(user.home_phone)}
+                    %br/
+                    W: #{format_phone_number(user.work_phone)}
+                  %td= format_date(user.background_check_date)
+                  %td= format_date(user.last_sign_in_at)
+                  %td
+                    - if policy(user).edit?
+                      = link_to 'Edit', edit_user_registration_path(user)
+                    - if policy(user).destroy? and user != current_user
+                      = link_to 'Delete', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'}
+              - if @users.count == 0
                 %tr
                   %td{:colspan => "9"}
                     %center No Users in the database...

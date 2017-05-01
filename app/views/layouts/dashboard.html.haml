@@ -138,7 +138,7 @@
               / main-nav
               %nav.main-nav
                 %ul.main-menu
-                  - if !(current_user.role == 'guest')
+                  - if current_user.role != 'guest'
                     %li
                       = link_to dashboard_index_url do
                         %i.fa.fa-dashboard.fa-fw
@@ -182,8 +182,9 @@
                       Tips
                   #tip.panel-body
                     = @tips_message ||= 'Check here for useful tips based on the page you are viewing.'
-                = display_event_widget_based_on(current_user.role)
-                = display_global_stats_widget_based_on(current_user.role)
+                /Considering deleting...
+                /= display_event_widget_based_on(current_user.role)
+                /= display_global_stats_widget_based_on(current_user.role)
               / end sidebar content
             / end left sidebar
             / content-wrapper

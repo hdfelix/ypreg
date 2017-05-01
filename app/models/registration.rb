@@ -21,14 +21,6 @@ class Registration < ActiveRecord::Base
   STATUS = %w(attended excused y)
 
   # scopes
-  def self.locality_roster(locality, event)
-    where(locality: locality, event: event)
-  end
-  
-  def self.for_event(event)
-    where(event: event)
-  end
-
   def self.paid
     where(has_been_paid: true)
   end

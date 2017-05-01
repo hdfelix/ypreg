@@ -2,6 +2,8 @@
 class Location < ActiveRecord::Base
   has_many :events
 
+  delegate :name, to: :location, prefix: true
+
   validates :name, presence: true, uniqueness: true
   validates :address1, presence: true
   validates :city, presence: true
