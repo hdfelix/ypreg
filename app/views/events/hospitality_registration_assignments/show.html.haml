@@ -1,14 +1,14 @@
 .content
   .main-header
-    %h2= "Hospitality Assignments - #{ @locality.city.capitalize }"
-    %em Hospitality arrangement details
+    %h2= "EventLodging Assignments - #{ @locality.city.capitalize }"
+    %em EventLodging arrangement details
   .col-md-6
     .widget.widget-table
       .widget-header
         %h3
           %i.fa.fa-table>
           Registered Saints
-      = form_tag assign_event_hospitality_registration_assignments_path(@event, locality_id: @locality) do |f|
+      = form_tag assign_event_event_lodging_registration_assignments_path(@event, locality_id: @locality) do |f|
         - if @event.errors.any?
           #error_explanation.alert.alert-danger.alert-dismissable
             %h4
@@ -33,16 +33,16 @@
                   %td= saint.age
                   %td= saint.gender
                   %td
-                    = select_tag "saint_hospitality_ids[#{ saint.id }][]", |
+                    = select_tag "saint_event_lodging_ids[#{ saint.id }][]", |
                       options_from_collection_for_select(                  |
-                      @locality.hospitalities(@event),                     |
+                      @locality.event_lodgings(@event),                     |
                       "id",                                                |
                       "lodging_name",                                      |
-                      selected: selected_hospitality(saint)),              |
+                      selected: selected_event_lodging(saint)),              |
                       {                                                    |
                         prompt: '--'                                       |
                       }                                                    |
                     / TODO: why like this?
         .panel-footer
           = submit_tag "Update Assignments", class: 'btn btn-primary btn-sm'
-          = link_to 'Back', event_hospitality_registration_assignments_path(@event), class: 'btn btn-default btn-sm'
+          = link_to 'Back', event_event_lodging_registration_assignments_path(@event), class: 'btn btn-default btn-sm'

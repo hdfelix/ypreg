@@ -1,6 +1,6 @@
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
+//= require jquery-ui
 //= require modernizr
 //= require_directory ./kingadmin-v1.2/.
 //= require bootstrap-sprockets

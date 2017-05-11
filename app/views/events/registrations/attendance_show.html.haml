@@ -39,7 +39,7 @@
                 %span.data-value= display_yes_no(@attendance.has_been_paid)
               %p.data-row
                 %span.data-name Med Release Form?
-                %span.data-value= display_yes_no(@attendance.has_medical_release_form)
+                %span.data-value= display_yes_no(@attendance.medical_release)
               %p.data-row
                 %span.data-name
                 = add_alert_style?(@attendance.user)
@@ -55,30 +55,30 @@
                 \#{format_date(@attendance.user.background_check_date)}
     %h3
       %i.fa.fa-square>
-      Hospitality Info
-    - if @attendance.hospitality.nil?
-      %p No hospitality has been assigned.
+      EventLodging Info
+    - if @attendance.event_lodging.nil?
+      %p No event_lodging has been assigned.
       %p
-        Click #{link_to 'here', event_hospitality_registration_assignment_path(@event, @attendance.user.locality)} to assign hospitality.
+        Click #{link_to 'here', event_event_lodging_registration_assignment_path(@event, @attendance.user.locality)} to assign event_lodging.
     - else
       %p.data-row
-        %span.data-name Hospitality
+        %span.data-name EventLodging
         %span.data-value
-          = @attendance.hospitality.lodging.name
+          = @attendance.event_lodging.lodging.name
           %br/
-          = @attendance.hospitality.lodging.address1
+          = @attendance.event_lodging.lodging.address1
           %br/
-          = @attendance.hospitality.lodging.address2
+          = @attendance.event_lodging.lodging.address2
           %br/
-          = @attendance.hospitality.lodging.city
+          = @attendance.event_lodging.lodging.city
           %br/
-          = @attendance.hospitality.lodging.contact_person.name
+          = @attendance.event_lodging.lodging.contact_person.name
           %br/
-          = format_phone_number(@attendance.hospitality.lodging.contact_person.cell_phone)
+          = format_phone_number(@attendance.event_lodging.lodging.contact_person.cell_phone)
           %br/
-          = format_phone_number(@attendance.hospitality.lodging.contact_person.home_phone)
+          = format_phone_number(@attendance.event_lodging.lodging.contact_person.home_phone)
           %br/
-          = @attendance.hospitality.lodging.contact_person.email
+          = @attendance.event_lodging.lodging.contact_person.email
   .widget-footer
 .row
   .col-md-12

@@ -1,0 +1,2 @@
+class EventLodgingPolicy < ApplicationPolicy
+end

@@ -5,9 +5,9 @@ YpwReg::Application.routes.draw do
   get 'welcome/index'
   get 'dashboard/index'
 
-  delete 'events/:event_id/hospitalities/destroy',
-         to: 'events/hospitalities#destroy',
-         as: :hospitality_remove
+  delete 'events/:event_id/lodgings/destroy',
+         to: 'events/lodgings#destroy',
+         as: :event_lodging_remove
 
   get 'events/:event_id/edit_locality_payments',
       to: 'events#edit_locality_payments',
@@ -28,9 +28,9 @@ YpwReg::Application.routes.draw do
     resources :localities,
               only: [:index, :show, :new, :create],
               controller: 'events/localities'
-    resources :hospitalities,
+    resources :lodgings,
               only: [:index, :new, :create],
-              controller: 'events/hospitalities' do
+              controller: 'events/lodgings' do
       collection do
         post 'add'
         put 'remove'

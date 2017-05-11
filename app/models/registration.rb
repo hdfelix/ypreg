@@ -1,40 +1,43 @@
-# This class represents an user who has registered for an event.
-# self.hospitality is the assigned hospitality for the user.
 class Registration < ActiveRecord::Base
+# == Constants ============================================================
+  enum payment_type: [:check, :cash]
+  enum status: [:attended, :excused]
+
+# == Relationships ========================================================
+  belongs_to :event_locality
+  has_one :event, through: :event_locality
+  has_one :locality, through: :event_locality
+
+  belongs_to :event_lodging
   belongs_to :user
-  belongs_to :event
-  belongs_to :locality # TODO: should this be removed and a wrapper method registration_locality added?
-  belongs_to :hospitality
-  has_many :hospitality_registration_assignments, inverse_of: :registration
 
-  delegate :name, :email, :cell_phone, :home_phone, :work_phone, :birthday,
-           :lodging_id, # ...
-           to: :user
+  delegate :name, :email, :background_check_date,
+           :cell_phone, :home_phone, :work_phone, :age, :birthday, to: :user
 
-  validates :locality, presence: true
-  validates_inclusion_of :has_been_paid, in: [true, false]
-  validates_inclusion_of :has_medical_release_form, in: [true, false]
+# == Validations ==========================================================
+  validates :event_locality, presence: true
+  validates :user, presence: true
 
-  after_create :create_event_locality
+# == Scopes ===============================================================
+  scope :paid, -> { where(paid: true) }
+  # TODO: clarify how this differs from guest role
+  scope :guest, -> { where(guest: true) }
+  scope :serving_one, -> { where(serving_one: true) }
+  scope :for_locality, ->(locality) { where(locality: locality) }
+  scope :for_role, ->(role) { joins(:user).where(users: {role: role}) }
+  scope :by_name, -> { joins(:user).merge(User.order(:name)) }
 
-  PAYMENT_TYPE = %w(cash check)
-  STATUS = %w(attended excused y)
+  # == Callbacks ============================================================
 
-  # scopes
-  def self.paid
-    where(has_been_paid: true)
+# == Instance Methods =====================================================
+  public
+
+  def payment
+    if paid
+      0
+    else
+      event.registration_cost - payment_adjustment
+    end
   end
 
-  # TODO: pay(amount)
-  # TODO paid?
-
-  def payment_adjustment
-    @payment_adjustment ||= 0
-  end
-
-  protected
-
-  def create_event_locality
-    EventLocality.find_or_create_by(event: event, locality: user.locality)
-  end
 end

@@ -6,7 +6,7 @@ describe EventsHelper do
   let(:location) { create(:location, id: '1',
                                  address1: '1 Way',
                                  city: 'City',
-                                 state_abbrv: 'CA',
+                                 state: 'CA',
                                  zipcode: '12345') }
   let(:event) { build_stubbed(:event, location: location) }
 
@@ -18,7 +18,7 @@ describe EventsHelper do
       content_tag(:address) do
         html <<
           "#{location.address1} \n<br />\n #{location.city},"\
-          "#{location.state_abbrv}&nbsp;&nbsp;#{location.zipcode}"
+          "#{location.state}&nbsp;&nbsp;#{location.zipcode}"
       end
       html.html_safe
 

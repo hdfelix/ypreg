@@ -25,7 +25,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    admin_user_update
+    user_update
   end
 
   def destroy

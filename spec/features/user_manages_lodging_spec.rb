@@ -58,8 +58,8 @@ feature 'Admin user manages lodgings' do
     fill_in 'lodging[address1]', with: lodging.address1
     fill_in 'lodging[address2]', with: lodging.address2
     fill_in 'lodging[city]', with: lodging.city
-    find('#lodging_state_abbrv')
-      .find(:xpath, "option[@value=\'#{lodging.state_abbrv}\']").select_option
+    find('#lodging_state')
+      .find(:xpath, "option[@value=\'#{lodging.state}\']").select_option
     fill_in 'lodging[zipcode]', with: lodging.zipcode
 
     click_button 'Submit'
@@ -126,8 +126,8 @@ feature 'SCYP user manages lodgings' do
     fill_in 'lodging[address1]', with: lodging.address1
     fill_in 'lodging[address2]', with: lodging.address2
     fill_in 'lodging[city]', with: lodging.city
-    find('#lodging_state_abbrv')
-      .find(:xpath, "option[@value=\'#{lodging.state_abbrv}\']").select_option
+    find('#lodging_state')
+      .find(:xpath, "option[@value=\'#{lodging.state}\']").select_option
     fill_in 'lodging[zipcode]', with: lodging.zipcode
 
     click_button 'Submit'

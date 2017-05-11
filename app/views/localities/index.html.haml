@@ -16,21 +16,20 @@
                 %td State
                 %td
             %tbody
-              - if !@localities.empty?
-                - @localities.each do |locality|
-                  %tr
-                    %td= link_to locality.city, locality_path(locality)
-                    %td
-                      = locality.state_abbrv
-                    %td
-                      - if policy(locality).edit?
-                        = link_to 'Edit', edit_locality_path(locality)
-                      - if policy(locality).destroy?
-                        \#{link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' }}
-              - else
+              - @localities.each do |locality|
+                %tr
+                  %td= link_to locality.city, locality_path(locality)
+                  %td
+                    = locality.state
+                  %td
+                    - if policy(locality).edit?
+                      = link_to 'Edit', edit_locality_path(locality)
+                    - if policy(locality).destroy?
+                      \#{link_to 'Delete', locality, method: :delete, data: { confirm: 'Are you sure?' }}
+              - if @localities.empty?
                 %tr
                   %td{:colspan => "4"}
-                    %center No Localities have been entered yet...
+                    %center No localities in the system.
             %tbody
         - if policy(Locality.new).new?
           = link_to 'Back', dashboard_index_path, class: 'btn btn-default'

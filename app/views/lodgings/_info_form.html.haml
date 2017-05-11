@@ -1,5 +1,5 @@
-- event.hospitalities.each do |hosp| lodging = hosp.lodging
-  %tr.odd{:id => "event_hospitalities_#{hosp.id}"}
+- event.event_lodgings.each do |hosp| lodging = hosp.lodging
+  %tr.odd{:id => "event_event_lodgings_#{hosp.id}"}
     %td.sorting_1
       / hosp name
       = lodging.name

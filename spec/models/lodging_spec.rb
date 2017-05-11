@@ -9,7 +9,7 @@ describe Lodging, type: :model do
     it { should validate_presence_of :name }
     it { should validate_presence_of :address1 }
     it { should validate_presence_of :city }
-    it { should validate_presence_of :state_abbrv }
+    it { should validate_presence_of :state }
     it { should validate_presence_of :zipcode }
     it { should validate_presence_of :lodging_type }
     it { should validate_presence_of :contact_person }
@@ -42,7 +42,7 @@ describe Lodging, type: :model do
       it 'displays the lodging address' do
         lodging = FactoryGirl.create(:lodging)
         formatted_address =
-          "#{lodging.address1}\n#{lodging.city}, #{lodging.state_abbrv}  #{lodging.zipcode}"
+          "#{lodging.address1}\n#{lodging.city}, #{lodging.state}  #{lodging.zipcode}"
 
         expect(lodging.display_address_in_address_block_format)
           .to eq(formatted_address)
@@ -101,7 +101,7 @@ describe Lodging, type: :model do
         address =
           lodging.address1 + ' ' +
           lodging.city + ', ' +
-          lodging.state_abbrv + '  ' +
+          lodging.state + '  ' +
           lodging.zipcode.to_s
 
         expect(lodging.address).to eq(address)

@@ -1,7 +1,4 @@
 module DashboardHelper
-  def user_can_manage_site(user)
-    %w(admin scyp ycat loc_contact).include?(user.role)
-  end
 
   # Event widget helpers
   def event_widget_header
@@ -77,7 +74,7 @@ module DashboardHelper
       case attribute_name
       when 'Capacity' then 'cap'
       when 'Localities' then 'loc'
-      when 'Hospitality' then 'hosp'
+      when 'EventLodging' then 'hosp'
       when 'Payments' then 'pmt'
       when 'Attending' then 'att'
       end

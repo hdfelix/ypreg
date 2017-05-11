@@ -18,16 +18,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     user = User.find(params[:format]).decorate
     authorize user
     @user = user.decorate
-
     if user == current_user
       @form_params = [resource, as: resource_name, url: registration_path(resource_name, id: user.id), method: :put]
     else
       @form_params = [[:admin, user], method: :patch]
     end
+    session[:return_to] ||= request.referer
   end
 
   def update
-    admin_user_update
+    user_update
   end
 
 end

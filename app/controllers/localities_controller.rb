@@ -11,8 +11,8 @@ class LocalitiesController < ApplicationController
     @locality = Locality.find(params[:id])
     authorize @locality
     users = policy_scope(@locality.users)
-    @contacts = users.locality_contacts
     @users = users.decorate
+    @contacts = users.locality_contact
   end
 
   def new
@@ -68,6 +68,6 @@ class LocalitiesController < ApplicationController
   end
 
   def locality_params
-    params.require(:locality).permit(:city, :state_abbrv, :contact_id)
+    params.require(:locality).permit(:city, :state, :contact_id)
   end
 end

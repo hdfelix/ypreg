@@ -1,6 +1,14 @@
 # Policies for locality restful actions
 class LocalityPolicy < ApplicationPolicy
 
+  def index?
+    role?([:admin, :scyp, :locality_contact])
+  end
+
+  def show?
+    user.admin? || user.scyp? || (user.locality_contact? && user.locality == record)
+  end
+
   class Scope < Scope
     def resolve
       if user.admin?
@@ -11,11 +19,4 @@ class LocalityPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    user.admin? or user.locality_contact?
-  end
-
-  def show?
-    user.admin? or (user.locality_contact? and user.locality == record)
-  end
 end

@@ -1,23 +1,17 @@
 module EventsHelper
-  def display_event_manage_button?
-    policy(Event.all).edit? ||
-      (policy(Hospitality.all).index? &&
-       policy(Registration.all).index?)
-  end
-
   def event_location(event)
     location = Location.find(event.location_id)
     html = ''
     content_tag(:address) do
       html <<
         "#{location.address1} \n<br />\n #{location.city},"\
-        "#{location.state_abbrv}&nbsp;&nbsp;#{location.zipcode}"
+        "#{location.state}&nbsp;&nbsp;#{location.zipcode}"
     end
     html.html_safe
   end
 
   def event_button_text_based_on_user_role
-    current_user.role == 'speaking_brother' ? 'View' : 'Manage'
+    current_user.speaking_brother? ? 'View' : 'Manage'
   end
 
   def event_dates(event)
@@ -39,14 +33,6 @@ module EventsHelper
       else
         'TBA'
       end
-    end
-  end
-
-  def display_event(event)
-    if event_type = Event::EVENT_TYPE.detect { |a| a.include?(event.event_type) }
-      event_type[0]
-    else
-      '--'
     end
   end
 
@@ -78,8 +64,4 @@ module EventsHelper
     tag(:tr, { id: id, class: decorated_user(user).background_check_date_row_class })
   end
 
-  def display_attendance_summary_for?(locality)
-    return false if current_user.role?(:loc_contact) && current_user.locality != locality
-    true
-  end
 end

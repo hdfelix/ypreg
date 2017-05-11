@@ -1,18 +1,19 @@
 class Events::LocalitiesController < ApplicationController
 
   def index
-    @event = Event.find(params[:event_id])
-    localities = policy_scope(@event.localities).order(:city)
-    @localities = localities.decorate
-    other_localities = policy_scope(Locality.not_in(@event.localities)).order(:city)
-    @other_localities = other_localities.decorate
+    @event = Event.includes(:event_localities).find(params[:event_id])
+    @event_localities = policy_scope(@event.event_localities).by_city
+    @other_localities = policy_scope(Locality.where.not(id: @event_localities.pluck(:locality_id))).by_city
   end
 
   def show
-    @event = Event.find(params[:event_id])
-    @locality = @event.localities.find(params[:id]).decorate
-    @registrations = Registration.includes(:user).where(event: @event, locality: @locality)
-    users_not_registered = @locality.users.where.not(id: @registrations.pluck(:user_id)) 
+    event_locality = EventLocality.find_by!(event_id: params[:event_id], locality_id: params[:id])
+    @event = event_locality.event
+    @locality = event_locality.locality
+    @registrations = event_locality.registrations.includes(:user)
+    @role_counts = event_locality.users.role_counts
+    @lodgings = event_locality.event_lodgings
+    users_not_registered = event_locality.users_not_registered
     @users_not_registered = policy_scope(users_not_registered).decorate
     @tips_message = Payment.tips[:check_payment_instructions].html_safe
   end
@@ -39,8 +40,7 @@ class Events::LocalitiesController < ApplicationController
             user: user,
             event: @event,
             locality: user.locality,
-            has_medical_release_form: false,
-            has_been_paid: false)
+          )
           @event.registrations << reg
         end
       end

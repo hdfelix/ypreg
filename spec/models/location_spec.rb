@@ -42,12 +42,12 @@ describe Location, type: :model do
   #  create(:location,
   #                   address1: '100 Street',
   #                   city: 'Town',
-  #                   state_abbrv: 'FT',
+  #                   state: 'FT',
   #                   zipcode: '00000')
   #  expect(build(:location,
   #               address1: '100 Street',
   #               city: 'Town',
-  #               state_abbrv: 'FT',
+  #               state: 'FT',
   #               zipcode: '00000')
   #        ).to_not be_valid
   #end

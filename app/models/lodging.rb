@@ -1,13 +1,18 @@
-# Places for hospitality (home, hotel room, retreat center lodging unit, etc.
 class Lodging < ActiveRecord::Base
-  validates :address1, presence: true
-  validates :city, presence: true
-  validates :min_capacity, presence: true
-  validates :name, presence: true
-  validates :state_abbrv, presence: true
-  validates :lodging_type, presence: true
-  validates :zipcode, presence: true
 
-  LODGING_TYPE = {1 => 'Home', 2 => 'Retreat Center', 3 => 'Hotel/Motel'}
+# == Constants ============================================================
+  enum lodging_type: [:single_room, :cabin, :dorm]
+
+# == Relationships ========================================================
+  belongs_to :location
+  delegate :name, to: :location, prefix: true
+
+# == Validations ==========================================================
+  validates :name, presence: true, uniqueness: true
+  validates :location, presence: true
+
+# == Scopes ===============================================================
+  scope :at_location, ->(location) { where(location: location) }
+  scope :not_assigned_to_event, ->(event) { at_location(event.location).where.not(id: event.event_lodgings) }
 
 end

@@ -37,7 +37,7 @@ FactoryGirl.define do
     address1 { Faker::Address.street_address }
     address2 ''
     city { Faker::Address.city }
-    state_abbrv 'CA'
+    state 'CA'
     zipcode { Faker::Address.zip_code }
     max_capacity '200'
   end
@@ -45,7 +45,7 @@ FactoryGirl.define do
   ## Locality factories
   factory :locality do
     city { Faker::Address.city }
-    state_abbrv 'CA'
+    state 'CA'
 
     trait :with_3_saints do
       after(:create) do |instance|
@@ -64,7 +64,7 @@ FactoryGirl.define do
     address1 { Faker::Address.street_address }
     address2 ''
     city { Faker::Address.city }
-    state_abbrv 'CA'
+    state 'CA'
     zipcode { Faker::Address.zip_code }
     lodging_type '1'
     min_capacity min_cap

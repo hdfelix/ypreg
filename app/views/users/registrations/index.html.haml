@@ -46,7 +46,7 @@
                       = link_to 'Edit', edit_user_registration_path(user)
                     - if policy(user).destroy? and user != current_user
                       = link_to 'Delete', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'}
-              - if @users.count == 0
+              - if @users.empty?
                 %tr
                   %td{:colspan => "9"}
                     %center No Users in the database...

@@ -22,7 +22,7 @@
                   %td= check_box_tag "locality_paid_ids[]", el.locality.id
                   %td= el.locality.city
                   %td= @event.registrations.where(locality: el.locality).all.count
-                  %td= display_yes_no(el.submitted_registration_payment_check)
+                  %td= display_yes_no(el.paid?)
       .panel-footer
-        = submit_tag "Update Payments", class: 'btn btn-primary btn-sm'
         = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
+        = submit_tag "Update Payments", class: 'btn btn-primary btn-sm'

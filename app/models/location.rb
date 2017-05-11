@@ -1,18 +1,8 @@
 # Places where events can be held
 class Location < ActiveRecord::Base
-  has_many :events
 
-  delegate :name, to: :location, prefix: true
-
-  validates :name, presence: true, uniqueness: true
-  validates :address1, presence: true
-  validates :city, presence: true
-  # TODO: How do we validate for states now that they are in a hash variable?
-  # validates :state, presence: true
-  validates :zipcode, presence: true
-  validates :location_type, presence: true
-
-  TYPE = %w(motel camp church_hall)
+# == Constants ============================================================
+  enum location_type: [:camp, :meeting_hall]
   STATE_LIST = [
     %w(Alabama AL),
     %w(Alaska AK),
@@ -67,4 +57,15 @@ class Location < ActiveRecord::Base
     %w(Wisconsin WI),
     %w(Wyoming WY)
   ]
+
+# == Relationships ========================================================
+  has_many :events
+  has_many :lodgings, dependent: :destroy
+
+# == Validations ==========================================================
+  validates :address1, presence: true
+  validates :city, presence: true
+  validates :name, presence: true
+  validates :zipcode, presence: true
+
 end

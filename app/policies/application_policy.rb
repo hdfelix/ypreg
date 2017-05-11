@@ -1,5 +1,11 @@
-# Default application policiy for restful actions
+module CommonPolicy
+  def sudo?
+    user.admin? || user.scyp?
+  end
+end
+
 class ApplicationPolicy
+  include CommonPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -8,20 +14,24 @@ class ApplicationPolicy
     @record = record
   end
 
-  def scyp_edit?
-    user.admin?
+  # == Helpers ==
+  def role?(roles)
+    roles.any? do |other_role|
+      user.role == other_role.to_s
+    end
   end
 
+  # == Database Ops ==
   def index?
-    user.admin?
+    sudo?
   end
 
   def show?
-    user.admin?
+    sudo?
   end
 
   def create?
-    user.admin?
+    sudo?
   end
 
   def new?
@@ -29,7 +39,7 @@ class ApplicationPolicy
   end
 
   def update?
-    user.admin?
+    sudo?
   end
 
   def edit?
@@ -37,10 +47,11 @@ class ApplicationPolicy
   end
 
   def destroy?
-    user.admin?
+    sudo?
   end
 
   class Scope
+    include CommonPolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
@@ -50,7 +61,7 @@ class ApplicationPolicy
     end
 
     def resolve
-      if user.admin?
+      if sudo?
         scope
       end
     end

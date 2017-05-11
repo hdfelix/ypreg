@@ -6,10 +6,8 @@
       %em
         Participation details for #{@event.title}
   .row
-    .col-md-12
-      = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
-  .row
     .col-md-6
+      = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
     .col-md-6
       %strong
         Registration will close on: #{format_date(@event.registration_close_date)}
@@ -21,7 +19,7 @@
         .widget-header
           %h3
             %i.fa.fa-calendar-o>
-            Attendance Breakdown
+            Registration Breakdown
         .widget-content
           .table-responsive
             %table.table.table-bordered.table-striped.table-hover
@@ -32,31 +30,30 @@
               %tbody
                 %tr
                   %td Young People
-                  %td= @locality.registered_yp(@event).count
+                  %td= @role_counts['yp'].to_i
                 %tr
                   %td Helpers
-                  %td= @locality.registered_helpers(@event).count
+                  %td= @role_counts['helper'].to_i
                 %tr
                   %td Trainees
-                  %td= @locality.registered_trainees(@event).count
+                  %td= @role_counts['trainee'].to_i
                 %tr
                   %td Serving Ones
-                  %td
-                    (#{@locality.registered_serving_ones(@event).count})
+                  %td= @registrations.serving_one.size
                 %tr
                   %td Serving Ones Needed
-                  %td [Serving Ones]
+                  %td
                 %tr
                   %td
-                    %strong Totals
+                    %strong Total
                   %td
-                    %strong= @locality.registered_users(@event).count
+                    %strong= @registrations.size
     .col-md-4
       .widget
         .widget-header
           %h3
             %i.fa.fa-table>
-            Available Hospitalities
+            Available Lodgings
         .widget-content
           %table.table.table-bordered.table-striped.table-hover
             %thead
@@ -64,25 +61,25 @@
                 %td
                 %td Totals
             %tbody
-              - if @locality.hospitalities(@event).count > 0
+              - if @lodgings.any?
                 %tr
                   %td Lodgings
-                  %td= @locality.hospitalities(@event).count
+                  %td= @lodgings.size
                 %tr
                   %td Spaces Available
                   %td
-                    = @locality.hospitalities_min(@event)
-                    (#{@locality.hospitalities_max(@event)})
+                    = @lodgings.sum(:min_capacity)
+                    (#{@lodgings.sum(:max_capacity)})
                 %tr
                   %td Spaces Assigned
-                  %td= @locality.assigned_beds_total(@event)
+                  %td= #@locality.assigned_beds_total(@event)
                 %tr
                   %td Spaces to Assign
-                  %td= @locality.beds_to_assign(@event)
+                  %td= #@locality.beds_to_assign(@event)
               - else
                 %tr
                   %td{:colspan => "4"}
-                    %center No Hospitalities have been assigned
+                    %center No lodgings have been assigned
   .row
     .col-md-8
       .widget
@@ -103,18 +100,18 @@
                 %th Vehicle seats
                 %th Notes
             %tbody#registrations
-              - @registrations.all.each do |reg|
+              - @registrations.each do |reg|
                 = background_check_tr(reg.user, "reg-#{reg.id}")
                 - if policy(Registration).edit?
-                  %td= link_to reg.user.name, edit_event_registration_path(@event, reg)
+                  %td= link_to reg.name, edit_event_registration_path(@event, reg)
                 - else
-                  %td= reg.user.name
-                %td= reg.user.age.to_s.capitalize
-                %td= display_yes_no(reg.conference_guest)
-                %td= display_yes_no(reg.has_medical_release_form)
+                  %td= reg.name
+                %td= reg.age.to_s.capitalize
+                %td= display_yes_no(reg.guest)
+                %td= display_yes_no(reg.medical_release)
                 %td
-                  = format_date(reg.user.background_check_date)
-                %td= display_hospitality_assignment(reg)
+                  = format_date(reg.background_check_date)
+                %td= display_event_lodging_assignment(reg)
                 %td= reg.vehicle_seating_capacity
                 %td
     .col-md-4
@@ -154,19 +151,18 @@
                 %th Amt Paid
                 %th
             %tbody
-              - if @registrations.count > 0
-                - @registrations.each do |reg|
-                  %tr
-                    %td= reg.user.name
+              - @registrations.each do |reg|
+                %tr
+                  %td= reg.user.name
+                  %td
+                    = display_yes_no(reg.medical_release)
+                  %td= number_to_currency(@event.registration_cost)
+                  %td= number_to_currency(reg.payment_adjustment)
+                  %td= number_to_currency(reg.payment)
+                  - if policy(Registration).edit?
                     %td
-                      = display_yes_no(reg.has_medical_release_form)
-                    %td= number_to_currency(@event.registration_cost)
-                    %td= number_to_currency(reg.payment_adjustment)
-                    %td= calculate_payment(reg)
-                    - if policy(Registration).edit?
-                      %td
-                        = link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default'
-              - else
+                      = link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default'
+              - if @registrations.empty?
                 %tr
                   %td{:colspan => "4"}
                     %center No Payments have been made

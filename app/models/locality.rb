@@ -1,43 +1,25 @@
-# A local church
 class Locality < ActiveRecord::Base
+
+# == Relationships ========================================================
   has_many :users
-  has_many :lodgings
-
   has_many :event_localities, dependent: :destroy
-  has_many :events, through: :event_localities
 
-  belongs_to :contact, class_name: 'User'
-  belongs_to :lodging_contact, class_name: 'User'
-
+# == Validations ==========================================================
   validates :city, presence: true
-  validates :state_abbrv, presence: true
+  validates :state, presence: true
 
-  before_save :update_contact_role, if: "contact_id_changed?"
+# == Scopes ===============================================================
+  scope :by_city, -> { order(:city) }
+  
+# == Instance Methods ========================================================
+  public
 
-  def hospitalities(event)
-    Hospitality.where(event: event, locality: self)
-  end
-
-  def hospitalities_min(event)
-    hosp = hospitalities(event)
-    if hosp.empty?
-      0
-    else
-      hosp.map(&:lodging).map(&:min_capacity).sum
-    end
-  end
-
-  def hospitalities_max(event)
-    hosp = hospitalities(event)
-    if hosp.empty?
-      0
-    else
-      hosp.map(&:lodging).map(&:max_capacity).sum
-    end
+  def event_lodgings(event)
+    EventLodging.where(event: event, locality: self)
   end
 
   def assigned_beds_total(event)
-    hosp = hospitalities(event)
+    hosp = event_lodgings(event)
     hosp.map { |h| h.registration_id.nil? ? 0 : 1 }.sum
   end
 
@@ -58,7 +40,7 @@ class Locality < ActiveRecord::Base
   end
 
   def registered_serving_ones(event)
-    registrations(event).reject { |r| !r.attend_as_serving_one }
+    registrations(event).reject { |r| !r.serving_one }
   end
 
   def registered_helpers(event)
@@ -74,11 +56,4 @@ class Locality < ActiveRecord::Base
     Registration.locality_roster(self, event)
   end
 
-  protected
-    def update_contact_role
-      if contact_id?
-        contact.role = 'loc_contact'
-        contact.save
-      end
-    end
 end

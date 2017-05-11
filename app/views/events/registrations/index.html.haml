@@ -28,31 +28,23 @@
               %th Vehicle Seating Capacity
               %th
           %tbody
-            - if !@registrations.empty?
-              - @registrations.each do |reg|
-                = background_check_tr(reg.user, "reg-#{reg.id}")
-                %td= link_to reg.user.name, event_registration_path(@event, reg)
-                / td><haml_silent></haml_silent></td
-                %td= reg.user.role.capitalize
-                %td= reg.user.gender.to_s[0]
-                %td= reg.user.age
-                %td= reg.user.locality_city
-                /
-                  td>C: <haml_loud> format_phone_number(reg.user.cell_phone) </haml_loud><br />
-                  H: <haml_loud> format_phone_number(reg.user.home_phone) </haml_loud><br />
-                  W: <haml_loud> format_phone_number(reg.user.work_phone) </haml_loud></td
-                %td
-                  = reg.conference_guest.to_s.capitalize
-                %td= number_to_currency(reg.payment_adjustment)
-                %td= display_yes_no(reg.has_been_paid)
-                %td= display_yes_no(reg.has_medical_release_form)
-                %td= display_yes_no(reg.attend_as_serving_one)
-                %td= format_date(reg.user.background_check_date)
-                %td= reg.vehicle_seating_capacity
-                %td
-                  = link_to 'Edit', edit_event_registration_path(@event,reg)
-            - else
+            - @registrations.each do |reg|
+              = background_check_tr(reg.user, "reg-#{reg.id}")
+              %td= link_to reg.user.name, event_registration_path(@event, reg)
+              %td= reg.user.role.capitalize
+              %td= reg.user.gender.to_s[0]
+              %td= reg.user.age
+              %td= reg.user.locality_city
+              %td= reg.guest.to_s.capitalize
+              %td= number_to_currency(reg.payment_adjustment)
+              %td= display_yes_no(reg.paid)
+              %td= display_yes_no(reg.medical_release)
+              %td= display_yes_no(reg.serving_one)
+              %td= format_date(reg.user.background_check_date)
+              %td= reg.vehicle_seating_capacity
+              %td= link_to 'Edit', edit_event_registration_path(@event,reg)
+            - if @registrations.empty?
               %tr
-                %td{:colspan => "9"}
-                  %center No one registered for this event...
+                %td{:colspan => "12"}
+                  %center There is no one registered for this event.
       = link_to 'Back', event_path(@event), class: 'btn btn-default'

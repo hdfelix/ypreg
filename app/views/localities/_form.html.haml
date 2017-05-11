@@ -14,9 +14,9 @@
       .col-md-10
         = f.text_field :city, autofocus: true, class: 'form-control', placeholder: "Enter city name"
     .form-group
-      = f.label :state_abbrv, 'State', class: 'col-md-2 control-label'
+      = f.label :state, 'State', class: 'col-md-2 control-label'
       .col-md-10
-        = f.select :state_abbrv, Location::STATE_LIST, {include_blank: true, selected: @locality.state_abbrv}, {class: 'form-control'}
+        = f.select :state, Location::STATE_LIST, {include_blank: true, selected: @locality.state}, {class: 'form-control'}
   .form-group
     .col-md-12
       %span.pull-right

@@ -1,40 +1,45 @@
-# Events model - one-time events, conferences, or retreats
 class Event < ActiveRecord::Base
-  belongs_to :location
 
-  has_many :registrations, dependent: :destroy
-  has_many :users, through: :registrations
+# == Constants ============================================================
+  enum event_type: ["Conference", "Retreat", "One-day"]
+
+# == Relationships ========================================================
+  belongs_to :location
+  delegate :max_capacity, to: :location
+  delegate :name, :max_capacity, to: :location, prefix: true
 
   has_many :event_localities, dependent: :destroy
-  has_many :localities, through: :event_localities
+  has_many :registrations, through: :event_localities
+  has_many :users, through: :registrations
 
-  has_many :hospitalities
-  has_many :lodgings, -> { distinct }, through: :hospitalities
-  has_many :hospitality_registration_assignments, through: :hospitalities
+  has_many :event_lodgings, dependent: :destroy
+  has_many :assigned_lodgings, -> { assigned }, class_name: "EventLodging"
 
-  # considering deleting
-  # skip_before_filter :verify_authenticity_token
-
-  validates :title, presence: true
-  validates :event_type, presence: true
-  validates :location, presence: true
+# == Validations ==========================================================
   validates :begin_date, presence: true
   validates :end_date, presence: true
+  validates :event_type, presence: true
+  validates :location, presence: true
   validates :registration_cost, presence: true
+  validates :title, presence: true
 
-  EVENT_TYPE = [['One-day', 1], ['Retreat', 2], ['Conference', 3]]
-
+# == Scopes ===============================================================
   default_scope { order(:begin_date) }
-  scope :current, -> { where('begin_date <= ? AND end_date >= ?', Time.zone.now.to_date, Time.zone.now.to_date) }
-  scope :not_over, -> { where('begin_date >= ? OR end_date > ?', Time.zone.now.to_date, Time.zone.now.to_date) }
   scope :in_the_future, -> { where('begin_date > ?', Time.zone.now.to_date) }
   scope :in_the_past, -> { where('end_date < ?', Time.zone.now.to_date) }
-  scope :next, -> { [Event.current.first || Event.in_the_future.first] }
+  scope :next, -> { current.or(Event.in_the_future).first }
 
-  def remaining_spaces
-    location.max_capacity - registrations.size
+  def self.current
+    now = Time.zone.now.to_date
+    where('begin_date <= ? AND end_date >= ?', now, now)
   end
 
+  def self.not_over
+    now = Time.zone.now.to_date
+    where('begin_date >= ? OR end_date > ?', now, now)
+  end
+
+# == Instance Methods =====================================================
   def registered_saints_from_locality(locality)
     localities.find(locality).registrations(self).map(&:user)
   end
@@ -42,7 +47,7 @@ class Event < ActiveRecord::Base
   def total_registrations(options = {})
     locality = options[:locality]
     role = options[:role]
-    is_serving_one = options[:attend_as_serving_one] ||= false
+    is_serving_one = options[:serving_one] ||= false
 
     if locality.nil? && role.nil?
     end
@@ -50,7 +55,7 @@ class Event < ActiveRecord::Base
     if locality.nil? && !role.nil?
       if is_serving_one
         users.joins(:registrations)
-          .where(role: role, registrations: { attend_as_serving_one: true })
+          .where(role: role, registrations: { serving_one: true })
           .uniq
       else
         users.where(role: role).uniq
@@ -61,7 +66,7 @@ class Event < ActiveRecord::Base
         users
           .joins(:registrations)
           .where(locality: locality,
-                registrations: { attend_as_serving_one: true })
+                registrations: { serving_one: true })
           .uniq
       else
         users.where(locality: locality).uniq
@@ -72,7 +77,7 @@ class Event < ActiveRecord::Base
         tmp = users
           .joins(:registrations)
           .where(locality: locality,
-                 role: role, registrations: { attend_as_serving_one: true })
+                 role: role, registrations: { serving_one: true })
           .uniq
         tmp
       else
@@ -81,7 +86,7 @@ class Event < ActiveRecord::Base
     else # if both nil
       if is_serving_one
         users.joins(:registrations)
-          .where(registrations: { attend_as_serving_one: true })
+          .where(registrations: { serving_one: true })
           .uniq
       end
     end
@@ -89,16 +94,16 @@ class Event < ActiveRecord::Base
 
   def registered_serving_ones(locality)
     users.joins(:registrations)
-      .where(locality: locality, registrations: { attend_as_serving_one: true })
+      .where(locality: locality, registrations: { serving_one: true })
       .uniq
   end
 
   def conference_guests_from(locality)
-    registrations.includes(:user).where(locality: locality, conference_guest: true)
+      registrations.includes(:user).guest.for_locality(locality)
   end
 
   def conference_guest_count
-    registrations.select { |r| r.conference_guest }.count
+    registrations.select { |r| r.guest }.count
   end
 
   def count_present_yp_from(locality)
@@ -108,7 +113,7 @@ class Event < ActiveRecord::Base
 
   def present_serving_ones_from(locality)
     registrations
-      .where(locality: locality, attend_as_serving_one: true, status: 'attended')
+      .where(locality: locality, serving_one: true, status: 'attended')
   end
 
   def present_trainees_from(locality)
@@ -130,26 +135,8 @@ class Event < ActiveRecord::Base
       .map { |u| u if u.registration(self).status = 'attended' }.count
   end
 
-  def assigned_lodgings_as_hospitality
-    lodging_ids = hospitalities.pluck(:lodging_id)
-    lodgings = []
-    lodging_ids.each do |lodging_id|
-      lodgings << Lodging.find(lodging_id)
-    end
-    lodgings
-  end
-
-  def unassigned_lodgings_as_hospitality
-    ids = []
-    assigned = assigned_lodgings_as_hospitality
-    assigned.each do |hospitality|
-      ids << hospitality.id
-    end
-    Lodging.where.not(id: ids)
-  end
-
   def beds_assigned_to_locality
-    hospitalities.inject({}) do |beds_hash, h|
+    event_lodgings.inject({}) do |beds_hash, h|
       unless h.locality.nil?
         city = h.locality.city
         beds_hash[city] ||= 0
@@ -164,15 +151,15 @@ class Event < ActiveRecord::Base
       |hash, key| hash[key] = Hash.new { |h, k| h[k] = [] }
     end
 
-    localities.uniq.each do |locality|
-      calculate_locality_statistics(stats, locality)
+    event_localities.each do |event_locality|
+      calculate_event_locality_statistics(stats, event_locality)
     end
     stats
   end
 
   def registration_open?
-    now = Time.zone.now.to_date
-    now > registration_open_date && now < registration_close_date
+    today = Time.zone.now.to_date
+    today >= registration_open_date and today <= registration_close_date
   end
 
   def over?
@@ -187,7 +174,7 @@ class Event < ActiveRecord::Base
   end
 
   def payments
-    registrations.where(has_been_paid: true).count
+    registrations.where(paid: true).count
   end
 
   def attendance
@@ -195,34 +182,29 @@ class Event < ActiveRecord::Base
   end
 
   def medical_release_forms_returned
-    registrations.where(has_medical_release_form: true).count
+    registrations.where(medical_release: true).count
   end
 
   def copy
     copied_event = dup
     copied_event.title = title + ' (copy)'
     copied_event.save
-    hospitalities.map(&:lodging).each do |lodging|
-      copied_event.hospitalities <<
-        Hospitality.create(event: copied_event, lodging: lodging)
+    event_lodgings.map(&:lodging).each do |lodging|
+      copied_event.event_lodgings <<
+        EventLodging.create(event: copied_event, lodging: lodging)
     end
     copied_event.save
     copied_event
   end
 
-  # protected
   private
 
-  def calculate_locality_statistics(stats, locality)
-    loc = locality.city
-
-    # TODO: ambiguous locality_id
-    stats[loc]['guests'] = conference_guests_from(locality).count
-    stats[loc]['grand_total'] =
-      users.where('users.locality_id = ?', locality.id).count
+  def calculate_event_locality_statistics(stats, event_locality)
+    stats[event_locality]['guests'] = loc.registrations.guest.size
+    stats[loc]['grand_total'] = loc.registrations.size
     assign_totals(stats, locality)
     stats[loc]['amount_due'] =
-      stats[loc]['grand_total'] * registration_cost - payment_adjustments(locality)
+      (stats[loc]['grand_total'] * registration_cost) - payment_adjustments(locality)
     assign_grand_totals(stats, locality)
     stats[loc]['balance'] =
       stats[loc]['amount_due'] - stats[loc]['actual_amount_paid']
@@ -260,10 +242,10 @@ class Event < ActiveRecord::Base
 
   def locality_amount_paid(locality)
     paid_registrations =
-      Registration.where(event: self, locality: locality, has_been_paid: true)
+      Registration.where(event: self, locality: locality, paid: true)
 
     amount_paid = 0
-    paid_registrations.each { |pr| amount_paid += registration_cost - pr.payment_adjustment if pr.has_been_paid }
+    paid_registrations.each { |pr| amount_paid += registration_cost - pr.payment_adjustment if pr.paid }
     amount_paid
   end
 end

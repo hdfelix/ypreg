@@ -14,25 +14,26 @@
               %tr{:style => "font: bold"}
                 %th Name
                 %th Type
-                %th Max Cap.
-                %th Address
+                %th Location
+                %th Max Capacity
                 %th
             %tbody
               - @lodgings.each do |lodging|
                 %tr
                   %td= link_to lodging.name, lodging
-                  %td= lodging.lodging_type_name
+                  %td= lodging.lodging_type
+                  %td= lodging.location_name
                   %td= lodging.max_capacity
-                  %td= lodging.display_address_in_address_block_format
                   %td
-                    = link_to 'Edit', edit_lodging_path(lodging)
-                     
-                    / %= link_to 'Delete',event_lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' } %
+                    - if policy(lodging).edit?
+                      = link_to 'Edit', edit_lodging_path(lodging)
+                    - if policy(lodging).destroy?
+                      = link_to 'Delete', lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' }
               - if @lodgings.empty?
                 %tr
                   %td{:colspan => "7"}
-                    %center No Lodgings in the database...
-            %tbody
+                    %center No lodgings in the system.
+        %tbody
         = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
         = link_to new_lodging_path, class: 'btn btn-primary' do
           = content_tag(:i, '', class: "fa fa-plus-square")

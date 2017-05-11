@@ -1,4 +1,4 @@
-= form_for [@event,@registration] do |f|
+= form_for [@event, @registration] do |f|
   - if @registration.errors.any?
     #error_explanation.alert.alert-danger.alert-dismissable
       %h4
@@ -13,7 +13,7 @@
     .form-group
       = f.label "Location", class: 'col-md-2 control-label'
       .col-md-10
-        %h4= @event.location.name
+        %h4= @event.location_name
         %h5= event_location(@event)
     .form-group
       = f.label "Event Dates", class: 'col-md-2 control-label'
@@ -59,12 +59,15 @@
   %fieldset
     %legend Registration Information
     .form-group
+      = f.label :lodging, class: 'col-md-2 control-label'
+      .col-md-4
+        = f.collection_select :event_lodging_id, @event.event_lodgings, :id, :name, options={prompt: true}, html_options={class: 'form-control select'}
+    .form-group
       = f.label :payment_type, class: 'col-md-2 control-label'
       .col-md-4
-        = f.select :payment_type,                       |
-          Registration::PAYMENT_TYPE,                   |
-          options={ placeholder: "Payment Type" },      |
-          html_options={ class: 'form-control select' } |
+        = f.select :payment_type, Registration.payment_types.keys,
+          options={ placeholder: "Payment Type" },
+          html_options={ class: 'form-control select' }
     .form-group
       = f.label :payment_adjustment, class: 'col-md-2 control-label'
       .col-md-4
@@ -73,37 +76,37 @@
           .input-group-addon $
           = f.text_field :payment_adjustment, autofocus: true, class: 'form-control', placeholder: "Amount"
           .input-group-addon .00
+    .col-md-12.control-label Has registration been paid?
+    .form-group
+      .radio-inline{:style => "padding-left: 40px;"}
+        = f.radio_button(:paid, false)
+        = label_tag(:paid_no, "No", value: 'false')
+      .radio-inline
+        = f.radio_button(:paid, true)
+        = label_tag(:paid_yes, "Yes", value: 'true')
     .form-group
       = f.label :vehicle_seating_capacity, class: 'col-md-2 control-label'
       .col-md-4
         = f.text_field :vehicle_seating_capacity, autofocus: true, class: 'form-control', placeholder: '(Including driver)'
     .form-group
       .simple-checkbox
-        = f.check_box :has_medical_release_form
-        = f.label :has_medical_release_form, "Returned medical release form", class: 'checkbox'
+        = f.check_box :medical_release
+        = f.label :medical_release, "Returned medical release form", class: 'checkbox'
       .simple-checkbox
-        = f.check_box :attend_as_serving_one
-        = f.label :attend_as_serving_one,"Attending as a serving one", class: 'checkbox'
+        = f.check_box :serving_one
+        = f.label :serving_one, "Attending as a serving one", class: 'checkbox'
       .simple-checkbox
-        = f.check_box :conference_guest
-        = f.label :conference_guest,"Conference Guest", class: 'checkbox'
-    .col-md-12.control-label Has registration been paid?
-    .form-group
-      .radio-inline{:style => "padding-left: 40px;"}
-        = f.radio_button(:has_been_paid, false)
-        = label_tag(:has_been_paid_no, "No", value: 'false')
-      .radio-inline
-        = f.radio_button(:has_been_paid, true)
-        = label_tag(:has_been_paid_yes, "Yes", value: 'true')
+        = f.check_box :guest
+        = f.label :guest,"Conference Guest", class: 'checkbox'
     = hidden_field_tag 'return_to', params[:return_to]
   .form-group
     .col-md-12
       %span.pull-right
-        - if params[:action] == 'new'
-          = f.submit 'Register', class: 'btn btn-primary'
-        - else
-          = f.submit 'Update', class: 'btn btn-primary'
         - if params[:return_to]
           = link_to 'Back', params[:return_to], class: 'btn btn-default'
         - else
           = link_to 'Back', event_registrations_path(event, return_to: params[:return_to]), class: 'btn btn-default'
+        - if params[:action] == 'new'
+          = f.submit 'Register', class: 'btn btn-primary'
+        - else
+          = f.submit 'Update', class: 'btn btn-primary'

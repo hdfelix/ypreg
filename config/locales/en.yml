@@ -23,7 +23,7 @@ en:
   faker:
     address:
       ypreg_city: [Anaheim,Cypress,New Jerusalem,Buena Park,Irvine,Huntington Beach,San Juan Capistrano,San Diego,Orange,Baker's Field]
-      state_abbrv: [CA]
+      state: [CA]
       zipcode: [92804,92805,92620,92612,92713,92899]
     name:
       event_name:     [Brothers's,Sister's,Young Working Saint's,Toddler's,Retired,Full-timer's,Part-timer's]

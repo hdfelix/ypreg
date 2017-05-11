@@ -9,7 +9,7 @@ module ApplicationHelper
 
   def list_unassigned_lodgings
     ev = Event.find(params[:event_id])
-    Lodging.where('id not in (?)', ev.hospitalities.pluck(:lodging_id))
+    Lodging.where('id not in (?)', ev.event_lodgings.pluck(:lodging_id))
   end
 
   def full_address(addressable, options={})
@@ -20,7 +20,7 @@ module ApplicationHelper
       address += addressable.address2 unless addressable.address2.nil?
       address += '<br />' if two_lines
       address += addressable.city + ', ' +
-        addressable.state_abbrv + '&nbsp;&nbsp;' +
+        addressable.state + '&nbsp;&nbsp;' +
         addressable.zipcode.to_s
       address.html_safe
     else

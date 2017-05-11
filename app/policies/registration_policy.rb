@@ -1,9 +1,11 @@
-# Policies for registration restful actions
 class RegistrationPolicy < ApplicationPolicy
-
-  # TODO: testing... remove?
-  def attendance_index?
-    user.persent? && (user.role?(:admin))
+  class Scope < Scope
+    def resolve
+      if sudo?
+        scope
+      elsif user.locality_contact?
+        scope.joins(:event_locality).where(event_localities: {locality: user.locality})
+      end
+    end
   end
-
 end

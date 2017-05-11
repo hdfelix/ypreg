@@ -1,9 +1,9 @@
 module Events::HospitalityLocalityAssignmentsHelper
-  def selected_locality(hospitality)
-    if hospitality.locality.nil?
+  def selected_locality(event_lodging)
+    if event_lodging.locality.nil?
       ['', '']
     else
-      [hospitality.locality.id.to_s, hospitality.locality.city]
+      [event_lodging.locality.id.to_s, event_lodging.locality.city]
     end
   end
 end

@@ -1,0 +1,67 @@
+.main-header
+  %h2 Manage Lodgings
+  %em Add or remove lodgings that are available for "#{ @event.title }"
+.col-md-12
+  .widget.widget-table
+    .widget-header
+      %h3
+        %i.fa.fa-table
+          %strong Assigned Lodgings
+    = form_tag remove_event_lodgings_path, method: :put do
+      .widget-content
+        .table-responsive
+          %table.table.table-striped
+            %thead
+              %tr
+                %td
+                %td Name
+                %td Type
+                %td Min Capacity
+                %td Max Capacity
+            %tbody
+              - @event_lodgings.each do |event_lodging|
+                %tr
+                  %td= check_box_tag "event_lodging_ids[]", event_lodging.id
+                  %td= event_lodging.name
+                  %td= event_lodging.lodging_type
+                  %td= event_lodging.min_capacity
+                  %td= event_lodging.max_capacity
+              - if @event_lodgings.empty?
+                %tr
+                  %td{colspan: "5"}
+                    %center None.
+      .panel-footer
+        - if @event_lodgings.present?
+          = submit_tag "Remove", class: 'btn btn-primary btn-sm'
+.col-md-12
+  .widget.widge-table
+    .widget-header
+      %h3
+        %i.fa.fa-table
+          %strong Available Lodgings
+    = form_tag add_event_lodgings_path, method: :post do
+      .widget-content
+        .table-responsive
+          %table.table.table-striped
+            %thead
+              %tr
+                %td
+                %td Name
+                %td Type
+                %td Min Capacity
+                %td Max Capacity
+            %tbody
+              - @other_lodgings.each do |lodging|
+                %tr
+                  %td= check_box_tag "lodging_ids[]", lodging.id
+                  %td= lodging.name
+                  %td= lodging.lodging_type
+                  %td= lodging.min_capacity
+                  %td= lodging.max_capacity
+              - if @other_lodgings.empty?
+                %tr
+                  %td{colspan: "5"}
+                    %center None.
+      .panel-footer
+        - if @other_lodgings.present?
+          = submit_tag 'Add', class: 'btn btn-primary btn-sm'

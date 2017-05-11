@@ -27,7 +27,7 @@
                   %td
                     = location.address1
                     = location.city
-                    , #{location.state_abbrv}  #{location.zipcode}
+                    , #{location.state}  #{location.zipcode}
                   %td= location.max_capacity
                   %td
                     - if policy(location).edit?

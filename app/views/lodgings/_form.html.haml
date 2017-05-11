@@ -8,20 +8,24 @@
         - @lodging.errors.full_messages.each do |msg|
           %li= msg
   %fieldset
-    %legend General Information
+    %legend General
     .form-group
       = f.label :name, class: 'col-md-2 control-label'
       .col-md-10
         = f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Enter a name"
-    %br/
-    %br/
+    .form-group
+      = f.label :location, class: 'col-md-2 control-label'
+      .col-md-10
+        = f.collection_select :location_id, policy_scope(Location.all), :id, :name, {placeholder: "Enter a location"}, {class: 'form-control', autofocus: true}
     .form-group
       = f.label :lodging_type, class: 'col-md-2 control-label'
       .col-md-10
-        = f.select :lodging_type,                                                      |
-          Lodging::LODGING_TYPE.invert,                                                |
-          options={placeholder: "Type"}, html_options={ class: 'form-control select' } |
-    %br/
+        = f.select :lodging_type, Lodging.lodging_types.keys,
+          options={placeholder: "Type"}, html_options={class: 'form-control select'}
+    .form-group
+      = f.label :description, class: 'col-md-2 control-label'
+      .col-md-10
+        = f.text_field :description, autofocus: true, class: 'form-control'
     %br/
     .form-group
       = f.label :min_capacity, class: 'col-md-2 control-label'
@@ -32,33 +36,10 @@
       .col-md-10
         = f.text_field :max_capacity, autofocus: true, class: 'form-control', placeholder: "How many saints?"
     %br/
-    %br/
-  %fieldset
-    %legend Address Information
-    .form-group
-      = f.label :address1, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :address1, class: 'form-control', placeholder: "Enter an address"
-    .form-group
-      = f.label :address2, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :address2, class: 'form-control' ""
-    .form-group
-      = f.label :city, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :city, class: 'form-control', placeholder: "Enter a city"
-    .form-group
-      = f.label :state_abbrv, 'State', class: 'col-md-2 control-label'
-      .col-md-10
-        = f.select :state_abbrv, Location::STATE_LIST, {include_blank: true, selected: 'CA'}, {class: 'form-control'}
-    .form-group
-      = f.label :zipcode, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :zipcode, class: 'form-control', maxlength: 5, placeholder: "Enter a zipcode"
     .actions
       .form-group
         .col-md-12
           %span.pull-right
-            = f.submit "Submit", class: 'btn btn-primary'
             = link_to 'Back', lodgings_path, class: 'btn btn-default'
+            = f.submit "Submit", class: 'btn btn-primary'
         %br/

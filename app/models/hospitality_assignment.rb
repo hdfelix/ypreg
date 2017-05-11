@@ -1,10 +1,10 @@
-class HospitalityAssignment < ActiveRecord::Base
-  belongs_to :registration, inverse_of: :hospitality_assignments
-  belongs_to :hospitality, inverse_of: :hospitality_assignments
+class EventLodgingAssignment < ActiveRecord::Base
+  belongs_to :registration, inverse_of: :event_lodging_assignments
+  belongs_to :event_lodging, inverse_of: :event_lodging_assignments
   belongs_to :locality
 
-  def hospitality
-    Hospitality.find(hospitality_id)
+  def event_lodging
+    EventLodging.find(event_lodging_id)
   end
 
   def registration

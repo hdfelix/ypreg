@@ -29,8 +29,8 @@ feature 'Admin user manages a location' do
       fill_in 'location[description]', with: location.description
       fill_in 'location[address1]', with: location.address1
       fill_in 'location[city]', with: location.city
-      find('#location_state_abbrv')
-        .find(:xpath, "option[@value=\'#{location.state_abbrv}\']")
+      find('#location_state')
+        .find(:xpath, "option[@value=\'#{location.state}\']")
         .select_option
       fill_in 'location[zipcode]', with: location.zipcode
       click_button 'Submit'
@@ -90,8 +90,8 @@ feature 'SCYP user manages a location' do
       fill_in 'location[description]', with: location.description
       fill_in 'location[address1]', with: location.address1
       fill_in 'location[city]', with: location.city
-      find('#location_state_abbrv')
-        .find(:xpath, "option[@value=\'#{location.state_abbrv}\']")
+      find('#location_state')
+        .find(:xpath, "option[@value=\'#{location.state}\']")
         .select_option
       fill_in 'location[zipcode]', with: location.zipcode
       click_button 'Submit'

@@ -12,6 +12,4 @@
           %i.fa.fa-edit
       .widget-content
         / Registration form partial
-        = render partial: 'form', locals: { event: @event, |
-          registration: @registration,                     |
-          return_to: @return_to }                          |
+        = render partial: 'form', locals: {event: @event, registration: @registration, return_to: @return_to}

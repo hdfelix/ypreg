@@ -20,14 +20,12 @@
     .form-group
       = f.label :event_type, class: 'col-md-2 control-label'
       .col-md-10
-        = f.select :event_type,                                                               
-          Event::EVENT_TYPE,                                                                  
+        = f.select :event_type, Event.event_types.keys,
           options={ placeholder: "Event Type" }, html_options={ class: 'form-control select' }
     .form-group
       = f.label :location, class: 'col-md-2 control-label'
       .col-md-10
         = f.collection_select(:location_id, Location.all, :id, :name, {include_blank: true}, {class: 'form-control'})
-        = link_to "Add a location", new_location_path, class: 'pull-right'
     .form-group
       = f.label :registration_cost, class: 'col-md-2 control-label'
       .col-md-4
@@ -44,33 +42,30 @@
         .input-group.input-append.date
           %span.input-group-addon
             %i.fa.fa-calendar
-          = f.text_field :registration_open_date, class: 'form-control', placeholder: "Enter the date registration opens"
+          = f.text_field :registration_open_date, class: 'form-control'
     .form-group
       = f.label :registration_close_date, class: 'col-md-2 control-label'
       .col-md-4
         .input-group
           %span.input-group-addon
             %i.fa.fa-calendar
-          = f.text_field :registration_close_date, class: 'form-control', placeholder: "Enter the date registration closes"
+          = f.text_field :registration_close_date, class: 'form-control'
     .form-group
       = f.label :begin_date, class: 'col-md-2 control-label'
       .col-md-4
         .input-group
           %span.input-group-addon
             %i.fa.fa-calendar
-          = f.text_field :begin_date, class: 'form-control', placeholder: "Enter the date the event begins"
+          = f.text_field :begin_date, class: 'form-control'
     .form-group
       = f.label :end_date, class: 'col-md-2 control-label'
       .col-md-4
         .input-group
           %span.input-group-addon
             %i.fa.fa-calendar
-          = f.text_field :end_date, class: 'form-control', placeholder: "Enter the date the event ends"
+          = f.text_field :end_date, class: 'form-control'
   .form-group
     .col-md-12
       %span.pull-right
-        - if @return_to == 'index'
-          = link_to 'Back', event_path(@event), class: 'btn btn-default'
-        - else
-          = link_to 'Back', events_path, class: 'btn btn-default'
+        = link_to 'Back', request.referer, class: 'btn btn-default'
         = f.submit "Submit", class: 'btn btn-primary'

@@ -1,22 +1,22 @@
 class EventLocality < ActiveRecord::Base
-  self.table_name = 'events_localities'
+
+# == Relationships ========================================================
   belongs_to :event
   belongs_to :locality
 
-  def self.for_event(event)
-    where(event: event)
-  end
+  has_many :registrations
+  has_many :users, through: :registrations
+  has_many :event_lodgings, through: :registrations
 
-  def users
-    User.where(locality: locality)
-  end
+  delegate :title, to: :event
+  delegate :city, :state, to: :locality
 
-  def registrations
-    Registration.where(event: event, locality: locality)
-  end
+# == Scopes ===============================================================
+  scope :by_city, -> { joins(:locality).merge(Locality.order(:city)) }
 
-  def paid_registrations
-    Registration.where(event: event, locality: locality, has_been_paid: true)
+# == Instance Methods =====================================================
+  def users_not_registered
+    locality.users.where.not(id: users)
   end
 
   def beds_assigned_to_locality
@@ -29,7 +29,7 @@ class EventLocality < ActiveRecord::Base
   end
 
   def number_of_beds_assigned_to_registrations
-    Hospitality
+    EventLodging
       .where(event: event, locality: locality)
       .where.not(registration: nil).count
   end

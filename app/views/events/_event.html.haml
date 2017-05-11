@@ -9,7 +9,7 @@
         %h3= event.title
       .col-md-1
         - if current_user
-          - unless current_user.registrations.where(event_id: event).empty?
+          - unless current_user.events.exists?(id: event.id)
             - if !event.over?
               = link_to event_registration_path(event,current_user.registrations.where(event_id: event).first), class: 'btn btn-success pull-right' do
                 %i.fa.fa-check-circle
@@ -19,7 +19,7 @@
       %div
       .col-md-3{:style => "border-right: 1px solid #ccc; height: 100%"}
         Location:
-        %h4= event.location.name #location_name
+        %h4= event.location_name
         = event_location(event)
       .col-md-3
         Event Dates:
@@ -38,7 +38,7 @@
         - if current_user
           - if !event.over? && policy(Event).show?
             = link_to "#{event_button_text_based_on_user_role}", event, class: 'btn btn-default btn-sm'
-          - if current_user.registrations.where(event_id: event).empty?
+          - if current_user.events.exists?(id: event.id)
             - if event.registration_open?
               = link_to 'Register', new_event_registration_path(event), class: 'btn btn-custom-secondary btn-sm'
             - else

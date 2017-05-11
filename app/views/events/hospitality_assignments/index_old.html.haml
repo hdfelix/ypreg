@@ -1,22 +1,22 @@
 .content
   .main-header
-    %h2 Hospitality Assignments
+    %h2 EventLodging Assignments
     %em
-      hospitality assingments for #{@event.title}
+      event_lodging assingments for #{@event.title}
   .row
     .col-md-5
       .widget.widget-table
         .widget-header
           %h3
             %i.fa.fa-table>
-            Hospitality Units
+            EventLodging Units
         .widget-content
           = form_for(@event, url: {                             |
-            controller: 'events/hospitality_assignments',       |
+            controller: 'events/event_lodging_assignments',       |
             action:     'assign_lodging_to_locality' },         |
             class:      'form-horizontal', remote: true) do |f| |
             .table-responsive
-              %table#hospitality_units.table.table-striped
+              %table#event_lodging_units.table.table-striped
                 %thead
                   %tr
                     %td Lodging
@@ -24,7 +24,7 @@
                     %td Max
                     %td Assign to
                 %tbody
-                  - @event.hospitalities.each  do |hosp|
+                  - @event.event_lodgings.each  do |hosp|
                     %tr{:id => "<haml_loud"}
                       "\#{hosp.id}" &gt;
                       %td= hosp.name
@@ -72,8 +72,8 @@
           %select
           = form_for(@event,                                        |
                          url: {                                     |
-              controller: 'events/hospitality_assignments',         |
-              action:     'assign_registration_user_to_hospitality' |
+              controller: 'events/event_lodging_assignments',         |
+              action:     'assign_registration_user_to_event_lodging' |
             },                                                      |
             class: 'form-horizontal', remote: true) do |f|          |
             %table.table.table-striped
@@ -104,7 +104,7 @@
         .widget-header
           %h3
             %i.fa.fa-table>
-            Assigned Hospitalities
+            Assigned EventLodgings
         .widget-content
           %table.table.table-striped
             %thead
@@ -113,7 +113,7 @@
                 %td Name
             %tbody
               / TODO: Write code to display missing info
-              - @event.hospitality_assignments.each do |ha|
+              - @event.event_lodging_assignments.each do |ha|
                 %tr
                   %td [loc]
                   %td [name]
@@ -122,5 +122,5 @@
     .col-md-12
       = link_to 'Back', @event, class: "btn btn-default"
 = javascript_tag do
-  window.eventHospitalityAssignmentsURL = "#{j event_hospitality_assignments_url}";
+  window.eventEventLodgingAssignmentsURL = "#{j event_event_lodging_assignments_url}";
   window.currentEvent = "#{j @event.id.to_s}";

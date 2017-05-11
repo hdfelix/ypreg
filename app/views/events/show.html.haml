@@ -1,7 +1,7 @@
 .content
   .main-header
     %h2= @event.title
-    %em= "to be held at #{ Location.find(@event.location_id).name }"
+    %em= "to be held at #{ @event.location_name }"
   .row
     / Event info
     .col-md-4.col-sm-6
@@ -18,7 +18,7 @@
                 %tr
                   %td
                     %strong Type:
-                  %td= display_event(@event)
+                  %td= @event.event_type
                 %tr
                   %td
                     %strong Registration:
@@ -38,20 +38,20 @@
                     %strong Cost:
                   %td
                     = (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA"
-          - if policy(Event.all).edit?
-            = link_to 'Edit', edit_event_path(@event, r: 'index'), class: 'btn btn-primary btn-sm'
-          - if display_event_manage_button?
+          - if policy(@event).edit?
+            = link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm'
+          - if policy(@event).can_manage?
             #event-info-btn-group.btn-group
               %button#manage.btn.btn-default.btn-sm.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
                 Manage
                 %span.caret
               %ul.dropdown-menu{:role => "menu"}
-                - if policy(Hospitality.all).index?
-                  %li= link_to 'Hospitality', event_hospitalities_path(@event)
-                - if policy(Registration.all).index?
+                - if policy(EventLodging).index?
+                  %li= link_to 'Lodging', event_lodgings_path(@event)
+                - if policy(Registration).index?
                   %li= link_to 'Registrations', event_registrations_path(@event)
                   %li
-                - if policy(Registration.all).index?
+                - if policy(Registration).index?
                   %li= link_to 'Payments', edit_locality_payments_path(@event)
                 - if show_attendance_menu_option?(@event)
                   %li#attendance-option= link_to 'Attendance', event_registrations_path(@event, view: 'attendance')
@@ -70,22 +70,22 @@
                   %th Totals
               %tbody
                 %tr
-                  %td Total Attendance
+                  %td Registered
                   %td= @event.registrations.size
                 %tr
-                  %td Camp Max Capacity
-                  %td= display_max_cap(@event.location)
+                  %td Location Capacity
+                  %td= @event.max_capacity
                 %tr
                   %td Remaining Spaces
-                  %td= @event.remaining_spaces
+                  %td= @event.max_capacity - @event.registrations.size
       / end event registration details
-    / Attendance Breakdown
+    / Registration Breakdown
     .col-md-4.col-sm-6
       .widget
         .widget-header
           %h3
             %i.fa.fa-bar-chart-o>
-            Attendance Breakdown
+            Registration Breakdown
         .widget-content
           .table-responsive
             %table.table.table-bordered.table-striped.table-hover
@@ -96,25 +96,25 @@
               %tbody
                 %tr
                   %td Young People
-                  %td= @event.total_registrations(role: 'yp').count
+                  %td= @role_counts['yp'].to_i
                 %tr
                   %td Serving Ones
-                  %td= @event.total_registrations(attend_as_serving_one: true).count
+                  %td= @registrations.serving_one.size
                 %tr
                   %td Trainees
-                  %td= @event.total_registrations(role: 'trainee').count
+                  %td= @role_counts['trainee'].to_i
                 %tr
                   %td Helpers
-                  %td= @event.total_registrations(role: 'helper').count
+                  %td= @role_counts['helper'].to_i
                 %tr
                   %td Conference Guests
-                  %td= @event.conference_guest_count
+                  %td= @role_counts['guest'].to_i
                 %tr
                   %td YCAT
-                  %td= @event.total_registrations(role: 'ycat').count
+                  %td= @role_counts['ycat'].to_i
                 %tr
                   %td S/S Brothers
-                  %td= @event.total_registrations(role: 'speaking_brothers').count
+                  %td= @role_counts['speaking_brother'].to_i + @role_counts['supporting_brother'].to_i
     / end attendance breakdown
   / end event info, statistics, attendance breakdown row
   .row
@@ -153,90 +153,14 @@
                   %th Actual Amt Paid
                   %th Balance
               %tbody
-                = render partial: 'localities/attendance_summary', locals: { localities: @participating_localities }
-          - if policy(Locality.all).index?
+                - @event_localities.each do |event_locality|
+                  %tr
+                    %td= link_to event_locality.city, event_locality_path(event_locality.event, event_locality.locality)
+                - if @event_localities.empty?
+                  %tr
+                    %td.text-center{:colspan => "16"} There are no localities registered for this event.
+                = #render partial: 'events/localities/attendance_summary', locals: {event_localities: @event_localities}
+          - if policy(Locality).index?
             = link_to 'Localities List', event_localities_path(@event), class: 'btn btn-default btn-sm'
-          - elsif current_user.role == 'loc_contact' && @participating_localities.count == 0
-            = link_to "Add registrations for #{current_user.locality.city}", new_event_locality_path(@event, locality_id: current_user.locality), class: 'btn btn-default btn-sm'
-        / widget content
-      / locality summaries widget
-    / col-md 12
-  / row
-  / hospitality info
-  .row
-    .col-md-12
-      #hospitality_info_widget.widget
-        .widget-header
-          .btn-group.widget-header-toolbar
-            %a#tour-focus.btn-borderless.btn-focus{:href => "#", :title => "focus"}
-              %i.fa.fa-eye
-            %a.btn-borderless.btn-toggle-expand{:href => "#", :title => "expand/collapse"}
-              %i.fa.fa-chevron-up
-            %a.btn-borderless.btn-remove{:href => "#", :title => "remove"}
-              %i.fa.fa-times
-          %h3
-            %i.fa.fa-bar-chart-o>
-            Hospitality Info
-        .widget-content
-          #visit-stat-table_wrapper.datatables_wrapper{:role => "grid"}
-            .row
-              .col-md-3
-                #visit-stat-table_length.datatables_length
-                  / <label>
-                  / <select name="visit&#45;stat&#45;table_length" size="1" aria&#45;controls="visit&#45;stat&#45;table">
-                  / <option value="10" selected="selected">
-                  / 
-                  / 10
-                  / 
-                  / </option>
-                  / <option value="25">
-                  / 
-                  / 25
-                  / 
-                  / </option>
-                  / <option value="50">
-                  / 
-                  / 50
-                  / 
-                  / </option>
-                  / <option value="100">
-                  / 
-                  / 100
-                  / 
-                  / </option>
-                  / </select>
-                  / 
-                  / records per page
-                  / 
-                  / </label>
-                / table div
-            / end inner row
-            .table-responsive
-              %table.table.table-bordered.table-striped.table-hover
-                %thead
-                  %tr{:role => "row"}
-                    %th Name
-                    %th Home Phone
-                    %th Cell
-                    %th Address
-                    %th Min / Max Guests
-                    %th Assigned Localities
-                    %th Assigned Guests
-                %tbody#event_hospitalities{"aria-live" => "polite", "aria-relevant" => "all", :role => "alert"}
-                  = render partial: 'lodgings/info_form', locals: {event: @event}
-            - if policy(Hospitality.all).manage?
-              .btn-group
-                %button.btn.btn-default.btn-sm.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
-                  Manage
-                  %span.caret
-                %ul.dropdown-menu{:role => "menu"}
-                  - if policy(Hospitality.all).manage?
-                    %li= link_to 'Manage Hospitalities', event_hospitalities_path(@event)
-                  %li= link_to 'Assign to Localities', event_hospitality_locality_assignments_path(@event)
-                  - if policy(Hospitality.all).manage?
-                    %li= link_to 'Assign Saints', event_hospitality_registration_assignments_path(@event)
-            .row
-              / pagination footer
-              .col-md-6
-              / Add code for records displayed, pagination
-  / hospitality info
+          - elsif policay(Locality).new? && @event_localities.empty?
+            = link_to "Add registrations for #{current_user.locality_city}", new_event_locality_path(@event, locality: current_user.locality), class: 'btn btn-default btn-sm'

@@ -2,7 +2,7 @@ class UserDecorator < Draper::Decorator
   delegate_all
 
   def background_check_date_row_class
-    return '' if !object.adult?
+    return '' if !object.needs_bg_check?
     return 'warning' if object.background_check_warning?
     return 'danger' if !object.background_check_valid?
     ''

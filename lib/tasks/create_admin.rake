@@ -43,17 +43,17 @@ namespace :ypreg do
       end
     end
 
-    loc = Locality.where('city = ? and state_abbrv = ?', locality['city'].capitalize, locality['abbrv'].upcase).first
+    loc = Locality.where('city = ? and state = ?', locality['city'].capitalize, locality['abbrv'].upcase).first
 
     if loc.presence
       locality['locality_id'] = loc.id
       notice = "This locality is already in the database...\n"
       print_colored_text(notice, warning_text_color)
     else
-      new_locality = Locality.new(city: locality['city'].capitalize, state_abbrv: locality['abbrv'].upcase)
+      new_locality = Locality.new(city: locality['city'].capitalize, state: locality['abbrv'].upcase)
       if new_locality.save
         locality['locality_id'] = new_locality.id
-        notice = "'#{Locality.first.city}, #{Locality.first.state_abbrv}' created successfully.\n"
+        notice = "'#{Locality.first.city}, #{Locality.first.state}' created successfully.\n"
         print_colored_text(notice, success_text_color)
       else
         notice = 'Error creating the new locality.'

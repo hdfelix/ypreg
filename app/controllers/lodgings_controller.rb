@@ -14,26 +14,18 @@ class LodgingsController < ApplicationController
 
   def new
     @lodging = Lodging.new
+    @lodging.location_id = params[:location_id] if params.has_key?(:location_id)
     authorize @lodging
+    session[:return_to] ||= request.referer
   end
 
   def create
-    @lodging = Lodging.new(lodging_params)
+    lodging = Lodging.new(lodging_params)
+    authorize lodging
 
-    # TODO: refactor - pick only one approach
-    unless params[:contact_person].nil?
-      @lodging.contact_person = User.find(params[:contact_person][:id]) unless params[:contact_person].empty?
-    end
-
-    unless params[:lodging][:contact_person].nil?
-      @lodging.contact_person = User.find(params[:lodging][:contact_person]) unless params[:lodging][:contact_person].empty?
-    end
-
-    authorize @lodging
-
-    if @lodging.save
+    if lodging.save
       flash[:notice] = 'Lodging was created successfully.'
-      redirect_to lodgings_path
+      redirect_to session.delete(:return_to)
     else
       flash[:error] = 'Error saving the lodging.'
       render action: 'new'
@@ -45,8 +37,6 @@ class LodgingsController < ApplicationController
   end
 
   def update
-    @lodging.contact_person = User.find(params[:contact_person][:id])
-
     if @lodging.update_attributes(lodging_params)
       flash[:notice] = 'lodging was updated successfully.'
       redirect_to @lodging
@@ -57,7 +47,6 @@ class LodgingsController < ApplicationController
   end
 
   def destroy
-    # @lodging set wtih 'before_action'
     if @lodging.destroy
       flash[:notice] = "Lodging #{@lodging.name} deleted successfully."
       redirect_to lodgings_url
@@ -76,18 +65,13 @@ class LodgingsController < ApplicationController
   end
 
   def lodging_params
-    params.require(:lodging)
-      .permit(
-        :name,
-        :lodging_type,
-        :locality_id,
-        :min_capacity,
-        :max_capacity,
-        :address1,
-        :address2,
-        :city,
-        :state_abbrv,
-        :zipcode,
-        contact_person: [:id])
+    params.require(:lodging).permit(
+      :description,
+      :location_id,
+      :lodging_type,
+      :max_capacity,
+      :min_capacity,
+      :name,
+    )
   end
 end

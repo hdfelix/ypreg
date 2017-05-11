@@ -1,4 +1,4 @@
-class Events::HospitalityLocalityAssignmentsController < ApplicationController
+class Events::EventLodgingLocalityAssignmentsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
     @stats = @event.load_locality_summary
@@ -6,12 +6,12 @@ class Events::HospitalityLocalityAssignmentsController < ApplicationController
 
   def assign
     @event = Event.find(params[:event_id])
-    hospitality_ids = params[:hospitality_locality_ids].keys
+    event_lodging_ids = params[:event_lodging_locality_ids].keys
 
-    hospitality_ids.each do |id|
-      hosp = @event.hospitalities.find(id)
-      loc = params[:hospitality_locality_ids][id.to_sym][0]
-      # TODO: factor out to service HospitalityLocalityManager
+    event_lodging_ids.each do |id|
+      hosp = @event.event_lodgings.find(id)
+      loc = params[:event_lodging_locality_ids][id.to_sym][0]
+      # TODO: factor out to service EventLodgingLocalityManager
       if loc.empty?
         loc = nil
       else
@@ -21,6 +21,6 @@ class Events::HospitalityLocalityAssignmentsController < ApplicationController
       hosp.update_attributes(locality_id: loc)
     end
     @event.save
-    redirect_to event_hospitality_locality_assignments_path
+    redirect_to event_event_lodging_locality_assignments_path
   end
 end

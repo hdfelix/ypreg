@@ -42,8 +42,8 @@
           %strong= display_yes_no(@attendance.has_been_paid)
     .form-group
       .simple-checkbox
-        = f.check_box :has_medical_release_form
-        = f.label :has_medical_release_form, "Returned medical release form", class: 'checkbox'
+        = f.check_box :medical_release
+        = f.label :medical_release, "Returned medical release form", class: 'checkbox'
     %p.data-row
       %span.data-name= f.label :status, class: ' col-md-2'
       %span.data-value

@@ -3,13 +3,12 @@
     .main-header
       %h2
         = @locality.city
-        , #{@locality.state_abbrv}
+        , #{@locality.state}
       %em
   .row
     .col-md-8
       = link_to "Back", localities_path, class: 'btn btn-default'
     .col-md-8
-      %p#notice= notice
       .widget
         .widget-header
           %h3
@@ -31,6 +30,10 @@
                   %td= contact.name
                   %td= mail_to contact.email
                   %td= contact.cell_phone
+              - if @contacts.empty?
+                %tr
+                  %td{colspan: "4"}
+                    %center No contacts assigned.
     .col-md-8
       .widget
         .widget-header
@@ -62,7 +65,6 @@
           = link_to new_admin_user_path(locality_id: @locality.id), class: 'btn btn-primary' do
             = content_tag(:i, '', class: "fa fa-plus-square")
             New User 
-          %p#notice= notice
         .widget-footer
     .col-md-8
       = link_to "Back", localities_path, class: 'btn btn-default'

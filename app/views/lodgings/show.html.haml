@@ -2,7 +2,7 @@
   .row
     .main-header
       %h2= @lodging.name
-      %em= "a #{ Lodging::LODGING_TYPE[@lodging.lodging_type.to_i] } in #{ Locality.find(@lodging.locality_id).city }"
+      %em= "a #{@lodging.lodging_type} in #{@lodging.location_name}"
   .row
     / Lodging info
     .col-md-6
@@ -20,9 +20,14 @@
               = @lodging.name
           .row
             .col-sm-4
-              %strong Type:
+              %strong Location:
             .col-sm-8
-              = @lodging.lodging_type_name
+              = @lodging.location_name
+          .row
+            .col-sm-4
+              %strong Lodging Type:
+            .col-sm-8
+              = @lodging.lodging_type
           .row
             .col-sm-4
               %strong Description:
@@ -38,11 +43,6 @@
               %strong Max Capacity:
             .col-sm-8
               = @lodging.max_capacity
-          .row
-            .col-sm-4
-              %strong Address:
-            .col-sm-8
-              = @lodging.display_address_in_address_block_format
         .widget-footer
   .row
     .col-md-12

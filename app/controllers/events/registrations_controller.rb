@@ -1,13 +1,10 @@
 class Events::RegistrationsController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
-    @status_options = Registration::STATUS
-    @registrations = @event.registrations
-
-    return unless params[:view] == 'attendance'
-
-    @event_localities = EventLocality.includes(:locality).for_event(@event)
-    render 'attendance_index'
+    @registrations = @event.registrations.includes(:user).by_name
+    if params[:view] == 'attendance'
+      render 'attendance_index'
+    end
   end
 
   def show
@@ -33,9 +30,13 @@ class Events::RegistrationsController < ApplicationController
 
   def create
     @event = Event.find(params[:event_id])
-    @user = User.find(params[:user_id])
-    @registration = @user.registrations.new(registration_params)
-    if @registration.save
+    user = User.find(params[:user_id])
+
+    registration = Registration.new(registration_params)
+    registration.user = user
+    registration.event_locality = EventLocality.find_or_create_by(event: event, locality: user.locality)
+
+    if registration.save
       flash[:notice] = 'Registration created successfully'
       redirect_to event_path(@event)
     else
@@ -54,26 +55,20 @@ class Events::RegistrationsController < ApplicationController
       @id = params[:id]
       @registration = @event.registrations.find(params[:id])
     end
-    @return_to = params[:return_to]
+    session[:return_to] ||= request.referer
   end
 
   def update
     @event = Event.find(params[:event_id])
     @registration = Registration.find(params[:id])
-    locality = @registration.user.locality
 
-    if @registration.update_attributes(registration_params)
+    if @registration.update(registration_params)
       if params[:view] == 'attendance'
         flash[:notice] = 'Attendance updated successfully.'
-        redirect_to event_registrations_url(@event, view: 'attendance')
       else
         flash[:notice] = 'Registration updated successfully.'
-        if params[:return_to].nil?
-          redirect_to event_registrations_path(@event)
-        else
-          redirect_to event_locality_path(@event, locality)
-        end
       end
+      redirect_to session.delete(:return_to)
     else
       flash[:error] = 'error creating registration'
       render 'new'
@@ -94,18 +89,15 @@ end
 private
 
 def registration_params
-  parameters =
-    params.require(:registration)
-    .permit(:payment_type,
-            :payment_adjustment,
-            :vehicle_seating_capacity,
-            :has_been_paid,
-            :has_medical_release_form,
-            :attend_as_serving_one,
-            :conference_guest,
-            :return_to)
-    .merge(event_id: params[:event_id])
-    .merge(locality_id: User.find(params[:user_id]).locality.id)
+  parameters = params.require(:registration).permit(
+    :guest,
+    :medical_release,
+    :paid,
+    :payment_adjustment,
+    :payment_type,
+    :serving_one,
+    :vehicle_seating_capacity,
+  )
 
   parameters = parameters.merge(params.require(:registration).permit(:status)) if params[:view] == 'attendance'
   parameters

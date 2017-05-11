@@ -138,13 +138,13 @@
               / main-nav
               %nav.main-nav
                 %ul.main-menu
-                  - if current_user.role != 'guest'
+                  - if policy(:dashboard).show?
                     %li
                       = link_to dashboard_index_url do
                         %i.fa.fa-dashboard.fa-fw
                         %span.text Dashboard
                   %li
-                    - if user_can_manage_site(current_user)
+                    - if policy(:dashboard).manage_site?
                       %a.js-sub-menu-toggle{:href => "#"}
                         %i.fa.fa-clipboard.fa-fw
                         %span.text Manage

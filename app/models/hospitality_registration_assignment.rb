@@ -1,6 +1,6 @@
-class HospitalityRegistrationAssignment < ActiveRecord::Base
+class EventLodgingRegistrationAssignment < ActiveRecord::Base
   belongs_to :registration
-  belongs_to :hospitality
+  belongs_to :event_lodging
   belongs_to :locality
   belongs_to :event
 

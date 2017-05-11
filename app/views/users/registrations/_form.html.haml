@@ -3,15 +3,12 @@
   .form-group
     = f.label :role, "User Role", class: 'col-md-2 control-label'
     .col-md-10
-      - if policy(User).role_edit?
-        = f.select :role, policy(@user).authorized_roles, {include_blank: true }, {class: 'form-control'}
-      - else
-        = @user.role
+      = f.select :role, policy(@user).authorized_roles, {include_blank: true }, {class: 'form-control'}
   .form-group
     = f.label :locality_id, class: 'col-md-2 control-label'
     .col-md-10
       .input-group
-        - if policy(User).scyp_edit?
+        - if policy(User).sudo?
           = f.collection_select(:locality_id, Locality.all, :id, :city, { include_blank: 'Select locality' }, { class: 'form-control' })
           %span.input-group-addon
             %i.fa.fa-user
@@ -44,15 +41,15 @@
   .form-group
     = f.label :gender, '', class: 'col-md-2 control-label'
     .col-md-10
-      = f.select :gender, User::GENDER, { include_blank: 'Selet your gender' }, { class: 'form-control' }
+      = f.select :gender, User.genders.keys, { include_blank: 'Selet your gender' }, { class: 'form-control' }
   .form-group
     = f.label :age, '', class: 'col-md-2 control-label'
     .col-md-10
-      = f.select :age, User::AGE, { include_blank: 'Select your age' }, { class: 'form-control' }
+      = f.select :age, User.ages.keys, { include_blank: 'Select your age' }, { class: 'form-control' }
   .form-group
     = f.label :grade, '', class: 'col-md-2 control-label'
     .col-md-10
-      = f.select :grade, User::GRADE, { include_blank: 'Select your grade' }, {class: 'form-control'}
+      = f.select :grade, User.grades.keys, { include_blank: 'Select your grade' }, {class: 'form-control'}
   .form-group
     = f.label :home_phone, class: 'col-md-2 control-label'
     .col-md-10
@@ -75,7 +72,7 @@
   .form-group
     = f.label :background_check_date, class: 'col-md-2 control-label'
     .col-md-10
-      - if policy(User).scyp_edit?
+      - if policy(User).sudo?
         .input-group.input-append.date
           %span.input-group-addon
             %i.fa.fa-calendar

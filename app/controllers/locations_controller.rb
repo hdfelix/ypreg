@@ -1,12 +1,14 @@
 class LocationsController < ApplicationController
-  before_action :set_location, only: [:show, :edit, :update, :destroy]
+  before_action :set_location, only: [:edit, :update, :destroy]
 
   def index
-    @locations = Location.all
-    authorize @locations
+    @locations = policy_scope(Location).order(:name)
   end
 
   def show
+    @location = Location.includes(:lodgings).find(params[:id])
+    authorize @location
+    @lodgings = policy_scope(@location.lodgings)
   end
 
   def new
@@ -70,7 +72,7 @@ class LocationsController < ApplicationController
         :address1,
         :address2,
         :city,
-        :state_abbrv,
+        :state,
         :zipcode)
   end
 end

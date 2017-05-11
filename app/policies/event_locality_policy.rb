@@ -1,25 +1,24 @@
 class EventLocalityPolicy < ApplicationPolicy
 
+  def index?
+    sudo? or user.locality_contact?
+  end
+
+  def show?
+    sudo? or (user.locality_contact? and user.locality == record.locality)
+  end
+
+  def create?
+    sudo? or (user.locality_contact? and user.locality = record.locality)
+  end
+
   class Scope < Scope
     def resolve
-      if user.admin?
+      if sudo?
         scope
       elsif user.locality_contact?
         scope.where(locality: user.locality)
       end
     end
   end
-
-  def index?
-    user.admin? or user.locality_contact?
-  end
-
-  def show?
-    user.admin? or (user.locality_contact? and user.locality == record.locality)
-  end
-
-  def create?
-    user.admin? or (user.locality_contact? and user.locality = record.locality)
-  end
-
 end

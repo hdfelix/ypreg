@@ -38,7 +38,7 @@
             .col-sm-4
               %strong Paid?
             .col-sm-8
-              = display_boolean(@registration.has_been_paid)
+              = display_boolean(@registration.paid)
           .row
             .col-sm-4
               %strong Pmt Adjustment
@@ -48,15 +48,14 @@
             .col-sm-4
               %strong Serving One?
             .col-sm-8
-              = display_boolean(@registration.attend_as_serving_one)
+              = display_boolean(@registration.serving_one)
           .row
             .col-sm-4
               %strong Medical Release Form?
             .col-sm-8
-              = display_boolean(@registration.has_medical_release_form)
+              = display_boolean(@registration.medical_release)
           .row
             .col-sm-4
-              = add_alert_style?(@registration.user)
               %strong Background Check
             .col-sm-8
               - background_style = "#{decorated_user(@registration.user).background_check_date_row_class}"

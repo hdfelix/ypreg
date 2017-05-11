@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
   def admin_chart_values(next_event, chart_values)
     location_section_values(next_event, chart_values)
     locality_section_values(next_event, chart_values)
-    hospitality_section_values(next_event, chart_values)
+    event_lodging_section_values(next_event, chart_values)
     payments_section_values(next_event, chart_values)
   end
 
@@ -88,14 +88,14 @@ class ApplicationController < ActionController::Base
     chart_values['att_value_now'] = registration_count
     chart_values['att_value_max'] = total_users
 
-    # Hospitality
-    hospitalities = Hospitality.where(event: next_event, locality: locality)
-    assigned_hospitalities_count =
-      hospitalities.where.not(registration: nil).count
-    chart_values['hosp_ratio'] = "#{assigned_hospitalities_count} / #{hospitalities.count}"
-    chart_values['hosp_ratio_width_percentage'] = "width: #{(assigned_hospitalities_count.to_f / hospitalities.count.to_f) * 100}%"
-    chart_values['hosp_value_now'] = assigned_hospitalities_count
-    chart_values['hosp_value_max'] = hospitalities.count
+    # Event Lodging
+    event_lodgings = next_event.lodgings
+    assigned_event_lodgings_count =
+      event_lodgings.assigned_lodgings.size
+    chart_values['hosp_ratio'] = "#{assigned_event_lodgings_count} / #{event_lodgings.size}"
+    chart_values['hosp_ratio_width_percentage'] = "width: #{(assigned_event_lodgings_count.to_f / event_lodgings.size.to_f) * 100}%"
+    chart_values['hosp_value_now'] = assigned_event_lodgings_count
+    chart_values['hosp_value_max'] = event_lodgings.size
 
     # Paid?
     chart_values['paid?'] = false
@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
 
   def location_section_values(next_event, chart_values)
     location_capacity = next_event.location.max_capacity
-    registration_count = next_event.registrations.count
+    registration_count = next_event.registrations.size
 
     chart_values['cap_ratio'] =
       "#{registration_count} / #{location_capacity}"
@@ -114,8 +114,8 @@ class ApplicationController < ActionController::Base
   end
 
   def locality_section_values(next_event, chart_values)
-    total_localities = Locality.all.count
-    next_event_localities = next_event.localities.count
+    total_localities = Locality.count
+    next_event_localities = next_event.event_localities.size
     chart_values['loc_ratio'] = "#{next_event_localities} / #{total_localities}"
     if total_localities != 0
       chart_values['loc_ratio_width_percentage'] =
@@ -128,9 +128,9 @@ class ApplicationController < ActionController::Base
   end
 
   def payments_section_values(next_event, chart_values)
-    total_registrations = next_event.registrations.all.count
+    total_registrations = next_event.registrations.size
     next_event_payments =
-      next_event.registrations.where(has_been_paid: true).all.count
+      next_event.registrations.paid.size
     chart_values['pmt_ratio'] =
       "#{next_event_payments} / #{total_registrations}"
     chart_values['pmt_ratio_width_percentage'] =
@@ -143,18 +143,18 @@ class ApplicationController < ActionController::Base
     chart_values['pmt_value_max'] = total_registrations
   end
 
-  def hospitality_section_values(next_event, chart_values)
-    event_hospitalities_count = next_event.hospitalities.count
+  def event_lodging_section_values(next_event, chart_values)
+    event_event_lodgings_count = next_event.event_lodgings.size
     lodging_count = Lodging.count
     chart_values['hosp_ratio'] =
-      "#{event_hospitalities_count} / #{lodging_count}"
+      "#{event_event_lodgings_count} / #{lodging_count}"
     chart_values['hosp_ratio_width_percentage'] =
-      if event_hospitalities_count != 0
-        "width: #{(event_hospitalities_count.to_f / lodging_count.to_f) * 100}%"
+      if event_event_lodgings_count != 0
+        "width: #{(event_event_lodgings_count.to_f / lodging_count.to_f) * 100}%"
       else
         'width: 0'
       end
-    chart_values['hosp_value_now'] = event_hospitalities_count
+    chart_values['hosp_value_now'] = event_event_lodgings_count
     chart_values['hosp_value_max'] = lodging_count
   end
 end

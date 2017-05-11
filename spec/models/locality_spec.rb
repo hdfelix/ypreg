@@ -10,7 +10,7 @@ describe Locality, type: :model do
 
   describe 'Validations' do
     it { should validate_presence_of :city }
-    it { should validate_presence_of :state_abbrv }
+    it { should validate_presence_of :state }
   end
 
   describe 'Scopes' do

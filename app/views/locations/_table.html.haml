@@ -1,0 +1,19 @@
+.table-responsive
+  %table.table.table-bordered.table-striped.table-hover
+    %thead
+      %tr{:style => "font: bold"}
+        %th Name
+        %th Type
+        %th Max Capacity
+        %th
+    %tbody
+      - @lodgings.each do |lodging|
+        %tr
+          %td= link_to lodging.name, lodging
+          %td= lodging.lodging_type
+          %td= lodging.max_capacity
+          %td
+            - if policy(lodging).edit?
+              = link_to 'Edit', edit_lodging_path(lodging)
+            - if policy(lodging).destroy?
+              = link_to 'Delete', lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' }

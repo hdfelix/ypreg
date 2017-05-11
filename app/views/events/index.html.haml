@@ -21,39 +21,36 @@
                 %td Cost
                 %td
             %tbody
-              - if @events.all.count > 0
-                - @events.each do |event|
-                  %tr
-                    %td= link_to event.title, event
-                    %td= display_event(event)
-                    %td
-                      = format_date(event.begin_date)
-                      \-
-                      \#{format_date(event.end_date)}
-                    %td
-                      = format_date(event.registration_open_date)
-                      \-
-                      \#{format_date(event.registration_close_date)}
-                    %td= number_to_currency(event.registration_cost)
-                    %td
-                      - if policy(event).edit?
-                        = link_to 'Edit', edit_event_path(event)
-                         
-                      - if policy(event).copy?
-                        = link_to 'Copy', event_copies_path(event_id: event), method: :post
-                         
-                      - if policy(event).destroy?
-                        = link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }
-              - else
+              - @events.each do |event|
+                %tr
+                  %td= link_to event.title, event
+                  %td= event.event_type
+                  %td
+                    = format_date(event.begin_date)
+                    \-
+                    \#{format_date(event.end_date)}
+                  %td
+                    = format_date(event.registration_open_date)
+                    \-
+                    \#{format_date(event.registration_close_date)}
+                  %td= number_to_currency(event.registration_cost)
+                  %td
+                    - if policy(event).edit?
+                      = link_to 'Edit', edit_event_path(event)
+                       
+                    - if policy(event).copy?
+                      = link_to 'Copy', event_copies_path(event_id: event), method: :post
+                       
+                    - if policy(event).destroy?
+                      = link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }
+              - if @events.empty?
                 %tr
                   %td{:colspan => "7"}
-                    %center No Events in the database...
+                    %center No events in the system.
             %tbody
-        = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
         - if policy(Event).new?
           = link_to new_event_path, class: 'btn btn-primary' do
             = content_tag(:i, '', class: "fa fa-plus-square")
-            New Event
   / Events in the past
   .col-md-12
     .widget.widget-table
@@ -73,31 +70,30 @@
                 %td Cost
                 %td
             %tbody
-              - if @past_events.all.count > 0
-                - @past_events.each do |event|
-                  %tr
-                    %td= link_to event.title, event
-                    %td= display_event(event)
-                    %td
-                      = format_date(event.begin_date)
-                      \-
-                      \#{format_date(event.end_date)}
-                    %td
-                      = format_date(event.registration_open_date)
-                      \-
-                      \#{format_date(event.registration_close_date)}
-                    %td= number_to_currency(event.registration_cost)
-                    %td
-                      - if policy(Event.all).edit?
-                        = link_to 'Edit', edit_event_path(event)
-                         
-                      - if policy(Event.all).copy?
-                        = link_to 'Copy', event_copies_path(event_id: event), method: :post
-                         
-                      - if policy(Event.all).destroy?
-                        = link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }
-              - else
+              - @past_events.each do |event|
+                %tr
+                  %td= link_to event.title, event
+                  %td= event.event_type
+                  %td
+                    = format_date(event.begin_date)
+                    \-
+                    \#{format_date(event.end_date)}
+                  %td
+                    = format_date(event.registration_open_date)
+                    \-
+                    \#{format_date(event.registration_close_date)}
+                  %td= number_to_currency(event.registration_cost)
+                  %td
+                    - if policy(Event).edit?
+                      = link_to 'Edit', edit_event_path(event)
+                       
+                    - if policy(Event).copy?
+                      = link_to 'Copy', event_copies_path(event_id: event), method: :post
+                       
+                    - if policy(Event).destroy?
+                      = link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }
+              - if @past_events.empty?
                 %tr
                   %td{:colspan => "7"}
-                    %center No Events in the database...
+                    %center No events in the system.
             %tbody
