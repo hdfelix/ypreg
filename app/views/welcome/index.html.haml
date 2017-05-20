@@ -1,11 +1,7 @@
 %br/
-/ EVENTS
 .col-md-8
   %h3 Upcoming events
   .row
     .col-md-12
       #events.panel-group
-        = render partial: 'events/event', collection: @events
-      / panel-group
-    / col
-  / row
+        = render events

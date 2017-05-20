@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_chart_values
+  #before_action :set_chart_values
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
@@ -81,17 +81,18 @@ class ApplicationController < ActionController::Base
   def non_admin_chart_values(next_event, chart_values)
     locality = current_user.locality
     # Attending
-    registration_count = Registration.where(event: next_event, locality: locality).count
-    total_users = Locality.find(locality.id).users.count
+    event_locality = EventLocality.find_by!(event: next_event, locality: locality)
+    registration_count = event_locality.registrations.size
+    total_users = Locality.find(locality.id).users.size
     chart_values['att_ratio'] = "#{registration_count} / #{total_users}"
     chart_values['att_ratio_width_percentage'] = "width: #{(registration_count.to_f / total_users.to_f) * 100}%"
     chart_values['att_value_now'] = registration_count
     chart_values['att_value_max'] = total_users
 
     # Event Lodging
-    event_lodgings = next_event.lodgings
+    event_lodgings = next_event.event_lodgings
     assigned_event_lodgings_count =
-      event_lodgings.assigned_lodgings.size
+      event_lodgings.assigned.size
     chart_values['hosp_ratio'] = "#{assigned_event_lodgings_count} / #{event_lodgings.size}"
     chart_values['hosp_ratio_width_percentage'] = "width: #{(assigned_event_lodgings_count.to_f / event_lodgings.size.to_f) * 100}%"
     chart_values['hosp_value_now'] = assigned_event_lodgings_count

@@ -1,14 +1,4 @@
 module EventsHelper
-  def event_location(event)
-    location = Location.find(event.location_id)
-    html = ''
-    content_tag(:address) do
-      html <<
-        "#{location.address1} \n<br />\n #{location.city},"\
-        "#{location.state}&nbsp;&nbsp;#{location.zipcode}"
-    end
-    html.html_safe
-  end
 
   def event_button_text_based_on_user_role
     current_user.speaking_brother? ? 'View' : 'Manage'
@@ -58,10 +48,6 @@ module EventsHelper
 
   def show_attendance_menu_option?(event)
     Event.current.map(&:id).include?(event.id)
-  end
-
-  def background_check_tr(user, id)
-    tag(:tr, { id: id, class: decorated_user(user).background_check_date_row_class })
   end
 
 end

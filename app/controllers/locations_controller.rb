@@ -1,8 +1,8 @@
 class LocationsController < ApplicationController
-  before_action :set_location, only: [:edit, :update, :destroy]
+  decorates_assigned :location, :locations, :lodgings
 
   def index
-    @locations = policy_scope(Location).order(:name)
+    @locations = policy_scope(Location).by_name
   end
 
   def show
@@ -16,63 +16,47 @@ class LocationsController < ApplicationController
     authorize @location
   end
 
-  def edit
-  end
-
   def create
-    @location = Location.new(location_params)
+    @location = Location.new(permitted_attributes(Location))
     authorize @location
 
     if @location.save
       flash[:notice] = 'Location was created successfully.'
-      redirect_to locations_path
+      redirect_to @location
     else
-      flash[:error] = 'Error saving the Location.'
+      flash.now[:error] = 'Error saving the Location.'
       render action: 'new'
     end
   end
 
+  def edit
+    @location = Location.find(params[:id])
+    authorize @location
+  end
+
   def update
-    if @location.update(location_params)
+    @location = Location.find(params[:id])
+    authorize @location
+
+    if @location.update(permitted_attributes(@location))
       flash[:notice] = 'Location was updated successfully.'
       redirect_to @location
     else
-      flash[:error] = 'Error saving Location.'
+      flash.now[:error] = 'Error saving Location.'
       render action: 'edit'
     end
   end
 
   def destroy
+    @location = Location.find(params[:id])
+    authorize @location
+
     if @location.destroy
-      flash[:notice] = "Location #{ @location.name } deleted successfully."
+      flash[:notice] = "Location #{@location.name} deleted successfully."
       redirect_to locations_url
     else
-      flash[:error] = 'Location could not be deleted.'
-      render :index
+      flash.now[:error] = 'Location could not be deleted.'
     end
   end
 
-  private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_location
-    @location = Location.find(params[:id])
-    authorize @location
-  end
-
-  # Never trust parameters from the scary internet,
-  # only allow the white list through.
-  def location_params
-    params.require(:location)
-      .permit(
-        :location_type,
-        :name,
-        :description,
-        :max_capacity,
-        :address1,
-        :address2,
-        :city,
-        :state,
-        :zipcode)
-  end
 end

@@ -1,7 +1,7 @@
 .content
   .row
     .main-header
-      %h2= @location.name
+      %h2= location.name
       %em Possible location for an event.
   .row
     .col-md-6.col-sm-12
@@ -15,34 +15,31 @@
             .col-sm-4
               %strong Name:
             .col-sm-8
-              = @location.name
+              = location.name
           .row
             .col-sm-4
               %strong Type:
             .col-sm-8
-              = @location.location_type
+              = location.location_type
           .row
             .col-sm-4
               %strong Description:
             .col-sm-8
-              = @location.description
+              = location.description
           .row
             .col-sm-4
               %strong Address:
             .col-sm-8
-              = @location.address1
-              = @location.address2
+              = location.street_address
           .row
             .col-sm-4
-              %strong City, State Zip:
             .col-sm-8
-              = @location.city
-              , #{@location.state}  #{@location.zipcode}
+              = location.city_state_zip
           .row
             .col-sm-4
-              %strong Max capacity:
+              %strong Capacity:
             .col-sm-8
-              = @location.max_capacity
+              = location.max_capacity
         .panel-footer
           - if policy(@location).edit?
             = link_to 'Edit', edit_location_path(@location), class: 'btn btn-primary'
@@ -57,8 +54,27 @@
             %i.fa.fa-table
             Lodgings
         .widget-content
-          = render 'table'
-          - if @lodgings.empty?
+          .table-responsive
+            %table.table.table-bordered.table-striped.table-hover
+              %thead
+                %tr{:style => "font: bold"}
+                  %th Name
+                  %th Type
+                  %th Capacity
+                  %th
+              %tbody
+                - lodgings.each do |lodging|
+                  - @lodging = lodging.object
+                  %tr
+                    %td= link_to lodging.name, @lodging
+                    %td= lodging.lodging_type
+                    %td= lodging.max_capacity
+                    %td
+                      - if policy(@lodging).edit?
+                        = link_to 'Edit', edit_lodging_path(@lodging)
+                      - if policy(@lodging).destroy?
+                        = link_to 'Delete', lodging_path(@lodging), method: :delete, data: { confirm: 'Are you sure?' }
+          - if lodgings.empty?
             %tr
               %td{:colspan => "7"}
                 %center No lodgings at this location.

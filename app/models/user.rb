@@ -23,10 +23,9 @@ class User < ActiveRecord::Base
 
 # == Relationships ========================================================
   belongs_to :locality
-  delegate :city, to: :locality, prefix: true
-
   has_many :notes
   has_many :registrations
+  has_many :event_localities, through: :registrations
   has_many :events, through: :registrations
 
 # == Validations ==========================================================
@@ -34,16 +33,11 @@ class User < ActiveRecord::Base
   validates :gender, presence: true
 
 # == Scopes ===============================================================
-  scope :minor, -> { where.not(age: ADULT) }
-  scope :adult, -> { where(age: ADULT) }
   scope :background_check_valid, -> { where("background_check_date >= ?", 36.months.ago.midnight) }
   scope :role_counts, -> { group(:role).size }
+  scope :by_name, -> { order(:name) }
 
 # == Instance Methods ========================================================
-  def needs_bg_check?
-    adult? || eighteen?
-  end
-
   def background_check_valid?
     if background_check_date.present?
       background_check_date >= 36.months.ago.midnight
@@ -60,30 +54,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def registration(event)
-    Registration.where(user: self, event: event)[0]
-  end
-
-  def event_lodging_registration_assignment(event)
-    EventLodgingRegistrationAssignment.where(registration: registration(event))[0]
-  end
-
-  def assigned_event_lodging(event)
-    hra = event_lodging_registration_assignment(event)
-    if hra.nil?
-      nil
-    else
-      hra.event_lodging
-    end
-  end
-
-  def event_lodging(event)
-    reg = registration(event)
-    if reg.nil?
-      nil
-    else
-      EventLodging.where(event: event, locality: locality)[0]
-    end
+  def needs_background_check?
+    adult? || eighteen?
   end
 
 end

@@ -1,13 +1,10 @@
 .content
   .row
     .main-header
-      %h2
-        = @locality.city
-        , #{@locality.state}
+      %h2= "#{locality.city}, #{locality.state}"
       %em
+      = link_to 'Edit', edit_locality_path(@locality), class: 'btn btn-primary'
   .row
-    .col-md-8
-      = link_to "Back", localities_path, class: 'btn btn-default'
     .col-md-8
       .widget
         .widget-header
@@ -25,12 +22,12 @@
                 %th
                   %center Cellphone
             %tbody
-              - @contacts.each do |contact|
+              - contacts.each do |contact|
                 %tr
                   %td= contact.name
                   %td= mail_to contact.email
                   %td= contact.cell_phone
-              - if @contacts.empty?
+              - if contacts.empty?
                 %tr
                   %td{colspan: "4"}
                     %center No contacts assigned.
@@ -52,16 +49,17 @@
                   %center Cellphone
                 %th
             %tbody
-              - @users.each do |user|
+              - users.each do |user|
+                - @user = user.object
                 %tr{class: "#{user.background_check_date_row_class}"}
-                  %td= link_to user.name, user_path(user)
+                  %td= link_to user.name, user_path(@user)
                   %td= user.email
-                  %td= format_phone_number(user.cell_phone)
+                  %td= user.cell_phone
                   %td
-                    - if policy(user).edit?
-                      = link_to 'Edit', edit_user_registration_path(user)
-                    - if policy(user).destroy?
-                      = link_to 'Delete', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'}
+                    - if policy(@user).edit?
+                      = link_to 'Edit', edit_user_registration_path(@user)
+                    - if policy(@user).destroy?
+                      = link_to 'Delete', admin_user_path(@user), method: :delete, data: {confirm: 'Are you sure?'}
           = link_to new_admin_user_path(locality_id: @locality.id), class: 'btn btn-primary' do
             = content_tag(:i, '', class: "fa fa-plus-square")
             New User 

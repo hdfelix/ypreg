@@ -4,14 +4,9 @@ class EventLodging < ActiveRecord::Base
   belongs_to :event
   belongs_to :lodging
   has_many :registrations, dependent: :nullify
-
-  delegate :description, :lodging_type, :max_capacity, :min_capacity, :name, to: :lodging
-
+  
 # == Scopes ===============================================================
-  scope :assigned, -> { joins(:registrations).distinct }
-
-# == Callbacks ============================================================
-
-# == Instance Methods =====================================================
+  #scope :assigned, -> { joins(:registrations).distinct }
+  scope :with_vacancy, -> { joins(:lodging).left_outer_joins(:registrations).group(:id).having('COUNT(registrations.id) < MAX(lodgings.max_capacity)') }
 
 end

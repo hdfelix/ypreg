@@ -1,27 +1,40 @@
-# Policies for event restful actions
 class EventPolicy < ApplicationPolicy
 
   def permitted_attributes
-    [:event_type, :title, :begin_date, :end_date, :registration_cost,
-     :registration_open_date, :registration_close_date, :location_id]
+    [:begin_date, :description, :end_date, :event_type, :location_id, :name, :registration_cost, :registration_open_date, :registration_close_date, :name]
   end
 
   def can_manage?
-    edit? || 
-      (policy(EventLodging).index? &&
-       policy(Registration).index?)
+    #edit? || (policy(EventLodging).index? && policy(Registration).index?)
+    role?(:admin, :scyp, :locality_contact)
+  end
+
+  def edit_locality_payments?
+    update_locality_payments?
+  end
+
+  def update_locality_payments?
+    sudo?
   end
 
   # == Database Ops ==
   def index?
-    role?([:admin, :scyp, :locality_contact])
+    role?(:admin, :scyp, :locality_contact)
   end
 
   def show?
-    role?([:admin, :scyp, :locality_contact, :speaking_brother])
+    role?(:admin, :scyp, :locality_contact, :speaking_brother)
   end
 
   def copy?
     sudo?
+  end
+
+  class Scope < Scope
+    def resolve
+      if sudo? || user.locality_contact?
+        scope
+      end
+    end
   end
 end

@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+  decorates_assigned :events
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   layout :layout_by_resource

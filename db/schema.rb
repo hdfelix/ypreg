@@ -48,10 +48,10 @@ ActiveRecord::Schema.define(version: 20151022151545) do
     t.date     "end_date"
     t.integer  "event_type",              default: 0
     t.integer  "location_id"
+    t.string   "name"
     t.date     "registration_close_date"
     t.integer  "registration_cost"
     t.date     "registration_open_date"
-    t.string   "title"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["location_id"], name: "index_events_on_location_id", using: :btree
@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 20151022151545) do
     t.boolean  "medical_release",          default: false
     t.boolean  "paid",                     default: false
     t.integer  "payment_type",             default: 0
-    t.integer  "payment_adjustment"
+    t.integer  "payment_adjustment",       default: 0
     t.boolean  "serving_one",              default: false
     t.integer  "status"
     t.integer  "user_id"

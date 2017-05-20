@@ -15,26 +15,28 @@
                 %th Name
                 %th Type
                 %th Location
-                %th Max Capacity
+                %th Capacity
+                %th Description
                 %th
             %tbody
-              - @lodgings.each do |lodging|
+              - lodgings.each do |lodging|
+                - @lodging = lodging.object
                 %tr
-                  %td= link_to lodging.name, lodging
+                  %td= link_to lodging.name, @lodging
                   %td= lodging.lodging_type
                   %td= lodging.location_name
                   %td= lodging.max_capacity
+                  %td= lodging.description
                   %td
-                    - if policy(lodging).edit?
-                      = link_to 'Edit', edit_lodging_path(lodging)
-                    - if policy(lodging).destroy?
-                      = link_to 'Delete', lodging_path(lodging), method: :delete, data: { confirm: 'Are you sure?' }
-              - if @lodgings.empty?
+                    - if policy(@lodging).edit?
+                      = link_to 'Edit', edit_lodging_path(@lodging)
+                    - if policy(@lodging).destroy?
+                      = link_to 'Delete', lodging_path(@lodging), method: :delete, data: { confirm: 'Are you sure?' }
+              - if lodgings.empty?
                 %tr
                   %td{:colspan => "7"}
                     %center No lodgings in the system.
         %tbody
-        = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
         = link_to new_lodging_path, class: 'btn btn-primary' do
           = content_tag(:i, '', class: "fa fa-plus-square")
           New Lodging

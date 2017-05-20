@@ -5,11 +5,11 @@ class EventLocalityPolicy < ApplicationPolicy
   end
 
   def show?
-    sudo? or (user.locality_contact? and user.locality == record.locality)
+    sudo? or (user.locality_contact? && user.locality == record.locality)
   end
 
   def create?
-    sudo? or (user.locality_contact? and user.locality = record.locality)
+    sudo? or (user.locality_contact? && user.locality = record.locality)
   end
 
   class Scope < Scope

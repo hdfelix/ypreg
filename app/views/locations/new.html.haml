@@ -2,18 +2,10 @@
   .main-header
     %h2 New Location
     %em create a new location
-  %br/
   .col-md-8
     .widget
       .widget-header
         %h3
           %i.fa.fa-edit
       .widget-content
-        = form_for(@location, class: 'form-horizontal') do |f|
-          = render 'form', f:f
-          .form-group
-            .col-md-12
-              %span.pull-right
-                = link_to 'Back', locations_path, class: 'btn btn-default'
-                = f.submit "Submit", class: 'btn btn-primary'
-            %br/
+        = render partial: 'form'

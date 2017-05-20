@@ -1,18 +1,10 @@
 .content
   .main-header
     %h2 Edit Location
-  %br/
   .col-md-8
     .widget
       .widget-header
         %h3
           %i.fa.fa-edit
       .widget-content
-        = form_for(@location, class: 'form-horizontal') do |f|
-          = render 'form', f:f
-          .form-group
-            .col-md-12
-              %span.pull-right
-                = link_to 'Back', location_path(@location), class: 'btn btn-default'
-                = f.submit "Submit", class: 'btn btn-primary'
-            %br/
+        = render 'form'

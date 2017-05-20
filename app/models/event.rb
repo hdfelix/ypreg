@@ -5,26 +5,39 @@ class Event < ActiveRecord::Base
 
 # == Relationships ========================================================
   belongs_to :location
-  delegate :max_capacity, to: :location
-  delegate :name, :max_capacity, to: :location, prefix: true
+  has_many :location_lodgings, through: :location, source: :lodgings
 
-  has_many :event_localities, dependent: :destroy
   has_many :registrations, through: :event_localities
   has_many :users, through: :registrations
 
+  has_many :event_localities, dependent: :destroy
+  has_many :localities, through: :event_localities
+
   has_many :event_lodgings, dependent: :destroy
-  has_many :assigned_lodgings, -> { assigned }, class_name: "EventLodging"
+  has_many :lodgings, through: :event_lodgings
 
 # == Validations ==========================================================
+  validate :dates_make_sense?
   validates :begin_date, presence: true
   validates :end_date, presence: true
   validates :event_type, presence: true
-  validates :location, presence: true
-  validates :registration_cost, presence: true
-  validates :title, presence: true
+  validates :name, presence: true
+  validates :registration_open_date, presence: true
+  validates :registration_close_date, presence: true
+ 
+  def dates_make_sense?
+    return if begin_date.nil? || end_date.nil?
+    if begin_date >= end_date
+      errors.add(:begin_date, "must be before the end date")
+    end
+    return if registration_open_date.nil? || registration_close_date.nil?
+    if registration_open_date >= registration_close_date
+      errors.add(:registration_open_date, "must be before the registration close date")
+    end
+  end
 
 # == Scopes ===============================================================
-  default_scope { order(:begin_date) }
+  scope :by_begin_date, -> { order(:begin_date) }
   scope :in_the_future, -> { where('begin_date > ?', Time.zone.now.to_date) }
   scope :in_the_past, -> { where('end_date < ?', Time.zone.now.to_date) }
   scope :next, -> { current.or(Event.in_the_future).first }
@@ -40,6 +53,20 @@ class Event < ActiveRecord::Base
   end
 
 # == Instance Methods =====================================================
+  def current?
+    now = Time.zone.now.to_date
+    begin_date <= now && end_date >= now
+  end
+
+  def over?
+    end_date < Time.zone.now.to_date
+  end
+
+  def registration_open?
+    today = Time.zone.now.to_date
+    today >= registration_open_date && today <= registration_close_date
+  end
+
   def registered_saints_from_locality(locality)
     localities.find(locality).registrations(self).map(&:user)
   end
@@ -157,14 +184,6 @@ class Event < ActiveRecord::Base
     stats
   end
 
-  def registration_open?
-    today = Time.zone.now.to_date
-    today >= registration_open_date and today <= registration_close_date
-  end
-
-  def over?
-    Time.zone.now.to_date > end_date
-  end
 
   def payment_adjustments(locality)
     registrations.where(locality: locality)
@@ -187,7 +206,7 @@ class Event < ActiveRecord::Base
 
   def copy
     copied_event = dup
-    copied_event.title = title + ' (copy)'
+    copied_event.name = name + ' (copy)'
     copied_event.save
     event_lodgings.map(&:lodging).each do |lodging|
       copied_event.event_lodgings <<

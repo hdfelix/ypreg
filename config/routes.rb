@@ -1,9 +1,12 @@
 YpwReg::Application.routes.draw do
 
   root 'welcome#index'
-
   get 'welcome/index'
   get 'dashboard/index'
+
+  resources :locations
+  resources :localities
+  resources :lodgings
 
   delete 'events/:event_id/lodgings/destroy',
          to: 'events/lodgings#destroy',
@@ -19,13 +22,11 @@ YpwReg::Application.routes.draw do
       controller: 'events',
       as: :update_locality_payments
 
-  resources :locations
-  resources :localities
-  resources :lodgings
   resources :events do
+    resources :registrations, controller: 'events/registrations'
     resources :copies, only: [:new, :create,:show],
               controller: 'events/copies'
-    resources :localities,
+    resources :localities, 
               only: [:index, :show, :new, :create],
               controller: 'events/localities'
     resources :lodgings,
@@ -56,7 +57,6 @@ YpwReg::Application.routes.draw do
     resources :hospitality_lodgings,
               only: [:index],
               controller: 'events/hospitality_lodgings'
-    resources :registrations, controller: 'events/registrations'
   end
 
   # http://stackoverflow.com/a/22158715

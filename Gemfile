@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
 
-gem 'rails', '~> 5.0.0', '>= 5.0.2'
+gem 'rails', '~> 5.0.0', '>= 5.0.3'
 
 # Javascript
 gem 'jquery-rails'

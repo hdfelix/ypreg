@@ -8,9 +8,9 @@ module Admin::UsersHelper
 
     if @user.update(permitted_attributes(@user))
       flash[:notice] = "#{@user.name}'s profile was updated successfully."
-      redirect_to session.delete(:return_to)
+      redirect_to user_path(@user)
     else
-      flash[:error] = "There was an error updating the profile for #{@user.name}."
+      flash.now[:error] = "There was an error updating the profile for #{@user.name}."
       render "users/registrations/edit"
     end
   end

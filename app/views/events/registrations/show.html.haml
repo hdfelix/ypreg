@@ -2,10 +2,9 @@
   .row
     .main-header
       %h2
-        Registration - #{@registration.user.name}
-      %em= @registration.event.title
+        Registration - #{registration.user_name}
+      %em= registration.event_name
   .row
-    / event registration info
     .col-md-6.col-sm-12
       .widget
         .widget-header
@@ -16,58 +15,65 @@
           %p#notice= notice
           .row
             .col-sm-4
-              %strong Saint:
+              %strong Saint
             .col-sm-8
-              = @registration.user.name
+              = registration.user_name
               %br/
-              = mail_to @registration.user.email
+              = mail_to registration.user_email
               %br/
-              = @registration.user.cell_phone
+              = registration.user_cell_phone
               %br/
           .row
             .col-sm-4
-              %strong Event:
+              %strong Event
             .col-sm-8
-              = @registration.event.title
+              = registration.event_name
+          .row
+            .col-sm-4
+              %strong Lodging
+            .col-sm-8
+              = registration.lodging_name
           .row
             .col-sm-4
               %strong Registration Date
             .col-sm-8
-              = format_date(@registration.created_at)
+              = registration.created_at
           .row
             .col-sm-4
               %strong Paid?
             .col-sm-8
-              = display_boolean(@registration.paid)
+              = registration.paid?
           .row
             .col-sm-4
-              %strong Pmt Adjustment
+              %strong Payment Adjustment
             .col-sm-8
-              = number_to_currency(@registration.payment_adjustment)
+              = registration.payment_adjustment
           .row
             .col-sm-4
               %strong Serving One?
             .col-sm-8
-              = display_boolean(@registration.serving_one)
+              = registration.serving_one?
           .row
             .col-sm-4
               %strong Medical Release Form?
             .col-sm-8
-              = display_boolean(@registration.medical_release)
+              = registration.medical_release?
           .row
             .col-sm-4
               %strong Background Check
             .col-sm-8
-              - background_style = "#{decorated_user(@registration.user).background_check_date_row_class}"
-              %span{class: "bg-=#{background_style}"}
-                = format_date(@registration.user.background_check_date)
+              - background_style = registration.user_background_check_date_bg_class
+              %span{class: "#{background_style}"}
+                = registration.user_background_check_date
           .row
             .col-sm-4
-              %strong Vehicle Seating Capacity
+              %strong Vehicle Capacity
             .col-sm-8
-              = @registration.vehicle_seating_capacity
+              = registration.vehicle_seating_capacity
     .widget-footer
   .row
     .col-md-12
-      = link_to 'Back', event_registrations_path(@registration.event), class: 'btn btn-default'
-      = link_to 'Edit', edit_event_registration_path(@registration.event, @registration), class: 'btn btn-primary'
+      - if policy(@registration).edit?
+        = link_to 'Edit', edit_event_registration_path(@registration.event, @registration), class: 'btn btn-primary'
+      - if policy(@registration).destroy?
+        = link_to 'Delete', event_registration_path(@registration.event, @registration), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'

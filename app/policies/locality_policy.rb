@@ -1,17 +1,21 @@
-# Policies for locality restful actions
 class LocalityPolicy < ApplicationPolicy
 
+  def permitted_attributes
+    [:city, :state]
+  end
+
+  #== Database Ops ==
   def index?
-    role?([:admin, :scyp, :locality_contact])
+    role?(:admin, :scyp, :locality_contact)
   end
 
   def show?
-    user.admin? || user.scyp? || (user.locality_contact? && user.locality == record)
+    sudo? || (user.locality_contact? && user.locality == record)
   end
 
   class Scope < Scope
     def resolve
-      if user.admin?
+      if sudo?
         scope
       elsif user.locality_contact?
         scope.where(id: user.locality_id)

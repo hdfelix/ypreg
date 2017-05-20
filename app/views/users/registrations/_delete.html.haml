@@ -1,5 +1,0 @@
-- if policy(@user).destroy?
-  - if current_user == @user
-    = link_to "Delete my account", registration_path(resource_name, id: @user.id), method: :delete, data: {confirm: "Are you sure you want to delete my account?"},  class: 'btn btn-danger'
-  - else
-    = link_to "Delete", admin_user_path(@user), method: :delete, data: {confirm: "Are you sure?"},  class: 'btn btn-danger'

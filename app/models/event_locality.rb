@@ -6,19 +6,13 @@ class EventLocality < ActiveRecord::Base
 
   has_many :registrations
   has_many :users, through: :registrations
-  has_many :event_lodgings, through: :registrations
-
-  delegate :title, to: :event
-  delegate :city, :state, to: :locality
+  has_many :event_lodgings, -> { distinct }, through: :registrations
+  has_many :lodgings, -> { distinct }, through: :event_lodgings
 
 # == Scopes ===============================================================
   scope :by_city, -> { joins(:locality).merge(Locality.order(:city)) }
 
 # == Instance Methods =====================================================
-  def users_not_registered
-    locality.users.where.not(id: users)
-  end
-
   def beds_assigned_to_locality
     tmp = event.beds_assigned_to_locality[locality.city]
     if tmp.nil?

@@ -16,11 +16,9 @@
     .form-group
       = f.label :state, 'State', class: 'col-md-2 control-label'
       .col-md-10
-        = f.select :state, Location::STATE_LIST, {include_blank: true, selected: @locality.state}, {class: 'form-control'}
+        = f.text_field :state, class: 'form-control', placeholder: "Enter state name"
   .form-group
     .col-md-12
       %span.pull-right
-        = link_to 'Back', localities_path, class: 'btn btn-default'
         - if policy(@locality).create? or policy(@locality).update?
           = f.submit "Submit", class: 'btn btn-primary'
-    %br/

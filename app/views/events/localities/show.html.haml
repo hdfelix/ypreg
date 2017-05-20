@@ -2,15 +2,15 @@
   .row
     .main-header
       %h2
-        The Church in #{@locality.city}
+        The Church in #{event_locality.locality_city}
       %em
-        Participation details for #{@event.title}
+        Participation details for #{event_locality.event_name}
   .row
     .col-md-6
-      = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
+      = link_to 'Back', event_path(@event_locality.event), class: 'btn btn-default btn-sm'
     .col-md-6
       %strong
-        Registration will close on: #{format_date(@event.registration_close_date)}
+        Registration will close on: #{@event_locality.event.registration_close_date}
       %br/
       %br/
   .row
@@ -30,24 +30,24 @@
               %tbody
                 %tr
                   %td Young People
-                  %td= @role_counts['yp'].to_i
+                  %td= event_locality.role_count('yp')
                 %tr
                   %td Helpers
-                  %td= @role_counts['helper'].to_i
+                  %td= event_locality.role_count('helper')
                 %tr
                   %td Trainees
-                  %td= @role_counts['trainee'].to_i
+                  %td= event_locality.role_count('trainee')
                 %tr
                   %td Serving Ones
-                  %td= @registrations.serving_one.size
+                  %td= event_locality.serving_one_count
                 %tr
                   %td Serving Ones Needed
-                  %td
+                  %td 
                 %tr
                   %td
                     %strong Total
                   %td
-                    %strong= @registrations.size
+                    %strong= event_locality.registration_count
     .col-md-4
       .widget
         .widget-header
@@ -61,25 +61,18 @@
                 %td
                 %td Totals
             %tbody
-              - if @lodgings.any?
-                %tr
-                  %td Lodgings
-                  %td= @lodgings.size
-                %tr
-                  %td Spaces Available
-                  %td
-                    = @lodgings.sum(:min_capacity)
-                    (#{@lodgings.sum(:max_capacity)})
-                %tr
-                  %td Spaces Assigned
-                  %td= #@locality.assigned_beds_total(@event)
-                %tr
-                  %td Spaces to Assign
-                  %td= #@locality.beds_to_assign(@event)
-              - else
-                %tr
-                  %td{:colspan => "4"}
-                    %center No lodgings have been assigned
+              %tr
+                %td Lodgings
+                %td= event_locality.lodging_count
+              %tr
+                %td Spaces Available
+                %td= event_locality.spaces_available
+              %tr
+                %td Spaces Assigned
+                %td= #@locality.assigned_beds_total(@event)
+              %tr
+                %td Spaces to Assign
+                %td= #@locality.beds_to_assign(@event)
   .row
     .col-md-8
       .widget
@@ -96,24 +89,22 @@
                 %th Guest?
                 %th MF?
                 %th Background Check
-                %th Hosp. Assignment
+                %th Lodging
                 %th Vehicle seats
-                %th Notes
             %tbody#registrations
-              - @registrations.each do |reg|
-                = background_check_tr(reg.user, "reg-#{reg.id}")
-                - if policy(Registration).edit?
-                  %td= link_to reg.name, edit_event_registration_path(@event, reg)
-                - else
-                  %td= reg.name
-                %td= reg.age.to_s.capitalize
-                %td= display_yes_no(reg.guest)
-                %td= display_yes_no(reg.medical_release)
-                %td
-                  = format_date(reg.background_check_date)
-                %td= display_event_lodging_assignment(reg)
-                %td= reg.vehicle_seating_capacity
-                %td
+              - registrations.each do |registration|
+                - @registration = registration.object
+                %tr{class: "#{registration.user.background_check_date_row_class}"}
+                  - if policy(@registration).edit?
+                    %td= link_to registration.user_name, event_registration_path(@event_locality.event, @registration)
+                  - else
+                    %td= registration.user_name
+                  %td= registration.user_age
+                  %td= registration.guest?
+                  %td= registration.medical_release?
+                  %td= registration.user_background_check_date
+                  %td= registration.lodging_name
+                  %td= registration.vehicle_seating_capacity
     .col-md-4
       #locality_saints.widget
         .widget-header
@@ -128,44 +119,12 @@
                 %th Age
                 %th
             %tbody
-              - @users_not_registered.each do |user|
+              - users_not_registered.each do |user|
+                - @user = user.object
                 %tr{class: "#{user.background_check_date_row_class}"}
-                  %td= user.name.capitalize
-                  %td= user.age.to_s.capitalize
-                  %td= link_to 'Register', new_event_registration_path(@event, user), class: 'btn btn-custom-secondary btn-xs'
+                  %td= user.name
+                  %td= user.age
+                  %td= link_to 'Register', new_event_registration_path(@event_locality.event, @user, event_locality_id: @event_locality.id), class: 'btn btn-custom-secondary btn-xs'
   .row
     .col-md-12
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            Payments
-        .widget-content
-          %table.table.talbe-bordered.table-striped.table-hover
-            %thead
-              %tr
-                %th Saint
-                %th MRF?
-                %th Cost
-                %th Pmt Adjustment
-                %th Amt Paid
-                %th
-            %tbody
-              - @registrations.each do |reg|
-                %tr
-                  %td= reg.user.name
-                  %td
-                    = display_yes_no(reg.medical_release)
-                  %td= number_to_currency(@event.registration_cost)
-                  %td= number_to_currency(reg.payment_adjustment)
-                  %td= number_to_currency(reg.payment)
-                  - if policy(Registration).edit?
-                    %td
-                      = link_to 'Edit', edit_event_registration_path(@event, reg, return_to: event_locality_path(@event, @locality)), class: 'btn btn-default'
-              - if @registrations.empty?
-                %tr
-                  %td{:colspan => "4"}
-                    %center No Payments have been made
-  .row
-    .col-md-12
-      = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
+      = link_to 'Back', event_path(@event_locality.event), class: 'btn btn-default btn-sm'

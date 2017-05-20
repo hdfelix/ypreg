@@ -1,18 +1,19 @@
 class LocalitiesController < ApplicationController
-  before_action :set_locality, only: [:edit]
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
+  decorates_assigned :locality, :localities, :users, :contacts
 
   def index
-    @localities = policy_scope(Locality).order(:city).decorate
+    if current_user.locality_contact?
+      redirect_to current_user.locality
+    end
+    authorize Locality
+    @localities = policy_scope(Locality).by_city
   end
 
   def show
     @locality = Locality.find(params[:id])
     authorize @locality
-    users = policy_scope(@locality.users)
-    @users = users.decorate
-    @contacts = users.locality_contact
+    @users = policy_scope(@locality.users)
+    @contacts = @users.locality_contact
   end
 
   def new
@@ -21,27 +22,32 @@ class LocalitiesController < ApplicationController
   end
 
   def create
-    @locality = Locality.new(locality_params)
+    @locality = Locality.new(permitted_attributes(Locality))
     authorize @locality
 
     if @locality.save
       flash[:notice] = 'Locality was created successfully.'
-      redirect_to localities_path
+      redirect_to locality_path(@locality)
     else
-      flash[:error] = 'Error saving the locality.'
+      flash.now[:error] = 'Error saving the locality.'
       render action: 'new'
     end
+  end
+
+  def edit
+    @locality = Locality.find(params[:id])
+    authorize @locality
   end
 
   def update
     @locality = Locality.find(params[:id])
     authorize @locality
 
-    if @locality.update(locality_params)
+    if @locality.update(permitted_attributes(@locality))
       flash[:notice] = 'Locality was updated successfully.'
       redirect_to @locality
     else
-      flash[:error] = 'Error saving Locality.'
+      flash.now[:error] = 'Error saving Locality.'
       render action: 'edit'
     end
   end
@@ -50,24 +56,12 @@ class LocalitiesController < ApplicationController
     @locality = Locality.find(params[:id])
     authorize @locality
 
-    locality_name = @locality.city
     if @locality.destroy
-      flash[:notice] = "Locality #{locality_name} deleted successfully."
+      flash[:notice] = "Locality #{@locality.city} deleted successfully."
       redirect_to localities_url
     else
-      flash[:error] = 'Locality could not be deleted.'
-      render :index
+      flash.now[:error] = 'Locality could not be deleted.'
     end
   end
 
-  private
-
-  def set_locality
-    @locality = Locality.find(params[:id])
-    authorize @locality
-  end
-
-  def locality_params
-    params.require(:locality).permit(:city, :state, :contact_id)
-  end
 end

@@ -1,7 +1,7 @@
 .content
   .main-header
-    %h2= @event.title
-    %em= "to be held at #{ @event.location_name }"
+    %h2= event.name
+    %em= "to be held at #{event.location_name}"
   .row
     / Event info
     .col-md-4.col-sm-6
@@ -18,26 +18,19 @@
                 %tr
                   %td
                     %strong Type:
-                  %td= @event.event_type
+                  %td= event.event_type
                 %tr
                   %td
                     %strong Registration:
-                  %td
-                    = format_date(@event.registration_open_date)
-                    \-
-                    \#{format_date(@event.registration_close_date)}
+                  %td= event.registration_window
                 %tr
                   %td
                     %strong Dates:
-                  %td
-                    = format_date(@event.begin_date)
-                    \-
-                    \#{format_date(@event.end_date)}
+                  %td= event.dates
                 %tr
                   %td
                     %strong Cost:
-                  %td
-                    = (@event.registration_cost)? "#{number_to_currency(@event.registration_cost)}" : "TBA"
+                  %td= event.registration_cost
           - if policy(@event).edit?
             = link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary btn-sm'
           - if policy(@event).can_manage?
@@ -47,13 +40,13 @@
                 %span.caret
               %ul.dropdown-menu{:role => "menu"}
                 - if policy(EventLodging).index?
-                  %li= link_to 'Lodging', event_lodgings_path(@event)
+                  %li= link_to 'Lodgings', event_lodgings_path(@event)
                 - if policy(Registration).index?
                   %li= link_to 'Registrations', event_registrations_path(@event)
                   %li
-                - if policy(Registration).index?
+                - if policy(@event).edit_locality_payments?
                   %li= link_to 'Payments', edit_locality_payments_path(@event)
-                - if show_attendance_menu_option?(@event)
+                - if @event.current?
                   %li#attendance-option= link_to 'Attendance', event_registrations_path(@event, view: 'attendance')
     .col-md-4.col-sm-6
       .widget
@@ -71,15 +64,13 @@
               %tbody
                 %tr
                   %td Registered
-                  %td= @event.registrations.size
+                  %td= event.registration_count
                 %tr
-                  %td Location Capacity
-                  %td= @event.max_capacity
+                  %td Capacity
+                  %td= event.max_capacity
                 %tr
-                  %td Remaining Spaces
-                  %td= @event.max_capacity - @event.registrations.size
-      / end event registration details
-    / Registration Breakdown
+                  %td Remaining
+                  %td= event.remaining_spaces
     .col-md-4.col-sm-6
       .widget
         .widget-header
@@ -96,27 +87,25 @@
               %tbody
                 %tr
                   %td Young People
-                  %td= @role_counts['yp'].to_i
+                  %td= event.role_count('yp')
                 %tr
                   %td Serving Ones
-                  %td= @registrations.serving_one.size
+                  %td= event.serving_one_count
                 %tr
                   %td Trainees
-                  %td= @role_counts['trainee'].to_i
+                  %td= event.role_count('trainee')
                 %tr
                   %td Helpers
-                  %td= @role_counts['helper'].to_i
+                  %td= event.role_count('helper')
                 %tr
                   %td Conference Guests
-                  %td= @role_counts['guest'].to_i
+                  %td= event.role_count('guest')
                 %tr
                   %td YCAT
-                  %td= @role_counts['ycat'].to_i
+                  %td= event.role_count('ycat')
                 %tr
                   %td S/S Brothers
-                  %td= @role_counts['speaking_brother'].to_i + @role_counts['supporting_brother'].to_i
-    / end attendance breakdown
-  / end event info, statistics, attendance breakdown row
+                  %td= event.ss_brother_count
   .row
     .col-md-12
       #locality_summary.widget
@@ -153,14 +142,15 @@
                   %th Actual Amt Paid
                   %th Balance
               %tbody
-                - @event_localities.each do |event_locality|
+                - event_localities.each do |event_locality|
+                  - @event_locality = event_locality.object
                   %tr
-                    %td= link_to event_locality.city, event_locality_path(event_locality.event, event_locality.locality)
-                - if @event_localities.empty?
+                    %td= link_to event_locality.locality_city, event_locality_path(@event_locality.event, @event_locality.locality)
+                - if event_localities.empty?
                   %tr
                     %td.text-center{:colspan => "16"} There are no localities registered for this event.
                 = #render partial: 'events/localities/attendance_summary', locals: {event_localities: @event_localities}
           - if policy(Locality).index?
             = link_to 'Localities List', event_localities_path(@event), class: 'btn btn-default btn-sm'
-          - elsif policay(Locality).new? && @event_localities.empty?
+          - elsif policy(Locality).new? && event_localities.empty?
             = link_to "Add registrations for #{current_user.locality_city}", new_event_locality_path(@event, locality: current_user.locality), class: 'btn btn-default btn-sm'

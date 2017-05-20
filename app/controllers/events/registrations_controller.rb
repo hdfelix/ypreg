@@ -1,44 +1,38 @@
 class Events::RegistrationsController < ApplicationController
+  decorates_assigned :event, :event_lodgings, :registration, :registrations
+
   def index
+    authorize Registration
+
     @event = Event.find(params[:event_id])
-    @registrations = @event.registrations.includes(:user).by_name
-    if params[:view] == 'attendance'
-      render 'attendance_index'
-    end
+    registrations = @event.registrations.includes(:user, :locality)
+    @registrations = policy_scope(registrations).by_user_name
+
+    render 'attendance_index' if params[:view] == 'attendance'
   end
 
   def show
-    @event = Event.find(params[:event_id])
+    registration = Registration.find(params[:id])
+    authorize registration
 
     if params[:view] == 'attendance'
-      @attendance = Registration.find(params[:id])
+      @attendance = registration
       render 'attendance_show'
     else
-      @registration = Registration.find(params[:id])
+      @registration = registration
     end
   end
 
   def new
-    @event = Event.find(params[:event_id])
-    if params[:format]
-      @user = User.find(params[:format])
-    else
-      @user = current_user
-    end
-    @registration = Registration.new(user: @user, has_been_paid: false)
+    new_create(params[:event_id], params[:event_locality_id], params[:format])
   end
 
   def create
-    @event = Event.find(params[:event_id])
-    user = User.find(params[:user_id])
+    new_create(params[:event_id], params[:event_locality_id], params[:user_id])
 
-    registration = Registration.new(registration_params)
-    registration.user = user
-    registration.event_locality = EventLocality.find_or_create_by(event: event, locality: user.locality)
-
-    if registration.save
+    if @registration.update(permitted_attributes(Registration))
       flash[:notice] = 'Registration created successfully'
-      redirect_to event_path(@event)
+      redirect_to event_registrations_path(@event)
     else
       flash[:error] = 'Error creating registration'
       render 'new'
@@ -47,62 +41,68 @@ class Events::RegistrationsController < ApplicationController
 
   def edit
     @event = Event.find(params[:event_id])
+    registration = @event.registrations.find(params[:id])
+    authorize registration
+
     if params[:view] == 'attendance'
-      @attendance = Registration.find(params[:id])
+      @attendance = registration
       @user = @attendance.user
       render 'attendance_edit'
     else
-      @id = params[:id]
-      @registration = @event.registrations.find(params[:id])
+      @registration = registration
     end
-    session[:return_to] ||= request.referer
+
+    event_lodging_ids = @event.event_lodgings.with_vacancy.pluck(:id)
+    @event_lodgings = @event.event_lodgings.includes(:lodging).find(event_lodging_ids)
   end
 
   def update
     @event = Event.find(params[:event_id])
-    @registration = Registration.find(params[:id])
+    @registration = @event.registrations.find(params[:id])
+    authorize @registration
 
-    if @registration.update(registration_params)
+    if @registration.update(permitted_attributes(@registration))
       if params[:view] == 'attendance'
         flash[:notice] = 'Attendance updated successfully.'
       else
         flash[:notice] = 'Registration updated successfully.'
       end
-      redirect_to session.delete(:return_to)
+      redirect_to event_registration_path(@event, @registration)
     else
-      flash[:error] = 'error creating registration'
-      render 'new'
+      flash.now[:error] = 'error creating registration'
+      render 'edit'
     end
   end
 
   def destroy
-    if @registration.destroy flash[:notice] =
-        'registration deleted successfully.'
-      redirect_to events_url
+    @registration = Registration.find(params[:id])
+    authorize @registration
+
+    if @registration.destroy
+      flash[:notice] = 'Registration deleted successfully.'
     else
       flash[:error] = 'registration could not be deleted.'
-      render action: 'index'
     end
+    redirect_to event_registrations_path(@registration.event)
   end
-end
 
-private
+  private
 
-def registration_params
-  parameters = params.require(:registration).permit(
-    :guest,
-    :medical_release,
-    :paid,
-    :payment_adjustment,
-    :payment_type,
-    :serving_one,
-    :vehicle_seating_capacity,
-  )
+  def new_create(event_id, event_locality_id, user_id)
+    @event = Event.find(event_id)
+    if event_locality_id.present?
+      event_locality = EventLocality.find(event_locality_id)
+    else
+      flash[:error] = 'Sorry, your locality is not registered for this event.'
+      redirect_to '/' and return
+    end
+    if user_id.present?
+      user = event_locality.locality.users.find(user_id)
+    else
+      user = current_user
+    end
 
-  parameters = parameters.merge(params.require(:registration).permit(:status)) if params[:view] == 'attendance'
-  parameters
-end
-
-def event_locality
-  params.permit(:return_to)[:return_to]
+    @registration = Registration.new(event_locality: event_locality, user: user)
+    authorize @registration
+  end
 end

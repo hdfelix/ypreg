@@ -7,7 +7,7 @@ class Events::CopiesController < ApplicationController
       redirect_to event_path(@event)
     else
       error_message = create_errors_message
-      msg = "Event #{event.title} could not be copied: \n\ #{error_message}"
+      msg = "Event #{event.name} could not be copied: \n\ #{error_message}"
       flash[:error] = msg
     end
   end

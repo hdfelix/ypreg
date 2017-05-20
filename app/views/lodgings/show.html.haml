@@ -1,8 +1,8 @@
 .content
   .row
     .main-header
-      %h2= @lodging.name
-      %em= "a #{@lodging.lodging_type} in #{@lodging.location_name}"
+      %h2= lodging.name
+      %em= "a #{lodging.lodging_type} in #{lodging.location_name}"
   .row
     / Lodging info
     .col-md-6
@@ -17,36 +17,33 @@
             .col-sm-4
               %strong Name:
             .col-sm-8
-              = @lodging.name
+              = lodging.name
           .row
             .col-sm-4
               %strong Location:
             .col-sm-8
-              = @lodging.location_name
+              = lodging.location_name
           .row
             .col-sm-4
               %strong Lodging Type:
             .col-sm-8
-              = @lodging.lodging_type
+              = lodging.lodging_type
           .row
             .col-sm-4
               %strong Description:
             .col-sm-8
-              = @lodging.display_description
+              = lodging.description
           .row
             .col-sm-4
               %strong Min Capacity:
             .col-sm-8
-              = @lodging.min_capacity
+              = lodging.min_capacity
           .row
             .col-sm-4
               %strong Max Capacity:
             .col-sm-8
-              = @lodging.max_capacity
+              = lodging.max_capacity
         .widget-footer
-  .row
-    .col-md-12
-      = link_to 'Back', lodgings_path, class: 'btn btn-default'
-      = link_to 'Edit', edit_lodging_path(@lodging), class: 'btn btn-primary'
-      - if policy(@lodging).destroy?
-        = link_to 'Delete', @lodging, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+          = link_to 'Edit', edit_lodging_path(@lodging), class: 'btn btn-primary'
+          - if policy(@lodging).destroy?
+            = link_to 'Delete', @lodging, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'

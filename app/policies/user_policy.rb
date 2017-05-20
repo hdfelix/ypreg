@@ -16,6 +16,10 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def needs_background_check?
+    record.adult? || record.eighteen?
+  end
+
   def permitted_attributes
     common_params = [:email, :name, :gender, :age, :grade, :home_phone,
                      :work_phone, :cell_phone, :birthday, :password, :role]
@@ -24,6 +28,10 @@ class UserPolicy < ApplicationPolicy
     else
       common_params
     end
+  end
+
+  def role_edit?
+    sudo? || user.locality_contact?
   end
 
   # == Database ops ==
@@ -72,8 +80,8 @@ class UserPolicy < ApplicationPolicy
       if sudo?
         scope
       elsif user.locality_contact?
-        locality_users = scope.includes(:locality).where(locality: user.locality)
-        locality_users.minor.or(locality_users.adult.background_check_valid)
+        locality_users = scope.where(locality: user.locality)
+        locality_users.adult.background_check_valid.or(locality_users.minor)
       end
     end
   end

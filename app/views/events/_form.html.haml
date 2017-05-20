@@ -10,18 +10,17 @@
   %fieldset
     %legend General Information
     .form-group
-      = f.label :title, class: 'col-md-2 control-label'
+      = f.label :name, class: 'col-md-2 control-label'
       .col-md-10
-        = f.text_field :title, autofocus: true, class: 'form-control', placeholder: "Enter a Title"
+        = f.text_field :name, autofocus: true, class: 'form-control'
     .form-group
       = f.label :description, class: 'col-md-2 control-label'
       .col-md-10
-        = f.text_field :description, autofocus: true, class: 'form-control', placeholder: "Enter a description"
+        = f.text_field :description, autofocus: true, class: 'form-control'
     .form-group
       = f.label :event_type, class: 'col-md-2 control-label'
       .col-md-10
-        = f.select :event_type, Event.event_types.keys,
-          options={ placeholder: "Event Type" }, html_options={ class: 'form-control select' }
+        = f.select :event_type, EventDecorator.event_types, {}, html_options={class: 'form-control select'}
     .form-group
       = f.label :location, class: 'col-md-2 control-label'
       .col-md-10
@@ -31,41 +30,40 @@
       .col-md-4
         .input-group
           %span.input-group-addon $
-          = f.text_field :registration_cost, class: 'form-control', placeholder: 'Cost'
+          = f.text_field :registration_cost, class: 'form-control'
           %span.input-group-addon .00
       .col-md-6
   %fieldset
     %legend Event Dates
     .form-group
-      = f.label :registration_open_date, class: 'col-md-2 control-label'
-      .col-md-4
-        .input-group.input-append.date
-          %span.input-group-addon
-            %i.fa.fa-calendar
-          = f.text_field :registration_open_date, class: 'form-control'
-    .form-group
-      = f.label :registration_close_date, class: 'col-md-2 control-label'
-      .col-md-4
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-calendar
-          = f.text_field :registration_close_date, class: 'form-control'
-    .form-group
-      = f.label :begin_date, class: 'col-md-2 control-label'
+      = f.label 'Begin', class: 'col-md-2 control-label'
       .col-md-4
         .input-group
           %span.input-group-addon
             %i.fa.fa-calendar
           = f.text_field :begin_date, class: 'form-control'
     .form-group
-      = f.label :end_date, class: 'col-md-2 control-label'
+      = f.label 'End', class: 'col-md-2 control-label'
       .col-md-4
         .input-group
           %span.input-group-addon
             %i.fa.fa-calendar
           = f.text_field :end_date, class: 'form-control'
+    .form-group
+      = f.label 'Registration Open', class: 'col-md-2 control-label'
+      .col-md-4
+        .input-group.input-append.date
+          %span.input-group-addon
+            %i.fa.fa-calendar
+          = f.text_field :registration_open_date, class: 'form-control'
+    .form-group
+      = f.label 'Registration Close', class: 'col-md-2 control-label'
+      .col-md-4
+        .input-group
+          %span.input-group-addon
+            %i.fa.fa-calendar
+          = f.text_field :registration_close_date, class: 'form-control'
   .form-group
     .col-md-12
       %span.pull-right
-        = link_to 'Back', request.referer, class: 'btn btn-default'
         = f.submit "Submit", class: 'btn btn-primary'

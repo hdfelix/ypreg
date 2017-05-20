@@ -5,7 +5,7 @@ class Lodging < ActiveRecord::Base
 
 # == Relationships ========================================================
   belongs_to :location
-  delegate :name, to: :location, prefix: true
+  has_many :event_lodgings
 
 # == Validations ==========================================================
   validates :name, presence: true, uniqueness: true
@@ -13,6 +13,5 @@ class Lodging < ActiveRecord::Base
 
 # == Scopes ===============================================================
   scope :at_location, ->(location) { where(location: location) }
-  scope :not_assigned_to_event, ->(event) { at_location(event.location).where.not(id: event.event_lodgings) }
 
 end

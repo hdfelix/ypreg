@@ -16,12 +16,11 @@
     .form-group
       = f.label :location, class: 'col-md-2 control-label'
       .col-md-10
-        = f.collection_select :location_id, policy_scope(Location.all), :id, :name, {placeholder: "Enter a location"}, {class: 'form-control', autofocus: true}
+        = f.collection_select :location_id, policy_scope(Location.all), :id, :name, {prompt: true}, {class: 'form-control', autofocus: true}
     .form-group
       = f.label :lodging_type, class: 'col-md-2 control-label'
       .col-md-10
-        = f.select :lodging_type, Lodging.lodging_types.keys,
-          options={placeholder: "Type"}, html_options={class: 'form-control select'}
+        = f.select :lodging_type, LodgingDecorator.lodging_types, {}, {class: 'form-control select'}
     .form-group
       = f.label :description, class: 'col-md-2 control-label'
       .col-md-10
@@ -39,7 +38,6 @@
     .actions
       .form-group
         .col-md-12
-          %span.pull-right
-            = link_to 'Back', lodgings_path, class: 'btn btn-default'
+          %span
             = f.submit "Submit", class: 'btn btn-primary'
         %br/

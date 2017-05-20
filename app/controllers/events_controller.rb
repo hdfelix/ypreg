@@ -1,20 +1,20 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :destroy]
+  decorates_assigned :event, :events, :event_localities, :past_events
 
   def index
-    @events = Event.not_over
-    authorize @events
-    @past_events = Event.in_the_past
-    authorize @past_events
+    authorize Event
+
+    @events = policy_scope(Event.not_over).by_begin_date
+    @past_events = policy_scope(Event.in_the_past).by_begin_date
   end
 
   def show
-    @event = Event.includes(:event_localities, :registrations, :location).find(params[:id])
+    @event = Event.find(params[:id])
     authorize @event
-    #@stats = @event.load_locality_summary
-    @role_counts = @event.users.role_counts
-    @registrations = @event.registrations
-    @event_localities = policy_scope(@event.event_localities).by_city
+
+    event_localities = @event.event_localities.includes(:locality).by_city
+    @event_localities = policy_scope(event_localities)
+    #@stats = event.load_locality_summary
   end
 
   def new
@@ -25,18 +25,17 @@ class EventsController < ApplicationController
   def edit
     @event = Event.find(params[:id])
     authorize @event
-    @participating_localities = @event.localities
-    @return_to = params[:r]
   end
 
   def create
-    @event = Event.new(permitted_attributes(@event))
+    @event = Event.new(permitted_attributes(Event))
     authorize @event
 
     if @event.save
-      redirect_to events_path, notice: 'Event was successfully created.'
+      flash[:notice] = 'Event was successfully created.'
+      redirect_to @event
     else
-      flash[:error] = 'Error creating the event.'
+      flash.now[:error] = 'Error creating the event.'
       render action: 'new'
     end
   end
@@ -44,49 +43,47 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     authorize @event
-    @participating_localities = @event.localities
 
     if @event.update(permitted_attributes(@event))
-      redirect_to @event, notice: 'Event was successfully updated.'
+      flash[:notice] = 'Event was successfully updated.'
+      redirect_to @event
     else
-      flash[:error] = 'Event could not be updated.'
+      flash.now[:error] = 'Event could not be updated.'
       render action: 'edit'
     end
   end
 
   def destroy
-    # @event set & authorized with 'before_action'
+    @event = Event.find(params[:id])
+    authorize @event
+
     if @event.destroy
-      flash[:notice] = "Event #{@event.title}deleted successfully."
+      flash[:notice] = "Event #{@event.name} deleted successfully."
       redirect_to events_url
     else
-      flash[:error] = 'Event could not be deleted.'
-      render action: 'index'
+      flash.now[:error] = 'Event could not be deleted.'
     end
   end
 
   def edit_locality_payments
     @event = Event.find(params[:event_id])
-    @event_localities = EventLocality.where(event: @event)
+    authorize @event
+
+    event_localities = @event.event_localities.includes(:locality)
+    @event_localities = policy_scope(event_localities).by_city
   end
 
   def update_locality_payments
-    @event = Event.find(params[:event_id])
-    localities = Locality.where(id: params[:locality_paid_ids])
+    authorize Event
 
-    ActiveRecord::Base.transaction do
-      @event.event_localities.for_locality(localities).update_all(paid: true)
-      @event.registrations.for_locality(localities).update_all(paid: true)
+    event_localities = EventLocality.where(id: params[:locality_paid_ids])
+    event_localities.transaction do
+      event_localities.update_all(paid: true)
+      event_localities.each do |event_locality|
+        event_locality.registrations.update_all(paid: true)
+      end
     end
     redirect_to edit_locality_payments_path
   end
 
-  private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_event
-    @event = Event.find(params[:id])
-    authorize @event
-    @participating_localities = @event.event_localities
-  end
 end

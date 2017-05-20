@@ -17,12 +17,13 @@
                 %td Registrations
                 %td Paid?
             %tbody
-              - @event_localities.each do |el|
+              - event_localities.each do |event_locality|
+                - @event_locality = event_locality.object
                 %tr
-                  %td= check_box_tag "locality_paid_ids[]", el.locality.id
-                  %td= el.locality.city
-                  %td= @event.registrations.where(locality: el.locality).all.count
-                  %td= display_yes_no(el.paid?)
+                  %td= check_box_tag "locality_paid_ids[]", @event_locality.id
+                  %td= event_locality.locality_city
+                  %td= event.locality_count(@event_locality)
+                  %td= event_locality.paid?
       .panel-footer
         = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
         = submit_tag "Update Payments", class: 'btn btn-primary btn-sm'

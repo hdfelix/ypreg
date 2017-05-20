@@ -93,7 +93,7 @@ end
 print "\nCreating events: "
 tmp_date = Time.now + rand(1..3).months
 Event.create(
-  title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
+  name: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: Event.event_types.values.sample,
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -106,7 +106,7 @@ print '.'
 
 tmp_date = Time.now + rand(3..4).months
 Event.create(
-  title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
+  name: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: Event.event_types.values.sample,
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -119,7 +119,7 @@ print '.'
 
 tmp_date = Time.now + rand(4..7).months
 Event.create(
-  title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
+  name: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: Event.event_types.values.sample,
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -133,7 +133,7 @@ print '.'
 # Create completed event in the past
 tmp_date = Time.now - rand(5..7).months
 past_event = Event.create(
-  title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
+  name: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: Event.event_types.values.sample,
   begin_date: tmp_date,
   end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
@@ -316,7 +316,7 @@ count = rand(5..total_users)
 print "\nCreating #{count} event registrations (per event): "
 Event.all.each do |event|
   yp_count = (count * 0.60).to_i
-  print"\n\tYP Registrations for #{event.title}: "
+  print"\n\tYP Registrations for #{event.name}: "
   # YP registrations
   yp_ids = User.limit(yp_count).where(role: :yp).pluck(:id)
   while !yp_ids.empty?
@@ -331,7 +331,7 @@ Event.all.each do |event|
     print '.'
   end
 
-  print "\n\tNon-YP registrations for #{event.title}: "
+  print "\n\tNon-YP registrations for #{event.name}: "
   # non-YP registrations
   non_yp_count = count - yp_count
   non_yp_ids = User.limit(non_yp_count).where.not(role: :yp).pluck(:id)

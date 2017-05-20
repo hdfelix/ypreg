@@ -6,44 +6,33 @@
     .widget-header
       %h3
         %i.fa.fa-table
-        = @event.title
+        = event.name
     .widget-content
       .table-responsive
         %table#registrations.table.table-bordered.table-hover
           %thead
-            %tr{:style => "font: bold"}
+            %tr{style: "font: bold"}
               %th Name
-              / th>Email</th
+              %th Locality
+              %th Lodging
               %th Role
               %th Gender
               %th Age
-              %th Locality
-              / th style="width: 150px">Phone</th
-              %th Guest?
-              %th Payment Adjustment
               %th Paid?
-              %th Medical Release Form?
-              %th Serving?
-              %th Background Check
-              %th Vehicle Seating Capacity
-              %th
+              %th MF?
           %tbody
-            - @registrations.each do |reg|
-              = background_check_tr(reg.user, "reg-#{reg.id}")
-              %td= link_to reg.user.name, event_registration_path(@event, reg)
-              %td= reg.user.role.capitalize
-              %td= reg.user.gender.to_s[0]
-              %td= reg.user.age
-              %td= reg.user.locality_city
-              %td= reg.guest.to_s.capitalize
-              %td= number_to_currency(reg.payment_adjustment)
-              %td= display_yes_no(reg.paid)
-              %td= display_yes_no(reg.medical_release)
-              %td= display_yes_no(reg.serving_one)
-              %td= format_date(reg.user.background_check_date)
-              %td= reg.vehicle_seating_capacity
-              %td= link_to 'Edit', edit_event_registration_path(@event,reg)
-            - if @registrations.empty?
+            - registrations.each do |registration|
+              - @registration = registration.object
+              %tr{class: registration.user_background_check_date_row_class}
+                %td= link_to registration.user_name, event_registration_path(@event, @registration)
+                %td= registration.locality_city
+                %td= registration.lodging_name
+                %td= registration.user_role
+                %td= registration.user_gender
+                %td= registration.user_age
+                %td= registration.paid?
+                %td= registration.medical_release?
+            - if registrations.empty?
               %tr
                 %td{:colspan => "12"}
                   %center There is no one registered for this event.

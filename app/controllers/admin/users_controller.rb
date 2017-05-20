@@ -19,7 +19,7 @@ class Admin::UsersController < ApplicationController
       flash[:notice] = 'User was created successfully.'
       redirect_to users_path
     else
-      flash[:error] = 'Error saving the user.'
+      flash.now[:error] = 'Error saving the user.'
       render action: 'new'
     end
   end

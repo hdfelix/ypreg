@@ -3,12 +3,15 @@
   .form-group
     = f.label :role, "User Role", class: 'col-md-2 control-label'
     .col-md-10
-      = f.select :role, policy(@user).authorized_roles, {include_blank: true }, {class: 'form-control'}
+      - if policy(@user).sudo?
+        = f.select :role, policy(@user).authorized_roles, {include_blank: true }, {class: 'form-control'}
+      - else
+        = @user.role
   .form-group
     = f.label :locality_id, class: 'col-md-2 control-label'
     .col-md-10
       .input-group
-        - if policy(User).sudo?
+        - if policy(@user).sudo?
           = f.collection_select(:locality_id, Locality.all, :id, :city, { include_blank: 'Select locality' }, { class: 'form-control' })
           %span.input-group-addon
             %i.fa.fa-user

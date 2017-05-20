@@ -1,60 +1,63 @@
 class Events::LocalitiesController < ApplicationController
+  decorates_assigned :all_locality_users, :event, :event_localities, :event_locality, :other_localities, :registrations, :users_not_registered
 
   def index
-    @event = Event.includes(:event_localities).find(params[:event_id])
-    @event_localities = policy_scope(@event.event_localities).by_city
-    @other_localities = policy_scope(Locality.where.not(id: @event_localities.pluck(:locality_id))).by_city
+    authorize EventLocality
+
+    @event = Event.find(params[:event_id])
+    event_localities = @event.event_localities.includes(:locality)
+    @event_localities = policy_scope(event_localities).by_city
+    other_localities = Locality.where.not(id: @event.event_localities.pluck(:locality_id))
+    @other_localities = policy_scope(other_localities).by_city
   end
 
   def show
-    event_locality = EventLocality.find_by!(event_id: params[:event_id], locality_id: params[:id])
-    @event = event_locality.event
-    @locality = event_locality.locality
-    @registrations = event_locality.registrations.includes(:user)
-    @role_counts = event_locality.users.role_counts
-    @lodgings = event_locality.event_lodgings
-    users_not_registered = event_locality.users_not_registered
-    @users_not_registered = policy_scope(users_not_registered).decorate
+    @event_locality = EventLocality.find_by!(event_id: params[:event_id], locality_id: params[:id])
+    authorize @event_locality
+
+    @registrations = @event_locality.registrations.includes(:user)
+    users_not_registered = @event_locality.locality.users.where.not(id: @event_locality.users.select(:id))
+    @users_not_registered = policy_scope(users_not_registered)
     @tips_message = Payment.tips[:check_payment_instructions].html_safe
   end
 
   def new
-    @event = Event.find(params[:event_id])
-    @locality = Locality.find(params[:format])
-    users = policy_scope(@locality.users).order(:name)
-    @users = users.decorate
-    @event_locality = EventLocality.new
+    make_new(params[:event_id], params[:format])
   end
 
   def create
-    @event = Event.find(params[:event_id])
-    @locality = Locality.find(params[:locality_id])
-    @event_locality = EventLocality.new(event: @event, locality: @locality)
-    @locality_user_ids = params[:locality_user_ids]
+    make_new(params[:event_id], params[:locality_id])
 
-    unless @locality_user_ids.nil?
-      ActiveRecord::Base.transaction do
-        @locality_user_ids.each do |user_id|
-          user = User.find(user_id)
-          reg = Registration.find_or_create_by!(
-            user: user,
-            event: @event,
-            locality: user.locality,
-          )
-          @event.registrations << reg
-        end
-      end
-
-      if @event.save
-        flash[:notice] = "Registrations added successfully."
-        redirect_to @event
-      else
-        flash[:error] = "There was a problem saving these event registrations."
-        render action: 'new'
-      end
-    else
-      flash[:error] = "No users were selected!"
-      render action: 'new'
+    user_ids = params[:locality_user_ids]
+    if user_ids.nil?
+      flash.now[:error] = "No users were selected!"
+      render 'new' and return
     end
+
+    begin
+      @event_locality.transaction(requires_new: true) do
+        @event_locality.save!
+        users = @all_locality_users.find(user_ids)
+        users_hash = users.map { |user| {user: user} }
+        @event_locality.registrations.create!(users_hash)
+      end
+    rescue ActiveRecord::RecordNotUnique
+      retry
+    rescue Exception => msg
+      flash.now[:error] = "There was a problem saving these registrations: #{msg}"
+      render 'new' and return
+    end
+
+    flash[:notice] = "Registrations added successfully."
+    redirect_to event_localities_path(params[:event_id])
+  end
+
+  private
+
+  def make_new(event_id, locality_id)
+    @event_locality = EventLocality.new(event_id: event_id, locality_id: locality_id)
+    authorize @event_locality
+    all_locality_users = @event_locality.locality.users
+    @all_locality_users = policy_scope(all_locality_users).by_name
   end
 end

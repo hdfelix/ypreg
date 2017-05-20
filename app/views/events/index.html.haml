@@ -2,98 +2,21 @@
   .main-header
     %h2 Events
     %em list of up-coming conferences, retreats, and one-day events
-  / Current & future events
-  .col-md-12
-    .widget.widget-table
-      .widget-header
-        %h3
-          %i.fa.fa-table>
-           Current Events
-      .widget-content
-        .table-responsive
-          %table.table.table-striped
-            %thead
-              %tr{:style => "font: bold"}
-                %td Name
-                %td Type
-                %td Event Dates
-                %td Registration Window
-                %td Cost
-                %td
-            %tbody
-              - @events.each do |event|
-                %tr
-                  %td= link_to event.title, event
-                  %td= event.event_type
-                  %td
-                    = format_date(event.begin_date)
-                    \-
-                    \#{format_date(event.end_date)}
-                  %td
-                    = format_date(event.registration_open_date)
-                    \-
-                    \#{format_date(event.registration_close_date)}
-                  %td= number_to_currency(event.registration_cost)
-                  %td
-                    - if policy(event).edit?
-                      = link_to 'Edit', edit_event_path(event)
-                       
-                    - if policy(event).copy?
-                      = link_to 'Copy', event_copies_path(event_id: event), method: :post
-                       
-                    - if policy(event).destroy?
-                      = link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }
-              - if @events.empty?
-                %tr
-                  %td{:colspan => "7"}
-                    %center No events in the system.
-            %tbody
-        - if policy(Event).new?
-          = link_to new_event_path, class: 'btn btn-primary' do
-            = content_tag(:i, '', class: "fa fa-plus-square")
-  / Events in the past
-  .col-md-12
-    .widget.widget-table
-      .widget-header
-        %h3
-          %i.fa.fa-table>
-           Past Events
-      .widget-content
-        .table-responsive
-          %table.table.table-striped
-            %thead
-              %tr{:style => "font: bold"}
-                %td Name
-                %td Type
-                %td Event Dates
-                %td Registration Window
-                %td Cost
-                %td
-            %tbody
-              - @past_events.each do |event|
-                %tr
-                  %td= link_to event.title, event
-                  %td= event.event_type
-                  %td
-                    = format_date(event.begin_date)
-                    \-
-                    \#{format_date(event.end_date)}
-                  %td
-                    = format_date(event.registration_open_date)
-                    \-
-                    \#{format_date(event.registration_close_date)}
-                  %td= number_to_currency(event.registration_cost)
-                  %td
-                    - if policy(Event).edit?
-                      = link_to 'Edit', edit_event_path(event)
-                       
-                    - if policy(Event).copy?
-                      = link_to 'Copy', event_copies_path(event_id: event), method: :post
-                       
-                    - if policy(Event).destroy?
-                      = link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }
-              - if @past_events.empty?
-                %tr
-                  %td{:colspan => "7"}
-                    %center No events in the system.
-            %tbody
+  .widget.widget-table
+    .widget-header
+      %h3
+        %i.fa.fa-table
+          Current Events
+    .widget-content
+      = render partial: 'table', locals: {events: events}
+      - if policy(Event).new?
+        = link_to new_event_path, class: 'btn btn-primary' do
+          = content_tag(:i, '', class: "fa fa-plus-square")
+          New Event
+  .widget.widget-table
+    .widget-header
+      %h3
+        %i.fa.fa-table
+          Past Events
+    .widget-content
+      = render partial: 'table', locals: {events: past_events}

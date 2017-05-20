@@ -2,7 +2,7 @@
   .main-header
     %h2 Event Localities
     %em
-      manage localities registered for #{@event.title}
+      manage localities registered for #{event.name}
   .col-md-12
     .widget.widget-table
       .widget-header
@@ -17,11 +17,11 @@
                 %td Name
                 %td State
             %tbody
-              - @event_localities.each do |el|
+              - event_localities.each do |el|
                 %tr
-                  %td= link_to el.city, event_locality_path(el.event, el.locality)
-                  %td= el.state
-              - if @event_localities.empty?
+                  %td= link_to el.locality_city, event_locality_path(@event, el.locality)
+                  %td= el.locality_state
+              - if event_localities.empty?
                 %tr
                   %td{colspan: "2"}
                     %center No localities participating.
@@ -40,12 +40,12 @@
                 %td State
                 %td
             %tbody
-              - @other_localities.each do |el|
+              - other_localities.each do |locality|
                 %tr
-                  %td= el.city
-                  %td= el.state
+                  %td= locality.city
+                  %td= locality.state
                   %td
-                    - if @event.registration_open?
-                      = link_to 'Add', new_event_locality_path(el.event, el.locality), class: 'btn btn-default btn-sm'
+                    - if event.registration_open?
+                      = link_to 'Add', new_event_locality_path(@event, locality), class: 'btn btn-default btn-sm'
   .col-md-12
     = link_to 'Back', event_path(@event), class: 'btn btn-default'

@@ -1,6 +1,8 @@
 .main-header
   %h2 Manage Lodgings
-  %em Add or remove lodgings that are available for "#{ @event.title }"
+  %em Add or remove lodgings that are available for "#{event.name }"
+.col-md-12
+  = link_to 'Back', event_path(@event), class: 'btn btn-default'
 .col-md-12
   .widget.widget-table
     .widget-header
@@ -19,19 +21,20 @@
                 %td Min Capacity
                 %td Max Capacity
             %tbody
-              - @event_lodgings.each do |event_lodging|
+              - event_lodgings.each do |event_lodging|
+                - @event_lodging = event_lodging.object
                 %tr
-                  %td= check_box_tag "event_lodging_ids[]", event_lodging.id
+                  %td= check_box_tag "event_lodging_ids[]", @event_lodging.id
                   %td= event_lodging.name
                   %td= event_lodging.lodging_type
                   %td= event_lodging.min_capacity
                   %td= event_lodging.max_capacity
-              - if @event_lodgings.empty?
+              - if event_lodgings.empty?
                 %tr
                   %td{colspan: "5"}
                     %center None.
       .panel-footer
-        - if @event_lodgings.present?
+        - if @event_lodgings.any?
           = submit_tag "Remove", class: 'btn btn-primary btn-sm'
 .col-md-12
   .widget.widge-table
@@ -51,17 +54,18 @@
                 %td Min Capacity
                 %td Max Capacity
             %tbody
-              - @other_lodgings.each do |lodging|
+              - other_lodgings.each do |lodging|
+                - @lodging = lodging.object
                 %tr
-                  %td= check_box_tag "lodging_ids[]", lodging.id
+                  %td= check_box_tag "lodging_ids[]", @lodging.id
                   %td= lodging.name
                   %td= lodging.lodging_type
                   %td= lodging.min_capacity
                   %td= lodging.max_capacity
-              - if @other_lodgings.empty?
+              - if other_lodgings.empty?
                 %tr
                   %td{colspan: "5"}
                     %center None.
       .panel-footer
-        - if @other_lodgings.present?
+        - if other_lodgings.any?
           = submit_tag 'Add', class: 'btn btn-primary btn-sm'

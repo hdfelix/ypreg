@@ -7,67 +7,66 @@
       %ul
         - @registration.errors.full_messages.each do |msg|
           %li= msg
-  / Event info
   %fieldset
-    %legend= @event.title
+    %legend= event.name
     .form-group
       = f.label "Location", class: 'col-md-2 control-label'
       .col-md-10
-        %h4= @event.location_name
-        %h5= event_location(@event)
+        %h4= event.location_name
     .form-group
       = f.label "Event Dates", class: 'col-md-2 control-label'
       .col-md-10
         %h5
-          = @event.begin_date.to_formatted_s(:long_ordinal)
-          \- #{@event.end_date.to_formatted_s(:long_ordinal)}
+          = event.dates
     .form-group
       = f.label "Registration cost", class: 'col-md-2 control-label'
       .col-md-10
-        %h5= number_to_currency(@event.registration_cost)
+        %h5= event.registration_cost
   %fieldset
     %legend Registrant Information
     = hidden_field_tag "user_id", @registration.user.id
+    = hidden_field_tag "event_locality_id", @registration.event_locality.id
     .form-group
       = f.label "Name", class: 'col-md-2 control-label'
-      .col-md-6
-        %span.form-control{:disabled => "disabled"}= @registration.user.name
+      .col-md-4
+        %span.form-control{:disabled => "disabled"}= registration.user_name
     .form-group
       = f.label "Role", class: 'col-md-2 control-label'
-      .col-md-6
-        %span.form-control{:disabled => "disabled"}= @registration.user.role.upcase
+      .col-md-4
+        %span.form-control{:disabled => "disabled"}= registration.user_role
     .form-group
       = f.label "Gender", class: 'col-md-2 control-label'
-      .col-md-6
-        %span.form-control{:disabled => "disabled"}= format_titleize(@registration.user.gender.titleize)
+      .col-md-4
+        %span.form-control{:disabled => "disabled"}= registration.user_gender
     .form-group
       = f.label "Age", class: 'col-md-2 control-label'
-      .col-md-6
-        %span.form-control{:disabled => "disabled"}= format_titleize(@registration.user.age)
+      .col-md-4
+        %span.form-control{:disabled => "disabled"}= registration.user_age
     .form-group
       = f.label "Grade", class: 'col-md-2 control-label'
-      .col-md-6
-        %span.form-control{:disabled => "disabled"}= format_titleize(@registration.user.grade.titleize)
+      .col-md-4
+        %span.form-control{:disabled => "disabled"}= registration.user_grade
     .form-group
       = f.label "Locality", class: 'col-md-2 control-label'
-      .col-md-6
-        %span.form-control{:disabled => "disabled"}= @registration.user.locality_city.titleize
+      .col-md-4
+        %span.form-control{:disabled => "disabled"}= registration.locality_city
     .form-group
       = f.label "Background Check", class: 'col-md-2 control-label'
-      .col-md-6
-        %span.form-control{:disabled => "disabled"}= format_date(@registration.user.background_check_date)
+      .col-md-4
+        %span.form-control{:disabled => "disabled"}= registration.user_background_check_date
   %fieldset
     %legend Registration Information
     .form-group
       = f.label :lodging, class: 'col-md-2 control-label'
       .col-md-4
-        = f.collection_select :event_lodging_id, @event.event_lodgings, :id, :name, options={prompt: true}, html_options={class: 'form-control select'}
+        - if policy(@registration).edit_lodging?
+          = f.collection_select :event_lodging_id, event_lodgings, -> (el) {el.object.id}, :name, options={prompt: true}, html_options={class: 'form-control select'}
+        - else
+          %span.form-control{disabled: 'disabled'}= registration.lodging_name
     .form-group
       = f.label :payment_type, class: 'col-md-2 control-label'
       .col-md-4
-        = f.select :payment_type, Registration.payment_types.keys,
-          options={ placeholder: "Payment Type" },
-          html_options={ class: 'form-control select' }
+        = f.select :payment_type, RegistrationDecorator.payment_types, options={placeholder: "Payment Type"}, html_options={class: 'form-control select'}
     .form-group
       = f.label :payment_adjustment, class: 'col-md-2 control-label'
       .col-md-4
@@ -87,7 +86,7 @@
     .form-group
       = f.label :vehicle_seating_capacity, class: 'col-md-2 control-label'
       .col-md-4
-        = f.text_field :vehicle_seating_capacity, autofocus: true, class: 'form-control', placeholder: '(Including driver)'
+        = f.text_field :vehicle_seating_capacity, autofocus: true, class: 'form-control', placeholder: '(including driver)'
     .form-group
       .simple-checkbox
         = f.check_box :medical_release
@@ -98,15 +97,8 @@
       .simple-checkbox
         = f.check_box :guest
         = f.label :guest,"Conference Guest", class: 'checkbox'
-    = hidden_field_tag 'return_to', params[:return_to]
   .form-group
     .col-md-12
       %span.pull-right
-        - if params[:return_to]
-          = link_to 'Back', params[:return_to], class: 'btn btn-default'
-        - else
-          = link_to 'Back', event_registrations_path(event, return_to: params[:return_to]), class: 'btn btn-default'
-        - if params[:action] == 'new'
-          = f.submit 'Register', class: 'btn btn-primary'
-        - else
-          = f.submit 'Update', class: 'btn btn-primary'
+        - button_text = params[:action] == 'new' ? 'Register' : 'Update'
+        = f.submit button_text, class: 'btn btn-primary'

@@ -15,7 +15,7 @@ class ApplicationPolicy
   end
 
   # == Helpers ==
-  def role?(roles)
+  def role?(*roles)
     roles.any? do |other_role|
       user.role == other_role.to_s
     end

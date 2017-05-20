@@ -19,26 +19,23 @@
                 %th Capacity
                 %th
             %tbody
-              - @locations.each do |location|
+              - locations.each do |location|
+                - @location = location.object
                 %tr
-                  %td= link_to location.name, location
-                  %td= location.location_type.capitalize
+                  %td= link_to location.name, @location
+                  %td= location.location_type
                   %td= location.description
-                  %td
-                    = location.address1
-                    = location.city
-                    , #{location.state}  #{location.zipcode}
+                  %td= location.address
                   %td= location.max_capacity
                   %td
-                    - if policy(location).edit?
-                      = link_to 'Edit', edit_location_path(location)
-                    - if policy(location).destroy?
-                      = link_to 'Delete', location, method: :delete, data: { confirm: 'Are you sure?' }
-              - if @locations.empty?
+                    - if policy(@location).edit?
+                      = link_to 'Edit', edit_location_path(@location)
+                    - if policy(@location).destroy?
+                      = link_to 'Delete', @location, method: :delete, data: { confirm: 'Are you sure?' }
+              - if locations.empty?
                 %tr
                   %td{:colspan => "7"}
-                    %center No Locations in the database...
-        = link_to 'Back', dashboard_index_path, class: 'btn btn-default'
+                    %center No Locations in the system.
         = link_to new_location_path, class: 'btn btn-primary' do
           = content_tag(:i, '', class: "fa fa-plus-square")
           New Location

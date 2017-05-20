@@ -1,9 +1,10 @@
 class DashboardPolicy < Struct.new(:user, :dashboard)
+  include CommonPolicy
   def show?
     !user.guest?
   end
 
   def manage_site?
-    user.admin? || user.scyp? || user.locality_contact?
+    sudo? || user.locality_contact?
   end
 end
