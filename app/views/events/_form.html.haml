@@ -1,69 +1,54 @@
-= form_for(@event, class: 'form-horizontal') do |f|
-  - if @event.errors.any?
-    #error_explanation.alert.alert-danger.alert-dismissable
-      %h4
-        %strong= pluralize(@event.errors.count, "error")
-        prohibited this event from being saved:
-      %ul
-        - @event.errors.full_messages.each do |msg|
-          %li= msg
-  %fieldset
-    %legend General Information
-    .form-group
-      = f.label :name, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :name, autofocus: true, class: 'form-control'
-    .form-group
-      = f.label :description, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :description, autofocus: true, class: 'form-control'
-    .form-group
-      = f.label :event_type, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.select :event_type, EventDecorator.event_types, {}, html_options={class: 'form-control select'}
-    .form-group
-      = f.label :location, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.collection_select(:location_id, Location.all, :id, :name, {include_blank: true}, {class: 'form-control'})
-    .form-group
-      = f.label :registration_cost, class: 'col-md-2 control-label'
-      .col-md-4
-        .input-group
-          %span.input-group-addon $
-          = f.text_field :registration_cost, class: 'form-control'
-          %span.input-group-addon .00
-      .col-md-6
-  %fieldset
-    %legend Event Dates
-    .form-group
-      = f.label 'Begin', class: 'col-md-2 control-label'
-      .col-md-4
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-calendar
-          = f.text_field :begin_date, class: 'form-control'
-    .form-group
-      = f.label 'End', class: 'col-md-2 control-label'
-      .col-md-4
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-calendar
-          = f.text_field :end_date, class: 'form-control'
-    .form-group
-      = f.label 'Registration Open', class: 'col-md-2 control-label'
-      .col-md-4
-        .input-group.input-append.date
-          %span.input-group-addon
-            %i.fa.fa-calendar
-          = f.text_field :registration_open_date, class: 'form-control'
-    .form-group
-      = f.label 'Registration Close', class: 'col-md-2 control-label'
-      .col-md-4
-        .input-group
-          %span.input-group-addon
-            %i.fa.fa-calendar
-          = f.text_field :registration_close_date, class: 'form-control'
+= form_for @event, class: 'form-horizontal' do |f|
   .form-group
-    .col-md-12
-      %span.pull-right
-        = f.submit "Submit", class: 'btn btn-primary'
+    = f.label :name, class: 'col-sm-2 control-label' 
+    .col-sm-10
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :description, class: 'col-sm-2 control-label' 
+    .col-sm-10
+      = f.text_field :description, class: 'form-control'
+  .form-group
+    = f.label :event_type, 'Type', class: 'col-sm-2 control-label' 
+    .col-sm-10
+      = f.select :event_type, EventDecorator.event_types, {}, html_options={class: 'form-control'}
+  .form-group
+    = f.label :location, class: 'col-sm-2 control-label' 
+    .col-sm-10
+      = f.collection_select :location_id, Location.all, :id, :name, {include_blank: true}, {class: 'form-control'}
+  .form-group
+    = f.label :registration_cost, 'Cost', class: 'col-sm-2 control-label' 
+    .col-sm-10
+      .input-group
+        %span.input-group-addon $
+        = f.text_field :registration_cost, class: 'form-control'
+        %span.input-group-addon .00
+  .form-group
+    = f.label 'Begin', class: 'col-sm-2 control-label' 
+    .col-sm-10
+      .input-group
+        %span.input-group-addon
+          %i.fa.fa-calendar
+        = f.text_field :begin_date, class: 'form-control'
+  .form-group
+    = f.label 'End', class: 'col-sm-2 control-label' 
+    .col-sm-10
+      .input-group
+        %span.input-group-addon
+          %i.fa.fa-calendar
+        = f.text_field :end_date, class: 'form-control'
+  .form-group
+    = f.label 'Registration Open', class: 'col-sm-2 control-label' 
+    .col-sm-10
+      .input-group.input-append.date
+        %span.input-group-addon
+          %i.fa.fa-calendar
+        = f.text_field :registration_open_date, class: 'form-control'
+  .form-group
+    = f.label 'Registration Close', class: 'col-sm-2 control-label' 
+    .col-sm-10
+      .input-group
+        %span.input-group-addon
+          %i.fa.fa-calendar
+        = f.text_field :registration_close_date, class: 'form-control'
+  .form-group
+    = f.submit "Submit", class: 'btn btn-primary pull-right'

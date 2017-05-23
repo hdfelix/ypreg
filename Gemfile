@@ -1,28 +1,74 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
 
-gem 'rails', '~> 5.0.0', '>= 5.0.3'
+#
+gem 'rails', '~> 5.1.1'
+# Use postgres as the database for Active Record
+gem 'pg'
+# Use Puma as the app server
+gem 'puma', '~> 3.7'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 5.0'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# See https://github.com/rails/execjs#readme for more supported runtimes
+# gem 'therubyracer', platforms: :ruby
 
-# Javascript
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'uglifier'
-gem 'coffee-rails'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 4.2'
+# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+gem 'turbolinks', '~> 5'
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 2.5'
+# Use Redis adapter to run Action Cable in production
+# gem 'redis', '~> 3.0'
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Adds support for Capybara system testing and selenium driver
+  gem 'capybara', '~> 2.13'
+  gem 'selenium-webdriver'
+  gem 'binding_of_caller'
+  gem 'shoulda-matchers', '~> 3.1.1'
+  gem 'rspec-rails'
+  gem 'rspec-collection_matchers'
+  gem 'rspec_junit_formatter'
+  gem 'factory_girl_rails'
+  gem 'coverband'
+  gem 'rubocop', '~> 0.45.0', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'letter_opener', group: :development
+end
+
+group :development do
+  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
+end
 
 # CSS
-gem 'sass-rails'
 gem 'bootstrap-sass'
+gem 'font-awesome-sass'
 
-gem 'autoprefixer-rails'
-gem 'jbuilder'
-gem 'activemodel-serializers-xml'
-gem 'foreigner'
-gem 'immigrant'
-gem 'awesome_print'
+# Jquery
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
-# Database
-gem 'pg'
-gem 'pg_search'
+# Etc
+#gem 'autoprefixer-rails'
+#gem 'activemodel-serializers-xml'
+#gem 'foreigner'
+#gem 'immigrant'
+#gem 'awesome_print'
 
 # Authentication
 gem 'devise'
@@ -30,17 +76,8 @@ gem 'devise'
 # Authorization
 gem 'pundit'
 
-# manage environment variables
-gem 'figaro'
-
-# PDF generation
-# gem 'prawn'
-
 # Forms
 gem 'simple_form'
-
-# Monitoring
-gem 'skylight'
 
 # Decorator pattern
 gem 'draper'
@@ -48,57 +85,14 @@ gem 'draper'
 # HTML template
 gem 'haml-rails'
 
-# Image processing
-gem 'mini_magick'
-
-# Avatar uploader
-gem 'carrierwave', '~>1.0'
-
-group :production do
-  gem 'rails_12factor'
-end
-
-group :development do
-# Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.0.5'
-  gem 'better_errors'
-  #gem 'quiet_assets'
-  gem 'guard-livereload'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'spring-commands-rspec'
-  gem 'railroady'
-  gem 'bullet'
-end
-
-group :development, :test do
-  gem 'pry-rails'
-  gem 'pry-rescue'
-  gem 'pry-byebug'
-  gem 'binding_of_caller'
-  gem 'shoulda-matchers', '~> 3.1.1'
-  gem 'rspec-rails'
-  gem 'rspec-collection_matchers'
-  gem 'rspec_junit_formatter'
-  gem 'factory_girl_rails'
-  gem 'faker'
-#   gem 'simplecov', require: false
-#   gem 'simplecov-csv', require: false
-  gem 'coverband'
-  gem 'rubocop', '~> 0.45.0', require: false
-  gem 'rubocop-rspec', require: false
-  gem 'letter_opener', group: :development
-end
-
+# TODO: different seeds for dev and prod
+gem 'faker'
 group :test do
-  gem 'capybara', '~> 2.3.0'
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
   # gem 'poltergeist'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'selenium-webdriver'
   gem 'guard-rspec'
   gem 'timecop'
 end

@@ -1,0 +1,25 @@
+%section.content-header
+  %h1 Add Lodgings to Event
+%section.content
+  .row
+    .col-md-6
+      .box
+        .box-body
+          = form_tag event_lodgings_path, method: :post do
+            %table.table.table-striped
+              %thead
+                %tr
+                  %td
+                  %td Name
+                  %td Type
+                  %td Min Capacity
+                  %td Max Capacity
+              %tbody
+                - event.other_lodgings.each do |lodging|
+                  %tr
+                    %td= check_box_tag "lodging_ids[]", lodging.object.id
+                    %td= lodging.name
+                    %td= lodging.lodging_type
+                    %td= lodging.min_capacity
+                    %td= lodging.max_capacity
+            = submit_tag 'Add', class: 'btn btn-primary pull-right'

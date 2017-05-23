@@ -1,53 +1,39 @@
-= form_for(@location, class: 'form-horizontal') do |f|
-  - if @location.errors.any?
-    #error_explanation.alert.alert-danger.alert-dismissable
-      %h4
-        %strong
-          = pluralize(@location.errors.count, "error")
-         prohibited this location from being saved:
-      %ul
-        - @location.errors.full_messages.each do |msg|
-          %li= msg
-  %fieldset
-    %legend General Information
-    .form-group
-      = f.label :name, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :name, class: 'form-control'
-    .form-group
-      = f.label :type, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.select :location_type, LocationDecorator.location_types, {}, {class: 'form-control select'}
-    .form-group
-      = f.label :description, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :description, class: 'form-control'
-    .form-group
-      = f.label "Address", class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :address1, class: 'form-control', placeholder: "Street 1"
-    .form-group
-      = f.label " ", class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :address2, class: 'form-control', placeholder: "Street 2"
-    .form-group
-      = f.label " ", class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :city, class: 'form-control', placeholder: "City"
-    .form-group
-      = f.label " ", class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :state, class: 'col-md-2 form-control', placeholder: "State"
-    .form-group
-      = f.label " ", class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :zipcode, class: 'form-control', maxlength: 5, placeholder: "Zip"
-    .form-group
-      = f.label :max_capacity, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :max_capacity, class: 'form-control', placeholder: "(number of persons)"
+= form_for @location, class: 'form-horizontal' do |f|
   .form-group
-    .col-md-12
-      %span.pull-right
-        - if policy(@location).create? or policy(@location).update?
-          = f.submit "Submit", class: 'btn btn-primary'
+    = f.label :name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :type, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.select :location_type, LocationDecorator.location_types, {}, {class: 'form-control select'}
+  .form-group
+    = f.label :description, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :description, class: 'form-control'
+  .form-group
+    = f.label "Address", class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :address1, class: 'form-control', placeholder: "Street 1"
+  .form-group
+    = f.label " ", class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :address2, class: 'form-control', placeholder: "Street 2"
+  .form-group
+    = f.label " ", class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :city, class: 'form-control', placeholder: "City"
+  .form-group
+    = f.label " ", class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :state, class: 'col-sm-2 form-control', placeholder: "State"
+  .form-group
+    = f.label " ", class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :zipcode, class: 'form-control', maxlength: 5, placeholder: "Zip"
+  .form-group
+    = f.label :max_capacity, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :max_capacity, class: 'form-control', placeholder: "number of persons"
+  .form-group
+    = f.submit "Submit", class: 'btn btn-primary pull-right'

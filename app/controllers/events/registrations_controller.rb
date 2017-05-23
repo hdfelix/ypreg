@@ -1,13 +1,9 @@
 class Events::RegistrationsController < ApplicationController
-  decorates_assigned :event, :event_lodgings, :registration, :registrations
+  decorates_assigned :event, :event_lodgings, :registration 
 
   def index
     authorize Registration
-
     @event = Event.find(params[:event_id])
-    registrations = @event.registrations.includes(:user, :locality)
-    @registrations = policy_scope(registrations).by_user_name
-
     render 'attendance_index' if params[:view] == 'attendance'
   end
 
@@ -24,11 +20,11 @@ class Events::RegistrationsController < ApplicationController
   end
 
   def new
-    new_create(params[:event_id], params[:event_locality_id], params[:format])
+    set_new_registration(params[:event_id], params[:event_locality_id], params[:format])
   end
 
   def create
-    new_create(params[:event_id], params[:event_locality_id], params[:user_id])
+    set_new_registration(params[:event_id], params[:event_locality_id], params[:user_id])
 
     if @registration.update(permitted_attributes(Registration))
       flash[:notice] = 'Registration created successfully'
@@ -47,13 +43,10 @@ class Events::RegistrationsController < ApplicationController
     if params[:view] == 'attendance'
       @attendance = registration
       @user = @attendance.user
-      render 'attendance_edit'
-    else
-      @registration = registration
+      render 'attendance_edit' and return
     end
 
-    event_lodging_ids = @event.event_lodgings.with_vacancy.pluck(:id)
-    @event_lodgings = @event.event_lodgings.includes(:lodging).find(event_lodging_ids)
+    @registration = registration
   end
 
   def update
@@ -88,14 +81,15 @@ class Events::RegistrationsController < ApplicationController
 
   private
 
-  def new_create(event_id, event_locality_id, user_id)
+  def set_new_registration(event_id, event_locality_id, user_id)
     @event = Event.find(event_id)
-    if event_locality_id.present?
-      event_locality = EventLocality.find(event_locality_id)
-    else
+
+    unless event_locality_id.present?
       flash[:error] = 'Sorry, your locality is not registered for this event.'
       redirect_to '/' and return
     end
+    event_locality = EventLocality.find(event_locality_id)
+
     if user_id.present?
       user = event_locality.locality.users.find(user_id)
     else
@@ -105,4 +99,5 @@ class Events::RegistrationsController < ApplicationController
     @registration = Registration.new(event_locality: event_locality, user: user)
     authorize @registration
   end
+
 end

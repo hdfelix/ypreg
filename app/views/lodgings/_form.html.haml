@@ -1,43 +1,27 @@
-= form_for(@lodging, class: 'form-horizontal') do |f|
-  - if @lodging.errors.any?
-    #error_explanation.alert.alert-danger.alert-dismissable
-      %h4
-        %strong= pluralize(@lodging.errors.count, "error")
-        prohibited this event from being saved:
-      %ul
-        - @lodging.errors.full_messages.each do |msg|
-          %li= msg
-  %fieldset
-    %legend General
-    .form-group
-      = f.label :name, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Enter a name"
-    .form-group
-      = f.label :location, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.collection_select :location_id, policy_scope(Location.all), :id, :name, {prompt: true}, {class: 'form-control', autofocus: true}
-    .form-group
-      = f.label :lodging_type, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.select :lodging_type, LodgingDecorator.lodging_types, {}, {class: 'form-control select'}
-    .form-group
-      = f.label :description, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :description, autofocus: true, class: 'form-control'
-    %br/
-    .form-group
-      = f.label :min_capacity, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :min_capacity, autofocus: true, class: 'form-control', placeholder: "How many saints?"
-    .form-group
-      = f.label :max_capacity, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :max_capacity, autofocus: true, class: 'form-control', placeholder: "How many saints?"
-    %br/
-    .actions
-      .form-group
-        .col-md-12
-          %span
-            = f.submit "Submit", class: 'btn btn-primary'
-        %br/
+= form_for @lodging, class: 'form-horizontal' do |f|
+  .form-group
+    = f.label :name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :name, autofocus: true, class: 'form-control'
+  .form-group
+    = f.label :location, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.collection_select :location_id, policy_scope(Location.all), :id, :name, {prompt: true}, {class: 'form-control'}
+  .form-group
+    = f.label :lodging_type, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.select :lodging_type, LodgingDecorator.lodging_types, {}, {class: 'form-control select'}
+  .form-group
+    = f.label :description, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :description, class: 'form-control'
+  .form-group
+    = f.label :min_capacity, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :min_capacity, class: 'form-control'
+  .form-group
+    = f.label :max_capacity, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :max_capacity, class: 'form-control'
+  .form-group
+    = f.submit "Submit", class: 'btn btn-primary pull-right'

@@ -3,9 +3,7 @@ class EventsController < ApplicationController
 
   def index
     authorize Event
-
-    @events = policy_scope(Event.not_over).by_begin_date
-    @past_events = policy_scope(Event.in_the_past).by_begin_date
+    @events = policy_scope(Event).by_begin_date
   end
 
   def show

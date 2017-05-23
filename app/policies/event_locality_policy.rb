@@ -1,6 +1,6 @@
 class EventLocalityPolicy < ApplicationPolicy
 
-  def index?
+  def add?
     sudo? or user.locality_contact?
   end
 

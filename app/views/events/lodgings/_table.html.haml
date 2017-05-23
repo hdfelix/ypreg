@@ -1,0 +1,14 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Name
+      %th Type
+      %th Capacity
+      %th Description
+  %tbody
+    - event_lodgings.each do |event_lodging|
+      %tr
+        %td= link_to event_lodging.name, event_lodging_path(@event, event_lodging.lodging_id)
+        %td= event_lodging.lodging_type
+        %td= event_lodging.max_capacity
+        %td= event_lodging.description

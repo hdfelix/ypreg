@@ -1,104 +1,43 @@
 = form_for [@event, @registration] do |f|
-  - if @registration.errors.any?
-    #error_explanation.alert.alert-danger.alert-dismissable
-      %h4
-        %strong= pluralize(@registration.errors.count, "error")
-        prohibited this registration from being saved:
-      %ul
-        - @registration.errors.full_messages.each do |msg|
-          %li= msg
-  %fieldset
-    %legend= event.name
-    .form-group
-      = f.label "Location", class: 'col-md-2 control-label'
-      .col-md-10
-        %h4= event.location_name
-    .form-group
-      = f.label "Event Dates", class: 'col-md-2 control-label'
-      .col-md-10
-        %h5
-          = event.dates
-    .form-group
-      = f.label "Registration cost", class: 'col-md-2 control-label'
-      .col-md-10
-        %h5= event.registration_cost
-  %fieldset
-    %legend Registrant Information
-    = hidden_field_tag "user_id", @registration.user.id
-    = hidden_field_tag "event_locality_id", @registration.event_locality.id
-    .form-group
-      = f.label "Name", class: 'col-md-2 control-label'
-      .col-md-4
-        %span.form-control{:disabled => "disabled"}= registration.user_name
-    .form-group
-      = f.label "Role", class: 'col-md-2 control-label'
-      .col-md-4
-        %span.form-control{:disabled => "disabled"}= registration.user_role
-    .form-group
-      = f.label "Gender", class: 'col-md-2 control-label'
-      .col-md-4
-        %span.form-control{:disabled => "disabled"}= registration.user_gender
-    .form-group
-      = f.label "Age", class: 'col-md-2 control-label'
-      .col-md-4
-        %span.form-control{:disabled => "disabled"}= registration.user_age
-    .form-group
-      = f.label "Grade", class: 'col-md-2 control-label'
-      .col-md-4
-        %span.form-control{:disabled => "disabled"}= registration.user_grade
-    .form-group
-      = f.label "Locality", class: 'col-md-2 control-label'
-      .col-md-4
-        %span.form-control{:disabled => "disabled"}= registration.locality_city
-    .form-group
-      = f.label "Background Check", class: 'col-md-2 control-label'
-      .col-md-4
-        %span.form-control{:disabled => "disabled"}= registration.user_background_check_date
-  %fieldset
-    %legend Registration Information
-    .form-group
-      = f.label :lodging, class: 'col-md-2 control-label'
-      .col-md-4
-        - if policy(@registration).edit_lodging?
-          = f.collection_select :event_lodging_id, event_lodgings, -> (el) {el.object.id}, :name, options={prompt: true}, html_options={class: 'form-control select'}
-        - else
-          %span.form-control{disabled: 'disabled'}= registration.lodging_name
-    .form-group
-      = f.label :payment_type, class: 'col-md-2 control-label'
-      .col-md-4
-        = f.select :payment_type, RegistrationDecorator.payment_types, options={placeholder: "Payment Type"}, html_options={class: 'form-control select'}
-    .form-group
-      = f.label :payment_adjustment, class: 'col-md-2 control-label'
-      .col-md-4
-        .input-group
-          %label.sr-only{:for => "exampleInputAmount"} Amount (in dollars)
-          .input-group-addon $
-          = f.text_field :payment_adjustment, autofocus: true, class: 'form-control', placeholder: "Amount"
-          .input-group-addon .00
-    .col-md-12.control-label Has registration been paid?
-    .form-group
-      .radio-inline{:style => "padding-left: 40px;"}
-        = f.radio_button(:paid, false)
-        = label_tag(:paid_no, "No", value: 'false')
-      .radio-inline
-        = f.radio_button(:paid, true)
-        = label_tag(:paid_yes, "Yes", value: 'true')
-    .form-group
-      = f.label :vehicle_seating_capacity, class: 'col-md-2 control-label'
-      .col-md-4
-        = f.text_field :vehicle_seating_capacity, autofocus: true, class: 'form-control', placeholder: '(including driver)'
-    .form-group
-      .simple-checkbox
-        = f.check_box :medical_release
-        = f.label :medical_release, "Returned medical release form", class: 'checkbox'
-      .simple-checkbox
-        = f.check_box :serving_one
-        = f.label :serving_one, "Attending as a serving one", class: 'checkbox'
-      .simple-checkbox
-        = f.check_box :guest
-        = f.label :guest,"Conference Guest", class: 'checkbox'
+  = hidden_field_tag "user_id", @registration.user.id
+  = hidden_field_tag "event_locality_id", @registration.event_locality.id
   .form-group
-    .col-md-12
-      %span.pull-right
-        - button_text = params[:action] == 'new' ? 'Register' : 'Update'
-        = f.submit button_text, class: 'btn btn-primary'
+    = f.label :lodging, class: 'col-md-2 control-label'
+    - if policy(@registration).edit_lodging?
+      = f.collection_select :event_lodging_id, event.available_lodgings, :object_id, :name, options={prompt: true}, html_options={class: 'form-control select'}
+    - else
+      %span.form-control{disabled: 'disabled'}= registration.lodging_name
+  .form-group
+    = f.label :payment_type, class: 'col-md-2 control-label'
+    = f.select :payment_type, RegistrationDecorator.payment_types, options={placeholder: "Payment Type"}, html_options={class: 'form-control select'}
+  .form-group
+    = f.label :payment_adjustment, class: 'col-md-2 control-label'
+  .input-group
+    %label.sr-only{:for => "exampleInputAmount"} Amount (in dollars)
+    .input-group-addon $
+    = f.text_field :payment_adjustment, autofocus: true, class: 'form-control', placeholder: "Amount"
+    .input-group-addon .00
+  .form-group
+    .control-label Has registration been paid?
+    .radio-inline{:style => "padding-left: 40px;"}
+      = f.radio_button(:paid, false)
+      = label_tag(:paid_no, "No", value: 'false')
+    .radio-inline
+      = f.radio_button(:paid, true)
+      = label_tag(:paid_yes, "Yes", value: 'true')
+  .form-group
+    = f.label :vehicle_seating_capacity, class: 'col-md-2 control-label'
+    = f.text_field :vehicle_seating_capacity, autofocus: true, class: 'form-control', placeholder: '(including driver)'
+  .form-group
+    .simple-checkbox
+      = f.check_box :medical_release
+      = f.label :medical_release, "Returned medical release form", class: 'checkbox'
+    .simple-checkbox
+      = f.check_box :serving_one
+      = f.label :serving_one, "Attending as a serving one", class: 'checkbox'
+    .simple-checkbox
+      = f.check_box :guest
+      = f.label :guest,"Conference Guest", class: 'checkbox'
+  .form-group
+    %span.pull-right
+      = f.submit 'Submit', class: 'btn btn-primary'

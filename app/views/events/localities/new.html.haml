@@ -1,40 +1,23 @@
-.content
-  .main-header
-    %h2
-      The Church in #{event_locality.locality_city}
-    %em
-      Registrations for #{event_locality.event_name}
-  %br/
-  .col-md-8
-    .widget.widget-table
-      .widget-header
-        %h3
-          %i.fa.fa-edit>
-          Local Saints
-      = form_for(@event_locality, class: 'form-horizontal') do |f|
-        - if @event_locality.errors.any?
-          #error_explanation.alert.alert-danger.alert-dismissable
-            %h4
-              %strong= pluralize(@event_locality.errors.count, "error")
-              prohibited these registrations from being saved:
-            %ul
-              - @event_locality.errors.full_messages.each do |msg|
-                %li= msg
-        .widget-content
-          %table.table
-            %thead
-              %tr{style: 'font: bold'}
-                %td
-                %td Name
-                %td Age
-            %tbody
-              = hidden_field_tag 'locality_id', event_locality.locality_id
-              - all_locality_users.each do |user|
-                - @user = user.object
-                %tr{id: "user_#{@user.id}", class: "#{user.background_check_date_row_class}"}
-                  %td= check_box_tag 'locality_user_ids[]', @user.id
-                  %td= user.name
-                  %td= user.age
-        .panel-footer
-          = link_to 'Back', event_localities_path(@event_locality.event), class: 'btn btn-default btn-sm'
-          = f.submit 'Register Saints', class: 'btn btn-primary btn-sm'
+%section.content-header
+  %h1 Create Registrations
+%section.content
+  .row
+    .col-md-6
+      .box
+        .box-body
+          = form_for @event_locality, class: 'form-horizontal' do |f|
+            %table.table.table-bordered.table-hover.table-striped
+              %thead
+                %tr
+                  %th
+                  %th Name
+                  %th Age
+              %tbody
+                = hidden_field_tag 'locality_id', event_locality.locality_id
+                - all_locality_users.each do |user|
+                  - @user = user.object
+                  %tr{id: "user_#{@user.id}", class: "#{user.background_check_date_row_class}"}
+                    %td= check_box_tag 'locality_user_ids[]', @user.id
+                    %td= user.name
+                    %td= user.age
+            = f.submit 'Submit', class: 'btn btn-primary pull-right'

@@ -1,14 +1,9 @@
 class Events::LocalitiesController < ApplicationController
-  decorates_assigned :all_locality_users, :event, :event_localities, :event_locality, :other_localities, :registrations, :users_not_registered
+  decorates_assigned :all_locality_users, :event, :event_locality, :registrations, :users_not_registered
 
-  def index
+  def add
     authorize EventLocality
-
     @event = Event.find(params[:event_id])
-    event_localities = @event.event_localities.includes(:locality)
-    @event_localities = policy_scope(event_localities).by_city
-    other_localities = Locality.where.not(id: @event.event_localities.pluck(:locality_id))
-    @other_localities = policy_scope(other_localities).by_city
   end
 
   def show
@@ -28,33 +23,32 @@ class Events::LocalitiesController < ApplicationController
   def create
     make_new(params[:event_id], params[:locality_id])
 
-    user_ids = params[:locality_user_ids]
-    if user_ids.nil?
+    unless params.has_key?(:locality_user_ids)
       flash.now[:error] = "No users were selected!"
-      render 'new' and return
+      render :new and return
     end
 
+    users = @all_locality_users.find(params[:locality_user_ids]).map { |user| {user: user} }
     begin
       @event_locality.transaction(requires_new: true) do
         @event_locality.save!
-        users = @all_locality_users.find(user_ids)
-        users_hash = users.map { |user| {user: user} }
-        @event_locality.registrations.create!(users_hash)
+        @event_locality.registrations.create!(users).map { |r| policy(r).create? } 
       end
     rescue ActiveRecord::RecordNotUnique
       retry
     rescue Exception => msg
-      flash.now[:error] = "There was a problem saving these registrations: #{msg}"
-      render 'new' and return
+      flash.now[:error] = "There was a problem creating these registrations: #{msg}"
+      render :new and return
     end
 
     flash[:notice] = "Registrations added successfully."
-    redirect_to event_localities_path(params[:event_id])
+    redirect_to event_path(params[:event_id])
   end
 
   private
 
   def make_new(event_id, locality_id)
+    #TODO: move all locality users to decorator and kill this
     @event_locality = EventLocality.new(event_id: event_id, locality_id: locality_id)
     authorize @event_locality
     all_locality_users = @event_locality.locality.users

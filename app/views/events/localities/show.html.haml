@@ -1,65 +1,49 @@
-.content
+%section.content-header
+  %h1
+    #{event_locality.city} @ #{event_locality.event_name}
+%section.content
   .row
-    .main-header
-      %h2
-        The Church in #{event_locality.locality_city}
-      %em
-        Participation details for #{event_locality.event_name}
-  .row
-    .col-md-6
-      = link_to 'Back', event_path(@event_locality.event), class: 'btn btn-default btn-sm'
-    .col-md-6
-      %strong
-        Registration will close on: #{@event_locality.event.registration_close_date}
-      %br/
-      %br/
-  .row
-    .col-md-8
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            Registration Breakdown
-        .widget-content
-          .table-responsive
-            %table.table.table-bordered.table-striped.table-hover
-              %thead
-                %tr
-                  %th
-                  %th Totals
-              %tbody
-                %tr
-                  %td Young People
-                  %td= event_locality.role_count('yp')
-                %tr
-                  %td Helpers
-                  %td= event_locality.role_count('helper')
-                %tr
-                  %td Trainees
-                  %td= event_locality.role_count('trainee')
-                %tr
-                  %td Serving Ones
-                  %td= event_locality.serving_one_count
-                %tr
-                  %td Serving Ones Needed
-                  %td 
-                %tr
-                  %td
-                    %strong Total
-                  %td
-                    %strong= event_locality.registration_count
     .col-md-4
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-table>
-            Available Lodgings
-        .widget-content
-          %table.table.table-bordered.table-striped.table-hover
+      .box
+        .box-header.with-border
+          %h1.box-title Registration
+        .box-body
+          %table.table.table-bordered.table-hover.table-striped
             %thead
-              %tr{:style => "font: bold"}
+              %tr
+                %th
+                %th Totals
+            %tbody
+              %tr
+                %td Young People
+                %td= event_locality.role_count('yp')
+              %tr
+                %td Helpers
+                %td= event_locality.role_count('helper')
+              %tr
+                %td Trainees
+                %td= event_locality.role_count('trainee')
+              %tr
+                %td Serving Ones
+                %td= event_locality.serving_one_count
+              %tr
+                %td Serving Ones Needed
+                %td 
+              %tr
                 %td
-                %td Totals
+                  %strong Total
+                %td
+                  %strong= event_locality.registration_count
+    .col-md-4
+      .box
+        .box-header.with-border
+          %h1.box-title Lodging
+        .box-body
+          %table.table.table-bordered.table-hover.table-striped
+            %thead
+              %tr
+                %th
+                %th Totals
             %tbody
               %tr
                 %td Lodgings
@@ -73,15 +57,17 @@
               %tr
                 %td Spaces to Assign
                 %td= #@locality.beds_to_assign(@event)
-  .row
-    .col-md-8
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            Registered Saints
-        .widget-content
-          %table.table.table-bordered.table-hover
+.row
+  .col-md-8
+    .nav-tabs-custom
+      %ul.nav.nav-tabs
+        %li.active
+          %a{data: {toggle: 'tab'}, href: '#registered'} Registered
+        %li
+          %a{data: {toggle: 'tab'}, href: '#unregistered'} Unregistered
+      .tab-content
+        #registered.active.tab-pane
+          %table.table.table-bordered.table-hover.table-striped
             %thead
               %tr
                 %th Name
@@ -91,7 +77,7 @@
                 %th Background Check
                 %th Lodging
                 %th Vehicle seats
-            %tbody#registrations
+            %tbody
               - registrations.each do |registration|
                 - @registration = registration.object
                 %tr{class: "#{registration.user.background_check_date_row_class}"}
@@ -105,14 +91,8 @@
                   %td= registration.user_background_check_date
                   %td= registration.lodging_name
                   %td= registration.vehicle_seating_capacity
-    .col-md-4
-      #locality_saints.widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            Locality Saints
-        .widget-content
-          %table.table.table-bordered.table-hover
+        #unregistered.tab-pane
+          %table.table.table-bordered.table-hover.table-striped
             %thead
               %tr
                 %th Name
@@ -125,6 +105,6 @@
                   %td= user.name
                   %td= user.age
                   %td= link_to 'Register', new_event_registration_path(@event_locality.event, @user, event_locality_id: @event_locality.id), class: 'btn btn-custom-secondary btn-xs'
-  .row
-    .col-md-12
-      = link_to 'Back', event_path(@event_locality.event), class: 'btn btn-default btn-sm'
+.row
+  .col-md-12
+    = link_to 'Back', event_path(@event_locality.event), class: 'btn btn-default btn-sm'

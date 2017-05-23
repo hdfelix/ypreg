@@ -1,91 +1,44 @@
-.content
+%section.content-header
+  %h1
+    = user.name
+    - if policy(@user).edit?
+      %a.btn.btn-primary{href: edit_user_registration_path(@user)} Edit
+    - if policy(@user).destroy?
+      - if current_user == @user
+        %a.btn.btn-danger{href: registration_path(resource_name, id: @user.id), data: {confirm: 'Are you sure?', method: :delete}, ref: 'nofollow'} Delete My Account
+      - else
+        %a.btn.btn-danger{href: admin_user_path(@user), data: {confirm: 'Are you sure?', method: :delete}, ref: 'nofollow'} Delete
+        = link_to "Delete", admin_user_path(@user), method: :delete, data: {confirm: "Are you sure?"},  class: 'btn btn-danger'
+%section.content
   .row
-    .main-header
-      %h2= user.name
-      %em
-  .row
-    .col-md-6.col-sm-6
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            User Details
-        .widget-content
-          %p#notice= notice
-          .row
-            .col-sm-4
-              %strong Name:
-            .col-sm-8
-              = user.name
-          .row
-            .col-sm-4
-              %strong Email:
-            .col-sm-8
-              = user.email
-          .row
-            .col-sm-4
-              %strong Role:
-            .col-sm-8
-              = user.role
-          .row
-            .col-sm-4
-              %strong Gender:
-            .col-sm-8
-              = user.gender
-          .row
-            .col-sm-4
-              %strong Age:
-            .col-sm-8
-              = user.age
-          .row
-            .col-sm-4
-              %strong Grade:
-            .col-sm-8
-              = user.grade
-          .row
-            .col-sm-4
-              %strong Birthday:
-            .col-sm-8
-              = user.birthday
-          .row
-            .col-sm-4
-              %strong Locality:
-            .col-sm-8
-              = user.locality_city
-          .row
-            .col-sm-4
-              %strong Cell Phone:
-            .col-sm-8
-              = user.cell_phone
-          .row
-            .col-sm-4
-              %strong Home phone:
-            .col-sm-8
-              = user.home_phone
-          .row
-            .col-sm-4
-              %strong Work Phone:
-            .col-sm-8
-              = user.work_phone
-          - if @user.needs_background_check?
-            .row
-              .col-sm-4
-                %strong Last Background Check:
-              .col-sm-8
-                %span{:class => "#{user.background_check_date_bg_class}"}
-                  = user.background_check_date_with_warning
-          .row
-            .col-sm-4
-              %strong Last Sign In:
-            .col-sm-8
-              = user.last_sign_in_at
-        .widget-footer
-  .row
-    .col-md-12
-      = link_to 'Back', locality_path(@user.locality), class: 'btn btn-default'
-      = link_to 'Edit', edit_user_registration_path(@user), class: 'btn btn-primary'
-      - if policy(@user).destroy?
-        - if current_user == @user
-          = link_to "Delete my account", registration_path(resource_name, id: @user.id), method: :delete, data: {confirm: "Are you sure you want to delete your account?"},  class: 'btn btn-danger'
-        - else
-          = link_to "Delete", admin_user_path(@user), method: :delete, data: {confirm: "Are you sure?"},  class: 'btn btn-danger'
+    .col-md-6
+      .box
+        .box-body
+          %strong Name
+          %p= user.name
+          %strong Email
+          %p= user.email
+          %strong Role
+          %p= user.role
+          %strong Gender
+          %p= user.gender
+          %strong Age
+          %p= user.age
+          %strong Grade
+          %p= user.grade
+          %strong Birthday
+          %p= user.birthday
+          %strong Locality
+          %p= user.locality_city
+          %strong Cell Phone
+          %p= user.cell_phone
+          %strong Home phone
+          %p= user.home_phone
+          %strong Work Phone
+          %p= user.work_phone
+          -if @user.needs_background_check?
+            %strong Last Background Check
+            %p{class: user.background_check_date_bg_class}
+              = user.background_check_date_with_warning
+          %strong Last Sign In
+          %p= user.last_sign_in_at

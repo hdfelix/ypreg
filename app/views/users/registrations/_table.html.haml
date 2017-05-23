@@ -1,0 +1,27 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Name
+      %th Role
+      %th Gender
+      %th Email
+      %th Age
+      %th Grade
+      %th Locality
+      %th Phone
+      %th Last B.C.
+      %th Last Sign in
+  %tbody
+    - users.each do |user|
+      - @user = user.object
+      %tr{class: "#{user.background_check_date_row_class}"}
+        %td= link_to user.name, user_path(@user)
+        %td= user.role
+        %td= user.gender
+        %td= user.email
+        %td= user.age
+        %td= user.grade
+        %td= user.locality_city
+        %td= user.cell_phone
+        %td= user.background_check_date
+        %td= user.last_sign_in_at

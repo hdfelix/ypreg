@@ -12,6 +12,7 @@ class Lodging < ActiveRecord::Base
   validates :location, presence: true
 
 # == Scopes ===============================================================
+  scope :by_name, -> { order(:name) }
   scope :at_location, ->(location) { where(location: location) }
 
 end

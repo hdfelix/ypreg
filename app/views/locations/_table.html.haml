@@ -1,0 +1,17 @@
+%table.table.table-bordered.table-striped.table-hover
+  %thead
+    %tr
+      %th Name
+      %th Type
+      %th Description
+      %th Address
+      %th Capacity
+  %tbody
+    - locations.each do |location|
+      - @location = location.object
+      %tr
+        %td= link_to location.name, @location
+        %td= location.location_type
+        %td= location.description
+        %td= location.address
+        %td= location.max_capacity

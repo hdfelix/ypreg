@@ -82,4 +82,5 @@
           = f.text_field :background_check_date, class: 'form-control', placeholder: "Last background check"
       - else
         = format_date(@user.background_check_date)
-    %br/
+  .form-group
+    = f.submit "Submit", class: 'btn btn-primary pull-right'
