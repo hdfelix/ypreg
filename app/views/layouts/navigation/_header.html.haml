@@ -1,0 +1,22 @@
+%header.main-header
+  %a.logo{href: '/'}
+    %span.logo-lg
+      <b>YP</b>Reg
+  %nav.navbar.navbar-static-top{role: 'navigation'}
+    .navbar-custom-menu
+      %ul.nav.navbar-nav
+        - if user_signed_in?
+          - decorated_user = current_user.decorate
+          %li.dropdown.user.user-menu
+            %a.dropdown-toggle{'aria-expanded': 'true', 'data-toggle': 'dropdown', href: '#'}
+              %span= decorated_user.first_name
+            %ul.dropdown-menu
+              %li.user-header
+                %p
+                  = decorated_user.name
+                  %small= decorated_user.locality_city
+              %li.user-footer
+                .pull-left
+                  %a.btn.btn-default.btn-flat{href: user_path(current_user)} Profile
+                .pull-right
+                  %a.btn.btn-default.btn-flat{rel: 'nofollow', 'data-method': 'delete', href: destroy_user_session_path} Sign out

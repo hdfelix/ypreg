@@ -3,7 +3,6 @@ class RegistrationDecorator < ApplicationDecorator
 
   delegate :event, :locality, :lodging, :vehicle_seating_capacity
   delegate :age, :background_check_date, :background_check_date_row_class, :background_check_date_bg_class, :cell_phone, :email, :grade, :gender, :name, :role, to: :user, prefix: true
-
   delegate :name, to: :event, prefix: true
   delegate :city, to: :locality, prefix: true
   delegate :name, to: :lodging, prefix: true, allow_nil: true
@@ -18,6 +17,12 @@ class RegistrationDecorator < ApplicationDecorator
 
   def created_at
     format_date(object.created_at)
+  end
+
+  def available_lodgings
+    ids = @event.available_lodgings.pluck(:id)
+    q = EventLodging.includes(:lodging).find(ids)
+    q.decorate
   end
 
   def guest?

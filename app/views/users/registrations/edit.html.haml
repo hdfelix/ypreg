@@ -1,20 +1,13 @@
-.content
-  .main-header
-    %h2= @user.name
-    %em Update the user profile
-  %br/
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    %div
-      Currently waiting confirmation for: #{resource.unconfirmed_email}
-  .col-md-8
-    .widget
-      .widget-header
-        %h3
-          %i.fa.fa-edit
-      .widget-content
-        = form_for(*@form_params) do |f|
-          = devise_error_messages!
-          = render 'form', f: f
-          .widget-footer
-            = link_to "Back", :back, class: 'btn btn-default'
-            = f.submit "Update", class: 'btn btn-success'
+%section.content
+  .row
+    .col-md-6
+      - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+        %div
+          Currently waiting confirmation for: #{resource.unconfirmed_email}
+      .box.box-primary
+        .box-header.with-border
+          %h1.box-title Edit User
+        .box-body
+          = form_for(*@form_params) do |f|
+            = devise_error_messages!
+            = render 'form', f: f

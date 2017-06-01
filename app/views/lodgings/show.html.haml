@@ -1,49 +1,20 @@
-.content
+%section.content-header
+  %h1
+    = lodging.name
+    %a.btn.btn-flat.btn-primary{href: edit_lodging_path(@lodging)} Edit
+    %a.btn.btn-flat.btn-danger{href: lodging_path(@lodging), data: {confirm: 'Are you sure?', method: :delete}, ref: 'nofollow'} Delete
+%section.content
   .row
-    .main-header
-      %h2= lodging.name
-      %em= "a #{lodging.lodging_type} in #{lodging.location_name}"
-  .row
-    / Lodging info
     .col-md-6
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            Lodging Details
-        .widget-content
-          %p#notice= notice
-          .row
-            .col-sm-4
-              %strong Name:
-            .col-sm-8
-              = lodging.name
-          .row
-            .col-sm-4
-              %strong Location:
-            .col-sm-8
-              = lodging.location_name
-          .row
-            .col-sm-4
-              %strong Lodging Type:
-            .col-sm-8
-              = lodging.lodging_type
-          .row
-            .col-sm-4
-              %strong Description:
-            .col-sm-8
-              = lodging.description
-          .row
-            .col-sm-4
-              %strong Min Capacity:
-            .col-sm-8
-              = lodging.min_capacity
-          .row
-            .col-sm-4
-              %strong Max Capacity:
-            .col-sm-8
-              = lodging.max_capacity
-        .widget-footer
-          = link_to 'Edit', edit_lodging_path(@lodging), class: 'btn btn-primary'
-          - if policy(@lodging).destroy?
-            = link_to 'Delete', @lodging, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+      .box
+        .box-body
+          %strong Location
+          %p= lodging.location_name
+          %strong Type
+          %p= lodging.lodging_type
+          %strong Description
+          %p= lodging.description
+          %strong Min Capacity
+          %p= lodging.min_capacity
+          %strong Max Capacity
+          %p= lodging.max_capacity

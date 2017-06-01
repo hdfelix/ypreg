@@ -1,14 +1,26 @@
 class EventDecorator < ApplicationDecorator
-  decorates_associations :event_localities, :event_lodgings
+  decorates_associations :event_lodgings
 
   delegate :event_type, :location, :name, :over?, :registration_open?
+
+  def self.event_types
+    Event.event_types.keys.map { |k| [k.titleize, k] }
+  end
+
+  def available_lodgings
+    ids = object.available_lodgings.pluck(:id)
+    q = EventLodging.includes(:lodging).where(id: ids)
+    q.decorate
+  end
 
   def dates
     "#{format_date(object.begin_date)} - #{format_date(object.end_date)}"
   end
 
-  def self.event_types
-    Event.event_types.keys.map { |k| [k.titleize, k] }
+  def localities
+    q = object.event_localities.includes(:locality)
+    q = h.policy_scope(q).by_city
+    q.decorate
   end
 
   def locality_count(event_locality)
@@ -20,12 +32,28 @@ class EventDecorator < ApplicationDecorator
     location.nil? ? "TBD" : location.name
   end
 
+  def lodgings
+    q = object.event_lodgings.includes(:lodging)
+    q = h.policy_scope(q).by_name
+    q.decorate
+  end
+
   def max_capacity
     if location.nil? || location.max_capacity.nil?
       "N/A"
     else
       location.max_capacity
     end
+  end
+
+  def other_localities
+    q = Locality.where.not(id: object.event_localities.pluck(:locality_id))
+    h.policy_scope(q).by_city.decorate
+  end
+
+  def other_lodgings
+    q = object.location_lodgings.where.not(id: object.lodgings.pluck(:id))
+    h.policy_scope(q).by_name.decorate
   end
 
   def registration_close_date
@@ -46,6 +74,12 @@ class EventDecorator < ApplicationDecorator
 
   def registration_window
     "#{format_date(object.registration_open_date)} - #{format_date(object.registration_close_date)}"
+  end
+
+  def registrations
+    q = object.registrations.includes(:user, :locality)
+    q = h.policy_scope(q).by_user_name
+    q.decorate
   end
 
   def remaining_spaces

@@ -7,14 +7,15 @@ class Event < ActiveRecord::Base
   belongs_to :location
   has_many :location_lodgings, through: :location, source: :lodgings
 
-  has_many :registrations, through: :event_localities
-  has_many :users, through: :registrations
-
   has_many :event_localities, dependent: :destroy
   has_many :localities, through: :event_localities
 
+  has_many :registrations, through: :event_localities
+  has_many :users, through: :registrations
+
   has_many :event_lodgings, dependent: :destroy
   has_many :lodgings, through: :event_lodgings
+  has_many :available_lodgings, -> { with_vacancy }, class_name: 'EventLodging'
 
 # == Validations ==========================================================
   validate :dates_make_sense?

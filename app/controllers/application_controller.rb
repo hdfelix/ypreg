@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::Base
-  layout :layout_by_resource
+  include Pundit
+
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   #before_action :set_chart_values
 
-  include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
-    flash[:alert] = exception.message
-    redirect_to root_url, alert: exception.message
+    flash.alert = 'You are not allowed to do that!'#exception.message
+    redirect_to root_url
   end
 
   protected
@@ -25,24 +25,16 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(_resource)
-    dashboard_index_path
+    root_path
   end
 
   def after_sign_out_path_for(_resource)
-    request.referer
+    root_path
   end
 
   def user_not_authorized
     flash[:error] = 'You are not authorized to perform this action.'
     redirect_to(request.referrer || root_path)
-  end
-
-  def layout_by_resource
-    if current_user
-      'dashboard'
-    else
-      'application'
-    end
   end
 
   def set_chart_values

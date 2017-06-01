@@ -1,14 +1,13 @@
 class User < ActiveRecord::Base
-  include PgSearch
   # pg_search_scope :search_by_name, against: :name,
   # using: { tsearch: { dictionary: 'english' } }
+  #multisearchable against: [:gender, :role]
 
-  mount_uploader :avatar, AvatarUploader
+  #mount_uploader :avatar, AvatarUploader
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  multisearchable against: [:gender, :role]
 
 # == Constants ============================================================
   ADULT = [:eighteen, :adult]

@@ -1,0 +1,10 @@
+%section.content-header
+  %h1
+    = event_lodging.name
+    /%a.btn.btn-flat.btn-primary{href: edit_event_lodging_path(@event_lodging)} Edit
+    /%a.btn.btn-flat.btn-danger{href: event_lodging_path(@event_lodging), data: {confirm: 'Are you sure?', method: :delete}, ref: 'nofollow'} Delete
+%section.content
+  .row
+    .col-md-6
+      .box
+        .box-body

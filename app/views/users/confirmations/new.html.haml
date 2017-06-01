@@ -1,22 +1,18 @@
-.wrapper.full-page-wrapper.page-login.text-center
-  .inner.page
-    .logo
-      %a{:href => "index.html"}= image_tag('kingadmin-logo.png', alt:'')
-    .login-box.center-block
-      = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
-        = devise_error_messages!
-        %p.title Resend Confirmation Info
-        .form-group
-          = f.label :email, class: 'control-label sr-only'
-          .col-sm-12
-            .input-group
-              = f.email_field :email, autofocus: true, class: 'form-control', placeholder: "Enter email"
-              %span.input-group-addon
-                %i.fa.fa-envelope
-        %br/
-        = content_tag(:button, type: :submit, class: 'btn btn-custom-secondary btn-lg btn-block') do
-          %i.fa.fa-arrow-circle-o-right
-          Resend confirmation instructions
-      %br/
-      .links
-        = render "devise/shared/links"
+.login-box.center-block
+  = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+    = devise_error_messages!
+    %p.title Resend Confirmation Info
+    .form-group
+      = f.label :email, class: 'control-label sr-only'
+      .col-sm-12
+        .input-group
+          = f.email_field :email, autofocus: true, class: 'form-control', placeholder: "Enter email"
+          %span.input-group-addon
+            %i.fa.fa-envelope
+    %br/
+    = content_tag(:button, type: :submit, class: 'btn btn-custom-secondary btn-lg btn-block') do
+      %i.fa.fa-arrow-circle-o-right
+      Resend confirmation instructions
+  %br/
+  .links
+    = render "devise/shared/links"

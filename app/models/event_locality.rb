@@ -9,22 +9,10 @@ class EventLocality < ActiveRecord::Base
   has_many :event_lodgings, -> { distinct }, through: :registrations
   has_many :lodgings, -> { distinct }, through: :event_lodgings
 
+# == Validations ==========================================================
+  validates_uniqueness_of :locality, scope: :event
+
 # == Scopes ===============================================================
   scope :by_city, -> { joins(:locality).merge(Locality.order(:city)) }
 
-# == Instance Methods =====================================================
-  def beds_assigned_to_locality
-    tmp = event.beds_assigned_to_locality[locality.city]
-    if tmp.nil?
-      0
-    else
-      tmp
-    end
-  end
-
-  def number_of_beds_assigned_to_registrations
-    EventLodging
-      .where(event: event, locality: locality)
-      .where.not(registration: nil).count
-  end
 end

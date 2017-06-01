@@ -3,7 +3,7 @@ class LodgingsController < ApplicationController
 
   def index
     authorize Lodging
-    @lodgings = policy_scope(Lodging.all)
+    @lodgings = policy_scope(Lodging).by_name
   end
 
   def show
@@ -26,7 +26,7 @@ class LodgingsController < ApplicationController
       redirect_to lodging_path(@lodging)
     else
       flash.now[:error] = 'Error saving the lodging.'
-      render action: 'new'
+      render :new
     end
   end
 
@@ -44,18 +44,20 @@ class LodgingsController < ApplicationController
       redirect_to lodging_path(@lodging)
     else
       flash.now[:error] = 'Error saving Lodging.'
-      render action: 'edit'
+      render :edit
     end
   end
 
   def destroy
     @lodging = Lodging.find(params[:id])
     authorize @lodging
+
     if @lodging.destroy
       flash[:notice] = "Lodging #{@lodging.name} deleted successfully."
-      redirect_back fallback_location: lodgings_path
+      redirect_to lodgings_path
     else
       flash.now[:error] = 'lodging could not be deleted.'
+      render :show
     end
   end
 

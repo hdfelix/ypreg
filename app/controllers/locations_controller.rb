@@ -2,6 +2,7 @@ class LocationsController < ApplicationController
   decorates_assigned :location, :locations, :lodgings
 
   def index
+    authorize Location
     @locations = policy_scope(Location).by_name
   end
 

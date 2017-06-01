@@ -21,6 +21,7 @@ doc/
 *.swp
 *~
 .project
+.env
 .DS_Store
 .secret
 /Guardfile
@@ -40,15 +41,9 @@ snippets.html.erb
 # Simplecov
 coverage
 
-# Rubocop
-
 # ctags
 tags
 .ctags
 
 # Rubymine
 /.idea/*
-
-# Notes
-Joe-readme.md
-Felix-readme.md

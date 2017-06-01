@@ -1,53 +1,37 @@
-.content
+%section.content-header
+  %h1
+    #{locality.city}, #{locality.state}
+    %a.btn.btn-flat.btn-primary{href: edit_locality_path(@locality)} Edit
+%section.content
   .row
-    .main-header
-      %h2= "#{locality.city}, #{locality.state}"
-      %em
-      = link_to 'Edit', edit_locality_path(@locality), class: 'btn btn-primary'
-  .row
-    .col-md-8
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            Locality Contacts
-        .widget-content
-          %table.table.table-bordered.table-striped.table-hover
+    .col-md-6
+      .box
+        .box-header.with-border
+          %h1.box-title Contacts
+        .box-body
+          %table.table.table-bordered.table-hover.table-striped
             %thead
               %tr
-                %th
-                  %center Name
-                %th
-                  %center Email
-                %th
-                  %center Cellphone
+                %th Name
+                %th Email
+                %th Cellphone
             %tbody
               - contacts.each do |contact|
+                - @contact = contact.object
                 %tr
-                  %td= contact.name
-                  %td= mail_to contact.email
+                  %td= link_to contact.name, user_path(@contact)
+                  %td= contact.email
                   %td= contact.cell_phone
-              - if contacts.empty?
-                %tr
-                  %td{colspan: "4"}
-                    %center No contacts assigned.
-    .col-md-8
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            Local Saints
-        .widget-content
-          %table.table.table-bordered.table-hover
+      .box
+        .box-header.with-border
+          %h1.box-title Users
+        .box-body
+          %table.table.table-bordered.table-hover.table-striped
             %thead
               %tr
-                %th
-                  %center Name
-                %th
-                  %center Email
-                %th
-                  %center Cellphone
-                %th
+                %th Name
+                %th Email
+                %th Cellphone
             %tbody
               - users.each do |user|
                 - @user = user.object
@@ -55,14 +39,3 @@
                   %td= link_to user.name, user_path(@user)
                   %td= user.email
                   %td= user.cell_phone
-                  %td
-                    - if policy(@user).edit?
-                      = link_to 'Edit', edit_user_registration_path(@user)
-                    - if policy(@user).destroy?
-                      = link_to 'Delete', admin_user_path(@user), method: :delete, data: {confirm: 'Are you sure?'}
-          = link_to new_admin_user_path(locality_id: @locality.id), class: 'btn btn-primary' do
-            = content_tag(:i, '', class: "fa fa-plus-square")
-            New User 
-        .widget-footer
-    .col-md-8
-      = link_to "Back", localities_path, class: 'btn btn-default'

@@ -1,24 +1,11 @@
-= form_for(@locality, class: 'form-horizontal') do |f|
-  - if @locality.errors.any?
-    #error_explanation.alert.alert-danger.alert-dismissable
-      %h4
-        %strong= pluralize(@locality.errors.count, "error")
-        prohibited this locality from being saved:
-      %ul
-        - @locality.errors.full_messages.each do |msg|
-          %li= msg
-  %fieldset
-    %legend General Information
-    .form-group
-      = f.label :city, class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :city, autofocus: true, class: 'form-control', placeholder: "Enter city name"
-    .form-group
-      = f.label :state, 'State', class: 'col-md-2 control-label'
-      .col-md-10
-        = f.text_field :state, class: 'form-control', placeholder: "Enter state name"
+= form_for @locality, class: 'form-horizontal' do |f|
   .form-group
-    .col-md-12
-      %span.pull-right
-        - if policy(@locality).create? or policy(@locality).update?
-          = f.submit "Submit", class: 'btn btn-primary'
+    = f.label :city, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :city, autofocus: true, class: 'form-control'
+  .form-group
+    = f.label :state, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :state, class: 'form-control'
+  .form-group
+    = f.submit 'Submit', class: 'btn btn-primary pull-right'

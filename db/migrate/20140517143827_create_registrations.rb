@@ -13,7 +13,7 @@ class CreateRegistrations < ActiveRecord::Migration[5.0]
       t.belongs_to :user, index: true
       t.integer :vehicle_seating_capacity
 
-      t.index([:event_locality, :user], unique: true)
+      t.index([:event_locality_id, :user_id], unique: true)
       t.timestamps
     end
   end

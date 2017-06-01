@@ -1,21 +1,20 @@
-- @event_localities.each do |locality|
-  %tr
-    %td= link_to loc.city, event_locality_path(@event, locality)
-    %td= @stats["#{locality.city}"]['grand_total']
-    %td= @stats["#{locality.city}"]['total_yp']
-    %td= @stats["#{locality.city}"]['total_serving_ones']
-    %td= @stats["#{locality.city}"]['total_trainees']
-    %td= @stats["#{locality.city}"]['total_helpers']
-    %td= @stats["#{locality.city}"]['yp_so_ratio']
-    %td= @stats["#{locality.city}"]['guests']
-    %td= number_to_currency(@stats["#{locality.city}"]['amount_due'])
-    %td= @stats["#{locality.city}"]['actual_grand_total']
-    %td= @stats["#{locality.city}"]['actual_total_yp']
-    %td= @stats["#{locality.city}"]['actual_total_serving_ones']
-    %td= @stats["#{locality.city}"]['actual_total_trainees']
-    %td= @stats["#{locality.city}"]['actual_total_helpers']
-    %td= number_to_currency(@stats["#{locality.city}"]['actual_amount_paid'])
-    %td= style_balance(@stats["#{locality.city}"]['balance'])
-- if @event_localities.empty?
-  %tr
-    %td.text-center{:colspan => "16"} There are no localities registered for this event.
+%tr
+  %td= link_to loc.city, event_locality_path(@event, locality)
+  %td= @stats["#{locality.city}"]['grand_total']
+  %td= @stats["#{locality.city}"]['total_yp']
+  %td= @stats["#{locality.city}"]['total_serving_ones']
+  %td= @stats["#{locality.city}"]['total_trainees']
+  %td= @stats["#{locality.city}"]['total_helpers']
+  %td= @stats["#{locality.city}"]['yp_so_ratio']
+  %td= @stats["#{locality.city}"]['guests']
+  %td= number_to_currency(@stats["#{locality.city}"]['amount_due'])
+  %td= @stats["#{locality.city}"]['actual_grand_total']
+  %td= @stats["#{locality.city}"]['actual_total_yp']
+  %td= @stats["#{locality.city}"]['actual_total_serving_ones']
+  %td= @stats["#{locality.city}"]['actual_total_trainees']
+  %td= @stats["#{locality.city}"]['actual_total_helpers']
+  %td= number_to_currency(@stats["#{locality.city}"]['actual_amount_paid'])
+  %td= style_balance(@stats["#{locality.city}"]['balance'])
+if @event_localities.empty?
+%tr
+  %td.text-center{:colspan => "16"} There are no localities registered for this event.

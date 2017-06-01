@@ -1,0 +1,11 @@
+%section.content-header
+  %h1
+    = controller_name.titleize
+    - if policy(controller_name.classify.constantize).new?
+      = link_to 'New', {controller: controller_name, action: :new}, class: 'btn btn-primary'
+%section.content
+  .row
+    .col-xs-12
+      .box
+        .box-body
+          = render 'table'

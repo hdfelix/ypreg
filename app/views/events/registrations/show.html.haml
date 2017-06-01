@@ -1,79 +1,33 @@
-.content
+%section.content-header
+  %h1
+    #{registration.user_name} @ #{registration.event_name}
+    - if policy(@registration).edit?
+      = link_to 'Edit', edit_event_registration_path(@registration.event, @registration), class: 'btn btn-primary'
+    - if policy(@registration).destroy?
+      = link_to 'Delete', event_registration_path(@registration.event, @registration), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
+%section.content
   .row
-    .main-header
-      %h2
-        Registration - #{registration.user_name}
-      %em= registration.event_name
-  .row
-    .col-md-6.col-sm-12
-      .widget
-        .widget-header
-          %h3
-            %i.fa.fa-calendar-o>
-            Registration Details
-        .widget-content
-          %p#notice= notice
-          .row
-            .col-sm-4
-              %strong Saint
-            .col-sm-8
-              = registration.user_name
-              %br/
-              = mail_to registration.user_email
-              %br/
-              = registration.user_cell_phone
-              %br/
-          .row
-            .col-sm-4
-              %strong Event
-            .col-sm-8
-              = registration.event_name
-          .row
-            .col-sm-4
-              %strong Lodging
-            .col-sm-8
-              = registration.lodging_name
-          .row
-            .col-sm-4
-              %strong Registration Date
-            .col-sm-8
-              = registration.created_at
-          .row
-            .col-sm-4
-              %strong Paid?
-            .col-sm-8
-              = registration.paid?
-          .row
-            .col-sm-4
-              %strong Payment Adjustment
-            .col-sm-8
-              = registration.payment_adjustment
-          .row
-            .col-sm-4
-              %strong Serving One?
-            .col-sm-8
-              = registration.serving_one?
-          .row
-            .col-sm-4
-              %strong Medical Release Form?
-            .col-sm-8
-              = registration.medical_release?
-          .row
-            .col-sm-4
-              %strong Background Check
-            .col-sm-8
-              - background_style = registration.user_background_check_date_bg_class
-              %span{class: "#{background_style}"}
-                = registration.user_background_check_date
-          .row
-            .col-sm-4
-              %strong Vehicle Capacity
-            .col-sm-8
-              = registration.vehicle_seating_capacity
-    .widget-footer
-  .row
-    .col-md-12
-      - if policy(@registration).edit?
-        = link_to 'Edit', edit_event_registration_path(@registration.event, @registration), class: 'btn btn-primary'
-      - if policy(@registration).destroy?
-        = link_to 'Delete', event_registration_path(@registration.event, @registration), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger'
+    .col-md-6
+      .box
+        .box-body
+          %strong Email
+          %p= mail_to registration.user_email
+          %strong Lodging
+          %p= registration.lodging_name
+          %strong Registration Date
+          %p= registration.created_at
+          %strong Paid?
+          %p= registration.paid?
+          %strong Payment Adjustment
+          %p= registration.payment_adjustment
+          %strong Serving One?
+          %p= registration.serving_one?
+          %strong Medical Release Form?
+          %p= registration.medical_release?
+          %strong Background Check
+          %p{class: registration.user_background_check_date_bg_class}= registration.user_background_check_date
+          %strong Vehicle Capacity
+          %p= registration.vehicle_seating_capacity
+  .widget-footer
+.row
+  .col-md-12

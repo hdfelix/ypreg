@@ -1,6 +1,5 @@
-.main-header
-  %h2 Registrations
-  %em list of people attending this event
+%h2 Registrations
+%em list of people attending this event
 .col-md-12
   .widget.widget-table
     .widget-header
@@ -11,7 +10,7 @@
       .table-responsive
         %table#registrations.table.table-bordered.table-hover
           %thead
-            %tr{style: "font: bold"}
+            %tr
               %th Name
               %th Locality
               %th Lodging
@@ -21,19 +20,5 @@
               %th Paid?
               %th MF?
           %tbody
-            - registrations.each do |registration|
-              - @registration = registration.object
-              %tr{class: registration.user_background_check_date_row_class}
-                %td= link_to registration.user_name, event_registration_path(@event, @registration)
-                %td= registration.locality_city
-                %td= registration.lodging_name
-                %td= registration.user_role
-                %td= registration.user_gender
-                %td= registration.user_age
-                %td= registration.paid?
-                %td= registration.medical_release?
-            - if registrations.empty?
-              %tr
-                %td{:colspan => "12"}
-                  %center There is no one registered for this event.
+            = render partial: 'registration', collection: registrations, locals: {event: @event}
       = link_to 'Back', event_path(@event), class: 'btn btn-default'
