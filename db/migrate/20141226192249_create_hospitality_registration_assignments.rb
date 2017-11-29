@@ -1,4 +1,4 @@
-class CreateHospitalityRegistrationAssignments < ActiveRecord::Migration
+class CreateHospitalityRegistrationAssignments < ActiveRecord::Migration[5.0]
   def change
     create_table :hospitality_registration_assignments do |t|
       t.references :hospitality, index: true
