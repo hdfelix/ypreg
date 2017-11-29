@@ -5,19 +5,19 @@
         .box-body.box-profile
           %h1.profile-username.text-center= event.name
           %p.text-muted.text-center= event.location_name
-        %ul.list-group.list-group-unbordered
-          %li.list-group-item
-            %b Type
-            %span.pull-right= event.event_type
-          %li.list-group-item
-            %b Dates
-            %span.pull-right= event.dates
-          %li.list-group-item
-            %b Registration
-            %span.pull-right= event.registration_window
-          %li.list-group-item
-            %b Cost
-            %span.pull-right= event.registration_cost
+          %ul.list-group.list-group-unbordered
+            %li.list-group-item
+              %b Type
+              %span.pull-right= event.event_type
+            %li.list-group-item
+              %b Dates
+              %span.pull-right= event.dates
+            %li.list-group-item
+              %b Registration
+              %span.pull-right= event.registration_window
+            %li.list-group-item
+              %b Cost
+              %span.pull-right= event.registration_cost
           - if policy(@event).can_manage?
             #event-info-btn-group.btn-group
               %button#manage.btn.btn-default.btn-sm.dropdown-toggle{"data-toggle" => "dropdown", :type => "button"}
