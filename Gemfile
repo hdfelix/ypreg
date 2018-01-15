@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.0'
+ruby '2.3.5'
 
 gem 'rails', ' ~> 4.2'
 
@@ -19,21 +19,21 @@ gem 'skylight'
 gem 'awesome_print'
 
 # Authentication
-gem 'devise'
+gem 'devise', '~>4.4.0'
 
 # Authorization
-gem 'pundit'
+gem 'pundit', '~>1.1.0'
 
 # manage environment variables
-gem 'figaro'
+gem 'figaro', '~>1.1.1'
 
 # PDF generation
 # gem 'prawn'
 
-gem 'simple_form'
+gem 'simple_form', '~>3.5.0'
 
 # searching
-gem 'pg_search'
+gem 'pg_search', '~>2.1.2'
 
 # Decorator pattern
 gem 'draper', '~> 1.3'
@@ -69,7 +69,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
 #   gem 'simplecov', require: false
 #   gem 'simplecov-csv', require: false
