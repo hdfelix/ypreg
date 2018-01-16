@@ -60,10 +60,11 @@ group :development do
   gem 'bullet'
 end
 
+gem 'pry-rails'
+gem 'pry-rescue'
+gem 'pry-byebug'
+
 group :development, :test do
-  gem 'pry-rails'
-  gem 'pry-rescue'
-  gem 'pry-byebug'
   gem 'binding_of_caller'
   gem 'shoulda-matchers', '~> 3.1.1'
   gem 'rspec-rails'
