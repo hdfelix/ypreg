@@ -24,7 +24,6 @@ feature 'User adds Hospitality to event' do
     click_link 'Add a Lodging'
 
     expect(page).to have_content 'New Lodging'
-
   end
 
   # scenario 'can assign lodging as hospitality' do

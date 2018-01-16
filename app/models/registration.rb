@@ -21,7 +21,6 @@ class Registration < ActiveRecord::Base
 
   after_create :create_event_locality
 
-
   # TODO: pay(amount)
   # TODO paid?
 

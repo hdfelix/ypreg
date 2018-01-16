@@ -11,7 +11,7 @@ feature 'Admin user manages a location' do
     end
   end
 
-  scenario "can access location#new"  do
+  scenario "can access location#new" do
     visit new_location_path(authed_admin)
     within 'h2' do
       expect(page).to have_content('New Location')
@@ -72,7 +72,7 @@ feature 'SCYP user manages a location' do
     end
   end
 
-  scenario "can access the 'new' view"  do
+  scenario "can access the 'new' view" do
     visit new_location_path(authed_scyp)
     within 'h2' do
       expect(page).to have_content('New Location')

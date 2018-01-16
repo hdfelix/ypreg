@@ -1,5 +1,4 @@
 module ControllerMacros
-
   def sign_in_user(user = double('user', role: 'admin', role?: 'admin'))
     if user.nil?
       allow(request.env['warden']).

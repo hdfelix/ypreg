@@ -16,12 +16,12 @@ describe UserDecorator do
   end
 
   context '#background_check_date_row_class' do
-    it "returns and empty string if the user does not have a background check"  do
+    it "returns and empty string if the user does not have a background check" do
       @user.background_check_date = nil
       expect(@user.background_check_date_row_class).to eq 'danger'
     end
 
-    it "returns 'an empty string' if background check is expired"  do
+    it "returns 'an empty string' if background check is expired" do
       @user.background_check_date = 40.months.ago
       expect(@user.background_check_date_row_class).to eq 'danger'
     end
@@ -44,7 +44,7 @@ describe UserDecorator do
       expect(@user.background_check_date_bg_class).to eq 'bg-danger'
     end
 
-    it "returns and empty string if background check is expired"  do
+    it "returns and empty string if background check is expired" do
       @user.background_check_date = 40.months.ago
       expect(@user.background_check_date_bg_class).to eq 'bg-danger'
     end

@@ -228,8 +228,8 @@ describe Locality, type: :model do
 
     describe '#users_not_registered' do
       it 'returns the number of users not registered to an event' do
-        ev   = create(:event)
-        locality  = create(:locality)
+        ev = create(:event)
+        locality = create(:locality)
         user = create(:user, locality: locality)
         user2 = create(:user, locality: locality)
         create(:registration, event: ev, locality: locality, user: user)

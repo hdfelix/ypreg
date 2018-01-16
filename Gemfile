@@ -3,7 +3,6 @@ ruby '2.3.5'
 
 gem 'rails', ' ~> 4.2'
 
-gem 'pg'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'sass-rails', '>= 3.2'
 gem 'autoprefixer-rails'
@@ -47,6 +46,7 @@ gem 'mini_magick'
 gem 'carrierwave', '~>1.0'
 
 group :production do
+  gem 'pg', '~>0.21'
   gem 'rails_12factor'
 end
 

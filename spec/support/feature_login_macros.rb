@@ -6,7 +6,6 @@ include Warden::Test::Helpers
 
 # Features login helper
 module FeatureLoginMacros
-
   # DEPRECATED; update code to use #create_signed_in_user_by_role
 	def create_logged_in_admin
 		admin = FactoryBot.create(:user, :with_admin_role)
