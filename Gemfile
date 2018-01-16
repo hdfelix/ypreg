@@ -74,7 +74,7 @@ group :development, :test do
 #   gem 'simplecov', require: false
 #   gem 'simplecov-csv', require: false
   gem 'coverband'
-  gem 'rubocop', '~> 0.45.0', require: false
+  gem 'rubocop', '~> 0.52.1', require: false
   gem 'rubocop-rspec', require: false
   gem 'letter_opener', group: :development
 end
