@@ -41,7 +41,7 @@ group :development, :test do
   gem 'rspec_junit_formatter'
   gem 'factory_girl_rails'
   gem 'coverband'
-  gem 'rubocop', '~> 0.45.0', require: false
+  gem 'rubocop', '~> 0.52.1', require: false
   gem 'rubocop-rspec', require: false
   gem 'letter_opener', group: :development
 end
