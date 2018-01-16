@@ -20,8 +20,7 @@
                 %td
             %tbody
               - @event_localities.each do |el|
-                %tr{:id => "<haml_loud"}
-                  "locality_\#{ el.locality_id }" &gt;
+                %tr{ id: "locality_#{ el.locality_id }" }
                   %td= el.locality_city
                   %td= el.registrations.count
                   %td= el.number_of_beds_assigned_to_registrations

@@ -27,22 +27,17 @@
                 %td Assigned to
             %tbody
               - @event.registered_saints_from_locality(@locality).each  do |saint|
-                %tr{:id => "<haml_loud"}
-                  "saint_\#{saint.id}" &gt;
+                %tr{ id: "saint_#{saint.id}" }
                   %td= saint.name
                   %td= saint.age
                   %td= saint.gender
                   %td
-                    = select_tag "saint_hospitality_ids[#{ saint.id }][]", |
-                      options_from_collection_for_select(                  |
-                      @locality.hospitalities(@event),                     |
-                      "id",                                                |
-                      "lodging_name",                                      |
-                      selected: selected_hospitality(saint)),              |
-                      {                                                    |
-                        prompt: '--'                                       |
-                      }                                                    |
-                    / TODO: why like this?
+                    = select_tag "saint_hospitality_ids[#{ saint.id }][]",
+                      options_from_collection_for_select(@locality.hospitalities(@event),
+                                                         'id',
+                                                         'lodging_name',
+                                                         selected: selected_hospitality(saint)),
+                      { prompt: '--' }
         .panel-footer
           = submit_tag "Update Assignments", class: 'btn btn-primary btn-sm'
           = link_to 'Back', event_hospitality_registration_assignments_path(@event), class: 'btn btn-default btn-sm'

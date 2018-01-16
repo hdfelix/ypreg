@@ -19,22 +19,14 @@
                 %td Assigned to
             %tbody
               - @event.hospitalities.each  do |hosp|
-                %tr{:id => "<haml_loud"}
-                  "hospitality_\#{hosp.id}" &gt;
+                %tr{ id: "hospitality_#{hosp.id}" }
                   %td= hosp.lodging_name
                   %td= hosp.lodging_min_capacity
                   %td= hosp.lodging_max_capacity
                   %td
-                    = select_tag "hospitality_locality_ids[#{ hosp.id }][]", |
-                      options_from_collection_for_select(                    |
-                      @event.localities,                                     |
-                      "id",                                                  |
-                      "city",                                                |
-                      selected: selected_locality(hosp)),                    |
-                      {                                                      |
-                        prompt: '--'                                         |
-                      }                                                      |
-                    / TODO: why like this?
+                    = select_tag("hospitality_locality_ids[#{ hosp.id }][]",
+                      options_from_collection_for_select(@event.localities, 'id', 'city', selected: selected_locality(hosp)),
+                      { prompt: '--' })
         .panel-footer
           = submit_tag "Update Assignments", class: 'btn btn-primary btn-sm'
           = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'
@@ -61,5 +53,3 @@
                 %td= @stats["#{loc.city}"]['grand_total']
                 %td= @event.beds_assigned_to_locality[loc.city]
       .panel-footer
-         
-/ end row

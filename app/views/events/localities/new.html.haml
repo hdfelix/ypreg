@@ -30,8 +30,8 @@
             %tbody
               = hidden_field_tag 'locality_id', @locality.id
               - @locality.users.each do |user|
-                %tr{id: "user_#{user.id}"}
-                  %td= check_box_tag locality_user_ids[], user.id
+                %tr{ id: "user_#{user.id}" }
+                  %td= check_box_tag 'locality_user_ids[]', user.id
                   %td= user.name
                   %td= user.age.to_s.capitalize
         .panel-footer
