@@ -9,7 +9,7 @@
         = @event.title
     .widget-content
       .table-responsive
-        %table#registrations.table.table-bordered.table-hover
+        %table.table.table-bordered.table-hover#registrations
           %thead
             %tr{:style => "font: bold"}
               %th Name
@@ -28,7 +28,7 @@
               %th Vehicle Seating Capacity
               %th
           %tbody
-            - if @registrations.count > 0
+            - if @registrations.count.positive?
               - @registrations.each do |reg|
                 = background_check_tr(reg.user, "reg-#{reg.id}")
                 %td= reg.user.name
@@ -50,10 +50,10 @@
                 %td= format_date(reg.user.background_check_date)
                 %td= reg.vehicle_seating_capacity
                 %td
-                  = link_to 'Show', event_registration_path(@event,reg)
-                  = link_to 'Edit', edit_event_registration_path(@event,reg)
+                  = link_to 'Show', event_registration_path(@event, reg)
+                  = link_to 'Edit', edit_event_registration_path(@event, reg)
             - else
               %tr
-                %td{:colspan => "9"}
+                %td{ colspan: '13' }
                   %center No one registered for this event...
       = link_to 'Back', event_path(@event), class: 'btn btn-default'

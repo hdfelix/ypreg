@@ -59,8 +59,8 @@
               = add_alert_style?(@registration.user)
               %strong Background Check
             .col-sm-8
-              - background_style = "#{decorated_user(@registration.user).background_check_date_row_class}"
-              %span{class: "bg-=#{background_style}"}
+              - background_style = decorated_user(@registration.user).background_check_date_row_class.to_s
+              %span{ class: "bg-=#{background_style}" }
                 = format_date(@registration.user.background_check_date)
           .row
             .col-sm-4

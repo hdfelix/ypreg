@@ -13,9 +13,9 @@
           Local Saints
       = form_for(@event_locality, class: 'form-horizontal') do |f|
         - if @event.errors.any?
-          #error_explanation.alert.alert-danger.alert-dismissable
+          .alert.alert-danger.alert-dismissable#error_explanation
             %h4
-              %strong= pluralize(@event.errors.count, "error")
+              %strong= pluralize(@event.errors.count, 'error')
               prohibited these registrations from being saved:
             %ul
               - @event.errors.full_messages.each do |msg|
@@ -23,7 +23,7 @@
         .widget-content
           %table.table.table-striped
             %thead
-              %tr{style: 'font: bold'}
+              %tr{ style: 'font: bold' }
                 %td
                 %td Name
                 %td Age

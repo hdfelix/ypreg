@@ -14,5 +14,7 @@ AllCops:
     - 'config/**/*'
     - 'script/**/*'
 
+Metrics/LineLength:
+  Max: 100
 Style/VariableNumber:
   EnforcedStyle: 'normalcase'
