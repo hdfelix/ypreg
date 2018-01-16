@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe UserDecorator do
   before(:example) do
-    @user = FactoryGirl.create(:user).decorate
+    @user = FactoryBot.create(:user).decorate
   end
 
   describe 'decorates the User class with' do

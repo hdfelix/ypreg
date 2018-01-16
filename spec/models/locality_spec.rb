@@ -17,10 +17,10 @@ describe Locality, type: :model do
     describe '#localities_not_participating_in_event' do
       it 'returns the number of localities not registered for @event in alphabetical order' do
         Locality.delete_all
-        loc1 = FactoryGirl.create(:locality)
-        loc2 = FactoryGirl.create(:locality)
+        loc1 = FactoryBot.create(:locality)
+        loc2 = FactoryBot.create(:locality)
         sorted_loc_array = [loc1, loc2].sort { |a, b| a.city <=> b.city }
-        ev = FactoryGirl.create(:event_with_registrations)
+        ev = FactoryBot.create(:event_with_registrations)
 
         actual = Locality.localities_not_participating_in_event(ev).map(&:city)
         expected = sorted_loc_array.map(&:city)

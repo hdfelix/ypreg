@@ -40,7 +40,7 @@ describe Lodging, type: :model do
   describe 'Interface' do
     describe '#display_address_in_address_block_format' do
       it 'displays the lodging address' do
-        lodging = FactoryGirl.create(:lodging)
+        lodging = FactoryBot.create(:lodging)
         formatted_address =
           "#{lodging.address1}\n#{lodging.city}, #{lodging.state_abbrv}  #{lodging.zipcode}"
 
@@ -51,7 +51,7 @@ describe Lodging, type: :model do
 
     describe '#display_description' do
       it 'displays the lodging description' do
-        lodging = FactoryGirl.create(:lodging, description: 'My lodging')
+        lodging = FactoryBot.create(:lodging, description: 'My lodging')
 
         expect(lodging.display_description).to eq 'My lodging'
       end

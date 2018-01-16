@@ -44,7 +44,7 @@ module YpwReg
         routing_specs: false,
         controller_specs: true,
         request_specs: false
-      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
     console do
@@ -61,9 +61,9 @@ module YpwReg
     if (Rails.env.development? || Rails.env.test?)
       ActionDispatch::Callbacks.after do
         # Reload the factories
-        unless FactoryGirl.factories.blank? # first init will load factories, this should only run on subsequent reloads
-          FactoryGirl.factories.clear
-          FactoryGirl.find_definitions
+        unless FactoryBot.factories.blank? # first init will load factories, this should only run on subsequent reloads
+          FactoryBot.factories.clear
+          FactoryBot.find_definitions
         end
       end
     end

@@ -9,7 +9,7 @@ module FeatureLoginMacros
 
   # DEPRECATED; update code to use #create_signed_in_user_by_role
 	def create_logged_in_admin
-		admin = FactoryGirl.create(:user, :with_admin_role)
+		admin = FactoryBot.create(:user, :with_admin_role)
 		admin.confirm
     admin.current_sign_in_at = Time.now
 		admin.save
@@ -19,7 +19,7 @@ module FeatureLoginMacros
 	end
 
 	def create_signed_in_user_by_role(role)
-    user = FactoryGirl.create(:user, role: role.to_s)
+    user = FactoryBot.create(:user, role: role.to_s)
 		user.confirm
     user.current_sign_in_at = Time.now
 		user.save

@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 require 'faker'
 
-FactoryGirl.define do
+FactoryBot.define do
   ## User factories
   factory :user, aliases: [:contact, :locality_contact, :lodging_contact] do
     name { Faker::Name.first_name }
@@ -49,7 +49,7 @@ FactoryGirl.define do
 
     trait :with_3_saints do
       after(:create) do |instance|
-        FactoryGirl.create_list(:user, 3, locality: instance)
+        FactoryBot.create_list(:user, 3, locality: instance)
       end
     end
   end
@@ -160,9 +160,9 @@ FactoryGirl.define do
 
     trait :with_1_locality_with_3_registrations do
       after(:create) do |instance|
-        loc = FactoryGirl.create(:locality, :with_3_saints)
+        loc = FactoryBot.create(:locality, :with_3_saints)
         User.where(locality_id: loc.id).each do |usr|
-          FactoryGirl.create(
+          FactoryBot.create(
             :registration,
             user: usr,
             event: instance)
@@ -172,17 +172,17 @@ FactoryGirl.define do
 
     trait :with_2_localities_with_3_registrations_each do
       after(:create) do |instance|
-        loc1 = FactoryGirl.create(:locality, :with_3_saints)
-        loc2 = FactoryGirl.create(:locality, :with_3_saints)
+        loc1 = FactoryBot.create(:locality, :with_3_saints)
+        loc2 = FactoryBot.create(:locality, :with_3_saints)
         User.where(locality_id: loc1.id).each do |usr|
-          FactoryGirl.create(
+          FactoryBot.create(
             :registration,
             user: usr,
             event: instance)
         end
 
         User.where(locality_id: loc2.id).each do |usr|
-          FactoryGirl.create(
+          FactoryBot.create(
             :registration,
             user: usr,
             event: instance)

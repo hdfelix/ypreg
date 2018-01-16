@@ -3,16 +3,16 @@ require 'rails_helper'
 describe LocalityPolicy do
   subject { described_class }
 
-  let(:admin) { FactoryGirl.build_stubbed :user, role: 'admin' }
-  let(:scyp) { FactoryGirl.build_stubbed :user, role: 'scyp' }
-  let(:loc_contact) { FactoryGirl.build_stubbed :user, role: 'loc_contact' }
-  let(:hosp_contact) { FactoryGirl.build_stubbed :user, role: 'hosp_contact' }
-  let(:trainee) { FactoryGirl.build_stubbed :user, role: 'trainee' }
-  let(:speaking_brother) { FactoryGirl.build_stubbed :user, role: 'speaking_brother' }
-  let(:supporting_brother) { FactoryGirl.build_stubbed :user, role: 'supporting_brother' }
-  let(:helper) { FactoryGirl.build_stubbed :user, role: 'helper' }
-  let(:yp) { FactoryGirl.build_stubbed :user, role: 'yp' }
-  let(:guest) { FactoryGirl.build_stubbed :user, role: 'guest' }
+  let(:admin) { FactoryBot.build_stubbed :user, role: 'admin' }
+  let(:scyp) { FactoryBot.build_stubbed :user, role: 'scyp' }
+  let(:loc_contact) { FactoryBot.build_stubbed :user, role: 'loc_contact' }
+  let(:hosp_contact) { FactoryBot.build_stubbed :user, role: 'hosp_contact' }
+  let(:trainee) { FactoryBot.build_stubbed :user, role: 'trainee' }
+  let(:speaking_brother) { FactoryBot.build_stubbed :user, role: 'speaking_brother' }
+  let(:supporting_brother) { FactoryBot.build_stubbed :user, role: 'supporting_brother' }
+  let(:helper) { FactoryBot.build_stubbed :user, role: 'helper' }
+  let(:yp) { FactoryBot.build_stubbed :user, role: 'yp' }
+  let(:guest) { FactoryBot.build_stubbed :user, role: 'guest' }
 
   permissions :index? do
     it 'allows admin users' do

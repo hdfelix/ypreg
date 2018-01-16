@@ -318,7 +318,7 @@ print '.'
 
 for i in 1..30 do  # Not adding 1 to idx (added lodging above already)
   user = User.joins('left join lodgings on lodgings.contact_person_id = users.id').where.not(role: 'yp').sample
-  lodging = FactoryGirl.create(
+  lodging = FactoryBot.create(
     :lodging,
     name: "Lodging #{i}",
     contact_person: user,
