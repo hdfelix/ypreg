@@ -1,0 +1,1 @@
+$(document).ready(function(){!function(){if($){var e=$('meta[name="csrf-token"]').attr("content");console.log($('meta[name="csrf-token"]')),console.log($('meta[name="csrf-token"]').attr("content")),console.log(e),$.ajaxSetup({beforeSend:function(n){n.setRequestHeader("X-CSRF-Token",e)}})}}()});
