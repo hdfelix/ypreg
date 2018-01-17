@@ -71,7 +71,8 @@ feature 'Signed-in user' do
 	# scenario ' - registers successfully with required fields' do
 
 	# 	visit root_path(authed_admin)
-	# 	first(:link, 'Register').click   #figure out how to click on the register button for @event (href="/registrations/new?event_id=1")
+	# 	first(:link, 'Register')
+  # 	  .click # fig out how to click on button for @event (href="/registrations/new?event_id=1")
 
 	# 	expect(page).to have_content('New Registration')
 
@@ -91,5 +92,6 @@ feature 'User is unsuccessful in creating a registration' do
 		create_logged_in_admin
 	}
 
-	#scenario ' - sees error messages'  #Currently registration doesn't require any user input; if this changes we can write this test
+	#scenario ' - sees error messages'
+  # Currently registration doesn't require any user input; if this changes we can write this test
 end

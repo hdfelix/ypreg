@@ -85,7 +85,7 @@ FactoryBot.define do
   tmp_date = Time.now + 2.months
 
   factory :event do
-    title { Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type }
+    title { "#{Faker::Name.event_name} #{Faker::Name.event_modifier} #{Faker::Name.event_type}" }
     description 'This is the sample event description. Not much details here.'
     event_type '3'
     begin_date tmp_date
@@ -112,7 +112,11 @@ FactoryBot.define do
           evaluator.registrations_count.times do
             locality = create(:locality)
             user = create(:user, locality: locality)
-            create_list(:registration, evaluator.registrations_count, event: event, user: user, locality: locality)
+            create_list(:registration,
+                        evaluator.registrations_count,
+                        event: event,
+                        user: user,
+                        locality: locality)
           end
         end
       end

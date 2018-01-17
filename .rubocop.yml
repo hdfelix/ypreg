@@ -15,6 +15,6 @@ AllCops:
     - 'script/**/*'
 
 Metrics/LineLength:
-  Max: 100
-Style/VariableNumber:
+  Max: 120
+Naming/VariableNumber:
   EnforcedStyle: 'normalcase'

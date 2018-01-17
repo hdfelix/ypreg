@@ -55,7 +55,9 @@ feature 'User manages event localities' do
 
     it 'Displays the registration closing date' do
       visit event_locality_path(event, locality, authed_admin)
-      expect(page).to have_content("Registration will close on: #{format_date(event.registration_close_date)}")
+      text = "Registration will close on: #{format_date(event.registration_close_date)}"
+      expect(page)
+        .to have_content(text)
     end
 
     it 'it has the following sections: Attendance Breakdown, Available Hospitalities \

@@ -106,7 +106,8 @@ describe Locality, type: :model do
     end
 
     describe '#assigned_beds_total' do
-      it 'returns the number of beds allocated to a locality for an event that have been assigned to a registrant' do
+      it 'returns the number of beds allocated to a locality for an event
+          that have been assigned to a registrant' do
         ev = create(:event)
         lodge1 = create(:lodging, min_capacity: 1, max_capacity: 2)
         lodge2 = create(:lodging, min_capacity: 1, max_capacity: 2)

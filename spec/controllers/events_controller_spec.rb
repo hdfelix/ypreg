@@ -126,7 +126,9 @@ describe EventsController, type: :controller do
   #       event = Event.create! valid_attributes
   #       # Trigger the behavior that occurs when invalid params are submitted
   #       Event.any_instance.stub(:save).and_return(false)
-  #       put :update, {:id => event.to_param, :event => { "title" => "invalid value" }}, valid_session
+  #       put :update,
+  #           { id: event.to_param, event: { "title" => "invalid value" }},
+  #           valid_session
   #       assigns(:event).should eq(event)
   #     end
 
@@ -134,7 +136,10 @@ describe EventsController, type: :controller do
   #       event = Event.create! valid_attributes
   #       # Trigger the behavior that occurs when invalid params are submitted
   #       Event.any_instance.stub(:save).and_return(false)
-  #       put :update, {:id => event.to_param, :event => { "title" => "invalid value" }}, valid_session
+  #       put :update,
+  #           { id: event.to_param,
+  #             event: { "title" => "invalid value" }},
+  #             valid_session
   #       response.should render_template("edit")
   #     end
   #   end

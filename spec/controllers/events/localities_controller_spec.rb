@@ -29,7 +29,11 @@ describe Events::LocalitiesController, type: :controller do
 
   describe 'POST :create' do
     context 'with valid params' do
-      let(:event) { create(:event_with_registrations, ensure_unique_locality: false, registrations_count: 1) }
+      let(:event) do
+        create(:event_with_registrations,
+               ensure_unique_locality: false,
+               registrations_count: 1)
+      end
       let(:locality) { create(:locality) }
       before(:example) do
         post :create, event_id: event.id, locality_id: locality.id

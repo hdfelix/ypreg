@@ -35,7 +35,11 @@ class Locality < ActiveRecord::Base
     else
       contact_string = ''
       contact.cell_phone.nil? ? contact_string = ')' : contact_string << ", #{format_phone_number(contact.cell_phone)})"
-      contact.email.nil? ? contact_string.prepend("#{contact.name} (") : contact_string.prepend("#{contact.name} (#{contact.email}")
+      if contact.email.nil?
+        contact_string.prepend("#{contact.name} (")
+      else
+        contact_string.prepend("#{contact.name} (#{contact.email}")
+      end
       contact_string
     end
   end

@@ -1,9 +1,11 @@
 desc 'Create initial admin user for YPReg project'
 namespace :ypreg do
   task create_admin: :environment do
-    print "\n\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
-    print "\nWelcome! This rake task will help you create an admin user to get started with YPReg.\n\n"
-    print "First let's create your locality (e.g., if you meet with \nthe church in Anaheim, CA, create a locality for 'Anaheim, CA')\n"
+    print "\n\n||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+    print "\nWelcome! This rake task will help you create
+           an admin user to get started with YPReg.\n\n"
+    print "First let's create your locality (e.g., if you meet
+          with \nthe church in Anaheim, CA, create a locality for 'Anaheim, CA')\n"
 
     # Output text colors
     warning_text_color = 93 # Red
@@ -43,14 +45,18 @@ namespace :ypreg do
       end
     end
 
-    loc = Locality.where('city = ? and state_abbrv = ?', locality['city'].capitalize, locality['abbrv'].upcase).first
+    loc =
+      Locality
+      .where('city = ? and state_abbrv = ?', locality['city'].capitalize, locality['abbrv'].upcase)
+      .first
 
     if loc.presence
       locality['locality_id'] = loc.id
       notice = "This locality is already in the database...\n"
       print_colored_text(notice, warning_text_color)
     else
-      new_locality = Locality.new(city: locality['city'].capitalize, state_abbrv: locality['abbrv'].upcase)
+      new_locality =
+        Locality.new(city: locality['city'].capitalize, state_abbrv: locality['abbrv'].upcase)
       if new_locality.save
         locality['locality_id'] = new_locality.id
         notice = "'#{Locality.first.city}, #{Locality.first.state_abbrv}' created successfully.\n"
@@ -85,7 +91,9 @@ namespace :ypreg do
       print '> '
 
       input = STDIN.gets.chomp
-      print_colored_text("Let's try again; please enter your gender ('M'or 'F'): ", warning_text_color) unless input.size > 0 && %w(m f).include?(input.to_s)
+      try_again_text = "Let's try again; please enter your gender ('M'or 'F'): "
+
+      print_colored_text(try_again_text, warning_text_color) if input.size.nil? || !%w(m f).include?(input.to_s)
     end
     user['gender'] = input.downcase == 'm' ? 'B': 'S'
 
@@ -113,7 +121,8 @@ namespace :ypreg do
       print "> "
       input = STDIN.gets.chomp.downcase
       unless input.size > 0 && %w(college adult).include?(input)
-        print_colored_text("Let's try that again; enter either 'College' or 'Adult': ", warning_text_color)
+        print_colored_text("Let's try that again; enter either 'College' or 'Adult': ",
+                           warning_text_color)
       else
         user['grade'] = input.downcase == 'college' ? 'college' : 'adult'
       end

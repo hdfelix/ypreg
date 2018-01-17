@@ -36,7 +36,9 @@ feature 'User can visit the home page' do
     expect(find_by_id('user_grade').native.children[0].children.text).to eq 'Select your grade'
     expect(find_by_id('user_locality_id').native.children[0].children.text).to eq 'Select locality'
     expect(find_by_id('user_email').native.attributes['placeholder'].value).to eq 'Enter email'
-    expect(find_by_id('user_password').native.attributes['placeholder'].value).to eq 'Enter password'
-    expect(find_by_id('user_password_confirmation').native.attributes['placeholder'].value).to eq 'Enter password confirmation'
+    expect(find_by_id('user_password').native.attributes['placeholder'].value)
+      .to eq 'Enter password'
+    expect(find_by_id('user_password_confirmation').native.attributes['placeholder'].value)
+      .to eq 'Enter password confirmation'
   end
 end

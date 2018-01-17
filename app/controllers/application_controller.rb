@@ -109,7 +109,8 @@ class ApplicationController < ActionController::Base
     assigned_hospitalities_count =
       hospitalities.where.not(registration: nil).count
     chart_values['hosp_ratio'] = "#{assigned_hospitalities_count} / #{hospitalities.count}"
-    chart_values['hosp_ratio_width_percentage'] = "width: #{(assigned_hospitalities_count.to_f / hospitalities.count.to_f) * 100}%"
+    chart_values['hosp_ratio_width_percentage'] =
+      "width: #{(assigned_hospitalities_count.to_f / hospitalities.count.to_f) * 100}%"
     chart_values['hosp_value_now'] = assigned_hospitalities_count
     chart_values['hosp_value_max'] = hospitalities.count
 
