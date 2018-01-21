@@ -4,8 +4,6 @@ describe Payment, type: :model do
   describe 'Instance Methods' do
     describe '.tips' do
       it 'Returns an Hash of available system notes' do
-        expect(Payment.tips).to eq('dude')
-
         expect(Payment.tips)
           .to eq(
             check_payment_instructions: "Checks should be made out to:
