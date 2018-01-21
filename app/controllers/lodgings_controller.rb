@@ -24,9 +24,8 @@ class LodgingsController < ApplicationController
       @lodging.contact_person = User.find(params[:contact_person][:id]) unless params[:contact_person].empty?
     end
 
-    if (contact_person_id = params[:lodging][:contact_person].present?)
-      @lodging.contact_person = User.find(contact_person_id)
-    end
+    contact_person_id = params.dig(:lodging, :contact_person)
+    @lodging.contact_person = User.find(contact_person_id) if contact_person_id
 
     authorize @lodging
 
