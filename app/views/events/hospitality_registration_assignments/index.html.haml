@@ -25,6 +25,6 @@
                   %td= el.registrations.count
                   %td= el.number_of_beds_assigned_to_registrations
                   %td= el.beds_assigned_to_locality
-                  %td= link_to 'Assignments', event_hospitality_registration_assignment_path(@event, el.locality), class: 'btn btn-secondary'
+                  %td= link_to 'Manage Assignments', event_hospitality_registration_assignment_path(@event, el.locality), class: 'btn btn-secondary'
       .panel-footer
         = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'

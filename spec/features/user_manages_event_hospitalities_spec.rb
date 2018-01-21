@@ -12,7 +12,7 @@ feature 'User adds Hospitality to event' do
 
     visit event_hospitalities_path(event, authed_admin)
 
-    expect(page).to have_content(event.hospitalities.first.lodging_name)
+    expect(page).to have_content(event.hospitalities.first.name)
   end
 
   # TODO: Update to match new 'Manage Hospitality" code...

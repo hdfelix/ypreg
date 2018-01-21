@@ -2,16 +2,30 @@ require 'rails_helper'
 
 describe Hospitality, type: :model do
   describe 'Associations' do
-    it { should belong_to :event }
-    it { should belong_to :lodging }
-    it { should belong_to :locality }
-    it { should belong_to :registration }
+    it { is_expected.to belong_to :event }
+    it { is_expected.to belong_to :lodging }
+    it { is_expected.to belong_to :locality }
+    it { is_expected.to belong_to :registration }
     it do
-      should have_many(:registrations)
+      is_expected.to have_many(:registrations)
         .through(:hospitality_registration_assignments)
         .conditions(:uniq)
     end
-    it { should have_many :hospitality_registration_assignments }
+    it { is_expected.to have_many :hospitality_registration_assignments }
+  end
+
+  describe 'Delegations' do
+    it { is_expected.to delegate_method(:name).to(:lodging) }
+    it { is_expected.to delegate_method(:description).to(:lodging) }
+    it { is_expected.to delegate_method(:address1).to(:lodging) }
+    it { is_expected.to delegate_method(:address2).to(:lodging) }
+    it { is_expected.to delegate_method(:city).to(:lodging) }
+    it { is_expected.to delegate_method(:state_abbrv).to(:lodging) }
+    it { is_expected.to delegate_method(:zipcode).to(:lodging) }
+    it { is_expected.to delegate_method(:lodging_type).to(:lodging) }
+    it { is_expected.to delegate_method(:locality_id).to(:lodging) }
+    it { is_expected.to delegate_method(:min_capacity).to(:lodging) }
+    it { is_expected.to delegate_method(:max_capacity).to(:lodging) }
   end
 
   describe 'after_destroy' do

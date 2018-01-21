@@ -6,7 +6,7 @@
     .widget.widget-table
       .widget-header
         %h3
-          %i.fa.fa-table>
+          %i.fa.fa-table
           Registered Saints
       = form_tag assign_event_hospitality_registration_assignments_path(@event, locality_id: @locality) do |f|
         - if @event.errors.any?
@@ -35,9 +35,29 @@
                     = select_tag "saint_hospitality_ids[#{ saint.id }][]",
                       options_from_collection_for_select(@locality.hospitalities(@event),
                                                          'id',
-                                                         'lodging_name',
+                                                         'name',
                                                          selected: selected_hospitality(saint)),
                       { prompt: '--' }
         .panel-footer
           = submit_tag "Update Assignments", class: 'btn btn-primary btn-sm'
           = link_to 'Back', event_hospitality_registration_assignments_path(@event), class: 'btn btn-default btn-sm'
+  .col-md-6
+    .widget.widget-table
+      .widget-header
+        %h3
+          %i.fa.fa-table
+          Event Localities
+      .widget-content
+        %table.table.table-striped
+          %thead
+            %tr{ style: 'font: bold' }
+              %td Name
+              %td Allocated Beds
+              %td Max Beds
+          %tbody
+            - @locality.hospitalities(@event).each do |hospitality|
+              %tr{ id: "hospitality_#{hospitality.id}" }
+                %td= hospitality.name
+                %td= hospitality.min_capacity
+                %td= hospitality.max_capacity
+

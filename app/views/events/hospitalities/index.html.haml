@@ -23,7 +23,7 @@
               - @hospitalities.each do |h|
                 %tr
                   %td= check_box_tag "hospitality_lodging_ids[]", h.lodging.id
-                  %td= h.lodging_name
+                  %td= h.name
                   %td= full_address(h.lodging)
                   %td= Lodging::LODGING_TYPE[h.lodging.lodging_type.to_i]
                   %td= min_max_capacity(h.lodging)
