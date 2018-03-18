@@ -50,43 +50,48 @@ end
 # Create  3 upcoming test events
 count = 3
 print "\nCreating #{count} Events: "
-tmp_date = Time.now + rand(1..3).months
+months_from_now = rand(1..3).months
+tmp_registration_date = Time.now - 1.day
+tmp_event_date = tmp_registration_date + 2.weeks
+
 
 Event.create(
   title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..2),
-  begin_date: tmp_date,
-  end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
-  registration_open_date: (tmp_date - 1.month).strftime('%Y/%m/%d'),
-  registration_close_date: (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d'),
+  registration_open_date: tmp_registration_date,
+  registration_close_date: tmp_registration_date + 1.week,
+  begin_date: tmp_event_date,
+  end_date: tmp_event_date + 3.days,
   registration_cost: rand(10..100).round(-1),
   location_id: rand(1..Location.all.count)
 )
 print '.'
 
-tmp_date = Time.now + rand(3..4).months
+tmp_registration_date = Time.now + 3.months
+tmp_event_date = tmp_registration_date + 2.weeks
 
 Event.create(
   title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..3),
-  begin_date: tmp_date,
-  end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
-  registration_open_date: (tmp_date - 1.month).strftime('%Y/%m/%d'),
-  registration_close_date: (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d'),
+  registration_open_date: tmp_registration_date + 1.month,
+  registration_close_date: tmp_registration_date + 1.month + 1.week,
+  begin_date: tmp_event_date + 1.month,
+  end_date: tmp_event_date + 1.month + 3.days,
   registration_cost: rand(10..100).round(-1),
   location_id: rand(1..Location.all.count)
 )
 print '.'
 
-tmp_date = Time.now + rand(4..7).months
+tmp_registration_date = Time.now + 6.months
+tmp_event_date = tmp_registration_date + 2.weeks
 
 Event.create(
   title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
   event_type: rand(1..3),
-  begin_date: tmp_date,
-  end_date: (tmp_date + 3.days).strftime('%Y/%m/%d'),
-  registration_open_date: (tmp_date - 1.month).strftime('%Y/%m/%d'),
-  registration_close_date: (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d'),
+  registration_open_date: tmp_registration_date,
+  registration_close_date: tmp_registration_date + 1.week,
+  begin_date: tmp_event_date,
+  end_date: tmp_event_date + 3.days,
   registration_cost: rand(10..100).round(-1),
   location_id: rand(1..Location.all.count)
 )
@@ -123,9 +128,9 @@ end
 total_users = 0
 print "\nCreating Users..."
 
-birthday = 38.years.ago
+birthday = DateTime.now - (0..4).to_a.sample.years
 # Create admin users
-print "\n  Admins (2): "
+print "\n  Admins (4): "
 admin = User.new(
   name: 'Hector D. Felix',
   email: 'hdfelix@gmail.com',
@@ -146,6 +151,49 @@ admin.save
 
 print '.'
 total_users += 1
+
+admin = User.new(
+  name: 'Mairen Moreno',
+  email: 'marieneunice@gmail.com',
+  cell_phone: '8888888888',
+  gender: 'Sister',
+  birthday: birthday,
+  age: calculate_age(birthday),
+  grade: 'other',
+  role: 'admin',
+  password: 'password1',
+  password_confirmation: 'password1',
+  background_check_date: Time.zone.now)
+
+admin.skip_confirmation!
+admin.update_attributes(role: 'admin')
+admin.update_attributes(locality_id: Locality.all.sample.id)
+admin.save
+
+print '.'
+total_users += 1
+
+admin = User.new(
+  name: 'Rodrigo Moreno',
+  email: 'rodrigoi.montero@gmail.com',
+  cell_phone: '8888888888',
+  gender: 'Brother',
+  birthday: birthday,
+  age: calculate_age(birthday),
+  grade: 'other',
+  role: 'admin',
+  password: 'password1',
+  password_confirmation: 'password1',
+  background_check_date: Time.zone.now)
+
+admin.skip_confirmation!
+admin.update_attributes(role: 'admin')
+admin.update_attributes(locality_id: Locality.all.sample.id)
+admin.save
+
+print '.'
+total_users += 1
+
 birthday = 33.years.ago
 admin2 = User.new(
   name: 'Developer Account',
@@ -166,7 +214,6 @@ admin2.update_attributes(locality_id: Locality.all.sample.id)
 admin2.save
 
 print '.'
-
 total_users += 1
 
 
@@ -181,7 +228,7 @@ def calculate_grade(age)
         when 15 then '10th'
         when 16 then '11th'
         when 17 then '12th'
-        when 18 then %w(college other).sample 
+        when 18 then %w(college other).sample
         end
   age
 end
@@ -196,7 +243,7 @@ for i in 1..(count + 1) do
   yp = User.new(
     name: "YP User#{i}",
     gender: User::GENDER.sample,
-    birthday: birthday, 
+    birthday: birthday,
     age: age,
     grade: grade,
     role: 'yp',
@@ -254,7 +301,7 @@ for i in 1..(count + 1) do
     gender: User::GENDER.sample,
     birthday: birthday,
     age: calculate_age(birthday),
-    grade: %w(college other).sample, 
+    grade: %w(college other).sample,
     role: 'trainee',
     email: "trainee_user#{i}@ypreg.com",
     password: 'chiracha',
@@ -345,7 +392,7 @@ Event.all.each do |ev|
       has_been_paid: false,
       payment_adjustment: ev.registration_cost - rand(0..ev.registration_cost),
       attend_as_serving_one: false,
-      user: user, 
+      user: user,
       event: ev,
       locality: user.locality)
     reg.save
