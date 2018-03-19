@@ -45,6 +45,8 @@ gem 'mini_magick'
 # Avatar uploader
 gem 'carrierwave', '~>1.0'
 
+gem 'faker'
+
 group :production do
   gem 'pg', '~>0.21'
   gem 'rails_12factor'
@@ -71,7 +73,7 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter'
   gem 'factory_bot_rails'
-  gem 'faker'
+  # gem 'faker'
 #   gem 'simplecov', require: false
 #   gem 'simplecov-csv', require: false
   gem 'coverband'
