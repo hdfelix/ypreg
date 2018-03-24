@@ -7,6 +7,7 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
   def show
     @event = Event.find(params[:event_id])
     @locality = Locality.find(params[:locality_id])
+    @event_localities = EventLocality.where(event: @event)
   end
 
   def assign

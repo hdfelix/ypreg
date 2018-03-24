@@ -23,8 +23,8 @@
                 %tr{ id: "locality_#{ el.locality_id }" }
                   %td= el.locality_city
                   %td= el.registrations.count
-                  %td= el.number_of_beds_assigned_to_registrations
                   %td= el.beds_assigned_to_locality
+                  %td= el.number_of_beds_assigned_to_registrations
                   %td= link_to 'Manage Assignments', event_hospitality_registration_assignment_path(@event, el.locality), class: 'btn btn-secondary'
       .panel-footer
         = link_to 'Back', event_path(@event), class: 'btn btn-default btn-sm'

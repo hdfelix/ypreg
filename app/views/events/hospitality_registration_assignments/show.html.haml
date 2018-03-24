@@ -53,11 +53,15 @@
             %tr{ style: 'font: bold' }
               %td Name
               %td Allocated Beds
+              %td Assigned Beds
               %td Max Beds
           %tbody
             - @locality.hospitalities(@event).each do |hospitality|
+            - @event_localities.each do |el|
               %tr{ id: "hospitality_#{hospitality.id}" }
                 %td= hospitality.name
                 %td= hospitality.min_capacity
+                - binding.pry
+                %td= @event_locality.number_of_beds_assigned_to_registrations
                 %td= hospitality.max_capacity
 
