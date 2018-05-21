@@ -1,4 +1,4 @@
-class EventLocality < ActiveRecord::Base
+class EventLocality < ApplicationRecord
   self.table_name = 'events_localities'
   belongs_to :event
   belongs_to :locality

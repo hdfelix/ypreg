@@ -1,8 +1,8 @@
-class Hospitality < ActiveRecord::Base
+class Hospitality < ApplicationRecord
   belongs_to :event, inverse_of: :hospitalities
   belongs_to :lodging
   belongs_to :locality # TODO: does his need to be removed? More than one locality can be assigned to an hospitality
-  belongs_to :registration
+  belongs_to :registration, optional: true
   has_many :registrations, -> { uniq }, through: :hospitality_registration_assignments
   has_many :hospitality_registration_assignments, inverse_of: :hospitality
 

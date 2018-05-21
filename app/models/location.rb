@@ -1,5 +1,5 @@
 # Places where events can be held
-class Location < ActiveRecord::Base
+class Location < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :address1, presence: true
   validates :city, presence: true

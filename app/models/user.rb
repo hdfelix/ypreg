@@ -1,5 +1,5 @@
 # User model
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
   # Include default devise modules. Others available are:

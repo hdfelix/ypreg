@@ -20,8 +20,8 @@ YpwReg::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_files = true
-  config.static_cache_control = 'public, max-age=3600'
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
@@ -50,6 +50,7 @@ YpwReg::Application.configure do
   config.active_record.raise_in_transactional_callbacks = true
 
   # Simplecov (https://github.com/colszowka/simplecov#want-to-use-spring-with-simplecov)
-  config.serve_static_files = true
+
+  config.public_file_server.enabled = true
   # config.eager_load = false
 end

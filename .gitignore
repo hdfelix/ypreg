@@ -13,7 +13,7 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
-/tmp
+/tmp/*
 
 # Ignore other uneeded files
 database.yml
@@ -46,6 +46,7 @@ coverage
 tags
 .ctags
 
+.byebug_history
 # Rubymine
 /.idea/*
 

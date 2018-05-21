@@ -1,5 +1,5 @@
 # Events model - one-time events, conferences, or retreats
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
   belongs_to :location
   has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations

@@ -2,15 +2,15 @@ require 'rails_helper'
 
 describe Locality, type: :model do
   describe 'Associations' do
-    it { should have_many :users }
-    it { should have_many :lodgings }
-    it { should belong_to :contact }
-    it { should belong_to :lodging_contact }
+    it { is_expected.to have_many :users }
+    it { is_expected.to :lodgings }
+    it { is_expected.to belong_to(:contact).optional }
+    it { is_expected.to belong_to(:lodging_contact).optional }
   end
 
   describe 'Validations' do
-    it { should validate_presence_of :city }
-    it { should validate_presence_of :state_abbrv }
+    it { is_expected.to validate_presence_of :city }
+    it { is_expected.to validate_presence_of :state_abbrv }
   end
 
   describe 'Scopes' do

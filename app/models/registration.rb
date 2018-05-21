@@ -1,14 +1,14 @@
 # This class represents an user who has registered for an event.
 # self.hospitality is the assigned hospitality for the user.
 
-class Registration < ActiveRecord::Base
+class Registration < ApplicationRecord
   PAYMENT_TYPE = %w(cash check)
   STATUS = %w(attended excused y)
 
   belongs_to :user
   belongs_to :event
   belongs_to :locality # TODO: should this be removed and a wrapper method registration_locality added?
-  belongs_to :hospitality
+  belongs_to :hospitality, optional: true
   has_many :hospitality_registration_assignments, inverse_of: :registration
 
   delegate :name, :email, :cell_phone, :home_phone, :work_phone, :birthday,

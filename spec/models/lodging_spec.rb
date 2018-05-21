@@ -2,24 +2,24 @@ require 'rails_helper'
 
 describe Lodging, type: :model do
   describe 'Constants' do
-    it { should have_constant :LODGING_TYPE }
+    it { is_expected.to have_constant :LODGING_TYPE }
   end
 
   describe 'Validations' do
-    it { should validate_presence_of :name }
-    it { should validate_presence_of :address1 }
-    it { should validate_presence_of :city }
-    it { should validate_presence_of :state_abbrv }
-    it { should validate_presence_of :zipcode }
-    it { should validate_presence_of :lodging_type }
-    it { should validate_presence_of :contact_person }
-    it { should validate_presence_of :min_capacity }
+    it { is_expected.to validate_presence_of :name }
+    it { is_expected.to validate_presence_of :address1 }
+    it { is_expected.to validate_presence_of :city }
+    it { is_expected.to validate_presence_of :state_abbrv }
+    it { is_expected.to validate_presence_of :zipcode }
+    it { is_expected.to validate_presence_of :lodging_type }
+    it { is_expected.to validate_presence_of :contact_person }
+    it { is_expected.to validate_presence_of :min_capacity }
   end
 
   describe 'Associations' do
-    it { should belong_to :locality }
-    it { should belong_to :contact_person }
-    it { should accept_nested_attributes_for :contact_person }
+    it { is_expected.to belong_to :locality }
+    it { is_expected.to belong_to(:contact_person).optional }
+    it { is_expected.to accept_nested_attributes_for :contact_person }
   end
 
   describe 'Scopes' do
