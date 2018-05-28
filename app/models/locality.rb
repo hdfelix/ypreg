@@ -1,9 +1,9 @@
 # A local church
-class Locality < ActiveRecord::Base
+class Locality < ApplicationRecord
   has_many :users
   has_many :lodgings
-  belongs_to :contact, class_name: 'User', foreign_key: 'contact_id'
-  belongs_to :lodging_contact, class_name: 'User', foreign_key: 'lodging_contact_id'
+  belongs_to :contact, optional: true, class_name: 'User', foreign_key: 'contact_id'
+  belongs_to :lodging_contact, optional: true, class_name: 'User', foreign_key: 'lodging_contact_id'
 
   validates :city, presence: true
   validates :state_abbrv, presence: true

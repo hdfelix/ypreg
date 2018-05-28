@@ -12,8 +12,12 @@
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
-/tmp
+/log/*
+/tmp/*
+!/tmp/.keep
+
+/node_modules
+/yarn-error.log
 
 # Ignore other uneeded files
 database.yml
@@ -46,9 +50,6 @@ coverage
 tags
 .ctags
 
+.byebug_history
 # Rubymine
 /.idea/*
-
-# Notes
-Joe-readme.md
-Felix-readme.md

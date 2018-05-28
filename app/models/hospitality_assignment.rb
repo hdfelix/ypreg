@@ -1,4 +1,4 @@
-class HospitalityAssignment < ActiveRecord::Base
+class HospitalityAssignment < ApplicationRecord
   belongs_to :registration, inverse_of: :hospitality_assignments
   belongs_to :hospitality, inverse_of: :hospitality_assignments
   belongs_to :locality
