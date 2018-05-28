@@ -21,8 +21,7 @@
             %tbody
               - if @locations.all.count > 0
                 - @locations.each do |location|
-                  %tr{:id => "loc_<haml_loud"}
-                    location.id &gt;
+                  %tr{ id: location.id }
                     %td
                       = location.location_type.capitalize
                     %td= link_to location.name, location

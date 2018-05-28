@@ -13,12 +13,12 @@
           %thead
             %tr{ style: 'font: bold' }
               %th Name
-              / th>Email</th
+              -#%th Email
               %th Role
               %th Gender
               %th Age
               %th Locality
-              / th style="width: 150px">Phone</th
+              %th.phone-numbers-header Phone&nbsp;Numbers
               %th Guest?
               %th Payment Adjustment
               %th Paid?
@@ -32,15 +32,19 @@
               - @registrations.each do |reg|
                 = background_check_tr(reg.user, "reg-#{reg.id}")
                 %td= reg.user.name
-                / td><haml_silent></haml_silent></td
                 %td= reg.user.role.capitalize
                 %td= reg.user.gender.to_s[0]
                 %td= reg.user.age
                 %td= reg.user.locality_city
-                /
-                  td>C: <haml_loud> format_phone_number(reg.user.cell_phone) </haml_loud><br />
-                  H: <haml_loud> format_phone_number(reg.user.home_phone) </haml_loud><br />
-                  W: <haml_loud> format_phone_number(reg.user.work_phone) </haml_loud></td
+                %td.phone-numbers-cell
+                  C:
+                  = format_phone_number(reg.user.cell_phone)
+                  %br/
+                  H:
+                  = format_phone_number(reg.user.home_phone)
+                  %br/
+                  W:
+                  = format_phone_number(reg.user.work_phone)
                 %td
                   = reg.conference_guest.to_s.capitalize
                 %td= number_to_currency(reg.payment_adjustment)
