@@ -59,16 +59,5 @@ module YpwReg
         config.console = Pry
       end
     end
-
-    # http://stackoverflow.com/a/7412056
-    if (Rails.env.development? || Rails.env.test?)
-      ActionDispatch::Callbacks.after do
-        # Reload the factories
-        unless FactoryBot.factories.blank? # first init will load factories, this should only run on subsequent reloads
-          FactoryBot.factories.clear
-          FactoryBot.find_definitions
-        end
-      end
-    end
   end
 end
