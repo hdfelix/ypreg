@@ -8,7 +8,11 @@ Repo: https://github.com/hdfelix/ypreg.git
 This is an event registration management site. You can use this site to manage registrations short one-day events that require
 no hospitality accomodations as well as multi-day events where hospitality accomodations are necessary.  
    
-###Features
+It is currently running on: 
+* Ruby 2.5.1
+* Rails 5.2.0
+
+### Features
 * Create and manage events
 * Create and manage event locations
 * Create and manage hospitality locations
@@ -16,16 +20,28 @@ no hospitality accomodations as well as multi-day events where hospitality accom
 
 ## Setup
 To get started, clone this repo and run:
-```
+
+```bash
 $ bundle
 ```
 The site is configured to use PostgreSQL for all environments (Development|Test|Production). Make sure you install and configure PostgreSQL before running the following commands from your terminal:
-```
-$ rake db:create
-$ rake db:migrate
+
+```bash
+$ rails db:create
+$ rails db:migrate
 ```
 
 Next, Run the following command to create an admin user account:  
+
+```bash
+$ rails ypreg:create_admin
 ```
-rake ypreg:create_admin
+
+### Test data
+The previous instructions will get you a clean database. If you prefer to see the app with some test data, do this instead:
+
+```bash
+$ rails db:setup
 ```
+
+Tehn you can log in using `test@test.com` and password: `devaccount`.
