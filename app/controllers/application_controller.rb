@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   layout :layout_by_resource
 
   include Pundit
