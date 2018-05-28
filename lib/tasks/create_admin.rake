@@ -93,7 +93,7 @@ namespace :ypreg do
       input = STDIN.gets.chomp
       try_again_text = "Let's try again; please enter your gender ('M'or 'F'): "
 
-      print_colored_text(try_again_text, warning_text_color) if input.size.nil? || !%w(m f).include?(input.to_s)
+      print_colored_text(try_again_text, warning_text_color) if input.size.nil? || !%w(M m F f).include?(input.to_s)
     end
     user['gender'] = input.downcase == 'm' ? 'B': 'S'
 
@@ -156,6 +156,7 @@ namespace :ypreg do
           password: user['password'],
           role: 'admin',
           locality_id: locality['locality_id'])
+      new_user.skip_confirmation!
       if new_user.save
         notice = "\n#{new_user.name} (#{new_user.email}) created successfully."
         print_colored_text(notice, success_text_color)
