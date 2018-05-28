@@ -2,12 +2,33 @@ class InitSchema < ActiveRecord::Migration[5.2]
   def up
     # These are extensions that must be enabled in order to support this database
     enable_extension "plpgsql"
+    create_table "locations", force: :cascade do |t|
+      t.string   "name"
+      t.text     "description"
+      t.string   "address1"
+      t.string   "address2"
+      t.string   "city"
+      t.string   "state_abbrv"
+      t.integer  "zipcode"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.integer  "max_capacity"
+      t.string   "location_type"
+    end
     create_table "addresses", force: :cascade do |t|
       t.string   "addressline1"
       t.string   "addressline2"
       t.string   "city"
       t.string   "state_abbrv"
       t.integer  "zipcode"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+    create_table "localities", force: :cascade do |t|
+      t.string   "city"
+      t.string   "state_abbrv"
+      t.integer  "contact_id"
+      t.integer  "lodging_contact_id"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
@@ -25,6 +46,8 @@ class InitSchema < ActiveRecord::Migration[5.2]
       t.string   "description"
     end
     add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
+    add_index "localities", ["contact_id"], name: "index_localities_on_contact_id", using: :btree
+    add_index "localities", ["lodging_contact_id"], name: "index_localities_on_lodging_contact_id", using: :btree
     create_table "events_localities", force: :cascade do |t|
       t.integer "event_id"
       t.integer "locality_id"
@@ -53,29 +76,6 @@ class InitSchema < ActiveRecord::Migration[5.2]
     add_index "hospitality_registration_assignments", ["hospitality_id"], name: "index_hospitality_registration_assignments_on_hospitality_id", using: :btree
     add_index "hospitality_registration_assignments", ["locality_id"], name: "index_hospitality_registration_assignments_on_locality_id", using: :btree
     add_index "hospitality_registration_assignments", ["registration_id"], name: "index_hospitality_registration_assignments_on_registration_id", using: :btree
-    create_table "localities", force: :cascade do |t|
-      t.string   "city"
-      t.string   "state_abbrv"
-      t.integer  "contact_id"
-      t.integer  "lodging_contact_id"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-    add_index "localities", ["contact_id"], name: "index_localities_on_contact_id", using: :btree
-    add_index "localities", ["lodging_contact_id"], name: "index_localities_on_lodging_contact_id", using: :btree
-    create_table "locations", force: :cascade do |t|
-      t.string   "name"
-      t.text     "description"
-      t.string   "address1"
-      t.string   "address2"
-      t.string   "city"
-      t.string   "state_abbrv"
-      t.integer  "zipcode"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-      t.integer  "max_capacity"
-      t.string   "location_type"
-    end
     create_table "lodgings", force: :cascade do |t|
       t.string  "name"
       t.text    "description"
