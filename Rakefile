@@ -12,5 +12,4 @@ if defined?(RSpec)
   end
 end
 
-
 task spec: :factory_specs

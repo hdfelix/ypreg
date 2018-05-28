@@ -6,8 +6,7 @@ end
 
 ruby '2.3.5'
 
-# gem 'rails', '=5.0.0'
-gem 'rails', '5.0.6'
+gem 'rails', '5.1.1'
 
 # gem 'actionpack'
 gem 'activemodel'
@@ -15,14 +14,14 @@ gem 'activemodel'
 # gem 'railties'
 gem 'autoprefixer-rails'
 gem 'awesome_print'
-gem 'bootstrap-sass', '~> 3.2.0'
+gem 'bootstrap-sass'
 
 # Avatar uploader
 gem 'carrierwave', '~>1.2.2'
-gem 'coffee-rails'
+gem 'coffee-rails', '~> 4.2'
 
 # Authentication
-gem 'devise'
+gem 'devise', git: 'https://github.com/plataformatec/devise.git', branch: 'master'
 
 # Decorator pattern
 gem 'draper'
@@ -30,12 +29,13 @@ gem 'draper'
 gem 'faker'
 # manage environment variables
 gem 'figaro', '~>1.1.1'
-gem 'foreigner'
-gem 'haml-rails', '~>0.9'
+gem 'font-awesome-sass'
+# gem 'foreigner'
+gem 'haml-rails'
 # gem 'immigrant'
 
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+# gem 'jquery-rails'
+# gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.5'
 
 # Image processing
@@ -47,15 +47,15 @@ gem 'mini_magick'
 gem 'pg_search', '~>2.1.2'
 
 # Authorization
-gem 'pundit', '~>1.1.0'
-# gem 'pry-byebug', platform :mri
+gem 'pundit'
 gem 'pry-rails'
 gem 'pry-rescue'
-gem 'puma', '~> 3.0'
+# Use Puma as teh app server
+gem 'puma', '~> 3.7'
 
 # gem 'redis', '~>3.0' # for ActionCable in production
 gem 'sass-rails', '>= 3.2'
-gem 'simple_form', '~>3.5.0'
+gem 'simple_form'
 gem 'skylight'
 gem 'turbolinks', '~>5'
 gem 'uglifier', '>= 1.3.0'
@@ -69,6 +69,7 @@ group :development do
   gem 'better_errors'
   gem 'bullet'
   # gem 'guard-livereload'
+  gem 'listen', '>=3.0.5', '< 3.2'
   # gem 'quiet_assets'
   gem 'railroady'
   gem 'spring'
@@ -79,33 +80,33 @@ group :development do
   gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
   # Access an IRB console on exception pages by using <%= console %> anywhere in the code.
-  gem 'web-console' # , '>= 3.3.0'
+  gem 'web-console' , '>= 3.3.0'
 end
 
 group :development, :test do
   gem 'binding_of_caller'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'coverband'
   gem 'factory_bot_rails'
   gem 'letter_opener', group: :development
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter'
   gem 'rspec-rails'
-  # gem 'rubocop', '~> 0.52.1', require: false
+  gem 'rubocop', '~> 0.52.1', require: false
   gem 'rubocop-rspec', require: false
   gem 'shoulda-matchers', '~> 3.1.1'
 #   gem 'simplecov', require: false
 #   gem 'simplecov-csv', require: false
-gem 'listen' # '~> 3.0.5'
 end
 
 group :test do
-  gem 'capybara' # , '~> 2.3.0'
   gem 'capybara-screenshot'
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'launchy'
-  gem 'selenium-webdriver'
   gem 'timecop'
 end
 
