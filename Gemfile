@@ -48,6 +48,7 @@ gem 'pg_search', '~>2.1.2'
 
 # Authorization
 gem 'pundit'
+gem 'pry-byebug'
 gem 'pry-rails'
 gem 'pry-rescue'
 # Use Puma as teh app server
