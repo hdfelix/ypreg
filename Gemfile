@@ -82,7 +82,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-  gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+  # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
@@ -94,6 +94,7 @@ group :development, :test do
   gem 'coverband'
   gem 'factory_bot_rails'
   gem 'letter_opener', group: :development
+  gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter'
   gem 'rspec-rails'
