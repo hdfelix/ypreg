@@ -11,6 +11,7 @@
     %meta{ content: 'YPReg - Event Registration', name: 'description' }/
     %meta{ content: 'Hector D. Felix (hdfnet@gmail.com)', name: 'author' }/
     = csrf_meta_tags
+    = csp_meta_tag
     / kingsboard CSS
     / kingsboard skin
     / %= stylesheet_link_tag    "fullbright", media: "all" %

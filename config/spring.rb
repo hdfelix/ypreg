@@ -1,6 +1,6 @@
-%w(
+%w[
 .ruby-version
 .rbenv-vars
 tmp/restart.txt
 tmp/caching-dev.txt
-).each { |path| Spring.watch(patch) }
+].each { |path| Spring.watch(patch) }
