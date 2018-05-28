@@ -15,6 +15,7 @@ gem 'activemodel'
 gem 'autoprefixer-rails'
 gem 'awesome_print'
 gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
 
 # Avatar uploader
 gem 'carrierwave', '~>1.2.2'
@@ -34,8 +35,8 @@ gem 'font-awesome-sass'
 gem 'haml-rails'
 # gem 'immigrant'
 
-# gem 'jquery-rails'
-# gem 'jquery-ui-rails'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'jbuilder', '~> 2.5'
 
 # Image processing

@@ -1,5 +1,5 @@
 {
-  'name': 'YPReg',
-  'private': true,
-  'dependencies': {}
+  "name": "YPReg",
+  "private": true,
+  "dependencies": {}
 }
