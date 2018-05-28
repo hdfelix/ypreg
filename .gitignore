@@ -53,3 +53,5 @@ tags
 .byebug_history
 # Rubymine
 /.idea/*
+
+/db/ypreg_admin.rb

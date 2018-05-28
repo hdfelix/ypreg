@@ -120,67 +120,7 @@ print "\nCreating Users..."
 
 birthday = DateTime.now - (0..4).to_a.sample.years
 # Create admin users
-print "\n  Admins (4): "
-admin = User.new(
-  name: 'Hector D. Felix',
-  email: 'hdfelix@gmail.com',
-  cell_phone: '8888888888',
-  gender: 'Brother',
-  birthday: birthday,
-  age: calculate_age(birthday),
-  grade: 'other',
-  role: 'admin',
-  password: 'chiracha',
-  password_confirmation: 'chiracha',
-  background_check_date: Time.zone.now)
-
-admin.skip_confirmation!
-admin.update_attributes(role: 'admin')
-admin.update_attributes(locality_id: Locality.all.sample.id)
-admin.save
-
-print '.'
-total_users += 1
-
-admin = User.new(
-  name: 'Mairen Moreno',
-  email: 'marieneunice@gmail.com',
-  cell_phone: '8888888888',
-  gender: 'Sister',
-  birthday: birthday,
-  age: calculate_age(birthday),
-  grade: 'other',
-  role: 'admin',
-  password: 'password1',
-  password_confirmation: 'password1',
-  background_check_date: Time.zone.now)
-
-admin.skip_confirmation!
-admin.update_attributes(role: 'admin')
-admin.update_attributes(locality_id: Locality.all.sample.id)
-admin.save
-
-print '.'
-total_users += 1
-
-admin = User.new(
-  name: 'Rodrigo Moreno',
-  email: 'rodrigoi.montero@gmail.com',
-  cell_phone: '8888888888',
-  gender: 'Brother',
-  birthday: birthday,
-  age: calculate_age(birthday),
-  grade: 'other',
-  role: 'admin',
-  password: 'password1',
-  password_confirmation: 'password1',
-  background_check_date: Time.zone.now)
-
-admin.skip_confirmation!
-admin.update_attributes(role: 'admin')
-admin.update_attributes(locality_id: Locality.all.sample.id)
-admin.save
-
+print "\n  Admin Developer Account: "
 print '.'
 total_users += 1
 
