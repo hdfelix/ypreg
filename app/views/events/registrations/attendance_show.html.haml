@@ -41,18 +41,13 @@
                 %span.data-name Med Release Form?
                 %span.data-value= display_yes_no(@attendance.has_medical_release_form)
               %p.data-row
-                %span.data-name
-                = add_alert_style?(@attendance.user)
-                \&gt;Last Background Check
+                %span.data-name{ class: add_alert_style?(@attendance.user) }
+                Last Background Check
               %span.data-value
-                - background_style = #{decorated_user(@attendance.user).background_check_date_row_class}
-                %span{:style => "bg-"}
-                = background_style
-                '&gt;
-                %span.bg-
-                = background_style
-                '&gt;
-                \#{format_date(@attendance.user.background_check_date)}
+                - background_style = "#{decorated_user(@attendance.user).background_check_date_row_class}"
+                %span{ style: "bg-#{background_style}" }
+                  %span{ class: "bg-#{background_style}" }
+                    = format_date(@attendance.user.background_check_date)
     %h3
       %i.fa.fa-square>
       Hospitality Info

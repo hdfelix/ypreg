@@ -10,6 +10,23 @@ GIT
       responders
       warden (~> 1.2.3)
 
+GIT
+  remote: https://github.com/thoughtbot/capybara-webkit.git
+  revision: 1e0e932e10c9baf318d2edfa51bbc7aaab9cf9d1
+  branch: master
+  specs:
+    capybara-webkit (1.15.0)
+      capybara (>= 2.3, < 4.0)
+      json
+
+GIT
+  remote: https://github.com/thoughtbot/shoulda-matchers.git
+  revision: c0960bd72dd41c4e9bd8b4375254f539776bfe95
+  branch: master
+  specs:
+    shoulda-matchers (3.1.2)
+      activesupport (>= 4.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -97,9 +114,6 @@ GEM
     capybara-screenshot (1.0.21)
       capybara (>= 1.0, < 4)
       launchy
-    capybara-webkit (1.15.0)
-      capybara (>= 2.3, < 4.0)
-      json
     carrierwave (1.2.2)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -362,8 +376,6 @@ GEM
       rubyzip (~> 1.2)
     sexp_processor (4.11.0)
     shellany (0.0.1)
-    shoulda-matchers (3.1.2)
-      activesupport (>= 4.0.0)
     simple_form (4.0.1)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -434,7 +446,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15, < 4.0)
   capybara-screenshot
-  capybara-webkit
+  capybara-webkit!
   carrierwave (~> 1.2.2)
   chromedriver-helper
   coffee-rails (~> 4.2)
@@ -474,7 +486,7 @@ DEPENDENCIES
   sass-rails (>= 3.2)
   sdoc
   selenium-webdriver
-  shoulda-matchers (~> 3.1.1)
+  shoulda-matchers (~> 3.1.2)!
   simple_form
   skylight
   spring

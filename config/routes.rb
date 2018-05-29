@@ -53,6 +53,12 @@ Rails.application.routes.draw do
         post 'assign'
       end
     end
+    # resources :hospitality_registration_assignments, only: [:index, :show], controller: 'events/hospitality_registration_assignments' do
+    #   collection do
+    #     put 'assign'
+    #     post 'assign'
+    #   end
+    # end
     resources :hospitality_lodgings,
               only: [:index],
               controller: 'events/hospitality_lodgings'

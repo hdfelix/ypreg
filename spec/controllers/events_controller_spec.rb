@@ -64,22 +64,24 @@ describe EventsController, type: :controller do
   end
 
   describe 'POST :create' do
+    let(:location) { create(:location) }
+
     describe 'with valid params' do
       it 'creates a new Event' do
         expect {
-          post :create, params: { event: attributes_for(:event).merge(location_id: 1) }
+          post :create, params: { event: attributes_for(:event).merge(location_id: location.id) }
         }.to change(Event, :count).by(1)
       end
 
       it 'assigns a newly created event as @event' do
-        post :create, params: { event: attributes_for(:event).merge(location_id: 1) }
+        post :create, params: { event: attributes_for(:event).merge(location_id: location.id) }
 
         expect(assigns(:event)).to be_an(Event)
         expect(assigns(:event)).to be_persisted
       end
 
       it 'redirects to the event index' do
-        post :create, params: { event: attributes_for(:event).merge(location_id: 1) }
+        post :create, params: { event: attributes_for(:event).merge(location_id: location.id) }
         expect(response).to redirect_to events_path
       end
     end

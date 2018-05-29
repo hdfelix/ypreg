@@ -16,8 +16,6 @@ class Registration < ApplicationRecord
            to: :user
 
   validates :locality, presence: true
-  validates_inclusion_of :has_been_paid, in: [true, false]
-  validates_inclusion_of :has_medical_release_form, in: [true, false]
 
   after_create :create_event_locality
 

@@ -18,16 +18,6 @@ describe Registration, type: :model do
 
     describe 'Validations' do
       it { is_expected.to belong_to :locality }
-
-      it do
-        is_expected.to validate_inclusion_of(:has_been_paid)
-          .in_array([true, false])
-      end
-
-      it do
-        is_expected.to validate_inclusion_of(:has_medical_release_form)
-          .in_array([true, false])
-      end
     end
 
     describe 'Delegations' do

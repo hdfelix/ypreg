@@ -10,9 +10,6 @@ feature 'Admin user manages lodgings' do
     within 'h2' do
       expect(page).to have_content('Lodgings')
     end
-    expect(page)
-      .to have_content("list of available lodging \
-                        locations for conferences and retreats")
   end
 
   scenario 'can access lodging#new' do
@@ -70,8 +67,10 @@ feature 'Admin user manages lodgings' do
     expect(page).to have_content(lodging.min_capacity)
     expect(page).to have_content(lodging.max_capacity)
     expect(page).to have_content(lodging.contact_person.name)
-    expect(page)
-      .to have_content(lodging.display_address_in_address_block_format)
+    expect(page).to have_content(lodging.address1)
+    expect(page).to have_content(lodging.city)
+    expect(page).to have_content(lodging.state_abbrv)
+    expect(page).to have_content(lodging.zipcode)
   end
 
   scenario 'edits a lodging' do
@@ -102,8 +101,6 @@ feature 'SCYP user manages lodgings' do
     visit lodgings_path(authed_scyp)
 
     expect(page).to have_content('Lodging')
-    expect(page).to have_content("list of available lodging locations \
-                                 for conferences and retreats")
   end
 
   scenario 'Can add a lodging successfully' do

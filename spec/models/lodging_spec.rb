@@ -17,8 +17,8 @@ describe Lodging, type: :model do
   end
 
   describe 'Associations' do
-    it { is_expected.to belong_to :locality }
-    it { is_expected.to belong_to(:contact_person).optional }
+    it { is_expected.to belong_to(:locality).optional }
+    it { is_expected.to belong_to(:contact_person).class_name('User') }
     it { is_expected.to accept_nested_attributes_for :contact_person }
   end
 
@@ -32,7 +32,7 @@ describe Lodging, type: :model do
         user_list = create_list(:confirmed_user, 2)
 
         expect(lodge.users_that_are_not_contact_people)
-          .to eq(user_list + [lodge.contact_person])
+          .to eq(user_list.to_a + [lodge.contact_person])
       end
     end
   end

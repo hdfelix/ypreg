@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Locality, type: :model do
   describe 'Associations' do
     it { is_expected.to have_many :users }
-    it { is_expected.to :lodgings }
+    it { is_expected.to have_many :lodgings }
     it { is_expected.to belong_to(:contact).optional }
     it { is_expected.to belong_to(:lodging_contact).optional }
   end

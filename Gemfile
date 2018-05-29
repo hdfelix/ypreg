@@ -100,7 +100,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop', '~> 0.52.1', require: false
   gem 'rubocop-rspec', require: false
-  gem 'shoulda-matchers', '~> 3.1.1'
+  gem 'shoulda-matchers', '~> 3.1.2', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'master'
 #   gem 'simplecov', require: false
 #   gem 'simplecov-csv', require: false
 end
@@ -109,7 +109,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>=2.15', '< 4.0'
   gem 'capybara-screenshot'
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', git: 'https://github.com/thoughtbot/capybara-webkit.git', branch: 'master'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'database_cleaner'

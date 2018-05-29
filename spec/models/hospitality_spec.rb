@@ -4,12 +4,11 @@ describe Hospitality, type: :model do
   describe 'Associations' do
     it { is_expected.to belong_to(:event).inverse_of(:hospitalities) }
     it { is_expected.to belong_to :lodging }
-    it { is_expected.to belong_to :locality.optional }
+    it { is_expected.to belong_to(:locality).optional }
     it { is_expected.to belong_to(:registration).optional }
     it do
       is_expected.to have_many(:registrations)
         .through(:hospitality_registration_assignments)
-        .conditions(:uniq)
     end
     it { is_expected.to have_many(:hospitality_registration_assignments).inverse_of(:hospitality) }
   end

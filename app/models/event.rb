@@ -42,7 +42,7 @@ class Event < ApplicationRecord
   end
 
   def registered_saints_from_locality(locality)
-    localities.find(locality).registrations(self).map(&:user)
+    localities.find(locality.id).registrations(self).map(&:user)
   end
 
   def total_registrations(options = {})

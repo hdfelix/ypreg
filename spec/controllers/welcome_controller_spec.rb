@@ -22,7 +22,7 @@ describe WelcomeController, type: :controller do
 
     it 'returns http success' do
       get :index
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it "renders 'index' template" do

@@ -1,6 +1,7 @@
 .content
   .main-header
-    %h2= "Hospitality Assignments - #{ @locality.city.capitalize }"
+    %h2
+      = "Hospitality Assignments - #{ @locality.city.capitalize }"
     %em Hospitality arrangement details
   .col-md-6
     .widget.widget-table
@@ -12,7 +13,7 @@
         - if @event.errors.any?
           #error_explanation.alert.alert-danger.alert-dismissable
             %h4
-              %strong= pluralize(@event.errors.count, "error")
+              %strong= pluralize(@event.errors.count, 'error')
               prohibited this event from being saved:
             %ul
               - @event.errors.full_messages.each do |msg|
@@ -20,7 +21,7 @@
         .widget-content
           %table.table.table-striped
             %thead
-              %tr{:style => "font: bold"}
+              %tr{ style: 'font: bold' }
                 %td Saint
                 %td Age
                 %td Gender
@@ -39,7 +40,7 @@
                                                          selected: selected_hospitality(saint)),
                       { prompt: '--' }
         .panel-footer
-          = submit_tag "Update Assignments", class: 'btn btn-primary btn-sm'
+          = submit_tag 'Update Assignments', class: 'btn btn-primary btn-sm'
           = link_to 'Back', event_hospitality_registration_assignments_path(@event), class: 'btn btn-default btn-sm'
   .col-md-6
     .widget.widget-table
@@ -57,11 +58,8 @@
               %td Max Beds
           %tbody
             - @locality.hospitalities(@event).each do |hospitality|
-            - @event_localities.each do |el|
               %tr{ id: "hospitality_#{hospitality.id}" }
                 %td= hospitality.name
                 %td= hospitality.min_capacity
-                - binding.pry
                 %td= @event_locality.number_of_beds_assigned_to_registrations
                 %td= hospitality.max_capacity
-

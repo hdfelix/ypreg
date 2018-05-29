@@ -74,7 +74,7 @@ feature 'User manages event localities' do
     it 'Displays the attendance breakdown'
 
     it 'List registered users form locality' do
-      registrations = event.localities.find(locality).registrations(event)
+      registrations = event.localities.find(locality.id).registrations(event)
 
       visit event_locality_path(event, locality, authed_admin)
       registrations.all.each do |reg|

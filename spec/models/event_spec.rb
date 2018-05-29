@@ -6,10 +6,10 @@ describe Event, type: :model do
     it { should belong_to :location }
     it { should have_many(:registrations).dependent(:destroy) }
     it { should have_many(:users).through(:registrations) }
-    it { should have_many(:localities).conditions(:uniq).through(:users) }
+    it { should have_many(:localities).through(:users) }
     it { should have_many :event_localities }
     it { should have_many :hospitalities }
-    it { should have_many(:lodgings).conditions(:uniq).through(:hospitalities) }
+    it { should have_many(:lodgings).through(:hospitalities) }
     it { should have_many(:hospitality_registration_assignments).through(:hospitalities) }
   end
 

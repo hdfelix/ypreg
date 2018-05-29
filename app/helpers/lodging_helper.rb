@@ -10,6 +10,6 @@ module LodgingHelper
   end
 
   def filtered_contact_person_collection(assigned_contact_person)
-    User.not_contact_persons << assigned_contact_person
+    User.not_contact_persons.to_a << assigned_contact_person
   end
 end
