@@ -10,7 +10,7 @@ describe LodgingsController, type: :controller do
       h1 = create(:lodging)
       h2 = create(:lodging)
 
-      get 'index'
+      get :index
 
       expect(assigns(:lodgings)).to match_array([h1, h2])
     end
@@ -30,13 +30,13 @@ describe LodgingsController, type: :controller do
     it 'assigns the requested lodging to @lodging' do
       lodging = create(:lodging)
 
-      get :show, id: lodging.to_param
+      get :show, params: { id: lodging.to_param }
 
       expect(assigns(:lodging)).to eq lodging
     end
 
     it 'renders the :show template' do
-      get :show, id: create(:lodging)
+      get :show, params: { id: create(:lodging) }
       expect(response).to render_template :show
     end
   end
@@ -57,13 +57,13 @@ describe LodgingsController, type: :controller do
     it 'assigns the requested lodging as @lodging' do
       lodging = create(:lodging)
 
-      get :edit, id: lodging.to_param
+      get :edit, params: { id: lodging.to_param }
 
       expect(assigns(:lodging)).to eq(lodging)
     end
 
     it 'renders the :edit template' do
-      get :edit, id: create(:lodging).to_param
+      get :edit, params: { id: create(:lodging).to_param }
       expect(response).to render_template(:edit)
     end
   end
@@ -72,26 +72,26 @@ describe LodgingsController, type: :controller do
     context 'with empty contact_person_id' do
       it 'create a new lodging' do
         expect {
-          post :create, lodging: attributes_for(:lodging)
+          post :create, params: { lodging: attributes_for(:lodging) }
         }.to change(Lodging, :count).by(1)
       end
     end
     context 'with valid params' do
       it 'create a new lodging' do
         expect {
-          post :create, lodging: attributes_for(:lodging)
+          post :create, params: { lodging: attributes_for(:lodging) }
         }.to change(Lodging, :count).by(1)
       end
 
       it 'assigns a newly created lodging as @lodging' do
-        post :create, lodging: attributes_for(:lodging)
+        post :create, params: { lodging: attributes_for(:lodging) }
 
         expect(assigns(:lodging)).to be_a(Lodging)
         expect(assigns(:lodging)).to be_persisted
       end
 
       it 'redirects to the lodging index' do
-        post :create, lodging: attributes_for(:lodging)
+        post :create, params: { lodging: attributes_for(:lodging) }
         expect(response).to redirect_to lodgings_path
       end
     end
@@ -104,12 +104,12 @@ describe LodgingsController, type: :controller do
       end
 
       it 'assigns a newly created but unsaved lodging as @lodging' do
-        post :create, lodging: { name: '', contact_person: @user }
+        post :create, params: { lodging: { name: '', contact_person: @user } }
         expect(assigns(:lodging)).to be_a_new(Lodging)
       end
 
       it 're-renders :new template' do
-        post :create, lodging: { name: '', contact_person: @user }
+        post :create, params: { lodging: { name: '', contact_person: @user } }
         expect(response).to render_template(:new)
       end
     end

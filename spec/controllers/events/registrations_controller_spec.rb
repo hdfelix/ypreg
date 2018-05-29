@@ -8,12 +8,12 @@ describe Events::RegistrationsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns event to @event' do
-      get :index, event_id: event.to_param
+      get :index, params: { event_id: event.to_param }
       expect(assigns(:event)).to eq event
     end
 
     it 'assigns event registrations to @registrations' do
-      get :index, event_id: event.to_param
+      get :index, params: { event_id: event.to_param }
       # TODO: registrations are sorted by city but haven't found reliable way to test
       # event.registrations.sort_by { |reg| reg.locality.city }
       expect(assigns(:registrations).map(&:id))
@@ -21,13 +21,13 @@ describe Events::RegistrationsController, type: :controller do
     end
 
     it 'is :ok' do
-      get :index, event_id: event.to_param
+      get :index, params: { event_id: event.to_param }
       expect(response).to have_http_status(:ok)
     end
 
     context "without params[:view] == 'attendance'" do
       it 'renders the :index view' do
-        get :index, event_id: event.id
+        get :index, params: { event_id: event.id }
         expect(response).to render_template :index
       end
     end
@@ -36,7 +36,7 @@ describe Events::RegistrationsController, type: :controller do
       it 'renders the :attendance_index view' do
         event = create(:event_with_registrations)
 
-        get 'index', event_id: event.id, view: 'attendance'
+        get 'index', params: { event_id: event.id, view: 'attendance' }
 
         expect(response).to render_template :attendance_index
       end
@@ -48,7 +48,7 @@ describe Events::RegistrationsController, type: :controller do
       event = create(:event_with_registrations, registrations_count: 1)
       registration = event.registrations.first
 
-      post :show, event_id: event.to_param, id: registration.to_param
+      post :show, params: { event_id: event.to_param, id: registration.to_param }
 
       expect(assigns(:event)).to eq event
     end
@@ -58,7 +58,7 @@ describe Events::RegistrationsController, type: :controller do
         event = create(:event_with_registrations, registrations_count: 1)
         registration = event.registrations.first
 
-        post :show, event_id: event.to_param, id: registration.to_param, view: 'attendance'
+        post :show, params: { event_id: event.to_param, id: registration.to_param, view: 'attendance' }
 
         expect(assigns(:attendance)).to eq registration
       end
@@ -69,7 +69,7 @@ describe Events::RegistrationsController, type: :controller do
         event = create(:event_with_registrations, registrations_count: 1)
         registration = event.registrations.first
 
-        post :show, event_id: event.to_param, id: registration.to_param, view: ''
+        post :show, params: { event_id: event.to_param, id: registration.to_param, view: '' }
 
         expect(assigns(:registration)).to eq registration
       end

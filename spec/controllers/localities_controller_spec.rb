@@ -26,24 +26,24 @@ describe LocalitiesController, type: :controller do
   describe 'GET :show' do
     it 'assigns the requested locality to @locality' do
       locality = create(:locality)
-      get :show, id: locality.to_param
+      get :show, params: { id: locality.to_param }
       expect(assigns(:locality)).to eq(locality)
     end
 
     it 'renders the :show template' do
-      get :show, id: create(:locality)
+      get :show, params: { id: create(:locality) }
       expect(response).to render_template :show
     end
   end
 
   describe 'GET :new' do
     it 'instantiates a new @locality' do
-      get :new, {}
+      get :new
       expect(assigns(:locality)).to be_a_new(Locality)
     end
 
     it 'render the :new template' do
-      get :new, {}
+      get :new
       expect(response).to render_template(:new)
     end
   end
@@ -52,18 +52,18 @@ describe LocalitiesController, type: :controller do
     context 'with valid params' do
       it 'creates a new locality' do
         expect {
-          post :create, locality: attributes_for(:locality)
+          post :create, params: { locality: attributes_for(:locality) }
         }.to change(Locality, :count).by(1)
       end
 
       it 'assigns a newly created locality as @locality' do
-        post :create, locality: attributes_for(:locality)
+        post :create, params: { locality: attributes_for(:locality) }
         expect(assigns(:locality)).to be_a(Locality)
         expect(assigns(:locality)).to be_persisted
       end
 
       it 'redirects to :index' do
-        post :create, locality: attributes_for(:locality)
+        post :create, params: { locality: attributes_for(:locality) }
         expect(response).to redirect_to localities_path
       end
     end
@@ -74,13 +74,13 @@ describe LocalitiesController, type: :controller do
       end
 
       it 'assigns a newly created but unsaved locality as @locality' do
-        post :create, locality: { city: '' }
+        post :create, params: { locality: { city: '' } }
         expect(Locality.all.count).to eq(0)
         expect(assigns(:locality)).to be_a_new(Locality)
       end
 
       it 're-renders the :new template' do
-        post :create, locality: { city: '' }
+        post :create, params: { locality: { city: '' } }
         expect(response).to render_template(:new)
       end
     end
@@ -92,12 +92,12 @@ describe LocalitiesController, type: :controller do
     end
 
     it 'assigns the requested locality as @locality' do
-      get :edit, id: @locality.to_param
+      get :edit, params: { id: @locality.to_param }
       expect(assigns(:locality)).to eq(@locality)
     end
 
     it 'render the :edit template' do
-      get :edit, id: @locality.to_param
+      get :edit, params: { id: @locality.to_param }
       expect(response).to render_template(:edit)
     end
   end

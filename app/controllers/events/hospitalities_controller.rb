@@ -7,7 +7,7 @@ class Events::HospitalitiesController < ApplicationController
 
   def add
     @event = Event.find(params[:event_id])
-    ids_count = params[:lodging_ids].nil? ? 0 : params[:lodging_ids].count
+    ids_count = params[:lodging_ids].nil? ? 0 : params[:lodging_ids]&.count
     add_hospitalities_to_event(ids_count)
 
     if ids_count.positive? && @event.save

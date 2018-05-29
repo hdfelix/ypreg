@@ -27,25 +27,25 @@ describe LocationsController, type: :controller do
     it 'assigns the requested location to @location' do
       location = create(:location)
 
-      get :show, id: location.to_param
+      get :show, params: { id: location.to_param }
 
       expect(assigns(:location)).to eq(location)
     end
 
     it 'renders the :show template' do
-      get :show, id: create(:location)
+      get :show, params: { id: create(:location) }
       expect(response).to render_template :show
     end
   end
 
   describe 'GET :new' do
     it 'instantiates a new @locationn' do
-      get :new, {}
+      get :new
       expect(assigns(:location)).to be_a_new(Location)
     end
 
     it 'renders the :new template' do
-      get :new, {}
+      get :new
       expect(assigns(:location)).to render_template(:new)
     end
   end
@@ -54,7 +54,7 @@ describe LocationsController, type: :controller do
     it 'assigns the requested location as @location' do
       location = create(:location)
 
-      get :edit, id: location.to_param
+      get :edit, params: { id: location.to_param }
 
       expect(assigns(:location)).to eq(location)
     end
@@ -64,19 +64,19 @@ describe LocationsController, type: :controller do
     context 'with valid params' do
       it 'create a new location' do
         expect {
-          post :create, location: attributes_for(:location)
+          post :create, params: { location: attributes_for(:location) }
         }.to change(Location, :count).by(1)
       end
 
       it 'assigns a newly created location as @location' do
-        post :create, location: attributes_for(:location)
+        post :create, params: { location: attributes_for(:location) }
 
         expect(assigns(:location)).to be_a(Location)
         expect(assigns(:location)).to be_persisted
       end
 
       it 'redirects to the location index' do
-        post :create, location: attributes_for(:location)
+        post :create, params: { location: attributes_for(:location) }
         expect(response).to redirect_to locations_path
       end
     end
@@ -87,12 +87,12 @@ describe LocationsController, type: :controller do
       end
 
       it 'assigns a newly created but unsaved location as @location' do
-        post :create, location: { name: '' }
+        post :create, params: { location: { name: '' } }
         expect(assigns(:location)).to be_a_new(Location)
       end
 
       it 're-renders the :new template' do
-        post :create, location: { name: '' }
+        post :create, params: { location: { name: '' } }
         expect(response).to render_template(:new)
       end
     end

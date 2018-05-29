@@ -19,9 +19,9 @@ describe DashboardController, type: :controller do
       expect(assigns(:current_or_future_events_present)).to be true
     end
 
-    it 'returns http success' do
+    it 'returns 200 OK status' do
       get :index
-      expect(response).to be_success
+      expect(response).to have_http_status(:ok)
     end
 
     it "renders 'index' template" do

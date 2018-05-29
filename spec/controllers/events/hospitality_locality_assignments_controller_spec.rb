@@ -8,23 +8,23 @@ describe Events::HospitalityLocalityAssignmentsController, type: :controller do
 
   describe 'GET :index' do
     it 'assigns the current event to @event' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(assigns(:event)).to eq event
     end
 
     it 'assigns event stats to @stats' do
       event = create(:event)
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(assigns(:stats)).to eq event.load_locality_summary
     end
 
     it 'is success' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(response).to have_http_status(:ok)
     end
 
     it 'renders the :index template' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(response).to render_template(:index)
     end
   end
@@ -32,7 +32,7 @@ describe Events::HospitalityLocalityAssignmentsController, type: :controller do
   describe 'POST assign' do
     context 'with hospitality_locality_ids' do
       it 'assigns the current event to @event' do
-        get :index, event_id: event.id
+        get :index, params: { event_id: event.id }
         expect(assigns(:event)).to eq event
       end
 
@@ -52,7 +52,7 @@ describe Events::HospitalityLocalityAssignmentsController, type: :controller do
         ids_hash[hospitalities.first.id.to_s] = [localities.first.id.to_s]
         ids_hash[hospitalities.second.id.to_s] = [localities.second.id.to_s]
 
-        post :assign, event_id: event.id, hospitality_locality_ids: ids_hash
+        post :assign, params: { event_id: event.id, hospitality_locality_ids: ids_hash }
 
         expect(event.hospitalities.first.locality.id).to eq localities.first.id
         expect(response).to redirect_to(event_hospitality_locality_assignments_path)
@@ -75,7 +75,7 @@ describe Events::HospitalityLocalityAssignmentsController, type: :controller do
             ids_hash[hosp.id.to_s] = ['']
           end
 
-          post :assign, event_id: event.id, hospitality_locality_ids: ids_hash
+          post :assign, params: { event_id: event.id, hospitality_locality_ids: ids_hash }
           event.reload
 
           expect(event.hospitalities.first.locality).to be_nil

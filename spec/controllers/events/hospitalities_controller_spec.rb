@@ -8,7 +8,7 @@ describe Events::HospitalitiesController, type: :controller do
 
   describe 'GET :index' do
     it 'assigns the current event to @event' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(assigns(:event)).to eq event
     end
 
@@ -17,7 +17,7 @@ describe Events::HospitalitiesController, type: :controller do
       create(:hospitality, event: event)
       lodging = create(:lodging)
 
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
 
       expect(assigns(:lodgings)).to eq [lodging]
     end
@@ -25,32 +25,32 @@ describe Events::HospitalitiesController, type: :controller do
     it 'assigns event hospitalities to @hospitalities' do
       hospitality = create(:hospitality, event: event)
 
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
 
       expect(assigns(:hospitalities)).to eq [hospitality]
     end
 
     it 'is a success' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(response).to have_http_status(:ok)
     end
 
     it 'renders the :index template' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(response).to render_template(:index)
     end
   end
 
   describe 'POST add' do
     it 'assigns all the current event to @event' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(assigns(:event)).to eq event
     end
 
     context 'with valid at least one lodging id' do
       before(:example) do
-        2.times { |t| create(:lodging, id: t) }
-        post :add, event_id: event.id, lodging_ids: [0, 1]
+        create_list(:lodging, 2)
+        post :add, params: { event_id: event.id, lodging_ids: Lodging.pluck(:id) }
       end
 
       it 'creates a hospitality for @event from each lodging id' do
@@ -68,8 +68,8 @@ describe Events::HospitalitiesController, type: :controller do
 
     context 'with no lodging ids' do
       before(:example) do
-        2.times { |t| create(:lodging, id: t) }
-        post :add, event_id: event.id, lodging_ids: nil
+        create_list(:lodging, 2)
+        post :add, params: { event_id: event.id }
       end
 
       it 'redirects to the event hospitalities index' do
@@ -85,7 +85,7 @@ describe Events::HospitalitiesController, type: :controller do
   describe 'PUT remove' do
     context 'with lodging ids' do
       it 'assigns all the current event to @event' do
-        get :index, event_id: event.id
+        get :index, params: { event_id: event.id }
         expect(assigns(:event)).to eq event
       end
 
@@ -97,7 +97,7 @@ describe Events::HospitalitiesController, type: :controller do
         lodging_ids = event.hospitalities.map(&:lodging_id)
         event.save
 
-        put :remove, event_id: event.id, hospitality_lodging_ids: lodging_ids
+        put :remove, params: { event_id: event.id, hospitality_lodging_ids: lodging_ids }
 
         expect(event.hospitalities.count).to eq 0
       end
@@ -110,7 +110,7 @@ describe Events::HospitalitiesController, type: :controller do
         lodging_ids = event.hospitalities.map(&:lodging_id)
         event.save
 
-        put :remove, event_id: event.id, hospitality_lodging_ids: lodging_ids
+        put :remove, params: { event_id: event.id, hospitality_lodging_ids: lodging_ids }
 
         expect(response).to redirect_to(event)
       end
@@ -118,7 +118,7 @@ describe Events::HospitalitiesController, type: :controller do
 
     context 'without lodging ids' do
       before(:example) do
-        put :remove, event_id: event.id, hospitality_lodging_ids: nil
+        put :remove, params: { event_id: event.id }
       end
 
       it 'redirects to event hospitalities index' do

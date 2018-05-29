@@ -11,7 +11,7 @@ describe Events::LocalitiesController, type: :controller do
       event = create(:event_with_registrations, registrations_count: 1)
       loc_with_registration = event.registrations.first.locality
 
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
 
       expect(assigns(:localities).map(&:city)).to include(locality_names.first)
       expect(assigns(:localities).map(&:city)).to include(locality_names.second)
@@ -21,7 +21,7 @@ describe Events::LocalitiesController, type: :controller do
     it 'assigns all event localities to @event_localities' do
       event = create(:event_with_registrations, ensure_unique_locality: false)
 
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
 
       expect(assigns(:event_localities)).to match_array(event.localities)
     end
@@ -36,7 +36,7 @@ describe Events::LocalitiesController, type: :controller do
       end
       let(:locality) { create(:locality) }
       before(:example) do
-        post :create, event_id: event.id, locality_id: locality.id
+        post :create, params: { event_id: event.id, locality_id: locality.id }
       end
 
       it 'assigns event to @event' do

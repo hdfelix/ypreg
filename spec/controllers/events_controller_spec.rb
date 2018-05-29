@@ -38,7 +38,7 @@ describe EventsController, type: :controller do
         event.participating_localities.sort { |a, b| a.city <=> b.city }
       stats = event.load_locality_summary
 
-      get :show, id: event.to_param
+      get :show, params: { id: event.to_param }
 
       expect(assigns(:event)).to eq(event)
       expect(assigns(:participating_localities)).to eq(participating_localities)
@@ -48,7 +48,7 @@ describe EventsController, type: :controller do
 
   describe 'GET :new' do
     it 'assigns a new event as @event' do
-      get :new, {}
+      get :new
       expect(assigns(:event)).to be_a_new(Event)
     end
   end
@@ -57,7 +57,7 @@ describe EventsController, type: :controller do
     it 'assigns the requested event as @event' do
       event = create(:event)
 
-      get :edit, id: event.to_param
+      get :edit, params: { id: event.to_param }
 
       expect(assigns(:event)).to eq(event)
     end
@@ -67,19 +67,19 @@ describe EventsController, type: :controller do
     describe 'with valid params' do
       it 'creates a new Event' do
         expect {
-          post :create, event: attributes_for(:event).merge(location_id: 1)
+          post :create, params: { event: attributes_for(:event).merge(location_id: 1) }
         }.to change(Event, :count).by(1)
       end
 
       it 'assigns a newly created event as @event' do
-        post :create, event: attributes_for(:event).merge(location_id: 1)
+        post :create, params: { event: attributes_for(:event).merge(location_id: 1) }
 
         expect(assigns(:event)).to be_an(Event)
         expect(assigns(:event)).to be_persisted
       end
 
       it 'redirects to the event index' do
-        post :create, event: attributes_for(:event).merge(location_id: 1)
+        post :create, params: { event: attributes_for(:event).merge(location_id: 1) }
         expect(response).to redirect_to events_path
       end
     end
@@ -88,13 +88,14 @@ describe EventsController, type: :controller do
       before(:example) do
         allow_any_instance_of(Event).to receive(:save).and_return(false)
       end
+
       it 'assigns a newly created but unsaved event as @event' do
-        post :create, event: { title: '' }
+        post :create, params: { event: { title: '' } }
         expect(assigns(:event)).to be_a_new(Event)
       end
 
       it "re-renders the 'new' template" do
-        post :create, event: { title: '' }
+        post :create, params: { event: { title: '' } }
         expect(response).to render_template(:new)
       end
     end

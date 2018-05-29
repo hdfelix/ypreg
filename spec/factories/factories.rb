@@ -232,6 +232,7 @@ FactoryBot.define do
   end
 
   factory :hospitality_registration_assignment do
+    event
     hospitality
     registration
     locality

@@ -8,7 +8,7 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
 
   describe 'GET :index' do
     it 'assigns the current event to @event' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(assigns(:event)).to eq event
     end
 
@@ -18,7 +18,7 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
       EventLocality.create(event: event, locality: locality1)
       EventLocality.create(event: event, locality: locality2)
 
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
 
       sorted_city_names = EventLocality.all.map(&:locality).map(&:city).sort
       expect(assigns(:event_localities).map(&:locality).map(&:city))
@@ -26,7 +26,7 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
     end
 
     it 'renders the :index template' do
-      get :index, event_id: event.id
+      get :index, params: { event_id: event.id }
       expect(response).to render_template(:index)
     end
   end
@@ -35,22 +35,22 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
     let(:locality) { create(:locality) }
 
     it 'assigns the current event to @event' do
-      get :show, event_id: event.id, locality_id: locality.id
+      get :show, params: { event_id: event.id, locality_id: locality.id }
       expect(assigns(:event)).to eq event
     end
 
     it 'assigns the current locality to @locality' do
-      get :show, event_id: event.id, locality_id: locality.id
+      get :show, params: { event_id: event.id, locality_id: locality.id }
       expect(assigns(:locality)).to eq locality
     end
 
     it 'is :ok' do
-      get :show, event_id: event.id, locality_id: locality.id
+      get :show, params: { event_id: event.id, locality_id: locality.id }
       expect(response).to have_http_status(:ok)
     end
 
     it 'renders the :show template' do
-      get :show, event_id: event.id, locality_id: locality.id
+      get :show, params: { event_id: event.id, locality_id: locality.id }
       expect(response).to render_template(:show)
     end
   end
@@ -59,12 +59,12 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
     let(:locality) { create(:locality) }
 
     it 'assigns the current event to @event' do
-      post :show, event_id: event.id, locality_id: locality.id
+      post :show, params: { event_id: event.id, locality_id: locality.id }
       expect(assigns(:event)).to eq event
     end
 
     it 'assigns the current locality to @locality' do
-      post :show, event_id: event.id, locality_id: locality.id
+      post :show, params: { event_id: event.id, locality_id: locality.id }
       expect(assigns(:locality)).to eq locality
     end
 
@@ -81,9 +81,9 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
         registration = event.registrations.first
 
         post :assign,
-             event_id: event.id,
+             params: { event_id: event.id,
              locality_id: locality.id,
-             saint_hospitality_ids: saint_hospitality_ids
+             saint_hospitality_ids: saint_hospitality_ids }
 
         registration.reload
         expect(registration.hospitality).to eq hospitality
@@ -93,18 +93,18 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
 
       it 'is successful' do
         post :assign,
-             event_id: event.id,
+             params: { event_id: event.id,
              locality_id: locality.id,
-             saint_hospitality_ids: saint_hospitality_ids
+             saint_hospitality_ids: saint_hospitality_ids }
 
         expect(response).to have_http_status(:redirect)
       end
 
       it 'redirects to the hospitality_registration_assignments#index' do
         post :assign,
-             event_id: event.id,
+             params: { event_id: event.id,
              locality_id: locality.id,
-             saint_hospitality_ids: saint_hospitality_ids
+             saint_hospitality_ids: saint_hospitality_ids }
 
         expect(response)
           .to redirect_to(event_hospitality_registration_assignments_path(event))
@@ -123,9 +123,9 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
         saint_hospitality_ids = { registration.user.to_param => [''] }
 
         post :assign,
-             event_id: event.id,
+             params: { event_id: event.id,
              locality_id: locality.id,
-             saint_hospitality_ids: saint_hospitality_ids
+             saint_hospitality_ids: saint_hospitality_ids }
 
         registration.reload
         expect(registration.hospitality).to be_nil
@@ -135,18 +135,18 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
 
       it 'is success' do
         post :assign,
-             event_id: event.id,
+             params: { event_id: event.id,
              locality_id: locality.id,
-             saint_hospitality_ids: saint_hospitality_ids
+             saint_hospitality_ids: saint_hospitality_ids }
 
         expect(response).to have_http_status(:redirect)
       end
 
       it 'redirects to the hospitality_registration_assignments#index' do
         post :assign,
-             event_id: event.id,
+             params: { event_id: event.id,
              locality_id: locality.id,
-             saint_hospitality_ids: saint_hospitality_ids
+             saint_hospitality_ids: saint_hospitality_ids }
 
         expect(response)
           .to redirect_to(event_hospitality_registration_assignments_path(event))
