@@ -61,7 +61,6 @@
               %tr{ id: "hospitality_#{hospitality.id}" }
                 %td= hospitality.name
                 %td= hospitality.min_capacity
-                - binding.pry
                 %td= @event_locality.number_of_beds_assigned_to_registrations
                 %td= hospitality.max_capacity
 

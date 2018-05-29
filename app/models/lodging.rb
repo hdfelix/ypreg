@@ -18,7 +18,7 @@ class Lodging < ApplicationRecord
   accepts_nested_attributes_for :contact_person
 
   def users_that_are_not_contact_people
-    users = User.not_contact_persons
+    users = User.not_contact_persons.to_a
     unless contact_person.nil?
       users << contact_person
       users

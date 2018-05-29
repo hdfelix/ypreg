@@ -32,7 +32,7 @@ describe Lodging, type: :model do
         user_list = create_list(:confirmed_user, 2)
 
         expect(lodge.users_that_are_not_contact_people)
-          .to eq(user_list + [lodge.contact_person])
+          .to eq(user_list.to_a + [lodge.contact_person])
       end
     end
   end

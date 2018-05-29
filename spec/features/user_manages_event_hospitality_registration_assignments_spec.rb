@@ -14,10 +14,10 @@ feature 'User manages hospitality registration assignments' do
   end
 
   scenario 'User manages hospitality registration assignments for a locality' do
-    event         = create(:event)
-    user          = create(:user)
-                    create(:registration, event: event, user: user)
-    locality      = event.localities.first
+    event = create(:event)
+    user = create(:user)
+    locality = event.localities.first
+    create(:registration, event: event, user: user)
 
     visit event_hospitality_registration_assignment_path(event, locality, authed_admin)
 
