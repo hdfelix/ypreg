@@ -101,7 +101,7 @@
                   %td= @event.total_registrations(role: 'yp').count
                 %tr
                   %td Serving Ones
-                  %td= @event.total_registrations(attend_as_serving_one: true).count
+                  %td= @event.total_registrations(attend_as_serving_one: true)&.count
                 %tr
                   %td Trainees
                   %td= @event.total_registrations(role: 'trainee').count

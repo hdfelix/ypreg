@@ -4,7 +4,7 @@ class Lodging < ApplicationRecord
   LODGING_TYPE = { 1 => 'Home', 2 => 'Retreat Center', 3 => 'Hotel/Motel' }
 
   belongs_to :locality, optional: true
-  belongs_to :contact_person, required: true, class_name: 'User' #TODO: Changed to required: true 6/9/18
+  belongs_to :contact_person, required: true, class_name: 'User' # TODO: Changed to required: true 6/9/18
 
   validates :name, presence: true
   validates :address1, presence: true
