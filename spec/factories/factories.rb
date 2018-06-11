@@ -221,6 +221,10 @@ FactoryBot.define do
     trait :scyp do
       user { create(:user, role: 'scyp') }
     end
+
+    trait :trainee do
+      user { create(:user, role: 'trainee') }
+    end
     trait :with_hospitality do
       hospitality
     end

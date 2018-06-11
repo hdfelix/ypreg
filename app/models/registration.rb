@@ -22,6 +22,9 @@ class Registration < ApplicationRecord
   # TODO: pay(amount)
   # TODO paid?
 
+  scope :for_event, ->(event) { where(event: event) }
+  scope :all_serving_ones, -> { where(attend_as_serving_one: true) }
+
   def payment_adjustment
     @payment_adjustment ||= 0
   end

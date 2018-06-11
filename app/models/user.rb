@@ -27,6 +27,9 @@ class User < ApplicationRecord
   GRADE = %w(6th 7th 8th 9th 10th 11th 12th college other)
 
   # scopes
+  scope :with_role, ->(role) { where(role: role) }
+  scope :from_locality, ->(locality) { where(locality: locality) }
+
   def self.not_contact_persons
     contact_person_ids =
       Lodging.where.not(contact_person: nil).pluck(:contact_person_id)

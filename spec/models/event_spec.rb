@@ -1,7 +1,10 @@
 require 'rails_helper'
 require 'awesome_print'
 
+# rubocop:disable Metrics/BlockLength
 describe Event, type: :model do
+  include EventStatistics
+
   describe 'Associations' do
     it { should belong_to :location }
     it { should have_many(:registrations).dependent(:destroy) }
@@ -169,13 +172,51 @@ describe Event, type: :model do
   describe '#total_registrations' do
     # TODO: test all new options {}
     # TODO: (refactored) test the actual registrations returned, not just count
-    it 'returns the registrations per locality for the given role' do
-      reg   = create(:registration, :yp)
-      event = reg.event
-      loc   = reg.user.locality
-      role  = reg.user.role
 
-      expect(event.total_registrations(role: role, locality: loc).count).to eq(1)
+    describe 'non-serving ones' do
+      let(:event) { create(:event) }
+      let(:locality) { create(:locality) }
+
+      before do
+        user1 = create(:user, locality: locality, role: 'yp')
+        user2 = create(:user, role: 'yp')
+        user3 = create(:user, locality: locality, role: 'trainee')
+        create(:registration, event: event, user: user1)
+        create(:registration, event: event, user: user2)
+        create(:registration, event: event, user: user3)
+      end
+
+      specify 'for role' do
+        expect(event.total_registrations(role: 'yp').count).to eq 2
+      end
+
+      specify 'for locality' do
+        expect(event.total_registrations(locality: locality).count).to eq 2
+      end
+    end
+
+    context 'serving ones' do
+      let(:event) { create(:event) }
+      let!(:locality) { create(:locality) }
+      let!(:yp_registration) { create(:registration, :yp, event: event) }
+      let!(:trainee_registration) { create(:registration, :trainee, event: event, attend_as_serving_one: true) }
+      let!(:scyp_registration) { create(:registration, :scyp, event: event, attend_as_serving_one: true) }
+
+      specify 'all' do
+        expect(event.total_registrations(attend_as_serving_one: true).count).to eq 2
+      end
+
+      specify 'by role' do
+        expect(event.total_registrations(role: 'trainee', attend_as_serving_one: true).count).to eq 1
+      end
+
+      specify 'by_locality' do
+        users = create_list(:user, 2, locality: locality)
+        create(:registration, event: event, user: users.first, attend_as_serving_one: true)
+        create(:registration, event: event, user: users.second, attend_as_serving_one: true)
+
+        expect(event.total_registrations(locality: locality, attend_as_serving_one: true).count).to eq 2
+      end
     end
   end
 
@@ -450,3 +491,4 @@ describe Event, type: :model do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

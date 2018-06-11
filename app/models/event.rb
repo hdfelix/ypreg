@@ -127,7 +127,7 @@ class Event < ApplicationRecord
     # TODO: ambiguous locality_id
     stats[loc]['guests'] = conference_guests_from(locality).count
     stats[loc]['grand_total'] =
-      users.where('users.locality_id = ?', locality.id).count
+      total_registrations(locality: locality).count # users.where('users.locality_id = ?', locality.id).count
     assign_totals(stats, locality)
     stats[loc]['amount_due'] =
       stats[loc]['grand_total'] * registration_cost - payment_adjustments(locality)
