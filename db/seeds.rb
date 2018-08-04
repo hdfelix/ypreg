@@ -281,11 +281,11 @@ count = 30
 print "\nCreating #{count} lodgings: "
 lodging = Lodging.new(
   name: 'Felixes',
-  description: "Hector & Angela Felix's home",
-  address1: '60 Georgetown',
-  city: 'Irvine',
+  description: "Hector Felix apartment",
+  address1: '10 City',
+  city: 'Orange',
   state_abbrv: 'CA',
-  zipcode: '92612',
+  zipcode: '92868',
   max_capacity: rand(3..5),
   min_capacity: rand(1..3),
   contact_person: User.where(email: 'hdfelix@gmail.com').first,
