@@ -64,6 +64,7 @@ gem 'simple_form'
 gem 'skylight'
 gem 'turbolinks', '~>5'
 gem 'uglifier', '>= 1.3.0'
+gem 'undercover'
 
 group :production do
   gem 'pg', '~>0.21'
@@ -116,6 +117,8 @@ group :test do
   gem 'guard-rspec'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'simplecov'
+  gem 'simplecov-lcov'
   gem 'timecop'
 end
 
