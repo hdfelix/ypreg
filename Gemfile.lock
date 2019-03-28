@@ -317,6 +317,8 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
+    rollbar (2.19.3)
+      multi_json
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -486,6 +488,7 @@ DEPENDENCIES
   rails (= 5.2.0)
   rails-controller-testing
   rails_12factor
+  rollbar
   rspec-collection_matchers
   rspec-rails
   rspec_junit_formatter

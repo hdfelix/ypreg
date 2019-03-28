@@ -58,6 +58,9 @@ gem 'pry-rescue'
 # Use Puma as teh app server
 gem 'puma', '~> 3.11'
 
+# Monitoring
+gem 'rollbar'
+
 # gem 'redis', '~>4.0' # for ActionCable in production
 gem 'sass-rails', '>= 3.2'
 gem 'simple_form'

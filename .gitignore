@@ -55,3 +55,4 @@ tags
 /.idea/*
 
 /db/ypreg_admin.rb
+.env
