@@ -56,7 +56,7 @@ gem 'pry-byebug'
 gem 'pry-rails'
 gem 'pry-rescue'
 # Use Puma as teh app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 
 # Monitoring
 gem 'rollbar'
