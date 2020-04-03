@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.7.1'
 
 gem 'rails', '5.2.0'
 
@@ -111,9 +111,9 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>=2.15', '< 4.0'
+  gem 'capybara'
+  gem 'capybara-chromedriver-logger'
   gem 'capybara-screenshot'
-  gem 'capybara-webkit', git: 'https://github.com/thoughtbot/capybara-webkit.git', branch: 'master'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'database_cleaner'

@@ -12,9 +12,43 @@ require 'capybara/rails'
 require 'capybara-screenshot/rspec'
 # require 'capybara/poltergeist'
 
-# Set the default driver
-Capybara.javascript_driver = :webkit # :poltergeist
+# Checks for pending migrations before tests are run.
+ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migration)
 
+# use :headless_chrome driver by default
+Capybara.register_driver(:selenium) do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: {
+      args: [
+        'disable-gpu',
+        'no-sandbox',
+        'disable-web-security',
+        'disable-component-update',
+        'window-size=2560,1440',
+        "proxy-server=#{Billy.proxy.host}:#{Billy.proxy.port}"
+      ]
+    },
+    loggingPrefs: {
+      browser: 'ALL'
+    },
+    acceptInsecureCerts: true
+  )
+  options = Selenium::WebDriver::Chrome::Options.new(args: ['no-sandbox'])
+  options.add_option(:w3c, false)
+
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    desired_capabilities: capabilities,
+    options: options
+  )
+end
+
+# Set the defaulVt driver
+Capybara.javascript_driver = :selenium
+Capybara.current_driver = Capybara.javascript_driver
+Capybara.default_max_wait_time = 15
+Capybara.wait_on_first_by_default = true
 # Capybara Screenshot config
 Capybara.asset_host = 'http://localhost:3000'
 # Capybara::Screenshot.autosave_on_failure = false
@@ -24,9 +58,6 @@ Capybara::Screenshot.prune_strategy = :keep_last_run
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
-
-# Checks for pending migrations before tests are run.
-ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|

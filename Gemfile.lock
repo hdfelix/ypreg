@@ -11,15 +11,6 @@ GIT
       warden (~> 1.2.3)
 
 GIT
-  remote: https://github.com/thoughtbot/capybara-webkit.git
-  revision: 1e0e932e10c9baf318d2edfa51bbc7aaab9cf9d1
-  branch: master
-  specs:
-    capybara-webkit (1.15.0)
-      capybara (>= 2.3, < 4.0)
-      json
-
-GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
   revision: c0960bd72dd41c4e9bd8b4375254f539776bfe95
   branch: master
@@ -111,6 +102,9 @@ GEM
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       xpath (~> 3.0)
+    capybara-chromedriver-logger (0.3.0)
+      capybara
+      colorize
     capybara-screenshot (1.0.21)
       capybara (>= 1.0, < 4)
       launchy
@@ -131,6 +125,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    colorize (0.8.1)
     concurrent-ruby (1.0.5)
     coverband (1.5.4)
       json
@@ -454,9 +449,9 @@ DEPENDENCIES
   bootstrap-sass
   bullet
   byebug
-  capybara (>= 2.15, < 4.0)
+  capybara
+  capybara-chromedriver-logger
   capybara-screenshot
-  capybara-webkit!
   carrierwave (~> 1.2.2)
   chromedriver-helper
   coffee-rails (~> 4.2)
@@ -513,7 +508,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.7.1p83
 
 BUNDLED WITH
    1.16.2
