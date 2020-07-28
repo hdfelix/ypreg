@@ -1,5 +1,5 @@
 class Events::HospitalityAssignmentsController < ApplicationController
-  skip_filter :verify_authenticity_token, :action
+  skip_after_action:verify_authenticity_token
   # respond_to :html, :js
 
   def index
