@@ -1,5 +1,5 @@
 class Events::HospitalityAssignmentsController < ApplicationController
-  skip_after_action:verify_authenticity_token
+  # skip_after_action:verify_authenticity_token - TODO: Remove; Forgery protection is applied by default as of 5.2
   # respond_to :html, :js
 
   def index
