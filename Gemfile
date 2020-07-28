@@ -5,10 +5,10 @@ ruby '2.7.1'
 
 gem 'rails', '5.2.0'
 
-# gem 'actionpack'
+gem 'actionpack'
 gem 'activemodel'
-# gem 'activerecord'
-# gem 'railties'
+gem 'activerecord'
+gem 'railties'
 gem 'autoprefixer-rails'
 gem 'awesome_print'
 

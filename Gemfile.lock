@@ -439,7 +439,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack
   activemodel
+  activerecord
   autoprefixer-rails
   awesome_print
   better_errors
@@ -483,6 +485,7 @@ DEPENDENCIES
   rails (= 5.2.0)
   rails-controller-testing
   rails_12factor
+  railties
   rollbar
   rspec-collection_matchers
   rspec-rails
@@ -511,4 +514,4 @@ RUBY VERSION
    ruby 2.7.1p83
 
 BUNDLED WITH
-   1.16.2
+   2.1.4
