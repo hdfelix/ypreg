@@ -116,7 +116,8 @@ group :test do
   gem 'capybara-chromedriver-logger'
   gem 'capybara-screenshot'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  # gem 'chromedriver-helper'
+  gem 'webdrivers', '~> 4.0'
   gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'launchy'

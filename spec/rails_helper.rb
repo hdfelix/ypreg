@@ -10,7 +10,8 @@ require 'spec_helper'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara-screenshot/rspec'
-# require 'capybara/poltergeist'
+# Ref: https://github.com/titusfortner/webdrivers#specific-drivers
+require 'webdrivers/chromedriver'
 
 # Checks for pending migrations before tests are run.
 ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migration)
