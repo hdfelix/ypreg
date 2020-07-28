@@ -24,8 +24,7 @@ Capybara.register_driver(:selenium) do |app|
         'no-sandbox',
         'disable-web-security',
         'disable-component-update',
-        'window-size=2560,1440',
-        "proxy-server=#{Billy.proxy.host}:#{Billy.proxy.port}"
+        'window-size=2560,1440'
       ]
     },
     loggingPrefs: {
