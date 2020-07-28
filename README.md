@@ -38,10 +38,10 @@ $ rails ypreg:create_admin
 ```
 
 ### Test data
-The previous instructions will get you a clean database. If you prefer to see the app with some test data, do this instead:
+The previous instructions will get you a clean database. If you prefer to see the app with some test data, run the following:
 
 ```bash
 $ rails db:setup
 ```
 
-Tehn you can log in using `test@test.com` and password: `devaccount`.
+Then you can log in using `test@test.com` and password: `devaccount`.
