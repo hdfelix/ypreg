@@ -98,6 +98,7 @@ group :development, :test do
   gem 'coverband'
   gem 'factory_bot_rails'
   gem 'letter_opener', group: :development
+  gem 'rails_best_practices'
   gem 'rails-controller-testing'
   gem 'rspec-collection_matchers'
   gem 'rspec_junit_formatter'
