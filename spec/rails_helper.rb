@@ -24,8 +24,7 @@ Capybara.register_driver(:selenium) do |app|
         'no-sandbox',
         'disable-web-security',
         'disable-component-update',
-        'window-size=2560,1440',
-        "proxy-server=#{Billy.proxy.host}:#{Billy.proxy.port}"
+        'window-size=2560,1440'
       ]
     },
     loggingPrefs: {
@@ -44,11 +43,11 @@ Capybara.register_driver(:selenium) do |app|
   )
 end
 
-# Set the defaulVt driver
+# Set the default driver
 Capybara.javascript_driver = :selenium
 Capybara.current_driver = Capybara.javascript_driver
 Capybara.default_max_wait_time = 15
-Capybara.wait_on_first_by_default = true
+
 # Capybara Screenshot config
 Capybara.asset_host = 'http://localhost:3000'
 # Capybara::Screenshot.autosave_on_failure = false
@@ -71,6 +70,8 @@ RSpec.configure do |config|
   config.include ControllerMacros, type: :controller
   config.use_transactional_fixtures = false
 
+  # configuration for use of `--only-failures` flag
+  config.example_status_persistence_file_path = 'rspec-example-status.txt'
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
