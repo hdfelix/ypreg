@@ -43,11 +43,11 @@ Capybara.register_driver(:selenium) do |app|
   )
 end
 
-# Set the defaulVt driver
+# Set the default driver
 Capybara.javascript_driver = :selenium
 Capybara.current_driver = Capybara.javascript_driver
 Capybara.default_max_wait_time = 15
-Capybara.wait_on_first_by_default = true
+
 # Capybara Screenshot config
 Capybara.asset_host = 'http://localhost:3000'
 # Capybara::Screenshot.autosave_on_failure = false
