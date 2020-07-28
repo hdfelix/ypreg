@@ -29,6 +29,9 @@ doc/
 .secret
 /Guardfile
 /.rspec
+
+# rspec examples status persistence file for `--only-failures` flag
+rspec-example-status.txt
 spec/Guardfile
 
 # Ignore application configuration

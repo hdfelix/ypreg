@@ -71,6 +71,8 @@ RSpec.configure do |config|
   config.include ControllerMacros, type: :controller
   config.use_transactional_fixtures = false
 
+  # configuration for use of `--only-failures` flag
+  config.example_status_persistence_file_path = 'rspec-example-status.txt'
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
