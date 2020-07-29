@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com#{repo}.git" }
 
 ruby '2.6.5'
 
-gem 'rails', '5.2.0'
+gem 'rails', '5.2.1'
 
 gem 'actionpack'
 gem 'activemodel'
@@ -113,7 +113,7 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara'
+  gem 'capybara', '>=2.15'
   gem 'capybara-chromedriver-logger'
   gem 'capybara-screenshot'
   # Easy installation and use of chromedriver to run system tests with Chrome

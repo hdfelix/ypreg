@@ -14,7 +14,13 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
+!/log/.keep
 !/tmp/.keep
+
+
+# Ignore uploaded files in development
+/storage/*
+/!/storage/.keep
 
 /node_modules
 /yarn-error.log
@@ -40,9 +46,13 @@ spec/Guardfile
 # My code snippets file
 snippets.html.erb
 
-# /public/assets
+/public/assets
 /public/capybara.html
 /public/dev-assets
+.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
 
 # Simplecov
 coverage
@@ -53,7 +63,6 @@ coverage
 tags
 .ctags
 
-.byebug_history
 # Rubymine
 /.idea/*
 

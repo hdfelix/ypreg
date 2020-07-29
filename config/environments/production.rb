@@ -5,7 +5,7 @@ YpwReg::Application.configure do
   config.cache_classes = true
 
   # Eager load code on boot. This eager loads most of Rails and
-  # your application in memory, allowing both thread web servers
+  # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
@@ -30,7 +30,7 @@ YpwReg::Application.configure do
   # ref: https://devcenter.heroku.com/articles/rails-asset-pipeline#compile-set-to-true-in-production
   config.assets.compile = false
 
-  # `config.assets.precompile` and `config.assets.version`A have moved to config/initializers/assets.rb
+  # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
@@ -52,21 +52,21 @@ YpwReg::Application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true # TODO: HDF - commented out
+  # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :requester_id ]
+  config.log_tags = [ :request_id ]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Use a real queuing backend for Active Job (and separate queues per inverionment)
+  # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "railsdiff_#{rails.env}"
+  # config.active_job.queue_name_prefix = "ypw_reg__#{Rails.env}"
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -74,7 +74,7 @@ YpwReg::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation can not be found).
+  # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners.
@@ -83,7 +83,7 @@ YpwReg::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  # Use a differnt logger for distributed setups.
+  # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
@@ -93,6 +93,6 @@ YpwReg::Application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  # Do not dump schema after migration
+  # Do not dump schema after migrations
   config.active_record.dump_schema_after_migration = false
 end
