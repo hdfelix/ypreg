@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   layout :layout_by_resource
 
-  include Pundit
+  include Pundit::Authorization
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from Pundit::NotAuthorizedError do |exception|
@@ -50,7 +51,7 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:error] = 'You are not authorized to perform this action.'
-    redirect_to(request.referrer || root_path)
+    redirect_to(request.referer || root_path)
   end
 
   def layout_by_resource
@@ -79,6 +80,7 @@ class ApplicationController < ActionController::Base
   def get_values_for_aria_chart(next_event, chart_values)
     return if next_event.nil?
     return if current_user.nil?
+
     if current_user.role == 'admin'
       admin_chart_values(next_event, chart_values)
     else
@@ -134,11 +136,11 @@ class ApplicationController < ActionController::Base
     total_localities = Locality.all.count
     next_event_localities = next_event.participating_localities.count
     chart_values['loc_ratio'] = "#{next_event_localities} / #{total_localities}"
-    if total_localities != 0
+    if total_localities == 0
+      chart_values['loc_ratio'] = 'width: 0'
+    else
       chart_values['loc_ratio_width_percentage'] =
         "width: #{((next_event_localities.to_f / total_localities.to_f) * 100).to_i}%"
-    else
-      chart_values['loc_ratio'] = 'width: 0'
     end
     chart_values['loc_value_now'] = next_event_localities
     chart_values['loc_value_max'] = total_localities
@@ -151,10 +153,10 @@ class ApplicationController < ActionController::Base
     chart_values['pmt_ratio'] =
       "#{next_event_payments} / #{total_registrations}"
     chart_values['pmt_ratio_width_percentage'] =
-      if total_registrations != 0
-        "width: #{((next_event_payments.to_f / total_registrations.to_f) * 100).to_i}%"
-      else
+      if total_registrations == 0
         'width: 0'
+      else
+        "width: #{((next_event_payments.to_f / total_registrations.to_f) * 100).to_i}%"
       end
     chart_values['pmt_value_now'] = next_event_payments
     chart_values['pmt_value_max'] = total_registrations
@@ -166,10 +168,10 @@ class ApplicationController < ActionController::Base
     chart_values['hosp_ratio'] =
       "#{event_hospitalities_count} / #{lodging_count}"
     chart_values['hosp_ratio_width_percentage'] =
-      if event_hospitalities_count != 0
-        "width: #{(event_hospitalities_count.to_f / lodging_count.to_f) * 100}%"
-      else
+      if event_hospitalities_count == 0
         'width: 0'
+      else
+        "width: #{(event_hospitalities_count.to_f / lodging_count.to_f) * 100}%"
       end
     chart_values['hosp_value_now'] = event_hospitalities_count
     chart_values['hosp_value_max'] = lodging_count

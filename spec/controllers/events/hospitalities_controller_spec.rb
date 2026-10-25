@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe Events::HospitalitiesController, type: :controller do
   let(:event) { create(:event) }
-  before(:example) do
+
+  before do
     sign_in_user
   end
 
@@ -48,7 +49,7 @@ describe Events::HospitalitiesController, type: :controller do
     end
 
     context 'with valid at least one lodging id' do
-      before(:example) do
+      before do
         create_list(:lodging, 2)
         post :add, params: { event_id: event.id, lodging_ids: Lodging.pluck(:id) }
       end
@@ -67,7 +68,7 @@ describe Events::HospitalitiesController, type: :controller do
     end
 
     context 'with no lodging ids' do
-      before(:example) do
+      before do
         create_list(:lodging, 2)
         post :add, params: { event_id: event.id }
       end
@@ -117,7 +118,7 @@ describe Events::HospitalitiesController, type: :controller do
     end
 
     context 'without lodging ids' do
-      before(:example) do
+      before do
         put :remove, params: { event_id: event.id }
       end
 

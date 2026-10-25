@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'User manages attendance at an event' do
-  before(:example) do
+  before do
     @authed_admin = create_signed_in_user_by_role('admin')
   end
 
-  scenario 'can see the total number of registrations for the event', js: true do
+  scenario 'can see the total number of registrations for the event', :js do
     event = create(:event_with_registrations, :current_event)
 
     visit event_path(event)
@@ -18,8 +18,8 @@ feature 'User manages attendance at an event' do
     expect(page).to have_content("Registrations: #{event.registrations.count}")
   end
 
-  scenario 'can view all localities participating in the event', js: true do
-    event = create(:event_with_registrations,:current_event, registrations_count: 5)
+  scenario 'can view all localities participating in the event', :js do
+    event = create(:event_with_registrations, :current_event, registrations_count: 5)
     create(:registration, event: event, locality: event.localities.first)
 
     visit event_path(event)
@@ -80,7 +80,7 @@ feature 'User manages attendance at an event' do
     visit "events/#{event.id}/registrations?view=attendance"
 
     # within("#user_#{user.id}") do
-      click_link_or_button "#{user.name}"
+    click_link_or_button "#{user.name}"
     # end
 
     expect(page).to have_content(user.name)
@@ -102,7 +102,7 @@ feature 'User manages attendance at an event' do
     expect(page).to have_content('Back')
   end
 
-  scenario "can edit an attendance (registration) record by clicking on the user name" do
+  scenario 'can edit an attendance (registration) record by clicking on the user name' do
     event = create(:event)
     loc = create(:locality)
 
@@ -126,7 +126,7 @@ feature 'User manages attendance at an event' do
 
     expect(page).to have_content 'Edit'
 
-    click_link_or_button "Edit"
+    click_link_or_button 'Edit'
     check('registration[has_medical_release_form]')
     select('attended', from: 'registration[status]')
     click_button 'Update'
@@ -140,8 +140,8 @@ feature 'User manages attendance at an event' do
     end
   end
 
-  scenario "Can see a warning if background check is expired"
-  scenario "Can see Hospitality information if hospitality has been assigned"
-  scenario "Can see a notice and a link to add hospitality if it has not been added"
+  scenario 'Can see a warning if background check is expired'
+  scenario 'Can see Hospitality information if hospitality has been assigned'
+  scenario 'Can see a notice and a link to add hospitality if it has not been added'
   scenario "Cannot update status to 'attended' if background check is expired"
 end

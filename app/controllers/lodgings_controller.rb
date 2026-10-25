@@ -1,5 +1,5 @@
 class LodgingsController < ApplicationController
-  before_action :set_lodging, only: [:show, :edit, :update, :destroy]
+  before_action :set_lodging, only: %i[show edit update destroy]
 
   def index
     @lodgings = Lodging.all
@@ -16,13 +16,15 @@ class LodgingsController < ApplicationController
     authorize @lodging
   end
 
+  def edit
+    # @lodging set with 'before_action'
+  end
+
   def create
     @lodging = Lodging.new(lodging_params)
 
     # TODO: refactor - pick only one approach
-    unless params[:contact_person].nil?
-      @lodging.contact_person = User.find(params[:contact_person][:id]) unless params[:contact_person].empty?
-    end
+    @lodging.contact_person = User.find(params[:contact_person][:id]) if params[:contact_person].present?
 
     contact_person_id = params.dig(:lodging, :contact_person)
     @lodging.contact_person = User.find(contact_person_id) if contact_person_id
@@ -38,14 +40,10 @@ class LodgingsController < ApplicationController
     end
   end
 
-  def edit
-    # @lodging set with 'before_action'
-  end
-
   def update
     @lodging.contact_person = User.find(params[:contact_person][:id])
 
-    if @lodging.update_attributes(lodging_params)
+    if @lodging.update(lodging_params)
       flash[:notice] = 'lodging was updated successfully.'
       redirect_to @lodging
     else
@@ -75,17 +73,18 @@ class LodgingsController < ApplicationController
 
   def lodging_params
     params.require(:lodging)
-      .permit(
-        :name,
-        :lodging_type,
-        :locality_id,
-        :min_capacity,
-        :max_capacity,
-        :address1,
-        :address2,
-        :city,
-        :state_abbrv,
-        :zipcode,
-        contact_person: [:id])
+          .permit(
+            :name,
+            :lodging_type,
+            :locality_id,
+            :min_capacity,
+            :max_capacity,
+            :address1,
+            :address2,
+            :city,
+            :state_abbrv,
+            :zipcode,
+            contact_person: [:id]
+          )
   end
 end

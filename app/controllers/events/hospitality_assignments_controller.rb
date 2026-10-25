@@ -23,7 +23,7 @@ class Events::HospitalityAssignmentsController < ApplicationController
     @hospitality = Hospitality.find(params[:event][:hospitality_id])
     @locality = Locality.find(params[:event][:locality_id])
 
-    @hospitality.update_attributes(locality_id: @locality.id) unless !@hospitality.locality_id
+    @hospitality.update(locality_id: @locality.id) if @hospitality.locality_id
 
     if @hospitality.save
       flash[:notice] = 'success!'
@@ -41,7 +41,7 @@ class Events::HospitalityAssignmentsController < ApplicationController
     @event = Event.find(params[:event_id])
     @hospitality = Hospitality.find(params[:event][:hospitality_id])
 
-    @hospitality.update_attributes(locality_id: nil) unless !@hospitality.locality_id
+    @hospitality.update(locality_id: nil) if @hospitality.locality_id
 
     if @hospitality.save
       flash[:notice] = 'success!'
@@ -71,16 +71,20 @@ class Events::HospitalityAssignmentsController < ApplicationController
       flash[:alert] = 'is already assigned; updating hospitality_assignment'
       # if the current registration has already been assigned hospitalty
       # update hospitality_assignment with new hospitality via locality_id
-      hospitality_assignment.update_attributes(
+      hospitality_assignment.update(
         registration_id: @registration.id,
         hospitality_id: @event.hospitalities.where(
-          locality_id: @locality.id).first.id)
+          locality_id: @locality.id
+        ).first.id
+      )
     else
       # add the new hospitality_assignment to @event.hospitality_assignments
       hospitality_assignment = @event.hospitality_assignments.new(
         registration_id: @registration.id,
         hospitality_id: @event.hospitalities.where(
-          locality_id: @locality.id).first.id)
+          locality_id: @locality.id
+        ).first.id
+      )
 
       if hospitality_assignment.save
         flash[:notice] = 'success!'

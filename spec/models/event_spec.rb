@@ -1,32 +1,31 @@
 require 'rails_helper'
 require 'awesome_print'
 
-# rubocop:disable Metrics/BlockLength
 describe Event, type: :model do
   include EventStatistics
 
   describe 'Associations' do
-    it { should belong_to :location }
-    it { should have_many(:registrations).dependent(:destroy) }
-    it { should have_many(:users).through(:registrations) }
-    it { should have_many(:localities).through(:users) }
-    it { should have_many :event_localities }
-    it { should have_many :hospitalities }
-    it { should have_many(:lodgings).through(:hospitalities) }
-    it { should have_many(:hospitality_registration_assignments).through(:hospitalities) }
+    it { is_expected.to belong_to :location }
+    it { is_expected.to have_many(:registrations).dependent(:destroy) }
+    it { is_expected.to have_many(:users).through(:registrations) }
+    it { is_expected.to have_many(:localities).through(:users) }
+    it { is_expected.to have_many :event_localities }
+    it { is_expected.to have_many :hospitalities }
+    it { is_expected.to have_many(:lodgings).through(:hospitalities) }
+    it { is_expected.to have_many(:hospitality_registration_assignments).through(:hospitalities) }
   end
 
   describe 'Validations' do
-    it { should validate_presence_of :event_type }
-    it { should validate_presence_of :title }
-    it { should validate_presence_of :begin_date }
-    it { should validate_presence_of :end_date }
-    it { should validate_presence_of :registration_cost }
-    it { should validate_presence_of :location_id }
+    it { is_expected.to validate_presence_of :event_type }
+    it { is_expected.to validate_presence_of :title }
+    it { is_expected.to validate_presence_of :begin_date }
+    it { is_expected.to validate_presence_of :end_date }
+    it { is_expected.to validate_presence_of :registration_cost }
+    it { is_expected.to validate_presence_of :location_id }
   end
 
   describe 'Constants' do
-    it { should have_constant :EVENT_TYPE }
+    it { is_expected.to have_constant :EVENT_TYPE }
   end
 
   describe 'Scopes' do
@@ -35,10 +34,10 @@ describe Event, type: :model do
     describe '#current' do
       it 'returns only events that are happening right now' do
         create(:event, end_date: 1.day.ago) # past event
-        create(:event, begin_date: (Time.zone.now + 7.days)) # future event
+        create(:event, begin_date: 7.days.from_now) # future event
         create(:event,
                begin_date: 1.day.ago,
-               end_date: (Time.zone.now + 3.days)) # current event
+               end_date: 3.days.from_now) # current event
 
         expect(Event.current.count).to eq 1
       end
@@ -47,10 +46,10 @@ describe Event, type: :model do
     describe '#current' do
       it 'returns the current events (those happening at the moment)' do
         create(:event, end_date: 1.day.ago) # past event
-        create(:event, begin_date: (Time.zone.now + 7.days)) # future event
+        create(:event, begin_date: 7.days.from_now) # future event
         events = create_list(:event, 2,
                              begin_date: 1.day.ago,
-                             end_date: (Time.zone.now + 3.days)) # current event
+                             end_date: 3.days.from_now) # current event
 
         expect(Event.current.map(&:title)).to eq events.map(&:title)
       end
@@ -106,7 +105,7 @@ describe Event, type: :model do
          (including an event happening at the moment)' do
         # scope :next, -> { where('begin_date > ?', Time.zone.now).first }
         today = Time.zone.now
-        create(:event, begin_date: (today + 4.day), end_date: (today + 5.days))
+        create(:event, begin_date: (today + 4.days), end_date: (today + 5.days))
         current_event =
           create(:event, begin_date: (today - 1.day), end_date: (today + 3.days))
 
@@ -328,7 +327,8 @@ describe Event, type: :model do
       create(:hospitality, event: ev, lodging: lodge2, locality: loc2)
       result = {
         "#{loc1.city}" => lodge1.min_capacity,
-        "#{loc2.city}" => lodge2.min_capacity }
+        "#{loc2.city}" => lodge2.min_capacity
+      }
       expect(ev.beds_assigned_to_locality).to eq(result)
     end
   end
@@ -435,8 +435,8 @@ describe Event, type: :model do
     end
   end
 
-  describe '#copy'do
-    describe 'creates a copy of an event'do
+  describe '#copy' do
+    describe 'creates a copy of an event' do
       it 'successfully' do
         ev = create(:event)
         expect(ev.copy).to be_an Event
@@ -491,4 +491,3 @@ describe Event, type: :model do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

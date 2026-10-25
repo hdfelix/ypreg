@@ -2,6 +2,7 @@
 
 class Event < ApplicationRecord
   include EventStatistics
+
   belongs_to :location
   has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations
@@ -57,19 +58,18 @@ class Event < ApplicationRecord
   end
 
   def beds_assigned_to_locality
-    hospitalities.inject({}) do |beds_hash, h|
-      unless h.locality.nil?
-        city = h.locality.city
-        beds_hash[city] ||= 0
-        beds_hash[city] += h.lodging.min_capacity
-      end
-      beds_hash
+    hospitalities.each_with_object({}) do |h, beds_hash|
+      next if h.locality.nil?
+
+      city = h.locality.city
+      beds_hash[city] ||= 0
+      beds_hash[city] += h.lodging.min_capacity
     end
   end
 
   def load_locality_summary
-    stats = Hash.new do
-      |hash, key| hash[key] = Hash.new { |h, k| h[k] = [] }
+    stats = Hash.new do |hash, key|
+      hash[key] = Hash.new { |h, k| h[k] = [] }
     end
 
     localities.uniq.each do |locality|
@@ -89,9 +89,9 @@ class Event < ApplicationRecord
 
   def payment_adjustments(locality)
     registrations.where(locality: locality)
-      .pluck(:payment_adjustment)
-      .reject { |p| p.nil? }
-      .inject(0) { |sum, r| sum + r }
+                 .pluck(:payment_adjustment)
+                 .reject { |p| p.nil? }
+                 .inject(0) { |sum, r| sum + r }
   end
 
   def payments
@@ -130,7 +130,7 @@ class Event < ApplicationRecord
       total_registrations(locality: locality).count # users.where('users.locality_id = ?', locality.id).count
     assign_totals(stats, locality)
     stats[loc]['amount_due'] =
-      stats[loc]['grand_total'] * registration_cost - payment_adjustments(locality)
+      (stats[loc]['grand_total'] * registration_cost) - payment_adjustments(locality)
     assign_grand_totals(stats, locality)
     stats[loc]['balance'] =
       stats[loc]['amount_due'] - stats[loc]['actual_amount_paid']
@@ -145,9 +145,11 @@ class Event < ApplicationRecord
     stats[loc]['total_helpers'] =
       total_registrations(role: 'helper', locality: locality).count
     stats[loc]['yp_so_ratio'] = '--'
+    return unless stats[loc]['total_serving_ones'] != 0
+
     stats[loc]['yp_so_ratio'] =
       stats[loc]['total_yp'] /
-      stats[loc]['total_serving_ones'] if stats[loc]['total_serving_ones'] != 0
+      stats[loc]['total_serving_ones']
   end
 
   def assign_grand_totals(stats, locality)

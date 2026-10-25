@@ -8,7 +8,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   include PgSearch
-  multisearchable against: [:gender, :role]
+
+  multisearchable against: %i[gender role]
   # pg_search_scope :search_by_name, against: :name,
   # using: { tsearch: { dictionary: 'english' } }
 
@@ -21,10 +22,10 @@ class User < ApplicationRecord
   validates :gender, presence: true
 
   # Constants
-  GENDER = %w(Brother Sister)
-  USER_ROLE = %w(admin scyp ycat loc_contact hosp_contact trainee speaking_brother supporting_brother helper yp guest)
-  AGE = %w(minor 13 14 15 16 17 18 adult)
-  GRADE = %w(6th 7th 8th 9th 10th 11th 12th college other)
+  GENDER = %w[Brother Sister]
+  USER_ROLE = %w[admin scyp ycat loc_contact hosp_contact trainee speaking_brother supporting_brother helper yp guest]
+  AGE = %w[minor 13 14 15 16 17 18 adult]
+  GRADE = %w[6th 7th 8th 9th 10th 11th 12th college other]
 
   # scopes
   scope :with_role, ->(role) { where(role: role) }
@@ -68,6 +69,7 @@ class User < ApplicationRecord
 
   def background_check_valid?
     return true if ages_that_do_not_require_background_check.include?(age)
+
     background_check_date.nil? ||
       background_check_date > 3.years.ago
   end

@@ -4,9 +4,10 @@ require 'awesome_print'
 describe Events::CopiesController, type: :controller do
   describe 'POST :create' do
     context 'with a valid params[:event_id]' do
-      before(:example) do
+      before do
         @event = create(:event)
       end
+
       context 'with no errors on @event' do
         it 'create a new (copied) event' do
           expect do

@@ -26,7 +26,10 @@ class Events::LocalitiesController < ApplicationController
     @event_locality = EventLocality.new(event: @event, locality: @locality)
     @locality_user_ids = params[:locality_user_ids]
 
-    unless @locality_user_ids.nil?
+    if @locality_user_ids.nil?
+      flash[:error] = 'No users were selected!'
+      render action: 'new'
+    else
       ActiveRecord::Base.transaction do
         @locality_user_ids.each do |user_id|
           user = User.find(user_id)
@@ -35,21 +38,19 @@ class Events::LocalitiesController < ApplicationController
             event: @event,
             locality: user.locality,
             has_medical_release_form: false,
-            has_been_paid: false)
+            has_been_paid: false
+          )
           @event.registrations << reg
         end
       end
 
       if @event.save
-        flash[:notice] = "Registrations added successfully."
+        flash[:notice] = 'Registrations added successfully.'
         redirect_to @event
       else
-        flash[:error] = "There was a problem saving these event registrations."
+        flash[:error] = 'There was a problem saving these event registrations.'
         render action: 'new'
       end
-    else
-      flash[:error] = "No users were selected!"
-      render action: 'new'
     end
   end
 
@@ -59,13 +60,12 @@ class Events::LocalitiesController < ApplicationController
     users_to_decorate = User.where(id: users.map(&:id))
     # authorize users_to_decorate
 
-    decorated_users = users_to_decorate.collect do |user|
+    users_to_decorate.collect do |user|
       if user.role == 'yp'
         YpUserDecorator.decorate(user)
       else
         UserDecorator.decorate(user)
       end
     end
-    decorated_users
   end
 end

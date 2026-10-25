@@ -33,14 +33,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     users = User.includes(:locality).all
     authorize users
 
-    decorated_users = users.collect do |user|
+    users.collect do |user|
       if user.role == 'yp'
         YpUserDecorator.decorate(user)
       else
         UserDecorator.decorate(user)
       end
     end
-    decorated_users
   end
 
   def admin_update_params

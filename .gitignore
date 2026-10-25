@@ -71,3 +71,6 @@ tags
 
 # Metrics
 rails_best_practices_output.html
+/vendor/bundle
+/.bundle
+/coverage

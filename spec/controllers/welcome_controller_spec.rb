@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe WelcomeController, type: :controller do
-  before(:example) do
+  before do
     sign_in_user
   end
 
@@ -15,9 +15,9 @@ describe WelcomeController, type: :controller do
 
       get :index
 
-      expect(assigns(:events)).to match_array([future_event])
-      expect(assigns(:events)).to_not include(current_event)
-      expect(assigns(:events)).to_not include(event_over)
+      expect(assigns(:events)).to contain_exactly(future_event)
+      expect(assigns(:events)).not_to include(current_event)
+      expect(assigns(:events)).not_to include(event_over)
     end
 
     it 'returns http success' do

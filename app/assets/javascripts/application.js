@@ -13,8 +13,6 @@
 // require turbolinks
 //= require ./kingadmin-v1.2/jquery-2.1.0
 //= require jquery_ujs
-//= require activestorage
-//= rquire jquery-ui
 
 //= require events
 //= require modernizr

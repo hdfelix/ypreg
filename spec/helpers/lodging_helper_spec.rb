@@ -12,7 +12,7 @@ describe LodgingHelper do
 
   describe '#filtered_contact_person_collection' do
     it 'returns a collection of users not assigned as contact_people' \
-        'with the contact_person (if any) for the current lodging' do
+       'with the contact_person (if any) for the current lodging' do
       # TODO: figure out how to use mocks with class doubles to test this method
     end
   end

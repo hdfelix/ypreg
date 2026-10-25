@@ -93,6 +93,7 @@ describe Locality, type: :model do
         expect(loc.hospitalities_min(ev)).to eq 2
       end
     end
+
     describe '#hospitalities_max' do
       it 'returns the sum of the max capacities of all event hospitalities' do
         ev = create(:event)
@@ -121,7 +122,7 @@ describe Locality, type: :model do
         reg = create(:registration, user: user, event: ev, locality: locality)
 
         # Assign a registration to oru hospitality object
-        hosp.update_attributes(registration: reg)
+        hosp.update(registration: reg)
 
         expect(locality.assigned_beds_total(ev)).to eq 1
       end
@@ -140,7 +141,7 @@ describe Locality, type: :model do
         user2 = create(:user)
         reg = create(:registration, user: user, event: ev, locality: locality)
         create(:registration, user: user2, event: ev, locality: locality)
-        hosp.update_attributes(registration: reg)
+        hosp.update(registration: reg)
 
         expect(locality.beds_to_assign(ev)).to eq 1
       end

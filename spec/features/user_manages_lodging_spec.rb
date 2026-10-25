@@ -56,7 +56,7 @@ feature 'Admin user manages lodgings' do
     fill_in 'lodging[address2]', with: lodging.address2
     fill_in 'lodging[city]', with: lodging.city
     find('#lodging_state_abbrv')
-      .find(:xpath, "option[@value=\'#{lodging.state_abbrv}\']").select_option
+      .find(:xpath, "option[@value='#{lodging.state_abbrv}']").select_option
     fill_in 'lodging[zipcode]', with: lodging.zipcode
 
     click_button 'Submit'
@@ -84,7 +84,7 @@ feature 'Admin user manages lodgings' do
     expect(lodging.name).to eq('Edited name')
   end
 
-  scenario ' deletes a lodging successfully' do
+  scenario 'deletes a lodging successfully' do
     lodging = create(:lodging)
 
     visit lodging_path(lodging, authed_admin)
@@ -124,7 +124,7 @@ feature 'SCYP user manages lodgings' do
     fill_in 'lodging[address2]', with: lodging.address2
     fill_in 'lodging[city]', with: lodging.city
     find('#lodging_state_abbrv')
-      .find(:xpath, "option[@value=\'#{lodging.state_abbrv}\']").select_option
+      .find(:xpath, "option[@value='#{lodging.state_abbrv}']").select_option
     fill_in 'lodging[zipcode]', with: lodging.zipcode
 
     click_button 'Submit'

@@ -6,10 +6,12 @@ describe Hospitality, type: :model do
     it { is_expected.to belong_to :lodging }
     it { is_expected.to belong_to(:locality).optional }
     it { is_expected.to belong_to(:registration).optional }
+
     it do
-      is_expected.to have_many(:registrations)
+      expect(subject).to have_many(:registrations)
         .through(:hospitality_registration_assignments)
     end
+
     it { is_expected.to have_many(:hospitality_registration_assignments).inverse_of(:hospitality) }
   end
 
@@ -41,7 +43,8 @@ describe Hospitality, type: :model do
 
           registrations.each do |reg|
             hra = HospitalityRegistrationAssignment.where(
-              hospitality: hospitality, registration: reg)
+              hospitality: hospitality, registration: reg
+            )
             expect(reg.hospitality).to be_nil
             expect(hra).to be_empty
           end

@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: %i[show edit update destroy]
 
   def index
     @events = Event.not_over
@@ -94,24 +94,25 @@ class EventsController < ApplicationController
   # only allow the white list through.
   def event_params
     params.require(:event)
-      .permit(
-        :event_type,
-        :title,
-        :begin_date,
-        :end_date,
-        :registration_cost,
-        :registration_open_date,
-        :registration_close_date,
-        :location_id)
+          .permit(
+            :event_type,
+            :title,
+            :begin_date,
+            :end_date,
+            :registration_cost,
+            :registration_open_date,
+            :registration_close_date,
+            :location_id
+          )
   end
 
   def flip_has_been_paid_flag_for(registrations)
     # Flip 'has_been_paid' value for registrations of selected locality
     registrations.each do |reg|
       if reg.has_been_paid == true
-        reg.update_attributes(has_been_paid: false)
+        reg.update(has_been_paid: false)
       else
-        reg.update_attributes(has_been_paid: true)
+        reg.update(has_been_paid: true)
       end
       reg.save
     end
@@ -122,9 +123,9 @@ class EventsController < ApplicationController
     # event localities of selected locality
     event_localities.each do |el|
       if el.submitted_registration_payment_check == true
-        el.update_attributes(submitted_registration_payment_check: false)
+        el.update(submitted_registration_payment_check: false)
       else
-        el.update_attributes(submitted_registration_payment_check: true)
+        el.update(submitted_registration_payment_check: true)
       end
       el.save
     end

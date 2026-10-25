@@ -2,7 +2,8 @@ require 'rails_helper'
 
 feature 'User creates an event' do
   let(:authed_admin) { create_logged_in_admin }
-  before(:each) { @event = create(:event) }
+
+  before { @event = create(:event) }
 
   scenario '- can access the Events index' do
     visit events_path(authed_admin)
@@ -12,7 +13,7 @@ feature 'User creates an event' do
     expect(page).to have_content('NEW EVENT')
   end
 
-  scenario ' - successfully with required fields' do
+  scenario '- successfully with required fields' do
     visit new_event_path(authed_admin)
     expect do
       fill_in 'event[title]', with: @event.title
@@ -34,7 +35,7 @@ feature 'User creates an event' do
     expect(page).to have_content @event.title
   end
 
-  scenario ' - with all fields' do
+  scenario '- with all fields' do
     visit new_event_path(authed_admin)
 
     expect do
@@ -69,7 +70,7 @@ feature 'User creates an event' do
     expect(page).to have_content "$#{@event.registration_cost}.00"
   end
 
-  scenario ' - unsuccessfully with no data' do
+  scenario '- unsuccessfully with no data' do
     visit new_event_path(authed_admin)
     expect do
       click_button 'Submit'
@@ -77,7 +78,7 @@ feature 'User creates an event' do
     end.not_to change(Event, :count)
   end
 
-  scenario ' - unsuccessfully with no title' do
+  scenario '- unsuccessfully with no title' do
     visit new_event_path(authed_admin)
     expect do
       click_button 'Submit'
@@ -88,25 +89,27 @@ end
 
 feature 'User copies an event' do
   let(:authed_admin) { create_logged_in_admin }
-  before(:each) { @event = create(:event) }
+
+  before { @event = create(:event) }
 
   scenario 'successfully' do
     visit events_path(authed_admin)
     click_link 'Copy'
-    expect(page). to have_content "#{@event.title} (copy)"
+    expect(page).to have_content "#{@event.title} (copy)"
   end
 end
 
 feature 'User edits an event' do
   let(:authed_admin) { create_logged_in_admin }
-  before(:each) { @event = create(:event) }
 
-  scenario ' - can access edit_event_path' do
+  before { @event = create(:event) }
+
+  scenario '- can access edit_event_path' do
     visit edit_event_path(@event, authed_admin)
     expect(page).to have_content 'Edit Event'
   end
 
-  scenario ' - successfully' do
+  scenario '- successfully' do
     visit edit_event_path(@event, authed_admin)
     click_button 'Submit'
     expect(page).to have_content 'Event was successfully updated.'
@@ -115,7 +118,8 @@ end
 
 feature 'User destroys event' do
   let(:authed_admin) { create_logged_in_admin }
-  before(:each) { @event = create(:event) }
+
+  before { @event = create(:event) }
 
   context 'Successfully' do
     it 'removes event localities' do

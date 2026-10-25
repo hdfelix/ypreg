@@ -1,7 +1,5 @@
 ##Event Registration application
 
-[ ![Codeship Status for
-hdfelix/ypreg](https://codeship.com/projects/c65ff3a0-7a8e-0132-7773-2e5924fc2807/status?branch=master)](https://codeship.com/projects/56162)
 
 Repo: https://github.com/hdfelix/ypreg.git
 
@@ -9,8 +7,8 @@ This is an event registration management site. You can use this site to manage r
 no hospitality accomodations as well as multi-day events where hospitality accomodations are necessary.  
    
 It is currently running on: 
-* Ruby 2.5.1
-* Rails 5.2.0
+* Ruby 3.4
+* Rails 8.1
 
 ### Features
 * Create and manage events
@@ -28,7 +26,7 @@ The site is configured to use PostgreSQL for all environments (Development|Test|
 
 ```bash
 $ rails db:create
-$ rails db:migrate
+$ rails db:schema:load
 ```
 
 Next, Run the following command to create an admin user account:  

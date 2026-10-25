@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe EventLocality, type: :model do
   describe 'Associations' do
-    it { should belong_to :event }
-    it { should belong_to :locality }
+    it { is_expected.to belong_to :event }
+    it { is_expected.to belong_to :locality }
   end
 
   describe 'Class Methods' do
@@ -31,7 +31,7 @@ describe EventLocality, type: :model do
         expect(el.locality.id).to eq el.locality_id
       end
 
-      it 'should not be nil' do
+      it 'is not nil' do
         expect(el).not_to be_nil
       end
     end

@@ -2,8 +2,8 @@
 # self.hospitality is the assigned hospitality for the user.
 
 class Registration < ApplicationRecord
-  PAYMENT_TYPE = %w(cash check)
-  STATUS = %w(attended excused y)
+  PAYMENT_TYPE = %w[cash check]
+  STATUS = %w[attended excused y]
 
   belongs_to :user
   belongs_to :event

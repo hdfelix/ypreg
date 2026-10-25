@@ -2,8 +2,8 @@
 class Locality < ApplicationRecord
   has_many :users
   has_many :lodgings
-  belongs_to :contact, optional: true, class_name: 'User', foreign_key: 'contact_id'
-  belongs_to :lodging_contact, optional: true, class_name: 'User', foreign_key: 'lodging_contact_id'
+  belongs_to :contact, optional: true, class_name: 'User'
+  belongs_to :lodging_contact, optional: true, class_name: 'User'
 
   validates :city, presence: true
   validates :state_abbrv, presence: true
@@ -74,6 +74,7 @@ class Locality < ApplicationRecord
   def beds_to_assign(event)
     registered_users(event).count - assigned_beds_total(event)
   end
+
   # Registrations Scopes
   def registrations(event)
     Registration.where(event: event, locality: self)
@@ -107,6 +108,7 @@ class Locality < ApplicationRecord
 
   def format_phone_number(phone)
     return '--' if phone.nil?
+
     tmp = phone
     if tmp.length == 7
       tmp.insert(3, ') ').insert(0, '(')

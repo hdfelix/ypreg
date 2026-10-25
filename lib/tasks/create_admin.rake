@@ -26,7 +26,7 @@ namespace :ypreg do
 
       input = STDIN.gets.chomp
       if input.size == 0
-        print_colored_text("\n\nYour locality name can't be blank.\n\n",warning_text_color)
+        print_colored_text("\n\nYour locality name can't be blank.\n\n", warning_text_color)
       else
         locality['city'] = input
       end
@@ -36,10 +36,10 @@ namespace :ypreg do
     input = nil
     until !input.nil? && input.size > 0
       puts "State Abbreviation ( e.g., 'CA'):"
-      print "> "
+      print '> '
       input = STDIN.gets.chomp
       if input.size == 0
-        print_colored_text("The state abbreviation can't be blank.\n\n",warning_text_color)
+        print_colored_text("The state abbreviation can't be blank.\n\n", warning_text_color)
       else
         locality['abbrv'] = input
       end
@@ -75,7 +75,7 @@ namespace :ypreg do
     input = nil
     until !input.nil? && input.size > 0
       puts "\nEnter your full name: "
-      print "> "
+      print '> '
       input = STDIN.gets.chomp
       if input.size == 0
         print_colored_text("You didn't enter a name!", warning_text_color)
@@ -86,16 +86,16 @@ namespace :ypreg do
 
     # Gender
     input = nil
-    until !input.nil? && input.size > 0 && %w(M m F f).include?(input.to_s)
+    until !input.nil? && input.size > 0 && %w[M m F f].include?(input.to_s)
       puts "\nEnter your gender ('M'or 'F'): "
       print '> '
 
       input = STDIN.gets.chomp
       try_again_text = "Let's try again; please enter your gender ('M'or 'F'): "
 
-      print_colored_text(try_again_text, warning_text_color) if input.size.nil? || !%w(M m F f).include?(input.to_s)
+      print_colored_text(try_again_text, warning_text_color) if input.size.nil? || !%w[M m F f].include?(input.to_s)
     end
-    user['gender'] = input.downcase == 'm' ? 'B': 'S'
+    user['gender'] = input.downcase == 'm' ? 'B' : 'S'
 
     # Email
     input = nil
@@ -118,13 +118,13 @@ namespace :ypreg do
     input = nil
     until !input.nil? && input.size > 0
       puts "\nEnter your 'grade' ('College' or 'Adult'): "
-      print "> "
+      print '> '
       input = STDIN.gets.chomp.downcase
-      unless input.size > 0 && %w(college adult).include?(input)
+      if input.size > 0 && %w[college adult].include?(input)
+        user['grade'] = input.downcase == 'college' ? 'college' : 'adult'
+      else
         print_colored_text("Let's try that again; enter either 'College' or 'Adult': ",
                            warning_text_color)
-      else
-        user['grade'] = input.downcase == 'college' ? 'college' : 'adult'
       end
     end
 
@@ -155,7 +155,8 @@ namespace :ypreg do
           email: user['email'].downcase,
           password: user['password'],
           role: 'admin',
-          locality_id: locality['locality_id'])
+          locality_id: locality['locality_id']
+        )
       new_user.skip_confirmation!
       if new_user.save
         notice = "\n#{new_user.name} (#{new_user.email}) created successfully."

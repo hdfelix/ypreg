@@ -7,13 +7,9 @@ class EventLocality < ApplicationRecord
     Registration.where(event: event, locality: locality)
   end
 
-  def locality_id
-    locality.id
-  end
+  delegate :id, to: :locality, prefix: true
 
-  def locality_city
-    locality.city
-  end
+  delegate :city, to: :locality, prefix: true
 
   def users
     User.where(locality: locality)
