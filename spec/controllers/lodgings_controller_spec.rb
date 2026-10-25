@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe LodgingsController, type: :controller do
-  before(:example) do
+  before do
     sign_in_user
   end
 
@@ -12,7 +12,7 @@ describe LodgingsController, type: :controller do
 
       get :index
 
-      expect(assigns(:lodgings)).to match_array([h1, h2])
+      expect(assigns(:lodgings)).to contain_exactly(h1, h2)
     end
 
     it 'is a success' do
@@ -71,16 +71,17 @@ describe LodgingsController, type: :controller do
   describe 'POST :create' do
     context 'with empty contact_person_id' do
       it 'create a new lodging' do
-        expect {
+        expect do
           post :create, params: { lodging: attributes_for(:lodging) }
-        }.to change(Lodging, :count).by(1)
+        end.to change(Lodging, :count).by(1)
       end
     end
+
     context 'with valid params' do
       it 'create a new lodging' do
-        expect {
+        expect do
           post :create, params: { lodging: attributes_for(:lodging) }
-        }.to change(Lodging, :count).by(1)
+        end.to change(Lodging, :count).by(1)
       end
 
       it 'assigns a newly created lodging as @lodging' do
@@ -97,7 +98,7 @@ describe LodgingsController, type: :controller do
     end
 
     context 'with invalid params' do
-      before(:example) do
+      before do
         allow_any_instance_of(Lodging).to receive(:save).and_return(false)
         @user = build_stubbed(:user)
         allow(User).to receive(:find).and_return(@user)

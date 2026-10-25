@@ -1,47 +1,26 @@
 # require 'simplecov'
 # SimpleCov.start 'rails'
 
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'support/factory_bot'
 require 'spec_helper'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara-screenshot/rspec'
-# Ref: https://github.com/titusfortner/webdrivers#specific-drivers
-require 'webdrivers/chromedriver'
 
 # Checks for pending migrations before tests are run.
 ActiveRecord::Migration.maintain_test_schema! if defined?(ActiveRecord::Migration)
 
-# use :headless_chrome driver by default
+# Headless Chrome; selenium-manager downloads a matching chromedriver
 Capybara.register_driver(:selenium) do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: {
-      args: [
-        'disable-gpu',
-        'no-sandbox',
-        'disable-web-security',
-        'disable-component-update',
-        'window-size=2560,1440'
-      ]
-    },
-    loggingPrefs: {
-      browser: 'ALL'
-    },
-    acceptInsecureCerts: true
-  )
-  options = Selenium::WebDriver::Chrome::Options.new(args: ['no-sandbox'])
-  options.add_option(:w3c, false)
-
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    desired_capabilities: capabilities,
-    options: options
-  )
+  options = Selenium::WebDriver::Chrome::Options.new
+  %w[headless=new disable-gpu no-sandbox disable-web-security window-size=2560,1440].each do |arg|
+    options.add_argument(arg)
+  end
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
 # Set the default driver
@@ -57,7 +36,7 @@ Capybara::Screenshot.prune_strategy = :keep_last_run
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
@@ -65,8 +44,8 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-	config.include FeatureLoginMacros
-	config.include ApplicationHelper
+  config.include FeatureLoginMacros
+  config.include ApplicationHelper
   config.include WaitForAjax
   config.include ControllerMacros, type: :controller
   config.use_transactional_fixtures = false
@@ -83,7 +62,7 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  #config.order = "random"
+  # config.order = "random"
 end
 
 Shoulda::Matchers.configure do |config|

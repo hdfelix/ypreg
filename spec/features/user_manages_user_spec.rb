@@ -31,4 +31,4 @@ feature 'User can manage an user account'
 #			expect(page).to have_content 'User, Test'
 #	end
 
-#end
+# end

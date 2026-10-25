@@ -3,21 +3,23 @@ require 'rails_helper'
 describe EventsHelper do
   let(:speaking_brother) { build_stubbed(:user, role: 'speaking_brother') }
   let(:current_user) { build_stubbed(:user, role: 'speaking_brother') }
-  let(:location) { create(:location, id: '1',
-                                 address1: '1 Way',
-                                 city: 'City',
-                                 state_abbrv: 'CA',
-                                 zipcode: '12345') }
+  let(:location) do
+    create(:location, id: '1',
+                      address1: '1 Way',
+                      city: 'City',
+                      state_abbrv: 'CA',
+                      zipcode: '12345')
+  end
   let(:event) { build_stubbed(:event, location: location) }
 
   describe '#display_event_manage_button?'
 
   describe '#event_location' do
-    it "returns the event location formatted in safe html" do
+    it 'returns the event location formatted in safe html' do
       html = ''
       content_tag(:address) do
         html <<
-          "#{location.address1} \n<br />\n #{location.city},"\
+          "#{location.address1} \n<br />\n #{location.city}," \
           "#{location.state_abbrv}&nbsp;&nbsp;#{location.zipcode}"
       end
       html.html_safe

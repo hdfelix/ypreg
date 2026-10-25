@@ -10,7 +10,7 @@ module EventsHelper
     html = ''
     content_tag(:address) do
       html <<
-        "#{location.address1} \n<br />\n #{location.city},"\
+        "#{location.address1} \n<br />\n #{location.city}," \
         "#{location.state_abbrv}&nbsp;&nbsp;#{location.zipcode}"
     end
     html.html_safe
@@ -34,8 +34,8 @@ module EventsHelper
   def event_registration_dates(event)
     content_tag(:span) do
       if event.registration_open_date && event.registration_close_date
-        "#{ event.registration_open_date.strftime('%m/%d/%y') } - \
-         #{ event.registration_close_date.strftime('%m/%d/%y') }".html_safe
+        "#{event.registration_open_date.strftime('%m/%d/%y')} - \
+         #{event.registration_close_date.strftime('%m/%d/%y')}".html_safe
       else
         'TBA'
       end
@@ -64,9 +64,9 @@ module EventsHelper
 
   def style_balance(balance)
     if balance > 0
-      content_tag('span',number_to_currency(balance), class: 'negative').html_safe
+      content_tag('span', number_to_currency(balance), class: 'negative').html_safe
     else
-      content_tag('span',number_to_currency(balance)).html_safe
+      content_tag('span', number_to_currency(balance)).html_safe
     end
   end
 
@@ -75,11 +75,12 @@ module EventsHelper
   end
 
   def background_check_tr(user, id)
-    tag(:tr, { id: id, class: decorated_user(user).background_check_date_row_class })
+    tag.tr({ id: id, class: decorated_user(user).background_check_date_row_class })
   end
 
   def display_attendance_summary_for?(locality)
     return false if current_user.role?(:loc_contact) && current_user.locality != locality
+
     true
   end
 end

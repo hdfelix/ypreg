@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe Events::HospitalityLocalityAssignmentsController, type: :controller do
   let(:event) { create(:event) }
-  before(:example) do
+
+  before do
     sign_in_user
   end
 
@@ -39,7 +40,8 @@ describe Events::HospitalityLocalityAssignmentsController, type: :controller do
       it 'updates hospitality with a locality id and /
           redirects to :index' do
         event = create(:event_with_registrations, ensure_unique_locality: true)
-        hospitalities, localities = [], []
+        hospitalities = []
+        localities = []
         event.registrations.each do |reg|
           localities << reg.locality
           hospitalities << create(:hospitality,

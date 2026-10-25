@@ -1,6 +1,6 @@
 module DashboardHelper
   def user_can_manage_site(user)
-    %w(admin scyp ycat loc_contact).include?(user.role)
+    %w[admin scyp ycat loc_contact].include?(user.role)
   end
 
   # Event widget helpers
@@ -16,11 +16,13 @@ module DashboardHelper
 
   def display_event_widget_based_on(role)
     return if role == 'yp'
+
     render partial: 'layouts/event_widget', locals: { role: role }
   end
 
   def display_global_stats_widget_based_on(role)
     return if !role == 'admin'
+
     render partial: 'layouts/global_stats_widget',
            locals: { current_user: current_user }
   end
@@ -73,14 +75,12 @@ module DashboardHelper
   end
 
   def get_hash_id_prefix_from(attribute_name)
-    prefix =
-      case attribute_name
-      when 'Capacity' then 'cap'
-      when 'Localities' then 'loc'
-      when 'Hospitality' then 'hosp'
-      when 'Payments' then 'pmt'
-      when 'Attending' then 'att'
-      end
-    prefix
+    case attribute_name
+    when 'Capacity' then 'cap'
+    when 'Localities' then 'loc'
+    when 'Hospitality' then 'hosp'
+    when 'Payments' then 'pmt'
+    when 'Attending' then 'att'
+    end
   end
 end

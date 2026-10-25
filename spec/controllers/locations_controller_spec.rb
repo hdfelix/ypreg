@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe LocationsController, type: :controller do
-  before(:example) do
+  before do
     sign_in_user
   end
 
@@ -63,9 +63,9 @@ describe LocationsController, type: :controller do
   describe 'POST :create' do
     context 'with valid params' do
       it 'create a new location' do
-        expect {
+        expect do
           post :create, params: { location: attributes_for(:location) }
-        }.to change(Location, :count).by(1)
+        end.to change(Location, :count).by(1)
       end
 
       it 'assigns a newly created location as @location' do
@@ -82,7 +82,7 @@ describe LocationsController, type: :controller do
     end
 
     context 'with invalid params' do
-      before(:example) do
+      before do
         allow_any_instance_of(Location).to receive(:save).and_return(false)
       end
 

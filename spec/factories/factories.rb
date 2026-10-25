@@ -3,23 +3,23 @@ require 'faker'
 
 FactoryBot.define do
   ## User factories
-  factory :user, aliases: [:contact, :locality_contact, :lodging_contact] do
+  factory :user, aliases: %i[contact locality_contact lodging_contact] do
     name { Faker::Name.first_name }
     email { Faker::Internet.email }
-    password 'secretpassword'
-    password_confirmation 'secretpassword'
+    password { 'secretpassword' }
+    password_confirmation { 'secretpassword' }
     locality
-    role 'yp'
-    gender 'Brother'
-    age '15'
-    grade '10th'
+    role { 'yp' }
+    gender { 'Brother' }
+    age { '15' }
+    grade { '10th' }
 
     trait :with_admin_role do
-      role 'admin'
+      role { 'admin' }
     end
 
     trait :yp do
-      role 'yp'
+      role { 'yp' }
     end
   end
 
@@ -35,17 +35,17 @@ FactoryBot.define do
     name { Faker::Address.street_name }
     description { Faker::Lorem.sentence }
     address1 { Faker::Address.street_address }
-    address2 ''
+    address2 { '' }
     city { Faker::Address.city }
-    state_abbrv 'CA'
+    state_abbrv { 'CA' }
     zipcode { Faker::Address.zip_code }
-    max_capacity '200'
+    max_capacity { '200' }
   end
 
   ## Locality factories
   factory :locality do
     city { Faker::Address.city }
-    state_abbrv 'CA'
+    state_abbrv { 'CA' }
 
     trait :with_3_saints do
       after(:create) do |instance|
@@ -62,22 +62,22 @@ FactoryBot.define do
     sequence(:name) { |n| "Household #{n}" }
     sequence(:description) { |n| "Description of household #{n}" }
     address1 { Faker::Address.street_address }
-    address2 ''
+    address2 { '' }
     city { Faker::Address.city }
-    state_abbrv 'CA'
+    state_abbrv { 'CA' }
     zipcode { Faker::Address.zip_code }
-    lodging_type '1'
-    min_capacity min_cap
-    max_capacity max_cap
+    lodging_type { '1' }
+    min_capacity { min_cap }
+    max_capacity { max_cap }
     locality
     contact_person { create(:confirmed_user) }
 
     trait :with_min_cap_of_3 do
-      min_capacity 3
+      min_capacity { 3 }
     end
 
     trait :with_max_cap_of_5 do
-      max_capacity 5
+      max_capacity { 5 }
     end
   end
 
@@ -86,19 +86,19 @@ FactoryBot.define do
 
   factory :event do
     title { "#{Faker::Name.event_name} #{Faker::Name.event_modifier} #{Faker::Name.event_type}" }
-    description 'This is the sample event description. Not much details here.'
-    event_type '3'
-    begin_date tmp_date
+    description { 'This is the sample event description. Not much details here.' }
+    event_type { '3' }
+    begin_date { tmp_date }
     end_date { (tmp_date + 3.days).strftime('%Y/%m/%d') }
     registration_open_date { (tmp_date - 1.month).strftime('%Y/%m/%d') }
     registration_close_date { (tmp_date - 1.month + 15.days).strftime('%Y/%m/%d') }
-    registration_cost '10'
+    registration_cost { '10' }
     location
 
     factory :event_with_registrations do
       transient do
-        registrations_count 2
-        ensure_unique_locality false
+        registrations_count { 2 }
+        ensure_unique_locality { false }
       end
 
       after(:create) do |event, evaluator|
@@ -125,9 +125,9 @@ FactoryBot.define do
     # YP Conference with 5 registered YP
     factory :event_yp_conference do
       transient do
-        users_count 5
-        lodgings_count 2
-        hospitalities_count 3
+        users_count { 5 }
+        lodgings_count { 2 }
+        hospitalities_count { 3 }
       end
 
       after(:create) do |event|
@@ -147,12 +147,12 @@ FactoryBot.define do
 
     trait :current_event do
       begin_date { Time.zone.now.to_date }
-      end_date { (Time.zone.now + 2.days).to_date }
+      end_date { 2.days.from_now.to_date }
     end
 
     trait :with_hospitalities do
       transient do
-        count 2
+        count { 2 }
       end
 
       after(:create) do |event, evaluator|
@@ -169,7 +169,8 @@ FactoryBot.define do
           FactoryBot.create(
             :registration,
             user: usr,
-            event: instance)
+            event: instance
+          )
         end
       end
     end
@@ -182,14 +183,16 @@ FactoryBot.define do
           FactoryBot.create(
             :registration,
             user: usr,
-            event: instance)
+            event: instance
+          )
         end
 
         User.where(locality_id: loc2.id).each do |usr|
           FactoryBot.create(
             :registration,
             user: usr,
-            event: instance)
+            event: instance
+          )
         end
       end
     end
@@ -197,21 +200,21 @@ FactoryBot.define do
 
   ## Registration factories
   factory :registration do
-    payment_type 'cash'
-    has_been_paid false
-    payment_adjustment '0'
-    attend_as_serving_one false
-    hospitality nil
+    payment_type { 'cash' }
+    has_been_paid { false }
+    payment_adjustment { '0' }
+    attend_as_serving_one { false }
+    hospitality { nil }
     locality { user.locality }
-    has_medical_release_form false
-    vehicle_seating_capacity 5
-    conference_guest false
-    status nil
+    has_medical_release_form { false }
+    vehicle_seating_capacity { 5 }
+    conference_guest { false }
+    status { nil }
     user
     event
 
     trait :serving_one do
-      attend_as_serving_one true
+      attend_as_serving_one { true }
     end
 
     trait :yp do

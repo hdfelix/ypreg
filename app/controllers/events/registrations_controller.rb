@@ -25,25 +25,12 @@ class Events::RegistrationsController < ApplicationController
 
   def new
     @event = Event.find(params[:event_id])
-    if params[:format]
-      @user = User.find(params[:format])
-    else
-      @user = current_user
-    end
+    @user = if params[:format]
+              User.find(params[:format])
+            else
+              current_user
+            end
     @registration = Registration.new(user: @user, has_been_paid: false)
-  end
-
-  def create
-    @event = Event.find(params[:event_id])
-    @user = User.find(params[:user_id])
-    @registration = @user.registrations.new(registration_params)
-    if @registration.save
-      flash[:notice] = 'Registration created successfully'
-      redirect_to event_path(@event)
-    else
-      flash[:error] = 'Error creating registration'
-      render 'new'
-    end
   end
 
   def edit
@@ -59,12 +46,25 @@ class Events::RegistrationsController < ApplicationController
     @return_to = params[:return_to]
   end
 
+  def create
+    @event = Event.find(params[:event_id])
+    @user = User.find(params[:user_id])
+    @registration = @user.registrations.new(registration_params)
+    if @registration.save
+      flash[:notice] = 'Registration created successfully'
+      redirect_to event_path(@event)
+    else
+      flash[:error] = 'Error creating registration'
+      render 'new'
+    end
+  end
+
   def update
     @event = Event.find(params[:event_id])
     @registration = Registration.find(params[:id])
     locality = @registration.user.locality
 
-    if @registration.update_attributes(registration_params)
+    if @registration.update(registration_params)
       if params[:view] == 'attendance'
         flash[:notice] = 'Attendance updated successfully.'
         redirect_to event_registrations_url(@event, view: 'attendance')
@@ -84,7 +84,7 @@ class Events::RegistrationsController < ApplicationController
 
   def destroy
     if @registration.destroy flash[:notice] =
-        'registration deleted successfully.'
+                               'registration deleted successfully.'
       redirect_to events_url
     else
       flash[:error] = 'registration could not be deleted.'
@@ -93,21 +93,19 @@ class Events::RegistrationsController < ApplicationController
   end
 end
 
-private
-
 def registration_params
   parameters =
     params.require(:registration)
-    .permit(:payment_type,
-            :payment_adjustment,
-            :vehicle_seating_capacity,
-            :has_been_paid,
-            :has_medical_release_form,
-            :attend_as_serving_one,
-            :conference_guest,
-            :return_to)
-    .merge(event_id: params[:event_id])
-    .merge(locality_id: User.find(params[:user_id]).locality.id)
+          .permit(:payment_type,
+                  :payment_adjustment,
+                  :vehicle_seating_capacity,
+                  :has_been_paid,
+                  :has_medical_release_form,
+                  :attend_as_serving_one,
+                  :conference_guest,
+                  :return_to)
+          .merge(event_id: params[:event_id])
+          .merge(locality_id: User.find(params[:user_id]).locality.id)
 
   parameters = parameters.merge(params.require(:registration).permit(:status)) if params[:view] == 'attendance'
   parameters

@@ -23,12 +23,12 @@ class Events::HospitalitiesController < ApplicationController
     @event = Event.find(params[:event_id])
     ids_count =
       params[:hospitality_lodging_ids].nil? ? 0 : params[:hospitality_lodging_ids].count
-    if ids_count != 0
-      remove_hospitalities
-      redirect_to @event
-    else
+    if ids_count == 0
       flash[:error] = 'No hospitalities selected.'
       redirect_to event_hospitalities_path(@event)
+    else
+      remove_hospitalities
+      redirect_to @event
     end
   end
 

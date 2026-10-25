@@ -1,21 +1,19 @@
 class LocationsController < ApplicationController
-  before_action :set_location, only: [:show, :edit, :update, :destroy]
+  before_action :set_location, only: %i[show edit update destroy]
 
   def index
     @locations = Location.all
     authorize @locations
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @location = Location.new
     authorize @location
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @location = Location.new(location_params)
@@ -42,7 +40,7 @@ class LocationsController < ApplicationController
 
   def destroy
     if @location.destroy
-      flash[:notice] = "Location #{ @location.name } deleted successfully."
+      flash[:notice] = "Location #{@location.name} deleted successfully."
       redirect_to locations_url
     else
       flash[:error] = 'Location could not be deleted.'
@@ -62,15 +60,16 @@ class LocationsController < ApplicationController
   # only allow the white list through.
   def location_params
     params.require(:location)
-      .permit(
-        :location_type,
-        :name,
-        :description,
-        :max_capacity,
-        :address1,
-        :address2,
-        :city,
-        :state_abbrv,
-        :zipcode)
+          .permit(
+            :location_type,
+            :name,
+            :description,
+            :max_capacity,
+            :address1,
+            :address2,
+            :city,
+            :state_abbrv,
+            :zipcode
+          )
   end
 end

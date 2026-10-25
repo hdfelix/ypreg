@@ -23,13 +23,13 @@ Rails.application.routes.draw do
   resources :localities
   resources :lodgings
   resources :events do
-    resources :copies, only: [:new, :create,:show],
-              controller: 'events/copies'
+    resources :copies, only: %i[new create show],
+                       controller: 'events/copies'
     resources :localities,
-              only: [:index, :show, :new, :create],
+              only: %i[index show new create],
               controller: 'events/localities'
     resources :hospitalities,
-              only: [:index, :new, :create],
+              only: %i[index new create],
               controller: 'events/hospitalities' do
       collection do
         post 'add'
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     end
     resources :hospitality_registration_assignments,
               param: :locality_id,
-              only: [:index, :show],
+              only: %i[index show],
               controller: 'events/hospitality_registration_assignments' do
       collection do
         put 'assign'

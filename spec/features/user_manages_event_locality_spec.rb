@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-feature "User visits Event#show" do
-  let(:authed_admin) {
+feature 'User visits Event#show' do
+  let(:authed_admin) do
     create_logged_in_admin
-  }
+  end
 
-  it "has a Localities List button" do
+  it 'has a Localities List button' do
     ev = create(:event)
     visit event_path(ev, authed_admin)
 
-    expect(page).to have_content("Localities List")
+    expect(page).to have_content('Localities List')
   end
 
   context 'Localities List button' do
@@ -60,7 +60,7 @@ feature 'User manages event localities' do
         .to have_content(text)
     end
 
-    it 'it has the following sections: Attendance Breakdown, Available Hospitalities \
+    it 'has the following sections: Attendance Breakdown, Available Hospitalities \
         Registered Saints, Locality Saints, Payments' do
       visit event_locality_path(event, locality, authed_admin)
 

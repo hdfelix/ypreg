@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Events::LocalitiesController, type: :controller do
-  before(:example) do
+  before do
     sign_in_user
   end
 
@@ -15,7 +15,7 @@ describe Events::LocalitiesController, type: :controller do
 
       expect(assigns(:localities).map(&:city)).to include(locality_names.first)
       expect(assigns(:localities).map(&:city)).to include(locality_names.second)
-      expect(assigns(:localities).map(&:city)).to_not include(loc_with_registration)
+      expect(assigns(:localities).map(&:city)).not_to include(loc_with_registration)
     end
 
     it 'assigns all event localities to @event_localities' do
@@ -35,7 +35,8 @@ describe Events::LocalitiesController, type: :controller do
                registrations_count: 1)
       end
       let(:locality) { create(:locality) }
-      before(:example) do
+
+      before do
         post :create, params: { event_id: event.id, locality_id: locality.id }
       end
 
@@ -55,7 +56,7 @@ describe Events::LocalitiesController, type: :controller do
       it 'assings locality user ids to @locality_user_ids'
       it 'renders the events/localities index on save'
 
-      it' displays a flash notice'
+      it 'displays a flash notice'
     end
   end
 end

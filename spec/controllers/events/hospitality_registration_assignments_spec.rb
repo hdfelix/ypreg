@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Events::HospitalityRegistrationAssignmentsController, type: :controller do
-  before(:example) do
+  before do
     sign_in_user
   end
 
@@ -145,12 +145,12 @@ describe Events::HospitalityRegistrationAssignmentsController, type: :controller
     end
 
     context 'Hospitality for a saint is unselected' do
-      it "it removes the hospitality assignment from the saint's registration" do
+      it "removes the hospitality assignment from the saint's registration" do
         event = create(:event_with_registrations, ensure_unique_locality: true)
         locality = create(:locality)
         hospitality = create(:hospitality, event: event, lodging: create(:lodging))
         registration = event.registrations.first
-        registration.update_attributes(hospitality: hospitality)
+        registration.update(hospitality: hospitality)
         HospitalityRegistrationAssignment
           .create(hospitality: hospitality,
                   registration: registration,

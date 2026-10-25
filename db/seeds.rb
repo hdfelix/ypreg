@@ -28,8 +28,9 @@ end
 
 # Create 10 localities
 print "\nCreating #{count} Localities: "
-locality_names = ['Anaheim', 'Cypress', 'New Jerusalem', 'Buena Park', 'Huntington Beach', 'Irvine', 'San Juan Capistrano', 'San Diego', 'Orange', 'Bakers Field']
-until locality_names.count == 0 do
+locality_names = ['Anaheim', 'Cypress', 'New Jerusalem', 'Buena Park', 'Huntington Beach', 'Irvine',
+                  'San Juan Capistrano', 'San Diego', 'Orange', 'Bakers Field']
+until locality_names.count == 0
   Locality.create(
     city: locality_names.pop,
     state_abbrv: 'CA'
@@ -40,10 +41,9 @@ end
 # Create  3 upcoming test events
 count = 3
 print "\nCreating #{count} Events: "
-months_from_now = rand(1..3).months
+rand(1..3).months
 tmp_registration_date = Time.now - 1.day
 tmp_event_date = tmp_registration_date + 2.weeks
-
 
 Event.create(
   title: Faker::Name.event_name + ' ' + Faker::Name.event_modifier + ' ' + Faker::Name.event_type,
@@ -100,25 +100,26 @@ past_event = Event.create(
   location: Location.all.sample
 )
 
-
 def calculate_age(birthday)
   days_in_a_year = 365.25
   now = Time.now.to_date
   birthdate = birthday.to_date
-  age = (((now - birthdate).to_i) / days_in_a_year).to_int
+  age = ((now - birthdate).to_i / days_in_a_year).to_int
 
-  age = case
-        when age < 13 then 'minor'
-        when age > 18 then 'adult'
-        else age
-        end
-  age
+  if age < 13
+    'minor'
+  elsif age > 18
+    'adult'
+  else
+    age
+  end
 end
 
 total_users = 0
 print "\nCreating Users..."
 
-birthday = DateTime.now - (0..4).to_a.sample.years
+DateTime.now
+(0..4).to_a.sample.years
 # Create admin users
 print "\n  Admin Developer Account: "
 print '.'
@@ -136,31 +137,21 @@ admin2 = User.new(
   role: 'admin',
   password: 'devaccount',
   password_confirmation: 'devaccount',
-  background_check_date: Time.zone.now)
+  background_check_date: Time.zone.now
+)
 
 admin2.skip_confirmation!
-admin2.update_attributes(role: 'admin')
-admin2.update_attributes(locality_id: Locality.all.sample.id)
+admin2.update(role: 'admin')
+admin2.update(locality_id: Locality.all.sample.id)
 admin2.save
 
 print '.'
 total_users += 1
 
-
 # Create yp accounts
 
-def calculate_grade(age)
-  age = case
-        when 11 then '6th'
-        when 12 then '7th'
-        when 13 then '8th'
-        when 14 then '9th'
-        when 15 then '10th'
-        when 16 then '11th'
-        when 17 then '12th'
-        when 18 then %w(college other).sample
-        end
-  age
+def calculate_grade(_age)
+  '6th'
 end
 
 count = 50
@@ -179,11 +170,12 @@ for i in 1..(count + 1) do
     role: 'yp',
     email: "yp_user#{i}@ypreg.com",
     password: 'chiracha',
-    password_confirmation: 'chiracha')
+    password_confirmation: 'chiracha'
+  )
 
   yp.skip_confirmation!
-  yp.update_attributes(role: 'yp')
-  yp.update_attributes(locality_id: Locality.all.sample.id)
+  yp.update(role: 'yp')
+  yp.update(locality_id: Locality.all.sample.id)
   yp.save
 
   print '.'
@@ -202,17 +194,17 @@ for i in 1..(count + 1) do
     gender: User::GENDER.sample,
     birthday: birthday,
     age: calculate_age(birthday),
-    grade: %w(college other).sample,
+    grade: %w[college other].sample,
     role: 'scyp',
     email: "scyp_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha',
-    background_check_date: (30..36).to_a.sample.months.ago)
-
+    background_check_date: (30..36).to_a.sample.months.ago
+  )
 
   scyp.skip_confirmation!
-  scyp.update_attributes(role: 'scyp')
-  scyp.update_attributes(locality_id: Locality.all.sample.id)
+  scyp.update(role: 'scyp')
+  scyp.update(locality_id: Locality.all.sample.id)
   scyp.save
 
   print '.'
@@ -231,16 +223,17 @@ for i in 1..(count + 1) do
     gender: User::GENDER.sample,
     birthday: birthday,
     age: calculate_age(birthday),
-    grade: %w(college other).sample,
+    grade: %w[college other].sample,
     role: 'trainee',
     email: "trainee_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha',
-    background_check_date: (30..36).to_a.sample.months.ago)
+    background_check_date: (30..36).to_a.sample.months.ago
+  )
 
   scyp.skip_confirmation!
-  scyp.update_attributes(role: 'trainee')
-  scyp.update_attributes(locality_id: Locality.all.sample.id)
+  scyp.update(role: 'trainee')
+  scyp.update(locality_id: Locality.all.sample.id)
   scyp.save
 
   print '.'
@@ -257,16 +250,17 @@ for i in 1..(count + 1) do
     gender: User::GENDER.sample,
     birthday: birthday,
     age: calculate_age(birthday),
-    grade: %w(college other).sample,
+    grade: %w[college other].sample,
     role: 'ypcat',
     email: "ycat_user#{i}@ypreg.com",
     password: 'chiracha',
     password_confirmation: 'chiracha',
-    background_check_date: (30..36).to_a.sample.months.ago)
+    background_check_date: (30..36).to_a.sample.months.ago
+  )
 
   scyp.skip_confirmation!
-  scyp.update_attributes(role: 'ycat')
-  scyp.update_attributes(locality_id: Locality.all.sample.id)
+  scyp.update(role: 'ycat')
+  scyp.update(locality_id: Locality.all.sample.id)
   scyp.save
 
   print '.'
@@ -281,7 +275,7 @@ count = 30
 print "\nCreating #{count} lodgings: "
 lodging = Lodging.new(
   name: 'Felixes',
-  description: "Hector Felix apartment",
+  description: 'Hector Felix apartment',
   address1: '10 City',
   city: 'Orange',
   state_abbrv: 'CA',
@@ -290,17 +284,19 @@ lodging = Lodging.new(
   min_capacity: rand(1..3),
   contact_person: User.where(email: 'hdfelix@gmail.com').first,
   locality: Locality.all.sample,
-  lodging_type: 1)
+  lodging_type: 1
+)
 lodging.save
 print '.'
 
-for i in 1..30 do  # Not adding 1 to idx (added lodging above already)
+for i in 1..30 do # Not adding 1 to idx (added lodging above already)
   user = User.joins('left join lodgings on lodgings.contact_person_id = users.id').where.not(role: 'yp').sample
   lodging = FactoryBot.create(
     :lodging,
     name: "Lodging #{i}",
     contact_person: user,
-    locality: user.locality)
+    locality: user.locality
+  )
   lodging.save
   print '.'
 end
@@ -312,10 +308,10 @@ print "\nCreating #{count} event registrations (per event): "
 Event.all.each do |ev|
   yp_count = (count * 0.60).to_i
 
-  print"\n\tYP Registrations for #{ev.title}: "
+  print "\n\tYP Registrations for #{ev.title}: "
   # YP registrations
   yp_ids = User.limit(yp_count).where(role: 'yp').pluck(:id)
-  while !yp_ids.empty?
+  until yp_ids.empty?
     user = User.find(yp_ids.delete(yp_ids.sample))
     reg = Registration.new(
       payment_type: 'check',
@@ -324,7 +320,8 @@ Event.all.each do |ev|
       attend_as_serving_one: false,
       user: user,
       event: ev,
-      locality: user.locality)
+      locality: user.locality
+    )
     reg.save
     print '.'
   end
@@ -333,7 +330,7 @@ Event.all.each do |ev|
   # non-YP registrations
   non_yp_count = count - yp_count
   non_yp_ids = User.limit(non_yp_count).where.not(role: 'yp').pluck(:id)
-  while !non_yp_ids.empty?
+  until non_yp_ids.empty?
     user = User.find(non_yp_ids.delete(non_yp_ids.sample))
     reg = Registration.new(
       payment_type: 'Check',
@@ -342,7 +339,8 @@ Event.all.each do |ev|
       attend_as_serving_one: [true, false].sample,
       user: user,
       event: ev,
-      locality: user.locality)
+      locality: user.locality
+    )
     reg.save
     print '.'
   end
@@ -350,7 +348,7 @@ end
 
 # Past event - mark registrations paid
 past_event.registrations.each do |registration|
-  registration.update_attributes(has_been_paid: true)
+  registration.update(has_been_paid: true)
   # Write code to mark all registrations as attended
 end
 

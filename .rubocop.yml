@@ -1,20 +1,17 @@
 inherit_from: .rubocop_todo.yml
 
-Rails:
-  Enabled: true
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
-  Include:
-  #   - '**/RakeFile'
-    - '**/config.ru'
+  NewCops: enable
+  TargetRubyVersion: 3.4
+  SuggestExtensions: false
   Exclude:
-    - '.rbenv/**/*'
     - 'bin/**/*'
-    - 'db/**/*'
-    - 'config/**/*'
-    - 'script/**/*'
-
-Metrics/LineLength:
-  Max: 120
-Naming/VariableNumber:
-  EnforcedStyle: 'normalcase'
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'

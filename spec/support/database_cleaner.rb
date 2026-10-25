@@ -1,9 +1,9 @@
-require 'database_cleaner'
+require 'database_cleaner/active_record'
 
 def select_by_value(id, value)
-	  option_xpath = "//*[@id='#{id}']/option[@value='#{value}']"
-		option = find(:xpath, option_xpath).text
-		select(option, :from => id)
+  option_xpath = "//*[@id='#{id}']/option[@value='#{value}']"
+  option = find(:xpath, option_xpath).text
+  select(option, from: id)
 end
 
 RSpec.configure do |config|
@@ -12,13 +12,12 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.before(:each) do |example|
+  config.before do |example|
     DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
   end
 end
-

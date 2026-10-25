@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe HospitalityRegistrationAssignment, type: :model do
   describe 'Associations' do
-    it { should belong_to :registration }
-    it { should belong_to :hospitality }
-    it { should belong_to :locality }
-    it { should belong_to :event }
+    it { is_expected.to belong_to :registration }
+    it { is_expected.to belong_to :hospitality }
+    it { is_expected.to belong_to :locality }
+    it { is_expected.to belong_to :event }
   end
 
   describe 'Interface' do

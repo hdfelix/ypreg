@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 feature 'User adds Hospitality to event' do
-  let(:authed_admin) {
+  let(:authed_admin) do
     create_logged_in_admin
-  }
+  end
 
   scenario 'can see event current hospitalities when assigning new ones' do
     event = create(:event)

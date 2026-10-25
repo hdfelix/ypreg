@@ -94,6 +94,7 @@ describe Lodging, type: :model do
         expect(lodging.contact_person_cell_phone).to eq('--')
       end
     end
+
     describe '#address' do
       it 'displays the complete lodging address in a string' do
         lodging = create(:lodging)

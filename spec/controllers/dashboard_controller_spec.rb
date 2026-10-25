@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe DashboardController, type: :controller do
-  before(:example) do
+  before do
     sign_in_user
   end
 
@@ -14,8 +14,8 @@ describe DashboardController, type: :controller do
 
       get :index
 
-      expect(assigns(:events)).to match_array([current_event, future_event])
-      expect(assigns(:events)). to_not include(event_over)
+      expect(assigns(:events)).to contain_exactly(current_event, future_event)
+      expect(assigns(:events)).not_to include(event_over)
       expect(assigns(:current_or_future_events_present)).to be true
     end
 

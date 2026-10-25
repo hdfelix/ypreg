@@ -12,13 +12,13 @@ class Events::HospitalityLocalityAssignmentsController < ApplicationController
       hosp = @event.hospitalities.find(id)
       loc = params[:hospitality_locality_ids][id.to_sym][0]
       # TODO: factor out to service HospitalityLocalityManager
-      if loc.empty?
-        loc = nil
-      else
-        loc = loc.to_i
-      end
+      loc = if loc.empty?
+              nil
+            else
+              loc.to_i
+            end
       # TODO: should this be an array?
-      hosp.update_attributes(locality_id: loc)
+      hosp.update(locality_id: loc)
     end
     @event.save
     redirect_to event_hospitality_locality_assignments_path

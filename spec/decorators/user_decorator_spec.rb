@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe UserDecorator do
-  before(:example) do
+  before do
     @user = FactoryBot.create(:user).decorate
   end
 
@@ -15,7 +15,7 @@ describe UserDecorator do
     end
   end
 
-  context '#background_check_date_row_class' do
+  describe '#background_check_date_row_class' do
     it "returns 'danger' if the user does not have a background check" do
       @user.background_check_date = nil
       expect(@user.background_check_date_row_class).to eq 'danger'
@@ -31,14 +31,13 @@ describe UserDecorator do
       expect(@user.background_check_date_row_class).to eq 'warning'
     end
 
-    it "does not return a class name if background check has not expired \
-        and won't expire for more than 2 months" do
+    it "does not return a class name if background check has not expired and won't expire for more than 2 months" do
       @user.background_check_date = 20.months.ago
       expect(@user.background_check_date_row_class).to eq ''
     end
   end
 
-  context '#background_check_date_bg_class' do
+  describe '#background_check_date_bg_class' do
     it "that returns 'danger' if the user does not have a background check" do
       @user.background_check_date = nil
       expect(@user.background_check_date_bg_class).to eq 'bg-danger'
@@ -54,8 +53,7 @@ describe UserDecorator do
       expect(@user.background_check_date_bg_class).to eq 'bg-warning'
     end
 
-    it "that does not return a class name if background check has not expired \
-          and won't expire for more than 2 months" do
+    it "that does not return a class name if background check has not expired and won't expire for more than 2 months" do
       @user.background_check_date = 20.months.ago
       expect(@user.background_check_date_bg_class).to eq ''
     end

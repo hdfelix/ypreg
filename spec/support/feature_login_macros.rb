@@ -7,34 +7,34 @@ include Warden::Test::Helpers
 # Features login helper
 module FeatureLoginMacros
   # DEPRECATED; update code to use #create_signed_in_user_by_role
-	def create_logged_in_admin
-		admin = FactoryBot.create(:user, :with_admin_role)
-		admin.confirm
+  def create_logged_in_admin
+    admin = FactoryBot.create(:user, :with_admin_role)
+    admin.confirm
     admin.current_sign_in_at = Time.now
-		admin.save
+    admin.save
 
     login(admin)
     admin
-	end
+  end
 
-	def create_signed_in_user_by_role(role)
+  def create_signed_in_user_by_role(role)
     user = FactoryBot.create(:user, role: role.to_s)
-		user.confirm
+    user.confirm
     user.current_sign_in_at = Time.now
-		user.save
+    user.save
 
     login(user)
     user
-	end
+  end
 
   def login(user)
-		login_as user, scope: :user
+    login_as user, scope: :user
   end
 
   # def sign_in(user)
-	# 	user.confirm
+  # 	user.confirm
   #   user.current_sign_in_at = Time.now
-	# 	user.save
+  # 	user.save
 
   #   visit root_path
   #   click_link 'Sign in'

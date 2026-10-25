@@ -3,7 +3,8 @@ require 'rails_helper'
 feature 'Locality Contact creates an event registration' do
   let(:authed_admin) { create_signed_in_user_by_role('admin') }
   let(:authed_loc_contact) { create_signed_in_user_by_role('loc_contact') }
-  before(:each) { @event = create(:event) }
+
+  before { @event = create(:event) }
 
   context 'When there are no registrations from their locality' do
     it 'the locality does not show up in the Locality Summaries list' do
@@ -24,7 +25,7 @@ feature 'Locality Contact creates an event registration' do
   end
 
   context 'When there is at least one registration from their locality' do
-    before(:each) do
+    before do
       user = create(:user, role: 'yp', locality: authed_loc_contact.locality)
       create(:registration, event: @event, user: user)
     end
@@ -47,7 +48,7 @@ feature 'Locality Contact creates an event registration' do
   end
 
   context 'Can create a registration' do
-    before(:each) do
+    before do
       @locality = authed_loc_contact.locality
       @user = create(:user, role: 'scyp', locality: @locality)
       @reg = create(:registration, event: @event, user: @user, vehicle_seating_capacity: 5)

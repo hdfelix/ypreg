@@ -1,18 +1,19 @@
 class LocalitiesController < ApplicationController
-  before_action :set_locality, only: [:show, :edit, :update, :destroy]
+  before_action :set_locality, only: %i[show edit update destroy]
 
   def index
     @localities = Locality.all
     authorize @localities
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @locality = Locality.new
     authorize @locality
   end
+
+  def edit; end
 
   def create
     @locality = Locality.new(locality_params)
@@ -25,9 +26,6 @@ class LocalitiesController < ApplicationController
       flash[:error] = 'Error saving the locality.'
       render action: 'new'
     end
-  end
-
-  def edit
   end
 
   def update

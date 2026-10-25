@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe LocalitiesController, type: :controller do
-  before(:example) do
+  before do
     sign_in_user
   end
 
@@ -51,9 +51,9 @@ describe LocalitiesController, type: :controller do
   describe 'POST :create' do
     context 'with valid params' do
       it 'creates a new locality' do
-        expect {
+        expect do
           post :create, params: { locality: attributes_for(:locality) }
-        }.to change(Locality, :count).by(1)
+        end.to change(Locality, :count).by(1)
       end
 
       it 'assigns a newly created locality as @locality' do
@@ -69,7 +69,7 @@ describe LocalitiesController, type: :controller do
     end
 
     context 'with invalid params' do
-      before(:example) do
+      before do
         allow_any_instance_of(Locality).to receive(:save).and_return(false)
       end
 
@@ -87,7 +87,7 @@ describe LocalitiesController, type: :controller do
   end
 
   describe 'GET :edit' do
-    before(:example) do
+    before do
       @locality = create(:locality)
     end
 
@@ -101,6 +101,7 @@ describe LocalitiesController, type: :controller do
       expect(response).to render_template(:edit)
     end
   end
+
   describe 'PUT update'
   describe 'DELETE destroy'
 end

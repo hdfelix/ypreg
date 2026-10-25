@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe EventsController, type: :controller do
-  before(:example) do
+  before do
     sign_in_user
   end
 
@@ -15,8 +15,8 @@ describe EventsController, type: :controller do
 
       get :index
 
-      expect(assigns(:events)).to match_array([event_not_over])
-      expect(assigns(:past_events)).to match_array([event_over])
+      expect(assigns(:events)).to contain_exactly(event_not_over)
+      expect(assigns(:past_events)).to contain_exactly(event_over)
     end
 
     it 'is a success' do
@@ -31,8 +31,7 @@ describe EventsController, type: :controller do
   end
 
   describe 'GET :show' do
-    it "assigns the requested event to @event and \
-        localities participating to @participating_localities" do
+    it 'assigns the requested event to @event and localities participating to @participating_localities' do
       event = create(:event_with_registrations)
       participating_localities =
         event.participating_localities.sort { |a, b| a.city <=> b.city }
@@ -68,9 +67,9 @@ describe EventsController, type: :controller do
 
     describe 'with valid params' do
       it 'creates a new Event' do
-        expect {
+        expect do
           post :create, params: { event: attributes_for(:event).merge(location_id: location.id) }
-        }.to change(Event, :count).by(1)
+        end.to change(Event, :count).by(1)
       end
 
       it 'assigns a newly created event as @event' do
@@ -87,7 +86,7 @@ describe EventsController, type: :controller do
     end
 
     describe 'with invalid params' do
-      before(:example) do
+      before do
         allow_any_instance_of(Event).to receive(:save).and_return(false)
       end
 
@@ -148,7 +147,7 @@ describe EventsController, type: :controller do
   #   end
   # end
 
-  #describe "DELETE destroy" do
+  # describe "DELETE destroy" do
   #  it "destroys the requested event" do
   #    event = Event.create! valid_attributes
   #    expect {
@@ -161,5 +160,5 @@ describe EventsController, type: :controller do
   #    delete :destroy, {:id => event.to_param}, valid_session
   #    response.should redirect_to(events_url)
   #  end
-  #end
+  # end
 end

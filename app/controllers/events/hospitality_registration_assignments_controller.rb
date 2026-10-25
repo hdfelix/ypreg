@@ -18,7 +18,7 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
     saint_ids.each do |id|
       hosp = nil
       hospitality_id = params[:saint_hospitality_ids][id.to_sym][0]
-      hosp = Hospitality.find(hospitality_id) if !hospitality_id.empty?
+      hosp = Hospitality.find(hospitality_id) unless hospitality_id.empty?
       reg = Registration.where(event: @event, user: User.find(id)).first
       hra = @event.hospitality_registration_assignments.find_by_registration_id(reg.id)
 
@@ -42,7 +42,7 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
 
   def remove_hospitality_assignment(hospitality_registration_assignment, registration)
     hospitality_registration_assignment && hospitality_registration_assignment.delete
-    registration.update_attributes(hospitality: nil)
+    registration.update(hospitality: nil)
   end
 
   def create_or_update_hospitality_assignment(hra, hosp, reg)
@@ -51,25 +51,25 @@ class Events::HospitalityRegistrationAssignmentsController < ApplicationControll
     else
       update_hospitality_registration_assignment(hra, hosp)
     end
-    hosp.update_attributes(registration_id: reg.id)
-    reg.update_attributes(hospitality: hosp)
+    hosp.update(registration_id: reg.id)
+    reg.update(hospitality: hosp)
   end
 
   def create_hospitality_assignment(hospitality, registration)
     hospitality_registration_assignment =
       @event
-        .hospitality_registration_assignments
-        .build(
-          event: @event,
-          hospitality: hospitality,
-          registration: registration,
-          locality: @locality
-        )
+      .hospitality_registration_assignments
+      .build(
+        event: @event,
+        hospitality: hospitality,
+        registration: registration,
+        locality: @locality
+      )
     hospitality_registration_assignment.save
   end
 
   def update_hospitality_registration_assignment(hospitality_registration_assignment, hospitality)
     hospitality_registration_assignment
-      .update_attributes(hospitality: hospitality, locality: @locality)
+      .update(hospitality: hospitality, locality: @locality)
   end
 end
