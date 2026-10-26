@@ -4,8 +4,9 @@ The ticket number (and optional hint) provided is: $ARGUMENTS
 
 ## Step 0 — Pick the cheapest correct approach and model
 
-Before doing anything else, decide how to do this ticket with the fewest tokens that is still correct,
-and say it in one line (approach + model). Follow the "Token discipline" rules in `CLAUDE.md`.
+Before doing anything else, find the most token-efficient way to do this ticket with the best accuracy
+using the right model, and say it in one line (approach + model). Accuracy is the constraint, tokens the
+objective: never trade correctness for a cheaper path. Follow the "Token discipline" rules in `CLAUDE.md`.
 
 - **Model:** Sonnet for mechanical porting, edits, boilerplate, and well-specified tickets. Opus only for
   design, tricky debugging, or security work. If the ticket is already planned (`/plan-ticket`), it is
