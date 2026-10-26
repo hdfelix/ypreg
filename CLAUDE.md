@@ -28,6 +28,7 @@ Before each task, pick the cheapest approach that is still correct, and the chea
 - Short replies: the result and the next decision, not a recap.
 
 ## Commands
+`make help` lists the Makefile targets (`make up`, `make test`, `make coverage`, `make lint`; `PORT` defaults to 3100).
 ```bash
 bundle exec rspec path/to/spec.rb      # prefer targeted runs
 timeout 600 bundle exec rspec          # full suite — check `free -h` first; never run in parallel

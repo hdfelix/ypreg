@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# Rewrites the README coverage badge from coverage/.last_run.json (run `make coverage`).
+require 'json'
+require_relative '../lib/coverage_badge'
+
+root = File.expand_path('..', __dir__)
+last_run = File.join(root, 'coverage', '.last_run.json')
+abort "#{last_run} not found; run the full suite first" unless File.exist?(last_run)
+
+percent = JSON.parse(File.read(last_run)).dig('result', 'line')
+readme = File.join(root, 'README.md')
+File.write(readme, CoverageBadge.replace(File.read(readme), percent))
+puts format('Coverage: %.1f%%', percent)
