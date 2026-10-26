@@ -3,6 +3,8 @@
 
 Repo: https://github.com/hdfelix/ypreg.git
 
+<!-- coverage-badge -->![coverage](https://img.shields.io/badge/coverage-80.4%25-yellow)<!-- /coverage-badge -->
+
 This is an event registration management site. You can use this site to manage registrations short one-day events that require
 no hospitality accomodations as well as multi-day events where hospitality accomodations are necessary.  
    
@@ -16,30 +18,16 @@ It is currently running on:
 * Create and manage hospitality locations
 * Create and manage different types of users
 
-## Setup
-To get started, clone this repo and run:
+## Quick start
+Requires Ruby 3.4 and PostgreSQL.
 
 ```bash
-$ bundle
-```
-The site is configured to use PostgreSQL for all environments (Development|Test|Production). Make sure you install and configure PostgreSQL before running the following commands from your terminal:
-
-```bash
-$ rails db:create
-$ rails db:schema:load
+$ make up        # start Postgres, prepare the DB, run Rails, print the URL (PORT=3100 by default)
+$ make test      # run the spec suite
+$ make coverage  # run the suite and refresh the coverage badge
+$ make help      # list every target
 ```
 
-Next, Run the following command to create an admin user account:  
+Port 3000 busy? Pass another: `make up PORT=3200`. Stop the app with `make stop`.
 
-```bash
-$ rails ypreg:create_admin
-```
-
-### Test data
-The previous instructions will get you a clean database. If you prefer to see the app with some test data, run the following:
-
-```bash
-$ rails db:setup
-```
-
-Then you can log in using `test@test.com` and password: `devaccount`.
+Seeded login: `test@test.com` / `devaccount`. To create your own admin instead, run `rails ypreg:create_admin`.
